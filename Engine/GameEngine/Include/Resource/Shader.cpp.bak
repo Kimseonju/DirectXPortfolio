@@ -1,0 +1,52 @@
+
+#include "Shader.h"
+
+CShader::CShader()  :
+    m_InputLayout(nullptr),
+    m_InputSize(0)
+{
+}
+
+CShader::~CShader()
+{
+    SAFE_RELEASE(m_InputLayout);
+}
+
+bool CShader::Init()
+{
+    return true;
+}
+
+void CShader::AddInputDesc(const char* SemanticName, unsigned int SemanticIndex, DXGI_FORMAT Fmt,
+	unsigned int InputSlot, unsigned int Size, D3D11_INPUT_CLASSIFICATION InputSlotClass, unsigned int InstanceDataStepRate)
+{
+	//입력 어셈블러 단계 
+	//fx에 넣을것들을 설정하기
+	D3D11_INPUT_ELEMENT_DESC	Desc = {};
+
+	//쉐이더이름 fx에서 color:COLOR 오른쪽꺼 이름
+	Desc.SemanticName = SemanticName;
+
+	Desc.SemanticIndex = SemanticIndex;
+	Desc.Format = Fmt;
+	Desc.InputSlot = InputSlot;
+
+	//	D3D11_INPUT_PER_VERTEX_DATA = 0,
+	//	D3D11_INPUT_PER_INSTANCE_DATA = 1
+	Desc.InputSlotClass = InputSlotClass;
+
+	Desc.InstanceDataStepRate = InstanceDataStepRate;
+	Desc.AlignedByteOffset = m_InputSize;
+	m_InputSize += Size;
+
+	m_vecInputDesc.push_back(Desc);
+}
+
+bool CShader::CreateInputLayout()
+{
+	return true;
+}
+
+void CShader::SetShader()
+{
+}

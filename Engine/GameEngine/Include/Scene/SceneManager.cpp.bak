@@ -1,0 +1,63 @@
+
+#include "SceneManager.h"
+
+DEFINITION_SINGLE(CSceneManager)
+
+CSceneManager::CSceneManager()  :
+    m_pNextScene(nullptr),
+    m_pScene(nullptr)
+{
+}
+
+CSceneManager::~CSceneManager()
+{
+    SAFE_DELETE(m_pNextScene);
+    SAFE_DELETE(m_pScene);
+}
+
+bool CSceneManager::Init()
+{
+    m_pScene = new CScene;
+
+    m_pScene->Init();
+
+
+
+    return true;
+}
+
+bool CSceneManager::Update(float DeltaTime)
+{
+    if (!m_pScene->IsStart())
+        m_pScene->Start();
+
+    m_pScene->Update(DeltaTime);
+
+    return false;
+}
+
+bool CSceneManager::PostUpdate(float DeltaTime)
+{
+    m_pScene->PostUpdate(DeltaTime);
+
+    return false;
+}
+
+bool CSceneManager::Collision(float DeltaTime)
+{
+    m_pScene->Collision(DeltaTime);
+
+    return false;
+}
+
+bool CSceneManager::Render(float DeltaTime)
+{
+    m_pScene->Render(DeltaTime);
+
+    return false;
+}
+
+void CSceneManager::Clear()
+{
+    m_pScene->Clear();
+}

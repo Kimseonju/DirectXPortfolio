@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01. SceneMode">
+      <UniqueIdentifier>{3e326f72-c98d-4f39-8cf3-5eab50bac787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object">
+      <UniqueIdentifier>{c835ba0d-1a8c-45eb-a9a6-a9a005fdd931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D">
+      <UniqueIdentifier>{269655eb-ea83-458f-aebe-1f372126653e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\01. Player">
+      <UniqueIdentifier>{314f2943-d226-4755-9366-2d9f546c4eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\수업듣기용">
+      <UniqueIdentifier>{c3ee4a27-d3ad-493c-8202-b672dd91f7c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{96b85ae0-6740-4410-b60b-87e342ea9af2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\02. BossEffect">
+      <UniqueIdentifier>{caaf4e5b-cd81-454e-955f-4b6a5aabcaaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\수업듣기용\UI">
+      <UniqueIdentifier>{25615c8c-5362-42d7-a872-04a7f1ff0045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\StartScene">
+      <UniqueIdentifier>{4162eb1b-6c9a-4dfb-a8dc-09a04ca95b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\StartScene\Bird">
+      <UniqueIdentifier>{7ba3cf4b-5249-448d-b0b5-e1b9eee0bc07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\BackGround">
+      <UniqueIdentifier>{61f0eb08-bbba-4e82-8d98-c4c17a14308e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\임시오브젝트">
+      <UniqueIdentifier>{212378bc-1725-4bea-a9ec-8d2e3b3737a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect">
+      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\Enemy">
+      <UniqueIdentifier>{df34b61b-3829-4e70-abe8-9758810d4474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Status">
+      <UniqueIdentifier>{62782876-f820-43b6-98b1-9e40320f2373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI">
+      <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{62e5cda9-4071-44e1-94bc-90003a9d0033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item">
+      <UniqueIdentifier>{2a96eaa4-6973-4d04-b1b8-dcadc9cd0309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon">
+      <UniqueIdentifier>{d0bfe66f-c7c3-462b-a44d-e065a65fc07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy">
+      <UniqueIdentifier>{b8a03d5e-c2fc-44e4-9f58-488b1e0235a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon\ShortSword">
+      <UniqueIdentifier>{131f9fbc-b758-4701-9ea2-5d9c85ee8b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon\EnemyWeapon">
+      <UniqueIdentifier>{8620f0dd-f792-4e04-935e-25b418f565c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\Enemy\Weapon">
+      <UniqueIdentifier>{cb02ee7f-a6c3-4c42-9af1-b49fabb00ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\RevolverEffect">
+      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\ShortSwordEffect">
+      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\WeaponEffect">
+      <UniqueIdentifier>{96136b21-dd16-4db2-af81-96991a2cb5b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\WeaponEffect\Revolver">
+      <UniqueIdentifier>{2a309288-43d7-44e4-a4db-ad841f351e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\WeaponEffect\ShortSword">
+      <UniqueIdentifier>{fbd6b3d4-59fc-4c5c-be82-936c3589e688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon\Revolver">
+      <UniqueIdentifier>{52f6370c-7cbb-46c7-b068-65afc4c93b08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Bullet">
+      <UniqueIdentifier>{109b848b-8c48-44d8-b6e7-868ff4f7311e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon\MetalBoomerang">
+      <UniqueIdentifier>{9467faa2-0175-44e4-8c88-062d04b7abdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\WeaponEffect\MetalBoomerang">
+      <UniqueIdentifier>{2b7c4be4-ca42-4384-a7d3-4d5697580dbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\MetalBoomerangEffect">
+      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\ObjectDie">
+      <UniqueIdentifier>{82da748a-0f20-47c5-bc3e-a23c0d0376e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\ObjectDieEffectObject">
+      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Player">
+      <UniqueIdentifier>{12d31ce6-b2bf-4546-aecb-e5b65a901f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="테스트파일">
+      <UniqueIdentifier>{4f4dc927-2d47-43ca-a541-5068705d7d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\수업듣기용\Effect">
+      <UniqueIdentifier>{3c3f581b-f312-4741-98f7-c4fc65bf380e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\수업듣기용\Object">
+      <UniqueIdentifier>{97dcf54c-1e0b-4250-bc18-67b1b238bc52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\UI">
+      <UniqueIdentifier>{787d6e5f-a996-4c42-bc30-b6680775432b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\Mouse">
+      <UniqueIdentifier>{b2d49b42-918b-4238-ad79-a89d11d3480a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\WidgetWindow">
+      <UniqueIdentifier>{6d2f1ca1-2e60-4603-b7e9-5d149460db30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\Widget">
+      <UniqueIdentifier>{82598922-bda6-4e89-9110-a6055f621a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\WidgetWindow\Ability">
+      <UniqueIdentifier>{9893ff9d-4ce0-4db1-9710-803d06baf1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\WidgetWindow\Inventory">
+      <UniqueIdentifier>{5894384b-857a-4572-8712-f1c5e2800fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="02. Object\Enemy\SmallSkel">
+      <UniqueIdentifier>{c36211c7-2b64-4daa-99d3-b3a0c37b7288}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\MainScene.cpp">
+      <Filter>01. SceneMode</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\PlayerAnimation2D.cpp">
+      <Filter>03. Animation2D\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWindow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\DoorEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Stage1MapEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BossDieEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\02. BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MainStageMapEffect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\StartScene.cpp">
+      <Filter>01. SceneMode</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MainHUDWidget.cpp">
+      <Filter>02. Object\수업듣기용\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BirdAnimation2D.cpp">
+      <Filter>03. Animation2D\StartScene\Bird</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\TestMainScene.cpp">
+      <Filter>01. SceneMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\StartScene\BackGround.cpp">
+      <Filter>02. Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Cloud.cpp">
+      <Filter>02. Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\StartScene\Bird.cpp">
+      <Filter>02. Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BackGround_Tree.cpp">
+      <Filter>02. Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CollisionObject.cpp">
+      <Filter>02. Object\임시오브젝트</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EffectObject.cpp">
+      <Filter>02. Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PlayerWorldInfoWidget.cpp">
+      <Filter>02. Object\수업듣기용\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\EnemyAnimation2D.cpp">
+      <Filter>03. Animation2D\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\EnemyShotAnimation2D.cpp">
+      <Filter>03. Animation2D\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicStatus.cpp">
+      <Filter>Status</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Item.cpp">
+      <Filter>02. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Weapon.cpp">
+      <Filter>02. Object\Item\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Enemy.cpp">
+      <Filter>02. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ShortSword.cpp">
+      <Filter>02. Object\Item\Weapon\ShortSword</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SkelSmallDagger.cpp">
+      <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\EnemyWeaponAnimation2D.cpp">
+      <Filter>03. Animation2D\Enemy\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EnemyAttack.cpp">
+      <Filter>02. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Revolver.cpp">
+      <Filter>02. Object\Item\Weapon\Revolver</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RevolverEffectObject.cpp">
+      <Filter>02. Object\Effect\RevolverEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ShortSwordEffectObject.cpp">
+      <Filter>02. Object\Effect\ShortSwordEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\WeaponEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\WeaponEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\RevolverEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\WeaponEffect\Revolver</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\ShortSwordEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\WeaponEffect\ShortSword</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bullet.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MetalBoomerang.cpp">
+      <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\MetalBoomerangEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\WeaponEffect\MetalBoomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MetalBoomerangEffectObject.cpp">
+      <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\ObjectDieEffectAnimation2D.cpp">
+      <Filter>03. Animation2D\ObjectDie</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjectDieEffectObject.cpp">
+      <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerDash.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>테스트파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>테스트파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FlameEffect.cpp">
+      <Filter>02. Object\수업듣기용\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Particle2D.cpp">
+      <Filter>02. Object\수업듣기용\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PixelCollisionTest.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player2D.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Teemo.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TempBullet.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TestParticle.cpp">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\LifeWaveAnimation2D.cpp">
+      <Filter>03. Animation2D\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BasicMouse.cpp">
+      <Filter>02. Object\UI\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TitleWidget.cpp">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\EnemyWorldInfoWidget.cpp">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PlayerUI.cpp">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InventoryButton.cpp">
+      <Filter>02. Object\UI\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\StageMap.cpp">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\LoadingScene.cpp">
+      <Filter>01. SceneMode</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\LoadingUI.cpp">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\LoadingThread.cpp">
+      <Filter>01. SceneMode</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget_Wrath.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget_Arcane.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget_Greed.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget_Patience.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AbilityWidget_Swiftness.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Ability.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Inventory.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ItemInfoWidget.cpp">
+      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatus.cpp">
+      <Filter>Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SmallSkel.cpp">
+      <Filter>02. Object\Enemy\SmallSkel</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WeaponArm.cpp">
+      <Filter>02. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerAttack.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\MainScene.h">
+      <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\PlayerAnimation2D.h">
+      <Filter>03. Animation2D\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientManager.h">
+      <Filter>02. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="TestWindow.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\DoorEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Stage1MapEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BossDieEffectAnimation2D.h">
+      <Filter>03. Animation2D\02. BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MainStageMapEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\StartScene.h">
+      <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MainHUDWidget.h">
+      <Filter>02. Object\수업듣기용\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BirdAnimation2D.h">
+      <Filter>03. Animation2D\StartScene\Bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\TestMainScene.h">
+      <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\StartScene\BackGround.h">
+      <Filter>02. Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Cloud.h">
+      <Filter>02. Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\StartScene\Bird.h">
+      <Filter>02. Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BackGround_Tree.h">
+      <Filter>02. Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CollisionObject.h">
+      <Filter>02. Object\임시오브젝트</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EffectObject.h">
+      <Filter>02. Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PlayerWorldInfoWidget.h">
+      <Filter>02. Object\수업듣기용\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\EnemyAnimation2D.h">
+      <Filter>03. Animation2D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\EnemyShotAnimation2D.h">
+      <Filter>03. Animation2D\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicStatus.h">
+      <Filter>Status</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Item.h">
+      <Filter>02. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Weapon.h">
+      <Filter>02. Object\Item\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Enemy.h">
+      <Filter>02. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ShortSword.h">
+      <Filter>02. Object\Item\Weapon\ShortSword</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SkelSmallDagger.h">
+      <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\EnemyWeaponAnimation2D.h">
+      <Filter>03. Animation2D\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EnemyAttack.h">
+      <Filter>02. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Revolver.h">
+      <Filter>02. Object\Item\Weapon\Revolver</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RevolverEffectObject.h">
+      <Filter>02. Object\Effect\RevolverEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ShortSwordEffectObject.h">
+      <Filter>02. Object\Effect\ShortSwordEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\WeaponEffectAnimation2D.h">
+      <Filter>03. Animation2D\WeaponEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\RevolverEffectAnimation2D.h">
+      <Filter>03. Animation2D\WeaponEffect\Revolver</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\ShortSwordEffectAnimation2D.h">
+      <Filter>03. Animation2D\WeaponEffect\ShortSword</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bullet.h">
+      <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MetalBoomerang.h">
+      <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\MetalBoomerangEffectAnimation2D.h">
+      <Filter>03. Animation2D\WeaponEffect\MetalBoomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MetalBoomerangEffectObject.h">
+      <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\ObjectDieEffectAnimation2D.h">
+      <Filter>03. Animation2D\ObjectDie</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjectDieEffectObject.h">
+      <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerDash.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>테스트파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>테스트파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\FlameEffect.h">
+      <Filter>02. Object\수업듣기용\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Particle2D.h">
+      <Filter>02. Object\수업듣기용\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PixelCollisionTest.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player2D.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Teemo.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TempBullet.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TestParticle.h">
+      <Filter>02. Object\수업듣기용\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\LifeWaveAnimation2D.h">
+      <Filter>03. Animation2D\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BasicMouse.h">
+      <Filter>02. Object\UI\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TitleWidget.h">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\EnemyWorldInfoWidget.h">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PlayerUI.h">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InventoryButton.h">
+      <Filter>02. Object\UI\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\StageMap.h">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\LoadingScene.h">
+      <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\LoadingUI.h">
+      <Filter>02. Object\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\LoadingThread.h">
+      <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Ability.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Inventory.h">
+      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ItemInfoWidget.h">
+      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget_Arcane.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget_Greed.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget_Patience.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget_Swiftness.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AbilityWidget_Wrath.h">
+      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <Filter>Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SmallSkel.h">
+      <Filter>02. Object\Enemy\SmallSkel</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WeaponArm.h">
+      <Filter>02. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerAttack.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client2D.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
