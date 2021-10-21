@@ -1,20 +1,20 @@
 #include "BasicStatus.h"
 #include "GlobalValue.h"
 CBasicStatus::CBasicStatus() :
-	m_HP(0.f),
-	m_HPMax(0.f),
-	m_Dash(0.f),
-	m_DashMax(0.f),
+	m_HP(0),
+	m_HPMax(0),
+	m_Dash(0),
+	m_DashMax(0),
 	m_AttackSpeed(1.f),
 	m_OldAttackSpeed(1.f),
 	m_ReloadSpeed(1.f),
 	m_OldReloadSpeed(1.f),
 	m_MoveSpeed(0.f),
-	m_Damage(0.f),
-	m_DamageMax(0.f),
-	m_Armor(0.f),
-	m_Critical(0.f),
-	m_Evasion(0.f)
+	m_Damage(0),
+	m_DamageMax(0),
+	m_Armor(0),
+	m_Critical(0),
+	m_Evasion(0)
 {
 }
 

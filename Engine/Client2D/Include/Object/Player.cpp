@@ -164,6 +164,7 @@ void CPlayer::Update(float DeltaTime)
 			m_Weapon->Enable(true);
 			m_Status.AttachWeapon(m_Weapon->GetStatus());
 			m_WeaponArm->PushObjectChild(m_Weapon);
+			m_Weapon->SetCurrentAttackDelay(1.f);
 		}
 	}
 	else

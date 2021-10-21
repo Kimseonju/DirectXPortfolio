@@ -83,6 +83,14 @@ enum class InventoryButton_State
     End
 };
 
+enum class InventoryButton_Slot
+{
+    Weapon,
+    Acc,
+    All, 
+    End
+};
+
 enum class Select_Weapon
 {
     Left,

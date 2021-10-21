@@ -151,6 +151,9 @@
     <Filter Include="02. Object\Enemy\SmallSkel">
       <UniqueIdentifier>{c36211c7-2b64-4daa-99d3-b3a0c37b7288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Enemy\Boss">
+      <UniqueIdentifier>{3d822338-2c79-4826-93ae-ae4e421e61f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -387,6 +390,9 @@
     <ClCompile Include="Object\PlayerAttack.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Belial.cpp">
+      <Filter>02. Object\Enemy\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -622,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="Object\PlayerAttack.h">
       <Filter>02. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Belial.h">
+      <Filter>02. Object\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

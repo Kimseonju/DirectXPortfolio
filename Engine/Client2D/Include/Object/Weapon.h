@@ -56,6 +56,10 @@ public:
 	{
 		return m_PlayAttack;
 	}
+	void SetCurrentAttackDelay(float Delay)
+	{
+		m_CurrentAttackDelay = Delay;
+	}
 	void SetWeaponType(Weapon_Type Type)
 	{
 		m_WeaponType = Type;

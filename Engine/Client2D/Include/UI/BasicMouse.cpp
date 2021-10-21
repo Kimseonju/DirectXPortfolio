@@ -118,27 +118,111 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 	{
 		if (Button->GetButtonState() == InventoryButton_State::NotItem)
 		{
-			InventoryUp();
+			ClearItem();
 		}
 		else if (Button->GetItem() == nullptr)
 		{
-			Button->SetItem(m_Item);
-			m_Item = nullptr;
-			m_ClickInventoryButton->SetItem(nullptr);
-			m_ClickInventoryButton = nullptr;
+			switch (m_Item->GetType())
+			{
+			case ITEM_TYPE::Weapon_One_Hand:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Weapon
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(nullptr);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+				break;
+			case ITEM_TYPE::Weapon_Two_Hand:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Weapon
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(nullptr);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+				break;
+			case ITEM_TYPE::Acc:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Acc
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(nullptr);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+				break;
+			case ITEM_TYPE::End:
+				m_Item = nullptr;
+				m_ClickInventoryButton->SetItem(nullptr);
+				m_ClickInventoryButton = nullptr;
+				break;
+			}
 		}
+
 		else
 		{
-			CItem* Item = Button->GetItem();
-			Button->SetItem(m_Item);
-			m_Item = nullptr;
-			m_ClickInventoryButton->SetItem(Item);
-			m_ClickInventoryButton = nullptr;
+			switch (m_Item->GetType())
+			{
+			case ITEM_TYPE::Weapon_One_Hand:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Weapon
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					CItem* Item = Button->GetItem();
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(Item);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+			break;
+			case ITEM_TYPE::Weapon_Two_Hand:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Weapon
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					CItem* Item = Button->GetItem();
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(Item);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+			break;
+			case ITEM_TYPE::Acc:
+			{
+				if (Button->GetButtonSlot() == InventoryButton_Slot::Acc
+					|| Button->GetButtonSlot() == InventoryButton_Slot::All)
+				{
+					CItem* Item = Button->GetItem();
+					Button->SetItem(m_Item);
+					m_Item = nullptr;
+					m_ClickInventoryButton->SetItem(Item);
+					m_ClickInventoryButton = nullptr;
+				}
+			}
+			break;
+			case ITEM_TYPE::End:
+				m_Item = nullptr;
+				m_ClickInventoryButton->SetItem(nullptr);
+				m_ClickInventoryButton = nullptr;
+				break;
+			}
+
 		}
 	}
 }
 
-void CBasicMouse::InventoryUp()
+void CBasicMouse::ClearItem()
 {
 	m_Item = nullptr;
 	m_ClickInventoryButton = nullptr;

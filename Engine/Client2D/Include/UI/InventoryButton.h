@@ -21,6 +21,7 @@ protected:
 	CItem* m_Item;
 	InventoryButton_State m_InventoryButtonState;
 	class CItemInfoWidget* m_ItemInfoWidget;
+	InventoryButton_Slot m_Slot;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -38,9 +39,17 @@ public:
 	{
 		m_InventoryButtonState= State;
 	}
+	void SetButtonSlot(InventoryButton_Slot Slot)
+	{
+		m_Slot = Slot;
+	}
 	InventoryButton_State GetButtonState() const
 	{
 		return m_InventoryButtonState;
+	}
+	InventoryButton_Slot GetButtonSlot() const
+	{
+		return m_Slot;
 	}
 	void SetItem(CItem* Item);
 	CItem* GetItem() const ;

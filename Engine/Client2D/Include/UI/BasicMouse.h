@@ -39,6 +39,7 @@ public:
 public:
     void InventoryClick(CInventoryButton* Button);
     void InventoryMove(CInventoryButton* Button);
-    void InventoryUp();
+    
+    void ClearItem();
 };
 

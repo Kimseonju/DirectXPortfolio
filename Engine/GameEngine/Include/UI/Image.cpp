@@ -85,7 +85,10 @@ void CImage::PostUpdate(float DeltaTime)
 void CImage::Render()
 {
 	CWidget::Render();
-
+	if (!IsEnable())
+	{
+		return;
+	}
 	if (m_Animation)
 		m_Animation->SetShader();
 

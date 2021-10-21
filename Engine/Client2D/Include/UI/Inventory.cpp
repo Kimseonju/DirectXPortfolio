@@ -58,48 +58,59 @@ bool CInventory::Init()
 	WeaponButton->SetSize(WeaponSize);
 	WeaponButton->SetPos(988.f, 430.f);
 	WeaponButton->SetPivot(0.5f, 0.5f);
-	WeaponButton->SetStateTint(Button_State::Normal, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::MouseOn, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::Click, 0.f, 0.f, 0.f, 0.f);
+	WeaponButton->SetStateTexture(Button_State::Normal, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::MouseOn, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::Click, "normals", TEXT("UI/Inventory/inventory.png"));
 	WeaponButton->SetZOrder(0);
+	WeaponButton->SetButtonSlot(InventoryButton_Slot::Weapon);
 	m_Weapon.push_back(WeaponButton);
 
 	WeaponButton = CreateWidget<CInventoryButton>("WeaponButton1");
 	WeaponButton->SetSize(WeaponSize);
 	WeaponButton->SetPos(988.f+9.f+ WeaponSize.x, 430.f);
 	WeaponButton->SetPivot(0.5f, 0.5f);
-	WeaponButton->SetStateTint(Button_State::Normal, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::MouseOn, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::Click, 0.f, 0.f, 0.f, 0.f);
+	WeaponButton->SetStateTexture(Button_State::Normal, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::MouseOn, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::Click, "normals", TEXT("UI/Inventory/inventory.png"));
 	WeaponButton->SetZOrder(0);
+	WeaponButton->SetButtonSlot(InventoryButton_Slot::Weapon);
 	m_Weapon.push_back(WeaponButton);
 
 	WeaponButton = CreateWidget<CInventoryButton>("WeaponButton2");
 	WeaponButton->SetSize(WeaponSize);
 	WeaponButton->SetPos(1150.f, 430.f);
 	WeaponButton->SetPivot(0.5f, 0.5f);
-	WeaponButton->SetStateTint(Button_State::Normal, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::MouseOn, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::Click, 0.f, 0.f, 0.f, 0.f);
+	WeaponButton->SetStateTexture(Button_State::Normal, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::MouseOn, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::Click, "normals", TEXT("UI/Inventory/inventory.png"));
 	WeaponButton->SetZOrder(0);
+	WeaponButton->SetButtonSlot(InventoryButton_Slot::Weapon);
 	m_Weapon.push_back(WeaponButton);
 
 	WeaponButton = CreateWidget<CInventoryButton>("WeaponButton3");
 	WeaponButton->SetSize(WeaponSize);
 	WeaponButton->SetPos(1150.f+9.f + WeaponSize.x, 430.f);
 	WeaponButton->SetPivot(0.5f, 0.5f);
-	WeaponButton->SetStateTint(Button_State::Normal, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::MouseOn, 0.f, 0.f, 0.f, 0.f);
-	WeaponButton->SetStateTint(Button_State::Click, 0.f, 0.f, 0.f, 0.f);
+	WeaponButton->SetStateTexture(Button_State::Normal, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::MouseOn, "normals", TEXT("UI/Inventory/inventory.png"));
+	WeaponButton->SetStateTexture(Button_State::Click, "normals", TEXT("UI/Inventory/inventory.png"));
 	WeaponButton->SetZOrder(0);
+	WeaponButton->SetButtonSlot(InventoryButton_Slot::Weapon);
 	m_Weapon.push_back(WeaponButton);
 
 	//무기선택배경
 	m_WeaponSelect_Left = CreateWidget<CImage>("WeaponSelect_Left");
-
-
+	m_WeaponSelect_Left->SetSize(141.f, 90.f);
+	m_WeaponSelect_Left->SetPos(1020.f, 440.f);
+	m_WeaponSelect_Left->SetPivot(0.5f, 0.5f);
+	m_WeaponSelect_Left->SetTexture("WeaponSelectLeft", TEXT("UI/Inventory/WeaponSelect0.png"));
+	m_WeaponSelect_Left->SetCollision(false);
 	m_WeaponSelect_Right = CreateWidget<CImage>("WeaponSelect_Right");
-
+	m_WeaponSelect_Right->SetSize(141.f, 90.f);
+	m_WeaponSelect_Right->SetPos(1180.f, 440.f);
+	m_WeaponSelect_Right->SetPivot(0.5f, 0.5f);
+	m_WeaponSelect_Right->SetTexture("WeaponSelectRight", TEXT("UI/Inventory/WeaponSelect1.png"));
+	m_WeaponSelect_Right->SetCollision(false);
 
 	//악세사리
 
@@ -122,6 +133,7 @@ bool CInventory::Init()
 		AccButton->SetStateTexture(Button_State::Normal, "accessory", TEXT("UI/Inventory/accessory.png"));
 		AccButton->SetStateTexture(Button_State::MouseOn, "accessory", TEXT("UI/Inventory/accessory.png"));
 		AccButton->SetStateTexture(Button_State::Click, "accessory", TEXT("UI/Inventory/accessory.png"));
+		AccButton->SetButtonSlot(InventoryButton_Slot::Acc);
 		m_Accs.push_back(AccButton);
 	}
 
@@ -131,7 +143,7 @@ bool CInventory::Init()
 		{
 			std::string str;
 			str = std::to_string(y*5+x);
-			WeaponButton = CreateWidget<CInventoryButton>("WeaponButton"+ str);
+			WeaponButton = CreateWidget<CInventoryButton>("InventoryButton"+ str);
 			WeaponButton->SetSize(WeaponSize);
 			WeaponButton->SetPos(972.f+ (WeaponSize.x + 8.f) * x, 255.f-(WeaponSize.x + 7.f)*y);
 			WeaponButton->SetPivot(0.5f, 0.5f);
@@ -139,6 +151,7 @@ bool CInventory::Init()
 			WeaponButton->SetStateTexture(Button_State::MouseOn, "selected", TEXT("UI/Inventory/inventory_select.png"));
 			WeaponButton->SetStateTexture(Button_State::Click, "selected", TEXT("UI/Inventory/inventory_select.png"));
 			WeaponButton->SetZOrder(1);
+			WeaponButton->SetButtonSlot(InventoryButton_Slot::All);
 			m_Items.push_back(WeaponButton);
 		}
 	}
@@ -162,11 +175,17 @@ bool CInventory::Init()
 void CInventory::Update(float DeltaTime)
 {
 	CWidgetWindow::Update(DeltaTime);
-	if (m_Weapon[0]->GetItem()!=nullptr)
+	if (m_Current == Select_Weapon::Left)
 	{
+		m_WeaponSelect_Left->Enable(true);
+		m_WeaponSelect_Right->Enable(false);
 
 	}
-
+	else if (m_Current == Select_Weapon::Right)
+	{
+		m_WeaponSelect_Left->Enable(false);
+		m_WeaponSelect_Right->Enable(true);
+	}
 }
 
 void CInventory::PostUpdate(float DeltaTime)

@@ -9,7 +9,8 @@
 #include <Scene/Viewport.h>
 CInventoryButton::CInventoryButton()	:
 	m_InventoryButtonState(InventoryButton_State::Normal),
-	m_ItemInfoWidget(nullptr)
+	m_ItemInfoWidget(nullptr),
+	m_Slot(InventoryButton_Slot::All)
 {
 }
 
