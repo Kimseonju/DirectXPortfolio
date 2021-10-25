@@ -317,7 +317,7 @@ float Vector2::GetAngle(const Vector2& v1) const
 {
     float _x = v1.x - x;
     float _y = v1.y - y;
-    float radian = atan2(_y, _x);
+    float radian = (float)atan2(_y, _x);
     return RadianToDegree(radian);
 }
 

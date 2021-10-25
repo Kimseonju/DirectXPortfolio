@@ -29,10 +29,6 @@ CAbilityWidget::CAbilityWidget() :
 {
 }
 
-CAbilityWidget::CAbilityWidget(const CAbilityWidget& widget) :
-	CWidgetWindow(widget)
-{
-}
 
 CAbilityWidget::~CAbilityWidget()
 {

@@ -6,7 +6,8 @@
 #include "../../Animation2D/BirdAnimation2D.h"
 #include <Component/Transform.h>
 CBird::CBird() :
-	m_Speed(200)
+	m_Speed(200),
+	m_Animation2D(nullptr)
 {
 }
 
@@ -14,6 +15,7 @@ CBird::CBird(const CBird& obj) :
 	CGameObject(obj)
 {
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
+	m_Animation2D = obj.m_Animation2D->Clone();
 }
 
 CBird::~CBird()

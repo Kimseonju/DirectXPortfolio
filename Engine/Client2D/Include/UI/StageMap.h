@@ -15,7 +15,6 @@ protected:
     bool m_StageUpdate;
 protected:
     CStageMap();
-    CStageMap(const CStageMap& widget);
     virtual ~CStageMap();
 public:
     void SetStage(class CStage* Stage)

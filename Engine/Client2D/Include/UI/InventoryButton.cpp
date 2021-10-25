@@ -10,11 +10,8 @@
 CInventoryButton::CInventoryButton()	:
 	m_InventoryButtonState(InventoryButton_State::Normal),
 	m_ItemInfoWidget(nullptr),
-	m_Slot(InventoryButton_Slot::All)
-{
-}
-
-CInventoryButton::CInventoryButton(const CInventoryButton& widget)
+	m_Slot(InventoryButton_Slot::All),
+	m_Item(nullptr)
 {
 }
 

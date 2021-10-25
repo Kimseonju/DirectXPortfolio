@@ -12,10 +12,6 @@ CBasicMouse::CBasicMouse():
 {
 }
 
-CBasicMouse::CBasicMouse(const CBasicMouse& widget):
-	CMouseWidget(widget)
-{
-}
 
 CBasicMouse::~CBasicMouse()
 {

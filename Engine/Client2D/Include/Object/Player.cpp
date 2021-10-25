@@ -16,9 +16,15 @@
 #include "PlayerDash.h"
 #include "../UI/Inventory.h"
 #include "../UI/BasicMouse.h"
+#include "../UI/PlayerUI.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
-	m_Inventory(nullptr)
+	m_Inventory(nullptr),
+	m_Weapon(nullptr),
+	m_WeaponArm(nullptr),
+	m_PlayerUI(nullptr),
+	m_Angle(0.f),
+	m_Dir(Object_Dir::Left)
 {
 }
 
@@ -32,6 +38,12 @@ CPlayer::CPlayer(const CPlayer& obj) :
 	m_Arm = (CSpringArm2D*)FindSceneComponent("Arm");
 	m_Camera = (CCamera*)FindSceneComponent("Camera");
 
+	m_OneAttack = obj.m_OneAttack;
+	m_Inventory = obj.m_Inventory->Clone();
+	m_WeaponArm = obj.m_WeaponArm->Clone();
+	m_Weapon = obj.m_Weapon->Clone();
+	m_PlayerUI = obj.m_PlayerUI->Clone();
+	m_OneAttack = obj.m_OneAttack;
 	//임시 삭제용
 
 	m_PlayerInfoWidgetComponent = (CWidgetComponent*)FindSceneComponent("PlayerInfoWidget");
@@ -44,6 +56,11 @@ CPlayer::~CPlayer()
 void CPlayer::SetInventory(CInventory* Inventory)
 {
 	m_Inventory = Inventory;
+}
+
+void CPlayer::SetPlayerUI(CPlayerUI* PlayerUI)
+{
+	m_PlayerUI = PlayerUI;
 }
 
 void CPlayer::Start()
@@ -103,6 +120,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Jump", KT_Push, this, &CPlayer::JumpMove);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Attack", KT_Down, this, &CPlayer::Attack);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InventoryOnOff", KT_Down, this, &CPlayer::InventoryOnOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("Dash", KT_Down, this, &CPlayer::Dash);
 	//마우스회전용
 
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -185,17 +203,18 @@ void CPlayer::Update(float DeltaTime)
 		if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
 		{
 			//임시로
-			//선형보간 적용하여 움직임구현하기			
+			//선형보간 적용하여 움직임구현하기		
+			//게임상엔 없네??ㅇ
 			float LerpAngle = CGlobalValue::Lerp2DMax(0.f, 90.f, m_Weapon->GetCurrentAttackDelay()*10.f);
 			if (m_OneAttack)
 			{
-				m_WeaponArm->SetRelativeRotationZ(angle + LerpAngle);
-				m_Weapon->SetRelativeRotationZ(angle + LerpAngle);
+				m_WeaponArm->SetRelativeRotationZ(angle + 90.f);
+				m_Weapon->SetRelativeRotationZ(angle + 90.f);
 			}
 			else
 			{
-				m_WeaponArm->SetRelativeRotationZ(angle - LerpAngle);
-				m_Weapon->SetRelativeRotationZ(angle - LerpAngle);
+				m_WeaponArm->SetRelativeRotationZ(angle - 90.f);
+				m_Weapon->SetRelativeRotationZ(angle - 90.f);
 
 			}
 		}
@@ -336,5 +355,6 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
 	{
 		m_Body->SetJump(true);
+		m_PlayerUI->Hit();
 	}
 }

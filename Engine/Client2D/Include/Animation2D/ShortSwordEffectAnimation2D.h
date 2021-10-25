@@ -7,16 +7,6 @@ public:
 	CShortSwordEffectAnimation2D();
 	CShortSwordEffectAnimation2D(const CShortSwordEffectAnimation2D& anim);
 	virtual ~CShortSwordEffectAnimation2D();
-protected:
-
-	bool m_Die;
-public:
-
-	void IsDie()
-	{
-		m_Die = true;
-	}
-
 public:
 	virtual void Start();
 	virtual bool Init();

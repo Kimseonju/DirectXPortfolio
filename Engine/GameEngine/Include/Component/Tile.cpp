@@ -1,5 +1,6 @@
 
 #include "Tile.h"
+#include "TileMapComponent.h"
 
 CTile::CTile() :
 	m_Shape(Tile_Shape::Rect),
@@ -19,6 +20,14 @@ CTile::~CTile()
 {
 }
 
+Vector2 CTile::GetPos()	const
+{
+	Vector3	OwnerPos = m_Owner->GetWorldPos();
+	Vector2	Pos = m_Pos + Vector2(OwnerPos.x, OwnerPos.y);
+
+	return Pos;
+}
+
 bool CTile::Init()
 {
 	return true;
@@ -34,10 +43,14 @@ void CTile::Update(float DeltaTime)
 
 void CTile::PostUpdate(float DeltaTime)
 {
+	Vector3	OwnerPos = m_Owner->GetWorldPos();
+
+	Vector2	Pos = m_Pos + Vector2(OwnerPos.x, OwnerPos.y);
+
 	Matrix	matScale, matTranslate;
 
 	matScale.Scaling(m_Size.x, m_Size.y, 1.f);
-	matTranslate.Translation(m_Pos.x, m_Pos.y, 0.f);
+	matTranslate.Translation(Pos.x, Pos.y, 0.f);
 
 	m_matWorld = matScale * matTranslate;
 }

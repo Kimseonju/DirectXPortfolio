@@ -2,13 +2,24 @@
 #include "Component/SpriteComponent.h"
 
 CEnemyAnimation2D::CEnemyAnimation2D() :
-	m_Die(false)
+	m_Die(false),
+	m_SequenceIdle(nullptr),
+	m_SequenceMove(nullptr),
+	m_SequenceJump(nullptr),
+	m_SequenceAttack(nullptr),
+	m_SequenceDie(nullptr)
 {
 }
 
 CEnemyAnimation2D::CEnemyAnimation2D(const CEnemyAnimation2D& anim) :
 	CAnimation2D(anim)
 {
+	m_SequenceIdle = nullptr;
+	m_SequenceMove = nullptr;
+	m_SequenceJump = nullptr;
+	m_SequenceAttack = nullptr;
+	m_SequenceDie = nullptr;
+	m_Die = false;
 }
 
 CEnemyAnimation2D::~CEnemyAnimation2D()

@@ -281,7 +281,20 @@ void CRenderManager::Render(float DeltaTime)
 
 void CRenderManager::Render2D(float DeltaTime)
 {
-	for (int i = 0; i < RT2D_End; ++i)
+	std::sort(m_pRenderList2D[RT2D_MAP], m_pRenderList2D[RT2D_MAP] + m_RenderList2DCount[RT2D_MAP],
+		CRenderManager::Sort2DObject);
+
+	m_DepthDisable->SetState();
+
+	for (int j = 0; j < m_RenderList2DCount[RT2D_MAP]; ++j)
+	{
+		m_pRenderList2D[RT2D_MAP][j]->Render(DeltaTime);
+	}
+
+	m_DepthDisable->ResetState();
+
+
+	for (int i = RT2D_Back; i < RT2D_End; ++i)
 	{
 		std::sort(m_pRenderList2D[i], m_pRenderList2D[i] + m_RenderList2DCount[i],
 			CRenderManager::Sort2DObject);

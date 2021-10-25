@@ -3,16 +3,31 @@
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
 #include <Resource/Texture.h>
-CItem::CItem():
+CItem::CItem() :
 	m_ItemImage(nullptr),
 	m_Type(ITEM_TYPE::End),
-	m_Rank(ITEM_RANK::End)
+	m_Rank(ITEM_RANK::End),
+	m_ItemName(nullptr),
+	m_ItemText(nullptr),
+	m_price(0),
+	m_Fire(false),
+	m_FireTime(0.f),
+	m_FireTimeMax(10.f)
 {
 }
 
 CItem::CItem(const CItem& obj) :
 	CGameObject(obj)
 {
+	m_ItemImage = obj.m_ItemImage;
+	m_Type = obj.m_Type;
+	m_Rank = obj.m_Rank;
+	m_ItemName = obj.m_ItemName;
+	m_ItemText = obj.m_ItemText;
+	m_price = obj.m_price;
+	m_Fire = obj.m_Fire;
+	m_FireTime = obj.m_FireTime;
+	m_FireTimeMax = obj.m_FireTimeMax;
 }
 
 CItem::~CItem()

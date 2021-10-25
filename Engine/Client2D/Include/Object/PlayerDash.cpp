@@ -10,7 +10,8 @@
 CPlayerDash::CPlayerDash() :
 	m_Fire(false),
 	m_FireTime(0.f),
-	m_FireTimeMax(0.2f)
+	m_FireTimeMax(0.2f),
+	m_Dir(Object_Dir::End)
 {
 }
 
@@ -18,6 +19,10 @@ CPlayerDash::CPlayerDash(const CPlayerDash& obj) :
 	CGameObject(obj)
 {
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
+	m_Fire = obj.m_Fire;
+	m_FireTime = obj.m_FireTime;
+	m_FireTimeMax = obj.m_FireTimeMax;
+	m_Dir = obj.m_Dir;
 }
 
 CPlayerDash::~CPlayerDash()

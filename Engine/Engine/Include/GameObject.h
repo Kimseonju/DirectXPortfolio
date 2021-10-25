@@ -62,7 +62,7 @@ public:
 
     void PushObjectChild(CGameObject* Object)
     {
-        if (FindObjectComponent(Object->GetName()))
+        if (FindObjectChild(Object->GetName()))
         {
             return;
         }
@@ -80,16 +80,13 @@ public:
     {
         return m_RootComponent.Get();
     }
-    CGameObject* GetOwner() const
-    {
-        return m_Owner;
-    }
+
     virtual void Active(bool bActive);
     void SetRootComponent(CSceneComponent* Root);
     CSceneComponent* FindSceneComponent(const std::string& Name);
-    CGameObject* FindObjectChild(const std::string& Name);
     void GetAllSceneComponentName(std::vector<HierarchyName>& vecName);
     void GetAllSceneComponent(std::vector<CSceneComponent*>& vecComponent);
+    CGameObject* FindObjectChild(const std::string& Name);
 
     CObjectComponent* FindObjectComponent(const std::string& Name);
     void GetAllObjectComponentName(std::vector<std::string>& vecName);

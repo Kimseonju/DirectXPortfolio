@@ -2,13 +2,18 @@
 #include "Component/SpriteComponent.h"
 
 CEnemyWeaponAnimation2D::CEnemyWeaponAnimation2D() :
-	m_Die(false)
+	m_Die(false),
+	m_Idle(nullptr),
+	m_Attack(nullptr)
 {
 }
 
 CEnemyWeaponAnimation2D::CEnemyWeaponAnimation2D(const CEnemyWeaponAnimation2D& anim) :
 	CAnimation2D(anim)
 {
+	m_Die = false;
+	m_Idle = nullptr;
+	m_Attack = nullptr;
 }
 
 CEnemyWeaponAnimation2D::~CEnemyWeaponAnimation2D()

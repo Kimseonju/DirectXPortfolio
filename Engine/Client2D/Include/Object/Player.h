@@ -29,10 +29,17 @@ protected:
 	CSharedPtr<CCamera> m_Camera;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
-	class CAnimation2D* m_Animation2D;
-	class CInventory* m_Inventory;
-	class CWeapon* m_Weapon;
+	CSharedPtr<CAnimation2D> m_Animation2D;
 	class CWeaponArm* m_WeaponArm;
+
+
+	class CWeapon*  m_Weapon;
+
+
+	class CInventory* m_Inventory;
+	class CPlayerUI* m_PlayerUI;
+
+
 	bool m_OneAttack;
 	float m_Angle;
 	Object_Dir m_Dir;
@@ -56,6 +63,7 @@ public:
 	}
 public:
 	void SetInventory(CInventory* Inventory);
+	void SetPlayerUI(CPlayerUI* PlayerUI);
 public:
 	virtual void Start();
 	virtual bool Init();

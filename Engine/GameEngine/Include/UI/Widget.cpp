@@ -169,6 +169,15 @@ CWidget* CWidget::Clone()
 	return nullptr;
 }
 
+bool CWidget::IsEnable()
+{
+	if (m_Owner)
+	{
+		return m_Enable && m_Owner->IsEnable();
+	}
+	return m_Enable;
+}
+
 void CWidget::SetZOrder(int ZOrder)
 {
 	m_ZOrder = ZOrder;

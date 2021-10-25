@@ -10,7 +10,6 @@ class CBasicMouse :
 
 protected:
     CBasicMouse();
-    CBasicMouse(const CBasicMouse& widget);
     virtual ~CBasicMouse();
 
 protected:

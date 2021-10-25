@@ -11,7 +11,6 @@ class CAbilityWidget :
 
 protected:
     CAbilityWidget();
-    CAbilityWidget(const CAbilityWidget& widget);
     virtual ~CAbilityWidget();
     
 private:

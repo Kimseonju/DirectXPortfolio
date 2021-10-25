@@ -5,8 +5,11 @@
 #include <Device.h>
 #include "../SceneMode/TestMainScene.h"
 #include "Scene/SceneManager.h"
-CTitleWidget::CTitleWidget()
+CTitleWidget::CTitleWidget():
+	m_Cloud(nullptr),
+	m_BackCloud(nullptr)
 {
+	
 }
 
 CTitleWidget::CTitleWidget(const CTitleWidget& widget) :

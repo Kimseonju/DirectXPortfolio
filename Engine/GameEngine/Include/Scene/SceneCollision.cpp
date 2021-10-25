@@ -350,6 +350,10 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 		{
 			continue;
 		}
+		if (!(*iterUI)->IsEnable())
+		{
+			continue;
+		}
 		Vector2 Pos = (*iterUI)->GetPos();
 		Vector2 Size = (*iterUI)->GetSize();
 		

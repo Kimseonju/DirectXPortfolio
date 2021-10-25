@@ -5,7 +5,8 @@
 #include "LoadingThread.h"
 #include "ThreadManager.h"
 
-CLoadingScene::CLoadingScene()
+CLoadingScene::CLoadingScene():
+	m_Thread(nullptr)
 {
 }
 

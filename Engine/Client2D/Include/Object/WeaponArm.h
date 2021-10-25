@@ -23,11 +23,6 @@ public:
 	{
 		m_Dir = Dir;
 	}
-protected:
-	bool    m_Fire;
-	float   m_FireTime;
-	float   m_FireTimeMax;
-	bool    m_OneAttack;
 public:
 	virtual void Start();
 	virtual bool Init();

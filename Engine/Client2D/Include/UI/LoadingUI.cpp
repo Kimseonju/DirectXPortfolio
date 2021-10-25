@@ -1,11 +1,13 @@
 #include "LoadingUI.h"
 
-CLoadingUI::CLoadingUI()
+CLoadingUI::CLoadingUI():
+	m_LoadingPercent(1.f)
 {
 }
 
 CLoadingUI::CLoadingUI(const CLoadingUI& widget)
 {
+	m_LoadingPercent = widget.m_LoadingPercent;
 }
 
 CLoadingUI::~CLoadingUI()

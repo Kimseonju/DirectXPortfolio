@@ -4,7 +4,6 @@ class CBasicStatus
 
 public:
 	CBasicStatus();
-	CBasicStatus(const CBasicStatus& status);
 	~CBasicStatus();
 
 protected:

@@ -14,11 +14,11 @@ protected:
 	bool		m_Active;
 public:
 
-	void Enable(bool bEnable)
+	virtual void Enable(bool bEnable)
 	{
 		m_Enable = bEnable;
 	}
-	bool IsEnable()
+	virtual bool IsEnable()
 	{
 		return m_Enable;
 	}

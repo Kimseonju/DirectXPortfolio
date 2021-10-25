@@ -7,15 +7,6 @@ public:
 	CLifeWaveAnimation2D();
 	CLifeWaveAnimation2D(const CLifeWaveAnimation2D& anim);
 	virtual ~CLifeWaveAnimation2D();
-protected:
-
-	bool m_Die;
-public:
-
-	void IsDie()
-	{
-		m_Die = true;
-	}
 
 public:
 	virtual void Start();

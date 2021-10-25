@@ -396,6 +396,8 @@ struct TileMapCBuffer
     Vector2	TileSize;
 };
 
+#pragma pack(push, 1)
+
 struct TileInfo
 {
     Matrix	matWVP;
@@ -404,5 +406,7 @@ struct TileInfo
     Vector4	Color;
     Vector4	EmvColor;
     float	Opacity;
+    Vector3	Empty;
 };
 
+#pragma pack(pop)

@@ -117,9 +117,6 @@
     <Filter Include="02. Object\Player">
       <UniqueIdentifier>{12d31ce6-b2bf-4546-aecb-e5b65a901f8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="테스트파일">
-      <UniqueIdentifier>{4f4dc927-2d47-43ca-a541-5068705d7d98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\수업듣기용\Effect">
       <UniqueIdentifier>{3c3f581b-f312-4741-98f7-c4fc65bf380e}</UniqueIdentifier>
     </Filter>
@@ -153,6 +150,21 @@
     </Filter>
     <Filter Include="02. Object\Enemy\Boss">
       <UniqueIdentifier>{3d822338-2c79-4826-93ae-ae4e421e61f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\WidgetWindow\BossUI">
+      <UniqueIdentifier>{1ae272e4-6f06-4dce-992a-fbe32ec698fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UI\WidgetWindow\PlayerUI">
+      <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\Boss">
+      <UniqueIdentifier>{73e5fa10-4da7-45bd-bf93-f9ef89400fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial">
+      <UniqueIdentifier>{f9860b94-e649-4616-a9a8-15dbde0bdc95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="테스트파일%28Stage,Room%29">
+      <UniqueIdentifier>{4f4dc927-2d47-43ca-a541-5068705d7d98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -292,10 +304,10 @@
       <Filter>02. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
-      <Filter>테스트파일</Filter>
+      <Filter>테스트파일%28Stage,Room%29</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>테스트파일</Filter>
+      <Filter>테스트파일%28Stage,Room%29</Filter>
     </ClCompile>
     <ClCompile Include="Object\FlameEffect.cpp">
       <Filter>02. Object\수업듣기용\Effect</Filter>
@@ -331,9 +343,6 @@
       <Filter>02. Object\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="UI\EnemyWorldInfoWidget.cpp">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\PlayerUI.cpp">
       <Filter>02. Object\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="UI\InventoryButton.cpp">
@@ -390,8 +399,41 @@
     <ClCompile Include="Object\PlayerAttack.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="UI\BossUI.cpp">
+      <Filter>02. Object\UI\WidgetWindow\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PlayerUI.cpp">
+      <Filter>02. Object\UI\WidgetWindow\PlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BelialAnimation2D.cpp">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClCompile>
     <ClCompile Include="Object\Belial.cpp">
-      <Filter>02. Object\Enemy\Boss</Filter>
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialHand.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BelialHandAnimation2D.cpp">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TestTileMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeapon.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BelialWeaponChargeAnimation2D.cpp">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\BelialWeaponHitAnimation2D.cpp">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeaponCharge.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeaponHit.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -531,10 +573,10 @@
       <Filter>02. Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
-      <Filter>테스트파일</Filter>
+      <Filter>테스트파일%28Stage,Room%29</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>테스트파일</Filter>
+      <Filter>테스트파일%28Stage,Room%29</Filter>
     </ClInclude>
     <ClInclude Include="Object\FlameEffect.h">
       <Filter>02. Object\수업듣기용\Effect</Filter>
@@ -570,9 +612,6 @@
       <Filter>02. Object\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="UI\EnemyWorldInfoWidget.h">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\PlayerUI.h">
       <Filter>02. Object\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="UI\InventoryButton.h">
@@ -629,8 +668,41 @@
     <ClInclude Include="Object\PlayerAttack.h">
       <Filter>02. Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="UI\BossUI.h">
+      <Filter>02. Object\UI\WidgetWindow\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PlayerUI.h">
+      <Filter>02. Object\UI\WidgetWindow\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BelialAnimation2D.h">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClInclude>
     <ClInclude Include="Object\Belial.h">
-      <Filter>02. Object\Enemy\Boss</Filter>
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialHand.h">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BelialHandAnimation2D.h">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TestTileMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeapon.h">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BelialWeaponChargeAnimation2D.h">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\BelialWeaponHitAnimation2D.h">
+      <Filter>03. Animation2D\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeaponCharge.h">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeaponHit.h">
+      <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

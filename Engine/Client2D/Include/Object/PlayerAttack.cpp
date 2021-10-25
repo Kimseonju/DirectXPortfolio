@@ -18,6 +18,8 @@ CPlayerAttack::CPlayerAttack() :
 CPlayerAttack::CPlayerAttack(const CPlayerAttack& obj) :
 	CGameObject(obj)
 {
+	m_AttackTime = obj.m_AttackTime;
+	m_AttackTimeMax = obj.m_AttackTimeMax;
 }
 
 CPlayerAttack::~CPlayerAttack()

@@ -20,10 +20,6 @@ CInventory::CInventory():
 {
 }
 
-CInventory::CInventory(const CInventory& widget) :
-	CWidgetWindow(widget)
-{
-}
 
 CInventory::~CInventory()
 {

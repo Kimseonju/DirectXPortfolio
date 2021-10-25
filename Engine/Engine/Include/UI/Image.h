@@ -25,6 +25,7 @@ public:
     CAnimation2D* GetAnimation2D()  const
     {
         return m_Animation;
+
     }
 
     void SetTexture(CTexture* Texture);

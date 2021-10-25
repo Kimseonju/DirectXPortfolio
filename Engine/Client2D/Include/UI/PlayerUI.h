@@ -11,15 +11,19 @@ class CPlayerUI :
 {
     friend class CViewport;
 
-protected:
+private:
     
     CSharedPtr<CProgressBar>    m_ProgressBar;
 
+    CSharedPtr<CImage>    m_WarningOnHit0;
+    CSharedPtr<CImage>    m_WarningOnHit1;
+    class CBossUI* m_BossUI;
+    float m_HitTime;
 protected:
     CPlayerUI();
-    CPlayerUI(const CPlayerUI& widget);
     virtual ~CPlayerUI();
-
+public:
+    void Hit();
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);

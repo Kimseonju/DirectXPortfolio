@@ -7,15 +7,6 @@ public:
 	CMetalBoomerangEffectAnimation2D();
 	CMetalBoomerangEffectAnimation2D(const CMetalBoomerangEffectAnimation2D& anim);
 	virtual ~CMetalBoomerangEffectAnimation2D();
-protected:
-
-	bool m_Die;
-public:
-
-	void IsDie()
-	{
-		m_Die = true;
-	}
 
 public:
 	virtual void Start();

@@ -21,7 +21,6 @@ protected:
     std::vector<CInventoryButton*> m_Items;
 protected:
     CInventory();
-    CInventory(const CInventory& widget);
     virtual ~CInventory();
 
 public:

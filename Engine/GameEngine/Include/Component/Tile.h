@@ -23,8 +23,13 @@ private:
 	int			m_IndexX;
 	int			m_IndexY;
 	int			m_Index;
+	class CTileMapComponent* m_Owner;
 
 public:
+	bool GetRender()	const
+	{
+		return m_FrameStart.x != 0.f || m_FrameStart.y != 0.f || m_FrameEnd.x != 0.f || m_FrameEnd.y != 0.f;
+	}
 	int GetIndexX()	const
 	{
 		return m_IndexX;
@@ -65,10 +70,7 @@ public:
 		return m_FrameEnd;
 	}
 
-	const Vector2& GetPos()	const
-	{
-		return m_Pos;
-	}
+	Vector2 GetPos()	const;
 
 	const Vector2& GetSize()	const
 	{

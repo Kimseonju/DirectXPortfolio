@@ -35,7 +35,13 @@
 #include "../UI/Inventory.h"
 #include "../UI/ItemInfoWidget.h"
 #include "../UI/AbilityWidget.h"
-CTestMainScene::CTestMainScene()
+#include "../Object/Belial.h"
+#include "../Object/TestTileMap.h"
+CTestMainScene::CTestMainScene() :
+	m_Stage(nullptr),
+	m_Minrooms(-1),
+	m_Maxrooms(-1),
+	m_Endrooms(-1)
 {
 }
 
@@ -53,6 +59,8 @@ bool CTestMainScene::Init()
 	//맵
 	m_Stage = new CStage();
 	m_Stage->Init();
+	CTestTileMap* TestTileMap = m_pScene->SpawnObject<CTestTileMap>("TestTileMap");
+
 	//구름
 	//CBackGround* BackGround = m_pScene->SpawnObject<CBackGround>("BackGround");
 	//BackGround->AddTexture("Town_BGL", TEXT("Map/Town_BGL.png"));
@@ -69,7 +77,10 @@ bool CTestMainScene::Init()
 
 
 	CPlayer* pPlayer = m_pScene->SpawnObject<CPlayer>("Player");
-	CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
+	
+	//CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
+	CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
+	pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
 	CGlobalValue::MainPlayer = pPlayer;
 	CCollisionObject* pCollisionObject = m_pScene->SpawnObject<CCollisionObject>("Collision1");
 	
@@ -83,14 +94,15 @@ bool CTestMainScene::Init()
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 	CDoorEffect* pDoorEffect = m_pScene->SpawnObject<CDoorEffect>("DoorEffect");
 	pDoorEffect->SetDir(Effect_Dir::Left);
-	CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
-	Widget->SetPlayer(pPlayer);
+	//CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
+	//Widget->SetPlayer(pPlayer);
 
 	//CStageMap* Widget1 = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMap");
 	//Widget1->SetStage(m_Stage);
-	//CPlayerUI* Widget1 = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
+	CPlayerUI* Widget1 = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
 	CInventory* Widget2 = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
 	pPlayer->SetInventory(Widget2);
+	pPlayer->SetPlayerUI(Widget1);
 	//CItemInfoWidget* Widget3 = m_pScene->GetViewport()->AddWindow<CItemInfoWidget>("ItemInfoWidget");
 	//CAbilityWidget* Widget4 = m_pScene->GetViewport()->AddWindow<CAbilityWidget>("CAbilityWidget");
 	//Widget4->SetPos(500.f, 300.f);
@@ -127,6 +139,13 @@ void CTestMainScene::CreateMaterial()
 		TEXT("Map/MapEffect.png"));
 	m_pScene->GetResource()->SetMaterialTransparency("DoorParticle", true);
 	
+
+	//임시
+	m_pScene->GetResource()->CreateMaterial("MainMap");
+	m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
+		TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
+	m_pScene->GetResource()->SetMaterialTransparency("MainMap", true);
+	m_pScene->GetResource()->SetMaterialShader("MainMap", "TileMapShader");
 }
 
 void CTestMainScene::CreateAnimationSequence2D()
@@ -288,6 +307,113 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyDaggerIdle",
 			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 30.f));
 	}
+
+	/*
+	
+	Boss. Belial
+
+	
+	*/
+	/*Head*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("BelialHead_Idle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("BelialHead_Idle",
+		"BelialHead_Idle", TEXT("boss/Belial/Head/idle.png"));
+	for (int i = 0; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHead_Idle",
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 96.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("BelialHead_Attack");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("BelialHead_Attack",
+		"BelialHead_Attack", TEXT("boss/Belial/Head/attack.png"));
+	for (int i = 0; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHead_Attack",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 128.f));
+	}
+
+
+	/*Hand*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("BelialHand_Idle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("BelialHand_Idle",
+		"BelialHand_Idle", TEXT("boss/Belial/Hand/idle.png"));
+	for (int i = 0; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHand_Idle",
+			Vector2(i * 57.f, 0.f), Vector2((i + 1) * 57.f, 67.f));
+	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("BelialHand_Attack");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("BelialHand_Attack",
+		"BelialHand_Attack", TEXT("boss/Belial/Hand/attack.png"));
+	for (int i = 0; i < 18; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHand_Attack",
+			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
+	}
+	//Notify설정할부분
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("PlayerAttack", "Attack", 8);
+
+	/*Back*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Circle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_Circle",
+		"Belial_Circle", TEXT("boss/Belial/Back/circle.png"));
+	for (int i = 0; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_Circle",
+			Vector2(i * 50.f, 0.f), Vector2((i + 1) * 50.f, 50.f));
+	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_CircleParticle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_CircleParticle",
+		"Belial_CircleParticle", TEXT("boss/Belial/Back/particle.png"));
+	for (int i = 0; i < 18; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_CircleParticle",
+			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
+	}
+
+	/*Raser*/
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_LaserBody");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_LaserBody",
+		"Belial_LaserBody", TEXT("boss/Belial/Laser/body.png"));
+	for (int i = 0; i < 7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_LaserBody",
+			Vector2(i * 32.f, 0.f), Vector2((i + 1) * 32.f, 50.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_LaserHand");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_LaserHand",
+		"Belial_LaserHand", TEXT("boss/Belial/Laser/hand.png"));
+	for (int i = 0; i < 7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_LaserHand",
+			Vector2(i * 27.f, 0), Vector2((i + 1) * 27.f, 44.f));
+	}
+
+	/*Weapon*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_WeaponCharge");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_WeaponCharge",
+		"Belial_WeaponCharge", TEXT("boss/Belial/Sword/charge.png"));
+	for (int i = 0; i < 8; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_WeaponCharge",
+			Vector2(0.f, i*21.f), Vector2(65.f, (i+1) * 21.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_WeaponHit");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_WeaponHit",
+		"Belial_WeaponHit", TEXT("boss/Belial/Sword/hit.png"));
+	for (int i = 0; i < 5; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_WeaponHit",
+			Vector2(i * 22.f, 0), Vector2((i + 1) * 22.f, 51.f));
+	}
+	
+
+
+
 
 	/*
 	UI

@@ -7,10 +7,9 @@
 #include "../Animation2D/PlayerAnimation2D.h"
 #include "Engine.h"
 #include "Weapon.h"
-CWeaponArm::CWeaponArm() :
-	m_Fire(false),
-	m_FireTime(0.f),
-	m_FireTimeMax(0.2f)
+CWeaponArm::CWeaponArm():
+	m_Dir(Object_Dir::End),
+	m_Animation2D(nullptr)
 {
 }
 
@@ -18,6 +17,8 @@ CWeaponArm::CWeaponArm(const CWeaponArm& obj) :
 	CGameObject(obj)
 {
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
+	m_Dir = obj.m_Dir;
+	m_Animation2D = obj.m_Animation2D->Clone();
 }
 
 CWeaponArm::~CWeaponArm()

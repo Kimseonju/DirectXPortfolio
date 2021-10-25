@@ -56,11 +56,15 @@ bool CEnemy::Init()
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_EnemyInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("InfoWidget");
 
+	//테스트용 
+	m_Status.SetHP(1);
+	m_Status.SetHPMax(1);
+
+
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Body);
 
 	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
-	m_Sprite->SetRelativePos(200.f, 300.f, 0.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	//CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	//m_Sprite->CreateAnimation2D<CEnemyAnimation2D>();

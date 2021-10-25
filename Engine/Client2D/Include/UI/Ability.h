@@ -10,7 +10,6 @@ class CAbility :
 
 protected:
     CAbility();
-    CAbility(const CAbility& widget);
     virtual ~CAbility();
     CWidgetWindow* m_Wrath; //분노
     CWidgetWindow* m_Swiftness; //신속

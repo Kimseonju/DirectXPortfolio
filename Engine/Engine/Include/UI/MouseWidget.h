@@ -3,6 +3,7 @@
 #include "Widget.h"
 #include "../Resource/Animation2D.h"
 #include "../Resource/UITransformConstantBuffer.h"
+
 class CMouseWidget :
     public CWidget
 {
@@ -16,6 +17,7 @@ protected:
 protected:
     CSharedPtr<CTexture>    m_Texture;
     CSharedPtr<CAnimation2D>    m_Animation;
+
 
 public:
     CAnimation2D* GetAnimation2D()  const

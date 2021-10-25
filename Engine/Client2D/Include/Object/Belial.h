@@ -9,7 +9,20 @@ protected:
 	CBelial();
 	CBelial(const CBelial& obj);
 	virtual ~CBelial();
+private:
+	float m_AttackTimer;
+	float m_AttackTimerMax;
+	float m_PatternTimer;
+	float m_PatternTimerMax;
 
+	float m_SwordSpawnTimer;
+	float m_SwordSpawnTimerMax;
+	bool m_SwordSpawn;
+	bool m_Attacking;
+	Belial_Pattern m_Pattern;
+	class CBelialHand* m_LeftHand;
+	class CBelialHand* m_RightHand;
+	std::vector<class CBelialWeapon*> m_BelialWeapon;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -20,10 +33,9 @@ public:
 	virtual CBelial* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
-	void Attack1();
-	void Attack2();
-	void Attack3();
-	void Attack4();
+	void AttackSword(float DeltaTime);
+	void AttackBullet(float DeltaTime);
+	void AttackLaser(float DeltaTime);
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 

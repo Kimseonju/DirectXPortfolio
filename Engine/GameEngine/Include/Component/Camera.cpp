@@ -61,6 +61,8 @@ void CCamera::Start()
 	CSceneComponent::Start();
 
 	CreateProjectionMatrix();
+
+	m_RS = CDevice::GetInst()->GetResolution();
 }
 
 bool CCamera::Init()

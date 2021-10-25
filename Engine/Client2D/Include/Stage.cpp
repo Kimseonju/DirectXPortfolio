@@ -9,11 +9,6 @@ CStage::CStage() :
 {
 }
 
-CStage::CStage(const CStage& obj) 
-{
-	
-}
-
 CStage::~CStage()
 {
 	for (int i = 0; i < 20; ++i)

@@ -67,6 +67,11 @@ public:
 		return m_Rotation;
 	}
 
+	virtual void Enable(bool bEnable)
+	{
+		m_Enable = bEnable;
+	}
+	virtual bool IsEnable();
 public:
 	virtual void SetZOrder(int ZOrder);
 	void SetCollision(bool Collision)

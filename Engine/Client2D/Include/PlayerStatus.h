@@ -5,7 +5,6 @@ class CPlayerStatus :
 {
 public:
 	CPlayerStatus();
-	CPlayerStatus(const CPlayerStatus& status);
 	~CPlayerStatus();
 
 private:

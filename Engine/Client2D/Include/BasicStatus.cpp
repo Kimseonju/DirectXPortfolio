@@ -18,22 +18,6 @@ CBasicStatus::CBasicStatus() :
 {
 }
 
-CBasicStatus::CBasicStatus(const CBasicStatus& status)
-{
-	m_HP = status.m_HP;
-	m_HPMax = status.m_HPMax;
-	m_Dash = status.m_Dash;
-	m_DashMax = status.m_DashMax;
-	m_AttackSpeed = status.m_AttackSpeed;
-	m_ReloadSpeed = status.m_ReloadSpeed;
-	m_MoveSpeed = status.m_MoveSpeed;
-	m_Damage = status.m_Damage;
-	m_DamageMax = status.m_DamageMax;
-	m_Armor = status.m_Armor;
-	m_Critical = status.m_Critical;
-	m_Evasion = status.m_Evasion;
-}
-
 CBasicStatus::~CBasicStatus()
 {
 }

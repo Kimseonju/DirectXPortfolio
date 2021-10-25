@@ -6,14 +6,14 @@
 #include "../Stage.h"
 #include "../Room.h"
 CStageMap::CStageMap() :
-	m_StageUpdate(true)
+	m_StageUpdate(true),
+	m_MapBase1_0(nullptr),
+	m_MapBase1_1(nullptr),
+	m_BackCloud(nullptr),
+	m_Stage(nullptr)
 {
 }
 
-CStageMap::CStageMap(const CStageMap& widget) :
-	CWidgetWindow(widget)
-{
-}
 
 CStageMap::~CStageMap()
 {

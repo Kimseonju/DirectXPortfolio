@@ -10,12 +10,19 @@
 #include "../Object/ShortSword.h"
 #include "../Object/MetalBoomerang.h"
 #include "../Object/Item.h"
-CAbility::CAbility()
-{
-}
+CAbility::CAbility() :
+    m_Wrath(nullptr),
+    m_Swiftness(nullptr),
+    m_Patience(nullptr),
+    m_Arcane(nullptr),
+    m_Greed(nullptr),
+    m_MouseButtonImage(nullptr),
+    m_MouseButtonText(nullptr),
+    m_ResetKeyImage(nullptr),
+    m_ResetKeyText(nullptr),
+    m_ExitKeyImage(nullptr),
+    m_ExitKeyText(nullptr)
 
-CAbility::CAbility(const CAbility& widget) :
-	CWidgetWindow(widget)
 {
 }
 

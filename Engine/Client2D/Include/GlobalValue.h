@@ -19,7 +19,8 @@ public:
 enum class Object_Dir
 {
     Left,
-    Right
+    Right,
+    End
 };
 
 enum class RoomCreate_Dir
@@ -103,5 +104,13 @@ enum class Enemy_State
     Move,
     Attack,
     Skill,
+    End
+};
+
+enum class Belial_Pattern
+{
+    Sword,
+    Laser,
+    Bullet,
     End
 };

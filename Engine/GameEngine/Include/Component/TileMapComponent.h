@@ -29,11 +29,24 @@ protected:
 	std::vector<TileInfo>	m_vecTileInfo;
 	class CStructuredBuffer* m_WorldBuffer;
 	CTileMapCBuffer* m_CBuffer;
+	int		m_RenderCount;
+	bool	m_EditorMode;
 
 public:
 	void SetFrameMax(int x, int y);
 	void SetTileDefaultFrame(int x, int y);
 	void SetTileFrame(int TileIndex, int x, int y);
+	void TileRemoveRender(const Vector3& Pos);
+	void TileRemoveRender(int TileIndexX, int TileIndexY);
+	void TileRemoveRender(int TileIndex);
+	void SetTileType(const Vector3& Pos, Tile_Type Type);
+	void SetTileType(int TileIndexX, int TileIndexY, Tile_Type Type);
+	void SetTileType(int TileIndex, Tile_Type Type);
+	void SetEditorMode(bool Mode)
+	{
+		m_EditorMode = Mode;
+	}
+
 
 public:
 	virtual class CMesh* GetMesh()  const;
@@ -43,6 +56,31 @@ public:
 	virtual void SetMaterial(int SlotIndex, const std::string& Name);
 	virtual void AddMaterial(CMaterial* pMaterial);
 	virtual void AddMaterial(const std::string& Name);
+
+public:
+	int GetTileCount()	const
+	{
+		return m_CountX * m_CountY;
+	}
+
+	int GetTileCountX()	const
+	{
+		return m_CountX;
+	}
+
+	int GetTileCountY()	const
+	{
+		return m_CountY;
+	}
+
+	int GetTileIndexX(const Vector3& Pos);
+	int GetTileIndexY(const Vector3& Pos);
+	int GetTileIndex(const Vector3& Pos);
+	int GetTileUpdateIndexX(const Vector3& Pos);
+	int GetTileUpdateIndexY(const Vector3& Pos);
+	CTile* GetTile(const Vector3& Pos);
+	CTile* GetTile(int x, int y);
+	CTile* GetTile(int Index);
 
 public:
 	virtual void Start();
@@ -74,6 +112,8 @@ public:
 			for (int j = 0; j < m_CountX; ++j)
 			{
 				T* Tile = new T;
+
+				Tile->m_Owner = this;
 
 				m_vecTile[i * m_CountX + j] = Tile;
 

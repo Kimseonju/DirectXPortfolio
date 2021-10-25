@@ -14,7 +14,6 @@ class CInventoryButton :
 
 protected:
 	CInventoryButton();
-	CInventoryButton(const CInventoryButton& widget);
 	virtual ~CInventoryButton();
 
 protected:

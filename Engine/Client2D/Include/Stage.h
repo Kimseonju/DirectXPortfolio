@@ -7,7 +7,6 @@ class CStage
 {
 public:
 	CStage();
-	CStage(const CStage& obj);
 	virtual ~CStage();
 
 public:
@@ -25,7 +24,7 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CStage* Clone();
 	void SetRooms(int x, int y, class CRoom* room);
-	CRoom* GetRooms(int x, int y);
+	class CRoom* GetRooms(int x, int y);
 	int GetRoomSize()
 	{
 		return m_RoomSize;

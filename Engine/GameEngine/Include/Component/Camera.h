@@ -22,8 +22,14 @@ protected:
 	float   m_Distance;
 	float	m_CameraBottom; //2D
 	float	m_CameraLeft;	//2D
+	Resolution	m_RS;
 
 public:
+	Resolution GetResolution()	const
+	{
+		return m_RS;
+	}
+
 	float GetCameraBottom() const
 	{
 		return m_CameraBottom;

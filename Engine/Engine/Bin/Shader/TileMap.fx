@@ -36,6 +36,7 @@ struct TileInfo
 	float4	Color;
 	float4	EmvColor;
 	float	Opacity;
+	float3	TileInfoEmpty;
 };
 
 StructuredBuffer<TileInfo>		g_TileArrayInput	: register(t30);
@@ -74,7 +75,7 @@ PS_OUTPUT_SINGLE TileMapPS(VS_OUTPUT_TILEMAP input)
 
 	float4	result = (float4)0.f;
 
-	result.rgb = BaseColor.rgb * input.Color.rgb + EmissiveColor.rgb * input.EmvColor.rgb;
+	result.rgb = BaseColor.rgb * input.Color.rgb * input.Color.a + EmissiveColor.rgb * input.EmvColor.rgb;
 	result.a = BaseColor.a * input.Opacity;
 
 	result = PaperBurn2D(result, input.UV);

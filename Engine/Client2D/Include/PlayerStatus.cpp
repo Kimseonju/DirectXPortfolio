@@ -1,11 +1,8 @@
 #include "PlayerStatus.h"
 
-CPlayerStatus::CPlayerStatus()
-{
-}
-
-CPlayerStatus::CPlayerStatus(const CPlayerStatus& status):
-	CBasicStatus(status)
+CPlayerStatus::CPlayerStatus():
+	m_DashCount(0),
+	m_DashCountMax(2.f)
 {
 }
 

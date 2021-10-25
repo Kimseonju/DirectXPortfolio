@@ -20,6 +20,8 @@ CEnemyAttack::CEnemyAttack() :
 CEnemyAttack::CEnemyAttack(const CEnemyAttack& obj) :
 	CGameObject(obj)
 {
+	m_AttackTime = 0.f;
+	m_AttackTimeMax = 0.5f;
 }
 
 CEnemyAttack::~CEnemyAttack()

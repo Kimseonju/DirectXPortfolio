@@ -25,7 +25,7 @@ bool CShortSwordEffectAnimation2D::Init()
 
 	AddAnimationSequence2D("ShortSwordEffect", false);
 	//AddAnimationSequence2D("PlayerRun");
-
+	return true;
 }
 
 void CShortSwordEffectAnimation2D::Update(float DeltaTime)
