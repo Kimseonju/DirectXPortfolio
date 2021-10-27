@@ -13,4 +13,9 @@
 *.iobj
 *.ipdf
 *.bak
+*.ilk
+*.pdb
+*.res
+!fmod.dll
+!fmod64.dll
 Engine/.vs
