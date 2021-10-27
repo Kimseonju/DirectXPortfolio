@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IMGUIWindow.h"
+#include "Editor.h"
+#include "Component/TileMapComponent.h"
 
 class CTileMapWindow :
 	public CIMGUIWindow
@@ -27,6 +29,38 @@ private:
 	class CIMGUITextInput* m_InputTileSizeX;
 	class CIMGUITextInput* m_InputTileSizeY;
 	Tile_Shape		m_TileShape;
+	class CIMGUIComboBox* m_TileModifyTypeCombo;
+	class CIMGUIComboBox* m_TileEditCombo;
+	Tile_Type			m_TileType;
+	Tile_Modify_Type	m_TileModifyType;
+	bool		m_CreateTile;
+	CSharedPtr<CTileMapComponent> m_TileMap;
+
+public:
+	CTileMapComponent* GetTileMap()	const
+	{
+		return m_TileMap;
+	}
+
+	bool IsTileMap()	const
+	{
+		return m_CreateTile;
+	}
+
+	Tile_Shape GetTileShape()	const
+	{
+		return m_TileShape;
+	}
+
+	Tile_Type GetTileType()	const
+	{
+		return m_TileType;
+	}
+
+	Tile_Modify_Type GetTileModifyType()	const
+	{
+		return m_TileModifyType;
+	}
 
 public:
 	void SetPosition(const Vector3& Pos);
@@ -55,6 +89,8 @@ public:
 
 private:
 	void TileShapeComboCallback(int SelectIndex, const char* Item);
+	void TileModifyTypeComboCallback(int SelectIndex, const char* Item);
+	void TileEditComboCallback(int SelectIndex, const char* Item);
 	void CreateInputPos();
 	void CreateInputScale();
 	void CreateInputRotation();
@@ -62,5 +98,7 @@ private:
 
 public:
 	void CreateTileButton();
+	void SaveTileMap();
+	void LoadTileMap();
 };
 

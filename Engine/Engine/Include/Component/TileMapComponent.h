@@ -79,6 +79,7 @@ public:
 	int GetTileUpdateIndexX(const Vector3& Pos);
 	int GetTileUpdateIndexY(const Vector3& Pos);
 	CTile* GetTile(const Vector3& Pos);
+	CTile* GetTile(const Vector2& Pos);
 	CTile* GetTile(int x, int y);
 	CTile* GetTile(int Index);
 
@@ -91,6 +92,11 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CTileMapComponent* Clone();
 
+public:
+	void Save(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+	void SaveFullPath(const TCHAR* FullPath);
+	void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+	void LoadFullPath(const TCHAR* FullPath);
 private:
 	void SetWorldInfo();
 

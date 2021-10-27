@@ -34,6 +34,9 @@
     <Filter Include="01. EditorGUI\Component\Sprite">
       <UniqueIdentifier>{adef2d1a-0903-4a32-a1ec-df6dfc27b19b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{4add2836-263f-4bee-8694-67f4be2549ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +99,12 @@
     <ClInclude Include="IMGUISpriteComponent.h">
       <Filter>01. EditorGUI\Component\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\EditorScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -148,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="IMGUISpriteComponent.cpp">
       <Filter>01. EditorGUI\Component\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\EditorScene.cpp">
+      <Filter>02. Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

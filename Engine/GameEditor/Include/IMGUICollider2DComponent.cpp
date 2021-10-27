@@ -53,6 +53,7 @@ bool CIMGUICollider2DComponent::Init()
 
 	CIMGUIText* Label = m_Owner->AddWidget<CIMGUIText>("Label_Title", 100.f, 20.f);
 	Label->SetText("Collider2D");
+	m_vecWidget.push_back(Label);
 	Label = m_Owner->AddWidget<CIMGUIText>("Label_Position", 100.f, 20.f);
 	Label->SetText("OffsetPos");
 	m_vecWidget.push_back(Label);

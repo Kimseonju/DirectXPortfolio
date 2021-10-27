@@ -9,22 +9,22 @@ public:
 	virtual ~CIMGUITransformComponent();
 
 private:
-	class CIMGUITextInput* m_InputPosX;
-	class CIMGUITextInput* m_InputPosY;
-	class CIMGUITextInput* m_InputPosZ;
+	class CIMGUIDrag* m_InputPosX;
+	class CIMGUIDrag* m_InputPosY;
+	class CIMGUIDrag* m_InputPosZ;
 
-	class CIMGUITextInput* m_InputRotX;
-	class CIMGUITextInput* m_InputRotY;
-	class CIMGUITextInput* m_InputRotZ;
+	class CIMGUIDrag* m_InputRotX;
+	class CIMGUIDrag* m_InputRotY;
+	class CIMGUIDrag* m_InputRotZ;
 
-	class CIMGUITextInput* m_InputScaleX;
-	class CIMGUITextInput* m_InputScaleY;
-	class CIMGUITextInput* m_InputScaleZ;
+	class CIMGUIDrag* m_InputScaleX;
+	class CIMGUIDrag* m_InputScaleY;
+	class CIMGUIDrag* m_InputScaleZ;
 
+	class CIMGUIDrag* m_InputPivotX;
+	class CIMGUIDrag* m_InputPivotY;
+	class CIMGUIDrag* m_InputPivotZ;
 
-	class CIMGUITextInput* m_InputPivotX;
-	class CIMGUITextInput* m_InputPivotY;
-	class CIMGUITextInput* m_InputPivotZ;
 	class CSceneComponent* m_Component;
 public:
 	void SetPosition(const Vector3& Pos);

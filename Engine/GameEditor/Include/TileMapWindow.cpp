@@ -17,7 +17,10 @@
 #include "GameObject.h"
 #include "Component/TileMapComponent.h"
 
-CTileMapWindow::CTileMapWindow()
+#include "PathManager.h"
+
+CTileMapWindow::CTileMapWindow() :
+	m_CreateTile(false)
 {
 }
 
@@ -67,29 +70,14 @@ void CTileMapWindow::Update(float DeltaTime)
 
 void CTileMapWindow::InputPosX()
 {
-	float x = m_InputPosX->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetPosX(x);
 }
 
 void CTileMapWindow::InputPosY()
 {
-	float y = m_InputPosY->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetPosY(y);
 }
 
 void CTileMapWindow::InputPosZ()
 {
-	float z = m_InputPosZ->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetPosZ(z);
 }
 
 void CTileMapWindow::InputRotX()
@@ -136,6 +124,37 @@ void CTileMapWindow::TileShapeComboCallback(int SelectIndex,
 	const char* Item)
 {
 	m_TileShape = (Tile_Shape)SelectIndex;
+}
+
+void CTileMapWindow::TileModifyTypeComboCallback(int SelectIndex,
+	const char* Item)
+{
+	m_TileModifyType = (Tile_Modify_Type)SelectIndex;
+
+	m_TileEditCombo->DeleteAllItem();
+
+	switch ((Tile_Modify_Type)SelectIndex)
+	{
+	case Tile_Modify_Type::Type:
+		m_TileEditCombo->AddItem("None");
+		m_TileEditCombo->AddItem("Wall");
+		break;
+	case Tile_Modify_Type::Image:
+		break;
+	}
+}
+
+
+void CTileMapWindow::TileEditComboCallback(int SelectIndex, const char* Item)
+{
+	switch (m_TileModifyType)
+	{
+	case Tile_Modify_Type::Type:
+		m_TileType = (Tile_Type)SelectIndex;
+		break;
+	case Tile_Modify_Type::Image:
+		break;
+	}
 }
 
 void CTileMapWindow::CreateInputPos()
@@ -333,14 +352,51 @@ void CTileMapWindow::CreateTileMapInfo()
 	m_InputTileSizeY = AddWidget<CIMGUITextInput>("##TileSizeY", 100.f, 20.f);
 	m_InputTileSizeY->SetNumberFloat(true);
 	m_InputTileSizeY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputTileSizeY);
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
-	CIMGUIButton* Button = AddWidget<CIMGUIButton>("타일생성", 100.f, 100.f);
+	CIMGUIButton* Button = AddWidget<CIMGUIButton>("타일생성", 80.f, 20.f);
 
 	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::CreateTileButton);
+
+	Text = AddWidget<CIMGUIText>("TileMapModifyType");
+	Text->SetFont("DefaultFont");
+	Text->SetText("ModifyType");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	m_TileModifyTypeCombo = AddWidget<CIMGUIComboBox>("##TileModifyType", 100.f, 100.f);
+
+	m_TileModifyTypeCombo->SetSelectCallback<CTileMapWindow>(this, &CTileMapWindow::TileModifyTypeComboCallback);
+
+	m_TileModifyTypeCombo->AddItem("Type");
+	m_TileModifyTypeCombo->AddItem("Image");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	Text = AddWidget<CIMGUIText>("TileMapEdit");
+	Text->SetFont("DefaultFont");
+	Text->SetText("TileTypeEdit");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	m_TileEditCombo = AddWidget<CIMGUIComboBox>("##TileTypeEdit", 100.f, 100.f);
+
+	m_TileEditCombo->SetSelectCallback<CTileMapWindow>(this, &CTileMapWindow::TileEditComboCallback);
+
+	Button = AddWidget<CIMGUIButton>("저장", 80.f, 40.f);
+
+	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::SaveTileMap);
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	Button = AddWidget<CIMGUIButton>("불러오기", 80.f, 40.f);
+
+	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::LoadTileMap);
 }
 
 void CTileMapWindow::CreateTileButton()
 {
+	m_CreateTile = true;
 	// 타일맵을 생성한다.
 	CScene* Scene = CSceneManager::GetInst()->GetScene();
 
@@ -385,6 +441,45 @@ void CTileMapWindow::CreateTileButton()
 	/*TileMap->SetMaterial(0, "MainMapRect");
 	TileMap->SetFrameMax(1, 5);
 	TileMap->SetTileDefaultFrame(0, 0);*/
+	m_TileMap = TileMap;
 }
 
 
+void CTileMapWindow::SaveTileMap()
+{
+	if (!m_TileMap)
+	{
+		AfxMessageBox(TEXT("타일맵을 생성하세요"));
+		return;
+	}
+
+	static TCHAR	Filter[] = TEXT("MapFile(*.map)|*.map;|모든파일(*.*)|*.*||");
+
+	CFileDialog	dlg(FALSE, TEXT(".map"), TEXT(""), OFN_OVERWRITEPROMPT,
+		Filter);
+
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(MAP_PATH);
+
+	dlg.m_pOFN->lpstrInitialDir = Info->pPath;
+
+	if (dlg.DoModal() == IDOK)
+	{
+		m_TileMap->SaveFullPath(dlg.GetPathName());
+	}
+}
+
+void CTileMapWindow::LoadTileMap()
+{
+	static TCHAR	Filter[] = TEXT("MapFile(*.map)|*.map;|모든파일(*.*)|*.*||");
+
+	CFileDialog	dlg(TRUE, TEXT(".map"), TEXT(""), OFN_HIDEREADONLY,
+		Filter);
+
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(MAP_PATH);
+
+	dlg.m_pOFN->lpstrInitialDir = Info->pPath;
+
+	if (dlg.DoModal() == IDOK)
+	{
+	}
+}

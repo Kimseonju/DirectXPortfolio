@@ -12,7 +12,8 @@
 #include "ObjectWindow.h"
 #include "IMGUIManager.h"
 #include "Resource/ResourceManager.h"
-CIMGUISpriteComponent::CIMGUISpriteComponent()
+CIMGUISpriteComponent::CIMGUISpriteComponent():
+	m_Animation2D(nullptr)
 {
 }
 
@@ -72,8 +73,13 @@ bool CIMGUISpriteComponent::Init()
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_Animation2DName = m_Owner->AddWidget<CIMGUIText>("##TextureName", 100.f, 20.f);
-	m_vecWidget.push_back(m_Animation2DName);
+	m_Animation2DCombo = m_Owner->AddWidget<CIMGUIComboBox>("##Animation2DCombo", 100.f, 20.f);
+	m_vecWidget.push_back(m_Animation2DCombo);
+	m_Animation2DCombo->SetSelectCallback<CIMGUISpriteComponent>(this, &CIMGUISpriteComponent::TextureComboCallback);
+
+	m_vecWidget.push_back(SameLine);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
 
 	m_LoadAnimation2DButton = m_Owner->AddWidget<CIMGUIButton>("LoadAnimation", 100.f, 20.f);
 	m_vecWidget.push_back(m_LoadAnimation2DButton);
@@ -101,7 +107,6 @@ void CIMGUISpriteComponent::InfoUpdate(CSpriteComponent* Sprite)
 	m_Sprite = Sprite;
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	m_MaterialName->SetText(SpriteMtrl->GetName().c_str());
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 	Enable(true);
 }
 
@@ -115,7 +120,7 @@ void CIMGUISpriteComponent::TextureComboCallback(int SelectIndex, const char* It
 
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	CTexture* Texture = CResourceManager::GetInst()->FindTexture(Item);
-	SpriteMtrl->AddTexture(Item, Texture);
+	SpriteMtrl->SetTexture(Item, Texture);
 }
 
 void CIMGUISpriteComponent::LoadTextureButtonClick()
@@ -131,8 +136,28 @@ void CIMGUISpriteComponent::LoadTextureButtonClick()
 
 }
 
+void CIMGUISpriteComponent::Animation2DComboCallback(int SelectIndex, const char* Item)
+{
+	//텍스트설정 
+	if (!m_Sprite->GetAnimation2D())
+	{
+		m_Sprite->CreateAnimation2D<CAnimation2D>();
+	}
+	m_Animation2D =m_Sprite->GetAnimation2D();
+	CAnimationSequence2D* AnimationSequence2D = CResourceManager::GetInst()->FindAnimationSequence2D(Item);
+	m_Animation2D->AddAnimationSequence2D(AnimationSequence2D, true);
+}
+
 void CIMGUISpriteComponent::LoadAnimation2DButtonClick()
 {
+	m_Animation2DCombo->DeleteAllItem();
+	std::unordered_map<std::string, class CAnimationSequence2D*>& MapTexture = CResourceManager::GetInst()->GetMapAniatmion2D();
+	auto iter = MapTexture.begin();
+	auto iterEnd = MapTexture.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		m_Animation2DCombo->AddItem(iter->first.c_str());
+	}
 }
 
 void CIMGUISpriteComponent::Animation2DInfoButtonClick()

@@ -7,6 +7,8 @@
 #include "../Resource/StructuredBuffer.h"
 #include "../Resource/Material.h"
 #include "Transform.h"
+#include "../PathManager.h"
+
 
 CTileMapComponent::CTileMapComponent() :
 	m_WorldBuffer(nullptr),
@@ -612,6 +614,16 @@ CTile* CTileMapComponent::GetTile(const Vector3& Pos)
 	return m_vecTile[Index];
 }
 
+CTile* CTileMapComponent::GetTile(const Vector2& Pos)
+{
+	int	Index = GetTileIndex(Vector3(Pos.x, Pos.y, 0.f));
+
+	if (Index == -1)
+		return nullptr;
+
+	return m_vecTile[Index];
+}
+
 CTile* CTileMapComponent::GetTile(int x, int y)
 {
 	Vector3	Pos((float)x, (float)y, 0.f);
@@ -768,6 +780,88 @@ CTileMapComponent* CTileMapComponent::Clone()
 	return new CTileMapComponent(*this);
 }
 
+void CTileMapComponent::Save(const TCHAR* FileName, 
+	const std::string& PathName)
+{
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
+
+	TCHAR	FullPath[MAX_PATH] = {};
+
+	if (Info)
+		lstrcpy(FullPath, Info->pPath);
+
+	lstrcat(FullPath, FileName);
+
+	SaveFullPath(FullPath);
+}
+
+void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "wb");
+
+	if (!pFile)
+		return;
+
+
+	fclose(pFile);
+}
+
+void CTileMapComponent::Load(const TCHAR* FileName, const std::string& PathName)
+{
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
+
+	TCHAR	FullPath[MAX_PATH] = {};
+
+	if (Info)
+		lstrcpy(FullPath, Info->pPath);
+
+	lstrcat(FullPath, FileName);
+
+	LoadFullPath(FullPath);
+}
+
+void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "rb");
+
+	if (!pFile)
+		return;
+
+
+	fclose(pFile);
+}
+
+
 void CTileMapComponent::SetWorldInfo()
 {
 	m_WorldBuffer = new CStructuredBuffer;
@@ -778,7 +872,4 @@ void CTileMapComponent::SetWorldInfo()
 		SAFE_DELETE(m_WorldBuffer);
 		return;
 	}
-	SetTileType(2, 3, Tile_Type::Wall);
-	SetTileType(2, 4, Tile_Type::Wall);
-	SetTileType(2, 5, Tile_Type::Wall);
 }

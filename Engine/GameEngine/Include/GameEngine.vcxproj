@@ -212,6 +212,7 @@
     <ClInclude Include="IMGUICheckBox.h" />
     <ClInclude Include="IMGUIComboBox.h" />
     <ClInclude Include="IMGUIConsole.h" />
+    <ClInclude Include="IMGUIDrag.h" />
     <ClInclude Include="IMGUIImageButton.h" />
     <ClInclude Include="IMGUILabel.h" />
     <ClInclude Include="IMGUIListBox.h" />
@@ -219,6 +220,8 @@
     <ClInclude Include="IMGUISameLine.h" />
     <ClInclude Include="IMGUIText.h" />
     <ClInclude Include="IMGUITextInput.h" />
+    <ClInclude Include="IMGUITreeNode.h" />
+    <ClInclude Include="IMGUITreePopNode.h" />
     <ClInclude Include="IMGUIWidget.h" />
     <ClInclude Include="IMGUIWindow.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
@@ -343,6 +346,7 @@
     <ClCompile Include="IMGUICheckBox.cpp" />
     <ClCompile Include="IMGUIComboBox.cpp" />
     <ClCompile Include="IMGUIConsole.cpp" />
+    <ClCompile Include="IMGUIDrag.cpp" />
     <ClCompile Include="IMGUIImageButton.cpp" />
     <ClCompile Include="IMGUILabel.cpp" />
     <ClCompile Include="IMGUIListBox.cpp" />
@@ -350,6 +354,8 @@
     <ClCompile Include="IMGUISameLine.cpp" />
     <ClCompile Include="IMGUIText.cpp" />
     <ClCompile Include="IMGUITextInput.cpp" />
+    <ClCompile Include="IMGUITreeNode.cpp" />
+    <ClCompile Include="IMGUITreePopNode.cpp" />
     <ClCompile Include="IMGUIWidget.cpp" />
     <ClCompile Include="IMGUIWindow.cpp" />
     <ClCompile Include="imgui_demo.cpp" />

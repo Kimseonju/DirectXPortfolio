@@ -107,7 +107,7 @@ void CGameEditorView::OnInitialUpdate()
 	CIMGUIManager::GetInst()->AddWindow<CTileWindow>("TileWindow");
 	CIMGUIManager::GetInst()->AddWindow<CTileMapWindow>("TileMapWindow");
 	CIMGUIManager::GetInst()->AddWindow<CObjectWindow>("ObjectWindow");
-	CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
+	//CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
 	CIMGUIManager::GetInst()->AddWindow<CInspectorWindow>("InspectorWindow");
 
 	CIMGUIWindow* Window = CIMGUIManager::GetInst()->FindIMGUIWindow("TileWindow");

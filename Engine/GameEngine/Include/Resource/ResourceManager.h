@@ -31,6 +31,10 @@ public:
 		return m_mapTexture;
 	}
 
+	std::unordered_map<std::string, class CAnimationSequence2D*>& GetMapAniatmion2D()
+	{
+		return m_mapAnimationSequence2D;
+	}
 public:
 	bool Init();
 	void Update();

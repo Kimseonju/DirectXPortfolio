@@ -19,6 +19,11 @@ protected:
 	std::function<void(int, const char*)>	m_SelectCallback;
 
 public:
+	int GetItemCount()	const
+	{
+		return (int)m_vecItem.size();
+	}
+
 	void AddItem(const char* Item)
 	{
 		m_vecItem.push_back(Item);
@@ -33,10 +38,12 @@ public:
 
 		m_vecItem.erase(iter);
 	}
+
 	void DeleteAllItem()
 	{
 		m_vecItem.clear();
 	}
+
 	void Sort(bool bSort)
 	{
 		m_Sort = bSort;

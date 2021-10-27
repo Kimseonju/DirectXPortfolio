@@ -15,10 +15,11 @@ private:
 	class CIMGUIComboBox* m_TextureCombo;
 	class CIMGUIButton* m_LoadTextureButton;
 
-	class CIMGUIText* m_Animation2DName;
+	class CIMGUIComboBox* m_Animation2DCombo;
 	class CIMGUIButton* m_LoadAnimation2DButton;
 	class CIMGUIButton* m_Animation2DInfoButton;
 	CSpriteComponent* m_Sprite;
+	CAnimation2D* m_Animation2D;
 
 public:
 
@@ -29,8 +30,9 @@ public:
 	void InfoUpdate(CSpriteComponent* Sprite);
 	void SetMaterialName(const std::string& Name);
 	void TextureComboCallback(int SelectIndex, const char* Item);
-
 	void LoadTextureButtonClick();
+
+	void Animation2DComboCallback(int SelectIndex, const char* Item);
 	void LoadAnimation2DButtonClick();
 	void Animation2DInfoButtonClick();
 

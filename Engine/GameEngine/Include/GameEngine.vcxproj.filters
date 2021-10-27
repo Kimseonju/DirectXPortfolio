@@ -226,6 +226,9 @@
     <Filter Include="05. Component\01. SceneComponent\01. PrimitiveComponent\06. TileMap">
       <UniqueIdentifier>{c9fb28a4-120c-4e76-bd08-f5d3795fcdd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\Tree">
+      <UniqueIdentifier>{d2f8f68a-5b0b-4cce-8fe1-e0dc074df487}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -648,6 +651,15 @@
     <ClInclude Include="IMGUICheckBox.h">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUITreeNode.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITreePopNode.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUIDrag.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1026,6 +1038,15 @@
       <Filter>05. Component\01. SceneComponent\01. PrimitiveComponent\06. TileMap</Filter>
     </ClCompile>
     <ClCompile Include="IMGUICheckBox.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITreeNode.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITreePopNode.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIDrag.cpp">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
     </ClCompile>
   </ItemGroup>

@@ -36,7 +36,8 @@ public:
 	void ComponentListCallback(int SelectIndex, const char* Item);
 	void ComponentComboCallback(int SelectIndex, const char* Item);
 	void CreateObjectButtonClick();
-	void InputNamePopupButton();
+	void CreateComponentButtonClick();
+	void InputComponentPopupButton();
 
 public:
 	void SetPosX(float x);

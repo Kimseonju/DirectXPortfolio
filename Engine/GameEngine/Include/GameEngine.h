@@ -58,6 +58,7 @@
 #define TEXTURE_PATH    "TexturePath"
 #define	FONT_PATH		"FontPath"
 #define	SOUND_PATH		"SoundPath"
+#define	MAP_PATH		"MapPath"
 
 struct Resolution
 {

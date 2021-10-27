@@ -58,6 +58,8 @@ bool CPathManager::Init()
     AddPath(TEXTURE_PATH, TEXT("Texture\\"));
     AddPath(FONT_PATH, TEXT("Font\\"));
     AddPath(SOUND_PATH, TEXT("Sound\\"));
+    AddPath(MAP_PATH, TEXT("Map\\"));
+
 
 
     return true;

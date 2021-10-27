@@ -84,3 +84,10 @@ void CInspectorWindow::CreateCollider2D()
 	m_Collider2D->Init();
 }
 
+void CInspectorWindow::AllComponentClose()
+{
+	m_Transform->Enable(false);
+	m_Sprite->Enable(false);
+	m_Collider2D->Enable(false);
+}
+

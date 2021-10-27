@@ -19,6 +19,6 @@ public:
 	void CreateTransform();
 	void CreateSprite();
 	void CreateCollider2D();
-
+	void AllComponentClose();
 	
 };
