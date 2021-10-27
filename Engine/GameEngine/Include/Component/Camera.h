@@ -23,7 +23,7 @@ protected:
 	float	m_CameraBottom; //2D
 	float	m_CameraLeft;	//2D
 	Resolution	m_RS;
-
+	float	m_CameraZoom;
 public:
 	Resolution GetResolution()	const
 	{

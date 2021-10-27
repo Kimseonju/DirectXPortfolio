@@ -22,6 +22,12 @@ private:
 	class CIMGUITextInput* m_NameInput;
 
 public:
+
+	CGameObject* GetSelectObject()
+	{
+		return m_SelectObject.Get();
+	}
+
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 

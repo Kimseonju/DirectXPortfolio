@@ -4,7 +4,8 @@
 CIMGUIWidget::CIMGUIWidget()    :
     m_Name{},
     m_UnicodeName{},
-    m_Font(nullptr)
+    m_Font(nullptr),
+    m_Enable(true)
 {
     SetColor(1.f, 1.f, 1.f);
 }

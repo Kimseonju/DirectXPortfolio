@@ -209,6 +209,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="IMGUIButton.h" />
+    <ClInclude Include="IMGUICheckBox.h" />
     <ClInclude Include="IMGUIComboBox.h" />
     <ClInclude Include="IMGUIConsole.h" />
     <ClInclude Include="IMGUIImageButton.h" />
@@ -339,6 +340,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="IMGUIButton.cpp" />
+    <ClCompile Include="IMGUICheckBox.cpp" />
     <ClCompile Include="IMGUIComboBox.cpp" />
     <ClCompile Include="IMGUIConsole.cpp" />
     <ClCompile Include="IMGUIImageButton.cpp" />

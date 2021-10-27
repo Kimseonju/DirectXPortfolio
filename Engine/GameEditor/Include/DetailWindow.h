@@ -1,5 +1,6 @@
 #pragma once
 #include "IMGUIWindow.h"
+//Transform
 class CDetailWindow :
 	public CIMGUIWindow
 {
@@ -24,6 +25,8 @@ private:
 	class CIMGUITextInput* m_InputPivotX;
 	class CIMGUITextInput* m_InputPivotY;
 	class CIMGUITextInput* m_InputPivotZ;
+
+	
 public:
 	void SetPosition(const Vector3& Pos);
 	void SetRotation(const Vector3& Pos);

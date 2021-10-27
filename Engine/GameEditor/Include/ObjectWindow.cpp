@@ -21,7 +21,7 @@
 #include "Component/SpringArm2D.h"
 #include "DetailWindow.h"
 #include "IMGUIManager.h"
-
+#include "InspectorWindow.h"
 CObjectWindow::CObjectWindow() :
 	m_CreateObjectCount(0),
 	m_SelectObjectIndex(-1),
@@ -97,9 +97,6 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	m_SelectObject = Scene->FindObject(SelectName);
 
-	m_SelectComponent = nullptr;
-	m_SelectComponentIndex = -1;
-
 	// 가지고 있는 컴포넌트의 이름을 얻어온다.
 	std::vector<std::string>	vecName;
 
@@ -109,9 +106,51 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	size_t	Size = vecName.size();
 
+	CDetailWindow* DetailWindow = (CDetailWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("DetailWindow");
+	DetailWindow->Open();
+	DetailWindow->SetPosition(m_SelectObject->GetWorldPos());
+	DetailWindow->SetRotation(m_SelectObject->GetWorldRotation());
+	DetailWindow->SetScale(m_SelectObject->GetWorldScale());
+	DetailWindow->SetPivot(m_SelectObject->GetPivot());
+
+	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	for (size_t i = 0; i < vecName.size(); ++i)
 	{
 		m_ComponentListBox->AddItem(vecName[i].c_str());
+
+		if (vecName[i] == "Sprite")
+		{
+			CSpriteComponent* Component= (CSpriteComponent *)m_SelectObject->FindSceneComponent(vecName[i]);
+			InspectorWindow->SpriteUpdate(Component);
+		}
+		else if (vecName[i] == "Box2D")
+		{
+
+		}
+		else if (vecName[i] == "Circle")
+		{
+
+		}
+		else if (vecName[i] == "Pixel")
+		{
+
+		}
+		else if (vecName[i] == "Camera")
+		{
+
+		}
+		else if (vecName[i] == "SpringArm")
+		{
+
+		}
+		else if (vecName[i] == "SpringArm2D")
+		{
+
+		}
+		else if (vecName[i] == "ParticleSystem")
+		{
+
+		}
 	}
 }
 
@@ -121,21 +160,19 @@ void CObjectWindow::ComponentListCallback(int SelectIndex, const char* Item)
 
 	m_SelectComponent = m_SelectObject->FindSceneComponent(Item);
 
+
 	Vector3	Pos = m_SelectComponent->GetWorldPos();
 	Vector3	Rot = m_SelectComponent->GetWorldRotation();
 	Vector3	Scale = m_SelectComponent->GetWorldScale();
 	Vector3	Pivot = m_SelectComponent->GetPivot();
 
-	CDetailWindow* DetailWindow = (CDetailWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("DetailWindow");
+	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 
-	if (DetailWindow)
+	if (InspectorWindow)
 	{
-		DetailWindow->SetPosition(Pos);
-		DetailWindow->SetRotation(Rot);
-		DetailWindow->SetScale(Scale);
-		DetailWindow->SetPivot(Pivot);
+		InspectorWindow->TransformUpdate(m_SelectComponent);
 	}
-		
+	
 }
 
 void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
@@ -144,16 +181,53 @@ void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
 		return;
 
 	m_CreateComponentIndex = SelectIndex;
+	CSceneComponent* NewComponent = nullptr;
 
-	// 이름을 지정하기 위한 Popup 창을 열어준다.
-	m_NameInput = AddPopupWidget<CIMGUITextInput>("NameInput");
+	switch ((Component_Class_Type)m_CreateComponentIndex)
+	{
+	case Component_Class_Type::Scene:
+		NewComponent = m_SelectObject->CreateSceneComponent<CSceneComponent>("Scene");
+		break;
+	case Component_Class_Type::Sprite:
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpriteComponent>("Sprite");
+		break;
+	case Component_Class_Type::Box2D:
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+		break;
+	case Component_Class_Type::Circle:
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderCircle>("ColliderCircle");
+		break;
+	case Component_Class_Type::Pixel:
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderPixel>("ColliderPixel");
+		break;
+	case Component_Class_Type::Camera:
+		NewComponent = m_SelectObject->CreateSceneComponent<CCamera>("Camera");
+		break;
+	case Component_Class_Type::SpringArm:
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm>("SpringArm");
+		break;
+	case Component_Class_Type::SpringArm2D:
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm2D>("SpringArm2D");
+		break;
+	}
 
-	CIMGUIButton* NameButton = AddPopupWidget<CIMGUIButton>("NameButton");
+	m_ComponentListBox->AddItem(NewComponent->GetName().c_str());
 
-	NameButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::InputNamePopupButton);
+	m_SelectComponent->AddChild(NewComponent);
 
-	SetPopupTitle("Component Name");
-	EnableModalPopup();
+	NewComponent->SetRelativePos(10.f, 20.f, 30.f);
+
+	ClosePopup();
+
+	//// 이름을 지정하기 위한 Popup 창을 열어준다.
+	//m_NameInput = AddPopupWidget<CIMGUITextInput>("NameInput");
+	//
+	//CIMGUIButton* NameButton = AddPopupWidget<CIMGUIButton>("NameButton");
+	//
+	//NameButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::InputNamePopupButton);
+	//
+	//SetPopupTitle("Component Name");
+	//EnableModalPopup();
 }
 
 void CObjectWindow::CreateObjectButtonClick()
@@ -167,7 +241,7 @@ void CObjectWindow::CreateObjectButtonClick()
 	++m_CreateObjectCount;
 
 	CGameObject* Obj = Scene->SpawnObject<CGameObject>(ObjName);
-
+	Obj->SetWorldScale(100.f, 100.f, 1.f);
 	m_ObjListBox->AddItem(ObjName);
 }
 
@@ -293,7 +367,7 @@ void CObjectWindow::SetScaleX(float x)
 	Vector3	Scale = m_SelectComponent->GetWorldScale();
 	Scale.x = x;
 
-	m_SelectComponent->SetWorldRotation(Scale);
+	m_SelectComponent->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetScaleY(float y)
@@ -304,7 +378,7 @@ void CObjectWindow::SetScaleY(float y)
 	Vector3	Scale = m_SelectComponent->GetWorldScale();
 	Scale.y = y;
 
-	m_SelectComponent->SetWorldRotation(Scale);
+	m_SelectComponent->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetScaleZ(float z)
@@ -315,7 +389,7 @@ void CObjectWindow::SetScaleZ(float z)
 	Vector3	Scale = m_SelectComponent->GetWorldScale();
 	Scale.z = z;
 
-	m_SelectComponent->SetWorldRotation(Scale);
+	m_SelectComponent->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetPivotX(float x)

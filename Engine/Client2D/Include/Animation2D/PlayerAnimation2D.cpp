@@ -46,18 +46,26 @@ void CPlayerAnimation2D::Update(float DeltaTime)
   		if (m_Owner->GetVelocity().Length() > 0.f)
 		{
 			if (m_Owner->GetVelocity().y == 0.f)
+			{
 				ChangeAnimation("PlayerRun");
+				m_Owner->SetRelativeScale(17.f, 20.f, 0.f);
+			}
+				
 			//공중상태
 			else
 			{
 				ChangeAnimation("PlayerJump");
+				m_Owner->SetRelativeScale(17.f, 21.f, 0.f);
 			}
 		}
 
 		else
 		{
 			if (GetCurrentSequenceName() != "PlayerAttack")
+			{
 				ChangeAnimation("PlayerIdle");
+				m_Owner->SetRelativeScale(15.f, 20.f, 0.f);
+			}
 		}
 	}
 }

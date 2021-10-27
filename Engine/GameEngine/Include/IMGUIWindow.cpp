@@ -92,7 +92,11 @@ void CIMGUIWindow::Update(float DeltaTime)
 	{
 		//ImGui::SetWindowSize(m_Size, ImGuiCond_Once);
 		if (!ImGui::Begin(m_Name, &m_Open, m_WindowFlag))
-			m_Open = false;
+		{
+			ImGui::End();
+			return;
+		}
+			
 
 		if (m_Font)
 			ImGui::PushFont(m_Font);
@@ -101,7 +105,8 @@ void CIMGUIWindow::Update(float DeltaTime)
 
 		for (size_t i = 0; i < WidgetSize; ++i)
 		{
-			m_vecWidget[i]->Render();
+			if(m_vecWidget[i]->IsEnable())
+				m_vecWidget[i]->Render();
 		}
 
 		if (m_Font)
@@ -122,7 +127,8 @@ void CIMGUIWindow::Update(float DeltaTime)
 					size_t  Size = m_PopupWidget.size();
 					for (size_t i = 0; i < Size; ++i)
 					{
-						m_PopupWidget[i]->Render();
+						if (m_PopupWidget[i]->IsEnable())
+							m_PopupWidget[i]->Render();
 					}
 
 
@@ -144,7 +150,8 @@ void CIMGUIWindow::Update(float DeltaTime)
 					size_t  Size = m_PopupWidget.size();
 					for (size_t i = 0; i < Size; ++i)
 					{
-						m_PopupWidget[i]->Render();
+						if (m_PopupWidget[i]->IsEnable())
+							m_PopupWidget[i]->Render();
 					}
 
 

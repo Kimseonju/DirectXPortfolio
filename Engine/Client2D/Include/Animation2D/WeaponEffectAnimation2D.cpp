@@ -26,10 +26,6 @@ bool CWeaponEffectAnimation2D::Init()
 	if (!CAnimation2D::Init())
 		return false;
 
-	//AddAnimationSequence2D("PlayerIdle");
-	//AddAnimationSequence2D("PlayerRun");
-	//AddAnimationSequence2D("PlayerJump");
-	//AddAnimationSequence2D("PlayerAttack", false);
 
 	return true;
 }

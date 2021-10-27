@@ -32,7 +32,10 @@ public:
 	{
 		return m_PopupFont;
 	}
-
+	void WidgetPush(class CIMGUIWidget* widget)
+	{
+		m_vecWidget.push_back(widget);
+	}
 public:
 	void SetName(const std::string& Name)
 	{

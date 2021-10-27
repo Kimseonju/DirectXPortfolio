@@ -237,14 +237,16 @@ void CEngine::Logic()
 
 bool CEngine::Update(float DeltaTime)
 {
-	m_MouseWidget->Update(DeltaTime);
+	if(m_MouseWidget)
+		m_MouseWidget->Update(DeltaTime);
 
 	return CSceneManager::GetInst()->Update(DeltaTime);
 }
 
 bool CEngine::PostUpdate(float DeltaTime)
 {
-	m_MouseWidget->PostUpdate(DeltaTime);
+	if (m_MouseWidget)
+		m_MouseWidget->PostUpdate(DeltaTime);
 
 	return CSceneManager::GetInst()->PostUpdate(DeltaTime);
 }

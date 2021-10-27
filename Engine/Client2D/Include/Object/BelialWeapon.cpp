@@ -39,6 +39,7 @@ bool CBelialWeapon::Init()
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->AddTexture("BelialWeapon", TEXT("Boss/Belial/Sword/Default.png"));
 	m_Sprite->SetRelativeScale(65.f, 21.f, 1.f);
+	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetRelativePos(0.f, 0.f, 0.f);
 	return true;
 }
@@ -55,9 +56,9 @@ void CBelialWeapon::Update(float DeltaTime)
 	}
 	if (m_AttackTimer > m_AttackTimerMax)
 	{
-		m_StartAttack = true;
-		m_Attacking = true;
-		m_TextureUpdate = true;
+		//m_StartAttack = true;
+		//m_Attacking = true;
+		//m_TextureUpdate = true;
 		m_AttackTimer = 0.f;
 	}
 	CPlayer* Player=CGlobalValue::MainPlayer;

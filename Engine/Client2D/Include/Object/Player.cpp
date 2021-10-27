@@ -85,7 +85,7 @@ bool CPlayer::Init()
 
 	SetRootComponent(m_Sprite);
 
-	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
+	m_Sprite->SetRelativeScale(15.f, 20.f, 1.f);
 	m_Sprite->SetRelativePos(200.f, 300.f, 0.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
@@ -112,8 +112,6 @@ bool CPlayer::Init()
 
 	m_Animation2D = m_Sprite->GetAnimation2D();
 
-	// 프레임 종료 콜백 설정
-	m_Animation2D->SetFrameEndFunction<CPlayer>(this, &CPlayer::AnimationFrameEnd);
 
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Left", KT_Push, this, &CPlayer::LeftMove);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Right", KT_Push, this, &CPlayer::RightMove);
@@ -148,10 +146,6 @@ void CPlayer::Update(float DeltaTime)
 	CGameObject::Update(DeltaTime);
 	m_Status.Update(DeltaTime);
 
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
-		m_Animation2D->SetSequencePlayRate("PlayerAttack", 5.f);
-	}
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Vector3 Pos = m_WeaponArm->GetWorldPos();
 	Vector2 Pos2 = Vector2(Pos.x, Pos.y);

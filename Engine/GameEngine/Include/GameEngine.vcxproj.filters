@@ -645,6 +645,9 @@
     <ClInclude Include="Component\Tile.h">
       <Filter>05. Component\01. SceneComponent\01. PrimitiveComponent\06. TileMap</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUICheckBox.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1021,6 +1024,9 @@
     </ClCompile>
     <ClCompile Include="Component\Tile.cpp">
       <Filter>05. Component\01. SceneComponent\01. PrimitiveComponent\06. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUICheckBox.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

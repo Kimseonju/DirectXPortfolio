@@ -25,6 +25,10 @@ bool CBelialWeaponCharge::Init()
 		return false;
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_Sprite->CreateAnimation2D<CBelialWeaponChargeAnimation2D>();
+	m_Sprite->SetRelativeScale(65.f, 21.f,1.f);
+	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
+	SetRootComponent(m_Sprite);
+
 	m_Animation2D = m_Sprite->GetAnimation2D();
 	return true;
 }

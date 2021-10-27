@@ -52,13 +52,17 @@ bool CDetailWindow::Init()
 #pragma region Position
 
 
-	CIMGUILabel* Label = AddWidget<CIMGUILabel>("Label_Position", 200.f, 20.f);
-	Label->SetText("Position (XYZ)");
+	CIMGUIText* Label = AddWidget<CIMGUIText>("Label_Title", 100.f, 20.f);
+	Label->SetText("Transform");
+
+	Label = AddWidget<CIMGUIText>("Label_Position", 100.f, 20.f);
+	Label->SetText("Position");
+	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputPosX = AddWidget<CIMGUITextInput>("##Input_PosX", 100.f, 20.f);
 	m_InputPosX->SetNumberFloat(true);
 	m_InputPosX->SetInputCallback<CDetailWindow>(this, &CDetailWindow::InputPosX);
-	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputPosY = AddWidget<CIMGUITextInput>("##Input_PosY", 100.f, 20.f);
 	m_InputPosY->SetNumberFloat(true);
@@ -75,8 +79,9 @@ bool CDetailWindow::Init()
 	m_InputPosZ->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 #pragma endregion
 #pragma region Rotation
-	Label = AddWidget<CIMGUILabel>("Label_Rotation", 200.f, 20.f);
-	Label->SetText("Rotation (XYZ)");
+	Label = AddWidget<CIMGUIText>("Label_Rotation", 100.f, 20.f);
+	Label->SetText("Rotation");
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputRotX = AddWidget<CIMGUITextInput>("##Input_RotationX", 100.f, 20.f);
 	m_InputRotX->SetNumberFloat(true);
@@ -100,9 +105,10 @@ bool CDetailWindow::Init()
 
 #pragma region Scale
 
-	Label = AddWidget<CIMGUILabel>("Label_Scale", 200.f, 20.f);
-	Label->SetText("Scale (XYZ)");
+	Label = AddWidget<CIMGUIText>("Label_Scale", 100.f, 20.f);
+	Label->SetText("Scale");
 	SameLine->SetSize(20.f, 20.f);
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputScaleX = AddWidget<CIMGUITextInput>("##Input_ScaleX", 100.f, 20.f);
 	m_InputScaleX->SetNumberFloat(true);
@@ -128,9 +134,10 @@ bool CDetailWindow::Init()
 #pragma region Pivot
 
 
-	Label = AddWidget<CIMGUILabel>("Label_Pivot", 200.f, 20.f);
-	Label->SetText("Pivot (XYZ)");
+	Label = AddWidget<CIMGUIText>("Label_Pivot", 100.f, 20.f);
+	Label->SetText("Pivot");
 	SameLine->SetSize(20.f, 20.f);
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputPivotX = AddWidget<CIMGUITextInput>("##Input_PivotX", 100.f, 20.f);
 	m_InputPivotX->SetNumberFloat(true);
@@ -153,6 +160,9 @@ bool CDetailWindow::Init()
 	m_InputPivotZ->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 
 #pragma endregion
+
+
+
 
 
 	return true;
@@ -220,7 +230,7 @@ void CDetailWindow::InputRotZ()
 
 void CDetailWindow::InputScaleX()
 {
-	float x = m_InputRotX->GetValueFloat();
+	float x = m_InputScaleX->GetValueFloat();
 
 	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 
@@ -229,7 +239,7 @@ void CDetailWindow::InputScaleX()
 
 void CDetailWindow::InputScaleY()
 {
-	float y = m_InputRotX->GetValueFloat();
+	float y = m_InputScaleY->GetValueFloat();
 
 	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 
@@ -238,7 +248,7 @@ void CDetailWindow::InputScaleY()
 
 void CDetailWindow::InputScaleZ()
 {
-	float z = m_InputRotX->GetValueFloat();
+	float z = m_InputScaleZ->GetValueFloat();
 
 	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 

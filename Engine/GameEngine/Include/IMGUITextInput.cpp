@@ -37,6 +37,7 @@ void CIMGUITextInput::Render()
 
 	bool	Input = false;
 
+	ImGui::PushItemWidth(m_Size.x);
 
 	//ImGui::TextColored(m_Color, m_TextUTF8);
 	//ImGui::InputText

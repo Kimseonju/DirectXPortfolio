@@ -23,6 +23,8 @@ void CIMGUIComboBox::Render()
 	if (m_Font)
 		ImGui::PushFont(m_Font);
 
+	ImGui::PushItemWidth(m_Size.x);
+
 	if (ImGui::BeginCombo(m_Name, m_PrevViewName.c_str(), m_Flag))
 	{
 		size_t	Size = m_vecItem.size();

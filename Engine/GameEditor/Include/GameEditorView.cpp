@@ -19,6 +19,8 @@
 #include "ObjectWindow.h"
 #include "DetailWindow.h"
 #include "TileWindow.h"
+#include "TileMapWindow.h"
+#include "InspectorWindow.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -102,9 +104,11 @@ void CGameEditorView::OnInitialUpdate()
 
 	CIMGUIManager::GetInst()->AddWindow<CTestWindow>("TestWindow");
 	CIMGUIManager::GetInst()->AddWindow<CLogWindow>("LogWindow");
+	CIMGUIManager::GetInst()->AddWindow<CTileWindow>("TileWindow");
+	CIMGUIManager::GetInst()->AddWindow<CTileMapWindow>("TileMapWindow");
 	CIMGUIManager::GetInst()->AddWindow<CObjectWindow>("ObjectWindow");
 	CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
-	CIMGUIManager::GetInst()->AddWindow<CTileWindow>("TileWindow");
+	CIMGUIManager::GetInst()->AddWindow<CInspectorWindow>("InspectorWindow");
 
 	CIMGUIWindow* Window = CIMGUIManager::GetInst()->FindIMGUIWindow("TileWindow");
 	Window->Open();

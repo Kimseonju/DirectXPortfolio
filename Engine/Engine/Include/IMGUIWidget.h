@@ -17,7 +17,7 @@ protected:
 	ImVec2	m_Size;
 	ImColor	m_Color;
 	ImFont* m_Font;
-
+	bool	m_Enable;
 public:
 	const char* GetName()	const
 	{
@@ -34,7 +34,10 @@ public:
 		Length = WideCharToMultiByte(CP_UTF8, 0, m_UnicodeName, -1, 0, 0, 0, 0);
 		WideCharToMultiByte(CP_UTF8, 0, m_UnicodeName, -1, m_Name, Length, 0, 0);
 	}
-
+	void Enable(bool Enable)
+	{
+		m_Enable = Enable;
+	}
 	void SetSize(float x, float y)
 	{
 		m_Size.x = x;

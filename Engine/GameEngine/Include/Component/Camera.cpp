@@ -14,6 +14,7 @@ CCamera::CCamera()
 	m_Distance = 1000.f;
 	m_CameraLeft = 0.f;
 	m_CameraBottom = 0.f;
+	m_CameraZoom = 1.f;
 }
 
 CCamera::CCamera(const CCamera& com) :
@@ -46,7 +47,19 @@ void CCamera::CreateProjectionMatrix()
 			RS.Width / (float)RS.Height, 0.1f, m_Distance);
 	}
 		break;
-	case Camera_Type::Cam2D: 
+	case Camera_Type::Cam2D:
+	{
+		float percent = (1.f / m_CameraZoom);
+		Vector2 Size = { 640,320 };
+		Size.x = Size.x / m_CameraZoom -640.f;
+		Size.y = Size.y / m_CameraZoom -320.f;
+
+
+		m_matProj = XMMatrixOrthographicOffCenterLH(-Size.x, (float)RS.Width+ Size.x,
+			-Size.y, (float)RS.Height+ Size.y,
+			0.f, m_Distance);
+	}
+		break;
 	case Camera_Type::CamUI:
 	{
 		m_matProj = XMMatrixOrthographicOffCenterLH(0.f, (float)RS.Width, 0.f, (float)RS.Height,

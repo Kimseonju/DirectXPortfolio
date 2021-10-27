@@ -33,7 +33,10 @@ public:
 
 		m_vecItem.erase(iter);
 	}
-
+	void DeleteAllItem()
+	{
+		m_vecItem.clear();
+	}
 	void Sort(bool bSort)
 	{
 		m_Sort = bSort;

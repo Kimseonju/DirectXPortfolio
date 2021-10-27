@@ -17,11 +17,20 @@ protected:
 	ImVec2	m_Size;
 	ImColor	m_Color;
 	ImFont* m_Font;
+	bool	m_Enable;
 
 public:
 	const char* GetName()	const
 	{
 		return m_Name;
+	}
+	bool IsEnable() const
+	{
+		return m_Enable;
+	}
+	void Enable(bool Enable)
+	{
+		m_Enable = Enable;
 	}
 public:
 	void SetName(const std::string& Name)

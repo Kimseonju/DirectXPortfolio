@@ -25,7 +25,11 @@ private:
 	std::unordered_map<std::string, ID3D11SamplerState*>   m_mapSampler;
 	std::unordered_map<std::string, class CAnimationSequence2D*>   m_mapAnimationSequence2D;
 	std::unordered_map<std::string, class CParticleSystem*>   m_mapParticleSystem;
-
+public:
+	std::unordered_map<std::string, class CTexture*>& GetMapTexture()
+	{
+		return m_mapTexture;
+	}
 
 public:
 	bool Init();

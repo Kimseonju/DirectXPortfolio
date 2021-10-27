@@ -154,7 +154,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	m_pScene->GetResource()->CreateAnimationSequence2D("PlayerIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("PlayerIdle",
 		"PlayerIdle", TEXT("Characters/Basic/player_idle.png"));
-
+	
 	for (int i = 0; i < 5; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("PlayerIdle",
@@ -372,7 +372,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
 	}
 
-	/*Raser*/
+	/*Laser*/
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_LaserBody");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_LaserBody",

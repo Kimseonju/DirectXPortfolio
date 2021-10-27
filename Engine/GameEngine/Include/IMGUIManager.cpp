@@ -36,10 +36,10 @@ bool CIMGUIManager::Init(HWND hWnd)
 	m_Context = ImGui::CreateContext();
 
 	ImGuiIO& io = ImGui::GetIO();
-
+	
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
+	io.ConfigFlags |= ImGuiWindowFlags_UnsavedDocument;
 	// Multi-Viewports È°¼ºÈ­
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 

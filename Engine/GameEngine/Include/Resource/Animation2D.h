@@ -38,7 +38,7 @@ protected:
 	Sequence2DInfo* m_CurrentSequence;
 	float		m_FrameTime;
 	int		m_Frame;
-	bool m_End;
+	bool	m_End;
 protected:
 	std::function<void(const std::string&)>	m_FrameEndFunction;
 
