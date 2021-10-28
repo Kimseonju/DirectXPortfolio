@@ -21,6 +21,9 @@
 #include "TileWindow.h"
 #include "TileMapWindow.h"
 #include "InspectorWindow.h"
+#include "Scene/SceneManager.h"
+#include "Scene/Scene.h"
+#include "Scene/EditorScene.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -112,6 +115,8 @@ void CGameEditorView::OnInitialUpdate()
 
 	CIMGUIWindow* Window = CIMGUIManager::GetInst()->FindIMGUIWindow("TileWindow");
 	Window->Open();
+
+	CSceneManager::GetInst()->SetSceneMode<CEditorScene>();
 }
 
 

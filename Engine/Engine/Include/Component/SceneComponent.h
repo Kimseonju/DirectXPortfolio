@@ -19,7 +19,11 @@ protected:
     CSceneComponent* m_pParent;
     std::vector<CSharedPtr<CSceneComponent>>    m_vecChild;
     SceneComponent_Type m_SceneComponentType;
-
+public:
+    SceneComponent_Type GetSceneComponentType() const
+    {
+        return m_SceneComponentType;
+    }
 public:
     virtual void Active(bool bActive);
     //SocketName은 3D할때 3D Animation에서 본(뼈대)이라는게있는데 그걸 쓸때 SocketName

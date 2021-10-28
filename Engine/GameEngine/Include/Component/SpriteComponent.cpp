@@ -8,6 +8,7 @@
 CSpriteComponent::CSpriteComponent()
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_PrimitiveClassType = PrimitiveComponent_ClassType::Sprite;
 	m_2DType = RT2D_Default;
 }
 

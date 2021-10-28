@@ -7,11 +7,14 @@
 #include "ResourceManager.h"
 #include "../Render/RenderState.h"
 #include "../Render/RenderStateManager.h"
+#include "../PathManager.h"
 
 CMaterial::CMaterial()  :
 	m_bTransparency(false),
 	m_pCBuffer(nullptr),
 	m_pScene(nullptr),
+	m_PaperBurnEnable(false),
+	m_DistortionEnable(false),
 	m_BaseColor(1.f, 1.f, 1.f, 1.f),
 	m_EmissiveColor(0.f, 0.f, 0.f, 0.f),
 	m_RenderState{},
@@ -662,11 +665,13 @@ bool CMaterial::SetTextureShaderType(const std::string& Name, int ShaderType)
 
 void CMaterial::PaperBurnEnable(bool Enable)
 {
+	m_PaperBurnEnable = Enable;
 	m_pCBuffer->PaperBurnEnable(Enable);
 }
 
 void CMaterial::DistortionEnable(bool Enable)
 {
+	m_DistortionEnable = Enable;
 	m_pCBuffer->DistortionEnable(Enable);
 }
 
@@ -796,4 +801,357 @@ void CMaterial::ResetMaterialEmptyShader()
 CMaterial* CMaterial::Clone()
 {
 	return new CMaterial(*this);
+}
+
+
+void CMaterial::Save(const TCHAR* FileName, const std::string& PathName)
+{
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
+
+	TCHAR	FullPath[MAX_PATH] = {};
+
+	if (Info)
+		lstrcpy(FullPath, Info->pPath);
+
+	lstrcat(FullPath, FileName);
+
+	SaveFullPath(FullPath);
+}
+
+void CMaterial::Save(FILE* pFile)
+{
+	int	Length = (int)m_Name.length();
+
+	fwrite(&Length, sizeof(int), 1, pFile);
+	fwrite(m_Name.c_str(), 1, Length, pFile);
+
+	const std::string& ShaderName = m_pShader->GetName();
+	Length = (int)ShaderName.length();
+
+	fwrite(&Length, sizeof(int), 1, pFile);
+	fwrite(ShaderName.c_str(), 1, Length, pFile);
+
+	fwrite(&m_BaseColor, sizeof(Vector4), 1, pFile);
+	fwrite(&m_EmissiveColor, sizeof(Vector4), 1, pFile);
+
+	fwrite(&m_bTransparency, sizeof(bool), 1, pFile);
+	fwrite(&m_PaperBurnEnable, sizeof(bool), 1, pFile);
+	fwrite(&m_DistortionEnable, sizeof(bool), 1, pFile);
+	fwrite(&m_Opacity, sizeof(float), 1, pFile);
+
+	for (int i = 0; i < RST_End; ++i)
+	{
+		bool	Enable = false;
+
+		if (m_RenderState[i])
+		{
+			Enable = true;
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+			const std::string& StateName = m_RenderState[i]->GetName();
+			Length = (int)StateName.length();
+
+			fwrite(&Length, sizeof(int), 1, pFile);
+			fwrite(StateName.c_str(), 1, Length, pFile);
+		}
+
+		else
+		{
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+		}
+	}
+
+	int	TextureCount = (int)m_vecTexture.size();
+	fwrite(&TextureCount, sizeof(int), 1, pFile);
+
+	for (int i = 0; i < TextureCount; ++i)
+	{
+		Length = (int)m_vecTexture[i]->Name.length();
+
+		fwrite(&Length, sizeof(int), 1, pFile);
+		fwrite(m_vecTexture[i]->Name.c_str(), 1, Length, pFile);
+		fwrite(&m_vecTexture[i]->Link, sizeof(Texture_Link), 1, pFile);
+		fwrite(&m_vecTexture[i]->Register, sizeof(int), 1, pFile);
+		fwrite(&m_vecTexture[i]->ShaderType, sizeof(int), 1, pFile);
+		m_vecTexture[i]->pTexture->Save(pFile);
+	}
+}
+
+void CMaterial::SaveFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "wb");
+
+	if (!pFile)
+		return;
+
+	Save(pFile);
+
+	fclose(pFile);
+}
+
+void CMaterial::Load(const TCHAR* FileName, const std::string& PathName)
+{
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
+
+	TCHAR	FullPath[MAX_PATH] = {};
+
+	if (Info)
+		lstrcpy(FullPath, Info->pPath);
+
+	lstrcat(FullPath, FileName);
+
+	LoadFullPath(FullPath);
+}
+
+void CMaterial::Load(FILE* pFile)
+{
+	int	Length = 0;
+
+	char	Name[256] = {};
+	fread(&Length, sizeof(int), 1, pFile);
+	fread(Name, 1, Length, pFile);
+
+	m_Name = Name;
+
+	char	ShaderName[256] = {};
+	fread(&Length, sizeof(int), 1, pFile);
+	fread(ShaderName, 1, Length, pFile);
+
+	m_pShader = CShaderManager::GetInst()->FindShader(ShaderName);
+
+	fread(&m_BaseColor, sizeof(Vector4), 1, pFile);
+	fread(&m_EmissiveColor, sizeof(Vector4), 1, pFile);
+
+	m_pCBuffer->SetBaseColor(m_BaseColor);
+	m_pCBuffer->SetEmissiveColor(m_EmissiveColor);
+
+	fread(&m_bTransparency, sizeof(bool), 1, pFile);
+	fread(&m_PaperBurnEnable, sizeof(bool), 1, pFile);
+	fread(&m_DistortionEnable, sizeof(bool), 1, pFile);
+	fread(&m_Opacity, sizeof(float), 1, pFile);
+
+	m_pCBuffer->PaperBurnEnable(m_PaperBurnEnable);
+	m_pCBuffer->DistortionEnable(m_DistortionEnable);
+
+	for (int i = 0; i < RST_End; ++i)
+	{
+		bool	Enable = false;
+		fread(&Enable, sizeof(bool), 1, pFile);
+
+		if (Enable)
+		{
+			char	StateName[256] = {};
+			fread(&Length, sizeof(int), 1, pFile);
+			fread(StateName, 1, Length, pFile);
+
+			m_RenderState[i] = CRenderStateManager::GetInst()->FindRenderState(StateName);
+		}
+	}
+
+	size_t  Size = m_vecTexture.size();
+
+	for (size_t i = 0; i < Size; ++i)
+	{
+		SAFE_DELETE(m_vecTexture[i]);
+	}
+
+	m_vecTexture.clear();
+
+	int	TextureCount = 0;
+	fread(&TextureCount, sizeof(int), 1, pFile);
+
+	for (int i = 0; i < TextureCount; ++i)
+	{
+		MaterialTextureInfo* Info = new MaterialTextureInfo;
+
+		m_vecTexture.push_back(Info);
+
+		char	TextureName[256] = {};
+
+		fread(&Length, sizeof(int), 1, pFile);
+		fread(TextureName, 1, Length, pFile);
+
+		Info->Name = Name;
+
+		fread(&m_vecTexture[i]->Link, sizeof(Texture_Link), 1, pFile);
+		fread(&m_vecTexture[i]->Register, sizeof(int), 1, pFile);
+		fread(&m_vecTexture[i]->ShaderType, sizeof(int), 1, pFile);
+
+		memset(TextureName, 0, 256);
+		fread(&Length, sizeof(int), 1, pFile);
+		fread(TextureName, 1, Length, pFile);
+
+		Image_Type	ImgType;
+		fread(&ImgType, sizeof(Image_Type), 1, pFile);
+
+		int	InfoCount = 0;
+
+		fread(&InfoCount, sizeof(int), 1, pFile);
+
+		if (InfoCount == 1)
+		{
+			TCHAR	TextureFileName[MAX_PATH] = {};
+			TCHAR	TextureFullPath[MAX_PATH] = {};
+			char	PathName[256] = {};
+
+			bool	Enable = false;
+			fread(&Enable, sizeof(bool), 1, pFile);
+
+			bool	FileNameEnable = Enable;
+
+			if (Enable)
+			{
+				fread(&Length, sizeof(int), 1, pFile);
+				fread(TextureFileName, sizeof(TCHAR), Length, pFile);
+			}
+
+			fread(&Enable, sizeof(bool), 1, pFile);
+
+			if (Enable)
+			{
+				fread(&Length, sizeof(int), 1, pFile);
+				fread(PathName, sizeof(char), Length, pFile);
+			}
+
+			fread(&Enable, sizeof(bool), 1, pFile);
+
+			if (Enable)
+			{
+				fread(&Length, sizeof(int), 1, pFile);
+				fread(TextureFullPath, sizeof(TCHAR), Length, pFile);
+			}
+
+			if (FileNameEnable)
+			{
+				CResourceManager::GetInst()->LoadTexture(TextureName,
+					TextureFileName, PathName);
+			}
+
+			else
+			{
+				CResourceManager::GetInst()->LoadTextureFullPath(TextureName,
+					TextureFullPath);
+			}
+
+			Info->pTexture = CResourceManager::GetInst()->FindTexture(TextureName);
+		}
+
+		else
+		{
+			std::vector<const TCHAR*>	vecFileName;
+			std::vector<const TCHAR*>	vecFullPath;
+			char	PathName[256] = {};
+
+			for (int i = 0; i < InfoCount; ++i)
+			{
+				bool	Enable = false;
+				fread(&Enable, sizeof(bool), 1, pFile);
+
+				if (Enable)
+				{
+					TCHAR* FileName = new TCHAR[MAX_PATH];
+					memset(FileName, 0, sizeof(TCHAR) * MAX_PATH);
+
+					fread(&Length, sizeof(int), 1, pFile);
+					fread(FileName, sizeof(TCHAR), Length, pFile);
+
+					vecFileName.push_back(FileName);
+				}
+
+				fread(&Enable, sizeof(bool), 1, pFile);
+
+				if (Enable)
+				{
+					fread(&Length, sizeof(int), 1, pFile);
+					fread(PathName, sizeof(char), Length, pFile);
+				}
+
+				fread(&Enable, sizeof(bool), 1, pFile);
+
+				if (Enable)
+				{
+					TCHAR* FullPath = new TCHAR[MAX_PATH];
+					memset(FullPath, 0, sizeof(TCHAR) * MAX_PATH);
+
+					fread(&Length, sizeof(int), 1, pFile);
+					fread(FullPath, sizeof(TCHAR), Length, pFile);
+
+					vecFullPath.push_back(FullPath);
+				}
+			}
+
+
+
+			if (!vecFileName.empty())
+			{
+				CResourceManager::GetInst()->LoadTexture(TextureName,
+					vecFileName, PathName);
+				Info->pTexture = CResourceManager::GetInst()->FindTexture(TextureName);
+				for (size_t j = 0; j < vecFileName.size(); ++j)
+				{
+					SAFE_DELETE_ARRAY(vecFileName[j]);
+				}
+
+				vecFileName.clear();
+			}
+
+			if (!vecFullPath.empty())
+			{
+				if (!Info->pTexture)
+				{
+					CResourceManager::GetInst()->LoadTexture(TextureName,
+						vecFileName, PathName);
+					Info->pTexture = CResourceManager::GetInst()->FindTexture(TextureName);
+				}
+
+				for (size_t j = 0; j < vecFullPath.size(); ++j)
+				{
+					SAFE_DELETE_ARRAY(vecFullPath[j]);
+				}
+
+				vecFullPath.clear();
+			}
+		}
+	}
+}
+
+void CMaterial::LoadFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "rb");
+
+	if (!pFile)
+		return;
+
+	Load(pFile);
+
+	fclose(pFile);
 }

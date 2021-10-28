@@ -16,8 +16,10 @@ protected:
 
 protected:
     PrimitiveComponent_Type m_PrimitiveType;
+    PrimitiveComponent_ClassType m_PrimitiveClassType;
     Render_Type_2D      m_2DType;
     Render_Type_3D      m_3DType;
+    
     std::vector<CSharedPtr<CMaterial>>   m_vecMaterialSlot;
     bool        m_DistortionEnable;
 
@@ -35,6 +37,11 @@ public:
     PrimitiveComponent_Type GetPrimitiveType()  const
     {
         return m_PrimitiveType;
+    }
+
+    PrimitiveComponent_ClassType GetPrimitiveClassType()  const
+    {
+        return m_PrimitiveClassType;
     }
 
     Render_Type_2D GetRender2DType()  const

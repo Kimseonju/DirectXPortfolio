@@ -15,13 +15,16 @@ protected:
 protected:
     class CScene* m_pScene;
     class CGameObject* m_pOwner;
-
 public:
     class CGameObject* GetOwner()   const
     {
         return m_pOwner;
     }
 
+    class CScene* GetScene() const
+    {
+        return m_pScene;
+    }
     virtual void Active(bool bActive);
 public:
     virtual void Start();

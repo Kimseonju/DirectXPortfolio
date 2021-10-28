@@ -8,6 +8,7 @@
 #include "../Resource/Material.h"
 #include "Transform.h"
 #include "../PathManager.h"
+#include "../Resource/ResourceManager.h"
 
 
 CTileMapComponent::CTileMapComponent() :
@@ -19,6 +20,7 @@ CTileMapComponent::CTileMapComponent() :
 	m_EditorMode(true)
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_PrimitiveClassType = PrimitiveComponent_ClassType::TileMap;
 	m_2DType = RT2D_MAP;
 	m_3DType = RT3D_Default;
 }
@@ -817,6 +819,38 @@ void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
 	if (!pFile)
 		return;
 
+	Vector3	Pos, Rot, Scale;
+
+	Pos = GetWorldPos();
+	Rot = GetWorldRotation();
+	Scale = GetWorldScale();
+
+	fwrite(&Pos, sizeof(Vector3), 1, pFile);
+	fwrite(&Rot, sizeof(Vector3), 1, pFile);
+	fwrite(&Scale, sizeof(Vector3), 1, pFile);
+
+	fwrite(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fwrite(&m_CountX, sizeof(int), 1, pFile);
+	fwrite(&m_CountY, sizeof(int), 1, pFile);
+
+	fwrite(&m_TileSize, sizeof(Vector2), 1, pFile);
+	fwrite(&m_TileImageSize, sizeof(Vector2), 1, pFile);
+	fwrite(&m_TileImageFrameSize, sizeof(Vector2), 1, pFile);
+
+	fwrite(&m_FrameMaxX, sizeof(int), 1, pFile);
+	fwrite(&m_FrameMaxY, sizeof(int), 1, pFile);
+
+	// 재질 정보 저장.
+	m_vecMaterialSlot[0]->Save(pFile);
+
+	// 타일 저장
+	size_t	Size = m_vecTile.size();
+
+	for (size_t i = 0; i < Size; ++i)
+	{
+		m_vecTile[i]->Save(pFile);
+	}
+
 
 	fclose(pFile);
 }
@@ -858,7 +892,64 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 		return;
 
 
+	Vector3	Pos, Rot, Scale;
+
+	fread(&Pos, sizeof(Vector3), 1, pFile);
+	fread(&Rot, sizeof(Vector3), 1, pFile);
+	fread(&Scale, sizeof(Vector3), 1, pFile);
+
+	SetWorldPos(Pos);
+	SetWorldRotation(Rot);
+	SetWorldScale(Scale);
+
+	fread(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fread(&m_CountX, sizeof(int), 1, pFile);
+	fread(&m_CountY, sizeof(int), 1, pFile);
+
+	fread(&m_TileSize, sizeof(Vector2), 1, pFile);
+	fread(&m_TileImageSize, sizeof(Vector2), 1, pFile);
+	fread(&m_TileImageFrameSize, sizeof(Vector2), 1, pFile);
+
+	fread(&m_FrameMaxX, sizeof(int), 1, pFile);
+	fread(&m_FrameMaxY, sizeof(int), 1, pFile);
+
+	// 재질 정보 불러오기.
+	CMaterial* Material = CResourceManager::GetInst()->CreateMaterial();
+
+	Material->Load(pFile);
+
+	m_vecMaterialSlot[0] = Material;
+
+	auto	iter = m_vecTile.begin();
+	auto	iterEnd = m_vecTile.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		SAFE_DELETE((*iter));
+	}
+
+	m_vecTile.clear();
+
+
+	// 타일 불러오기
+	int	Count = m_CountX * m_CountY;
+
+	m_vecTile.resize(Count);
+	m_vecTileInfo.resize(Count);
+
+	for (int i = 0; i < Count; ++i)
+	{
+		m_vecTile[i] = new CTile;
+
+		m_vecTile[i]->m_Owner = this;
+
+		m_vecTile[i]->Load(pFile);
+	}
+
 	fclose(pFile);
+
+
+	SetWorldInfo();
 }
 
 

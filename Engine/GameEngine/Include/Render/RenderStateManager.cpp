@@ -54,6 +54,8 @@ bool CRenderStateManager::AddBlendInfo(const std::string& Name,
 	{
 		State = new CBlendState;
 
+		State->SetName(Name);
+
 		m_mapRenderState.insert(std::make_pair(Name, State));
 	}
 
@@ -92,6 +94,8 @@ bool CRenderStateManager::CreateDepthStencilState(const std::string& Name, bool 
 
 	State = new CDepthStencilState;
 
+	State->SetName(Name);
+
 	if (!State->CreateState(DepthEnable, DepthWriteMask,
 		DepthFunc, StencilEnable, StencilReadMask,
 		StencilWriteMask, FrontFace, BackFace))
@@ -117,6 +121,8 @@ bool CRenderStateManager::CreateRasterizerState(const std::string& Name,
 		return false;
 
 	State = new CRasterizerState;
+
+	State->SetName(Name);
 
 	if (!State->CreateState(FillMode, CullMode,
 		FrontCounterClockwise, DepthBias, DepthBiasClamp,

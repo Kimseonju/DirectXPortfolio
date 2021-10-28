@@ -194,6 +194,7 @@ void CAnimation2D::ResetShader()
 	}
 }
 
+
 void CAnimation2D::AddAnimationSequence2D(const std::string& Name, bool Loop)
 {
 	CAnimationSequence2D* pSequence = nullptr;
@@ -298,6 +299,17 @@ void CAnimation2D::ChangeAnimation(Sequence2DInfo* Info)
 
 Sequence2DInfo* CAnimation2D::FindSequence(const std::string& Name)
 {
+	auto	iter = m_mapSequence.find(Name);
+
+	if (iter == m_mapSequence.end())
+		return nullptr;
+
+	return iter->second;
+}
+
+Sequence2DInfo* CAnimation2D::FindSequence(CAnimationSequence2D* Sequence)
+{
+	std::string Name=Sequence->GetName();
 	auto	iter = m_mapSequence.find(Name);
 
 	if (iter == m_mapSequence.end())

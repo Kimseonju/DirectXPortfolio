@@ -25,6 +25,10 @@ protected:
 	Resolution	m_RS;
 	float	m_CameraZoom;
 public:
+	float GetCameraZoom() const
+	{
+		return m_CameraZoom;
+	}
 	Resolution GetResolution()	const
 	{
 		return m_RS;
@@ -56,6 +60,12 @@ public:
 	}
 
 public:
+	void SetCameraZoom(float Zoom)
+	{
+		m_CameraZoom = Zoom;
+		CreateProjectionMatrix();
+	}
+
 	void SetViewAngle(float Angle)
 	{
 		m_ViewAngle = Angle;

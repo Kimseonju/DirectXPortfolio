@@ -55,10 +55,6 @@ void CIMGUITransformComponent::SetComponent(CSceneComponent* Component)
 }
 bool CIMGUITransformComponent::Init()
 {
-	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("À§Ä¡");
-	Text->SetFont("DefaultFont");
-	m_vecWidget.push_back(Text);
-
 #pragma region Position
 
 

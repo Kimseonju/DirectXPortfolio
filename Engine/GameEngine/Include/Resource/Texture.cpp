@@ -495,3 +495,67 @@ void CTexture::ResetShader(int Register, int ShaderType, int Index)
 			CONTEXT->CSSetShaderResources(Register, 1, &SRV);
 	}
 }
+
+void CTexture::Save(FILE* pFile)
+{
+	int	Length = (int)m_Name.length();
+
+	fwrite(&Length, sizeof(int), 1, pFile);
+	fwrite(m_Name.c_str(), 1, Length, pFile);
+
+	fwrite(&m_ImageType, sizeof(Image_Type), 1, pFile);
+
+	int	InfoCount = (int)m_vecResourceInfo.size();
+
+	fwrite(&InfoCount, sizeof(int), 1, pFile);
+
+	for (int i = 0; i < InfoCount; ++i)
+	{
+		bool	Enable = false;
+
+		if (m_vecResourceInfo[i]->FileName)
+		{
+			Enable = true;
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+			Length = lstrlen(m_vecResourceInfo[i]->FileName);
+
+			fwrite(&Length, sizeof(int), 1, pFile);
+			fwrite(m_vecResourceInfo[i]->FileName, sizeof(TCHAR), Length, pFile);
+		}
+
+		else
+		{
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+		}
+
+		if (m_vecResourceInfo[i]->PathName)
+		{
+			Enable = true;
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+			Length = strlen(m_vecResourceInfo[i]->PathName);
+
+			fwrite(&Length, sizeof(int), 1, pFile);
+			fwrite(m_vecResourceInfo[i]->PathName, sizeof(char), Length, pFile);
+		}
+
+		else
+		{
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+		}
+
+		if (m_vecResourceInfo[i]->FullPath)
+		{
+			Enable = true;
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+			Length = lstrlen(m_vecResourceInfo[i]->FullPath);
+
+			fwrite(&Length, sizeof(int), 1, pFile);
+			fwrite(m_vecResourceInfo[i]->FullPath, sizeof(TCHAR), Length, pFile);
+		}
+
+		else
+		{
+			fwrite(&Enable, sizeof(bool), 1, pFile);
+		}
+	}
+}

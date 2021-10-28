@@ -11,7 +11,7 @@
 #include "IMGUITextInput.h"
 #include "ObjectWindow.h"
 #include "IMGUIManager.h"
-
+#include <Component/Collider.h>
 CIMGUICollider2DComponent::CIMGUICollider2DComponent()
 {
 }
@@ -20,89 +20,65 @@ CIMGUICollider2DComponent::~CIMGUICollider2DComponent()
 {
 }
 
-void CIMGUICollider2DComponent::SetPosition(const Vector2& Pos)
+void CIMGUICollider2DComponent::InfoUpdate(CCollider* Collider)
 {
-	m_OffsetInputPosX->SetFloat(Pos.x);
-	m_OffsetInputPosY->SetFloat(Pos.y);
+	m_Collider = Collider;
+	Collider_Shape Shape=m_Collider->GetColliderShape();
+	Collider_Space Space = m_Collider->GetColliderSpace();
+
+	switch (Shape)
+	{
+	case Collider_Shape::Box2D:
+		m_ColliderType->SetText("Box2D");
+		break;
+	case Collider_Shape::Circle:
+		m_ColliderType->SetText("Circle");
+		break;
+	case Collider_Shape::Pixel:
+		m_ColliderType->SetText("Pixel");
+		break;
+	}
+
+	switch (Space)
+	{
+	case Collider_Space::Collider2D:
+		m_ColliderSpace->SetText("Collider2D");
+		break;
+	case Collider_Space::Collider3D:
+		m_ColliderSpace->SetText("Collider3D");
+		break;
+	default:
+		break;
+	}
+	Enable(true);
+
 }
 
-void CIMGUICollider2DComponent::SetScale(const Vector2& Pos)
-{
-	m_OffsetInputScaleX->SetFloat(Pos.x);
-	m_OffsetInputScaleY->SetFloat(Pos.y);
-}
-void CIMGUICollider2DComponent::TypeComboCallback(int SelectIndex, const char* Item)
-{
-	//m_TileShape = (Tile_Shape)SelectIndex;
-}
 bool CIMGUICollider2DComponent::Init()
 {
-	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("À§Ä¡");
-	Text->SetFont("DefaultFont");
-	m_vecWidget.push_back(Text);
 #pragma region Type
-	m_Collider2DType = m_Owner->AddWidget<CIMGUIComboBox>("##TileShape", 300.f, 100.f);
-	m_Collider2DType->SetSelectCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::TypeComboCallback);
-	m_Collider2DType->AddItem("Box");
-	m_Collider2DType->AddItem("Circle");
-	m_Collider2DType->AddItem("Pixel");
-	m_vecWidget.push_back(m_Collider2DType);
-#pragma endregion
 
-#pragma region Position
-
-	CIMGUIText* Label = m_Owner->AddWidget<CIMGUIText>("Label_Title", 100.f, 20.f);
-	Label->SetText("Collider2D");
-	m_vecWidget.push_back(Label);
-	Label = m_Owner->AddWidget<CIMGUIText>("Label_Position", 100.f, 20.f);
-	Label->SetText("OffsetPos");
-	m_vecWidget.push_back(Label);
+	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("##Type");
+	Text->SetText("Type");
+	m_vecWidget.push_back(Text);
 	CIMGUISameLine* SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_OffsetInputPosX = m_Owner->AddWidget<CIMGUITextInput>("##OffsetInput_PosX", 100.f, 20.f);
-	m_vecWidget.push_back(m_OffsetInputPosX);
-	m_OffsetInputPosX->SetNumberFloat(true);
-	m_OffsetInputPosX->SetInputCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::InputPosX);
+	m_ColliderType = m_Owner->AddWidget<CIMGUIText>("##ColliderType", 300.f, 100.f);
+	
+	m_vecWidget.push_back(m_ColliderType);
+
+	Text = m_Owner->AddWidget<CIMGUIText>("##Space");
+	Text->SetText("Space");
+	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_OffsetInputPosY = m_Owner->AddWidget<CIMGUITextInput>("##OffsetInput_PosY", 100.f, 20.f);
-	m_vecWidget.push_back(m_OffsetInputPosY);
-	m_OffsetInputPosY->SetNumberFloat(true);
-	m_OffsetInputPosY->SetInputCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::InputPosY);
+	m_ColliderSpace = m_Owner->AddWidget<CIMGUIText>("##ColliderSpace", 300.f, 100.f);
 
-	m_OffsetInputPosX->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
-	m_OffsetInputPosY->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
-#pragma endregion
-
-#pragma region Scale
-
-	Label = m_Owner->AddWidget<CIMGUIText>("Label_Scale", 100.f, 20.f);
-	m_vecWidget.push_back(Label);
-	Label->SetText("Offset Scale");
-	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
-	m_vecWidget.push_back(SameLine);
-	SameLine->SetSize(20.f, 20.f);
-
-	m_OffsetInputScaleX = m_Owner->AddWidget<CIMGUITextInput>("##OffsetInput_ScaleX", 100.f, 20.f);
-	m_vecWidget.push_back(m_OffsetInputScaleX);
-	m_OffsetInputScaleX->SetNumberFloat(true);
-	m_OffsetInputScaleX->SetInputCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::InputScaleX);
-	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
-
-	m_OffsetInputScaleY = m_Owner->AddWidget<CIMGUITextInput>("##OffsetInput_ScaleY", 100.f, 20.f);
-	m_vecWidget.push_back(m_OffsetInputScaleY);
-	m_OffsetInputScaleY->SetNumberFloat(true);
-	m_OffsetInputScaleY->SetInputCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::InputScaleY);
-
-	m_OffsetInputScaleX->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
-	m_OffsetInputScaleY->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
+	m_vecWidget.push_back(m_ColliderType);
 
 #pragma endregion
-
-
-
 	return true;
 }
 
@@ -110,41 +86,3 @@ void CIMGUICollider2DComponent::Update(float DeltaTime)
 {
 }
 
-
-void CIMGUICollider2DComponent::InputPosX()
-{
-	float x = m_OffsetInputPosX->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetPosX(x);
-}
-
-void CIMGUICollider2DComponent::InputPosY()
-{
-	float y = m_OffsetInputPosY->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetPosY(y);
-}
-
-
-
-void CIMGUICollider2DComponent::InputScaleX()
-{
-	float x = m_OffsetInputScaleX->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetScaleX(x);
-}
-
-void CIMGUICollider2DComponent::InputScaleY()
-{
-	float y = m_OffsetInputScaleY->GetValueFloat();
-
-	CObjectWindow* Window = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
-
-	Window->SetScaleY(y);
-}

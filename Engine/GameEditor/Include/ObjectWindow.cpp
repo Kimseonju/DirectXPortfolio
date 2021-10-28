@@ -22,6 +22,7 @@
 #include "DetailWindow.h"
 #include "IMGUIManager.h"
 #include "InspectorWindow.h"
+
 CObjectWindow::CObjectWindow() :
 	m_CreateObjectCount(0),
 	m_SelectObjectIndex(-1),
@@ -83,6 +84,7 @@ void CObjectWindow::Update(float DeltaTime)
 void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 {
 	m_SelectObjectIndex = SelectIndex;
+	m_SelectComponent = nullptr;
 
 	std::string SelectName = Item;
 
@@ -96,7 +98,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 	m_SelectObject->GetComponentName(vecName);
 
 	m_ComponentListBox->Clear();
-
+	
 	size_t	Size = vecName.size();
 
 	//CDetailWindow* DetailWindow = (CDetailWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("DetailWindow");
@@ -126,57 +128,53 @@ void CObjectWindow::ComponentListCallback(int SelectIndex, const char* Item)
 
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	InspectorWindow->AllComponentClose();
-	if (m_SelectComponent->GetName() == "DefaultRoot")
+	SceneComponent_Type Type=m_SelectComponent->GetSceneComponentType();
+	switch (Type)
+	{
+	case SceneComponent_Type::Scene:
 	{
 		InspectorWindow->TransformUpdate(m_SelectComponent);
+
+		break; 
 	}
-	if (m_SelectComponent->GetName() == "Sprite")
+	case SceneComponent_Type::Primitive:
 	{
 		InspectorWindow->TransformUpdate(m_SelectComponent);
-		InspectorWindow->SpriteUpdate((CSpriteComponent*)m_SelectComponent.Get());
-	}
-	else if (m_SelectComponent->GetName() == "Box2D")
-	{
+		CPrimitiveComponent* PrimitiveComponent = (CPrimitiveComponent*)m_SelectComponent.Get();
+		PrimitiveComponent_ClassType ClassType=PrimitiveComponent->GetPrimitiveClassType();
 
+		switch (ClassType)
+		{
+		case PrimitiveComponent_ClassType::Default:
+			break;
+		case PrimitiveComponent_ClassType::Mesh:
+			break;
+		case PrimitiveComponent_ClassType::Sprite:
+			InspectorWindow->SpriteUpdate((CSpriteComponent*)m_SelectComponent.Get());
+			break;
+		case PrimitiveComponent_ClassType::Collider:
+			InspectorWindow->ColliderUpdate((CCollider*)m_SelectComponent.Get());
+			
+		case PrimitiveComponent_ClassType::Particle:
+			break;
+		case PrimitiveComponent_ClassType::Widget:
+			break;
+		case PrimitiveComponent_ClassType::TileMap:
+			break;
+		}
+		break;
 	}
-	else if (m_SelectComponent->GetName() == "Circle")
+	case SceneComponent_Type::Camera:
 	{
-
+		CCamera* CameraComponent = (CCamera*)m_SelectComponent.Get();
+		InspectorWindow->TransformUpdate(m_SelectComponent);
+		InspectorWindow->CameraUpdate(CameraComponent);
+		break;
 	}
-	else if (m_SelectComponent->GetName() == "Pixel")
-	{
-
+	case SceneComponent_Type::SpringArm:
+		InspectorWindow->TransformUpdate(m_SelectComponent);
+		break;
 	}
-	else if (m_SelectComponent->GetName() == "Camera")
-	{
-
-	}
-	else if (m_SelectComponent->GetName() == "SpringArm")
-	{
-
-	}
-	else if (m_SelectComponent->GetName() == "SpringArm2D")
-	{
-
-	}
-	else if (m_SelectComponent->GetName() == "ParticleSystem")
-	{
-
-	}
-	//Vector3	Pos = m_SelectComponent->GetWorldPos();
-	//Vector3	Rot = m_SelectComponent->GetWorldRotation();
-	//Vector3	Scale = m_SelectComponent->GetWorldScale();
-	//Vector3	Pivot = m_SelectComponent->GetPivot();
-	//
-	//CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
-	//InspectorWindow->AllComponentClose();
-	//InspectorWindow->Open();
-	//if (InspectorWindow)
-	//{
-	//	InspectorWindow->TransformUpdate(m_SelectComponent);
-	//	
-	//}
-	//
 }
 
 void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
@@ -211,13 +209,18 @@ void CObjectWindow::CreateComponentButtonClick()
 	CIMGUIText* Text=AddPopupWidget<CIMGUIText>("CreateComponent");
 	Text->SetText("CreateComponent");
 
+	Text = AddPopupWidget<CIMGUIText>("CreateComponent");
+	Text->SetText("ComponentName");
+
+	CIMGUISameLine* SameLine = AddPopupWidget<CIMGUISameLine>("SameLine");
+	m_NameInput = AddPopupWidget<CIMGUITextInput>("##NameInput", 300.f, 20.f);
+
 	CIMGUIComboBox* ComponentCombo = AddPopupWidget<CIMGUIComboBox>("##ComponentCombo", 300.f, 100.f);
 
 	ComponentCombo->SetSelectCallback<CObjectWindow>(this, &CObjectWindow::ComponentComboCallback);
 
 	ComponentCombo->AddItem("Scene");
 	ComponentCombo->AddItem("Sprite");
-	ComponentCombo->AddItem("Circle");
 	ComponentCombo->AddItem("Box2D");
 	ComponentCombo->AddItem("Circle");
 	ComponentCombo->AddItem("Pixel");
@@ -243,35 +246,40 @@ void CObjectWindow::InputComponentPopupButton()
 	if (!m_SelectObject)
 		return;
 
-
 	CSceneComponent* NewComponent = nullptr;
+
+	const char* Name = m_NameInput->GetTextMultibyte();
 
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	switch ((Component_Class_Type)m_CreateComponentIndex)
 	{
 	case Component_Class_Type::Scene:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSceneComponent>("Scene");
+		NewComponent = m_SelectObject->CreateSceneComponent<CSceneComponent>(Name);
 		break;
 	case Component_Class_Type::Sprite:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpriteComponent>("Sprite");
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpriteComponent>(Name);
 		break;
 	case Component_Class_Type::Box2D:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderBox2D>(Name);
+		NewComponent->Start();
 		break;
 	case Component_Class_Type::Circle:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderCircle>("ColliderCircle");
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderCircle>(Name);
+		NewComponent->Start();
 		break;
 	case Component_Class_Type::Pixel:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderPixel>("ColliderPixel");
+		NewComponent = m_SelectObject->CreateSceneComponent<CColliderPixel>(Name);
+		NewComponent->Start();
 		break;
 	case Component_Class_Type::Camera:
-		NewComponent = m_SelectObject->CreateSceneComponent<CCamera>("Camera");
+		NewComponent = m_SelectObject->CreateSceneComponent<CCamera>(Name);
+		NewComponent->Start();
 		break;
 	case Component_Class_Type::SpringArm:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm>("SpringArm");
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm>(Name);
 		break;
 	case Component_Class_Type::SpringArm2D:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm2D>("SpringArm2D");
+		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm2D>(Name);
 		break;
 	}
 

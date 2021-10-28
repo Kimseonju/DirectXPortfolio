@@ -25,7 +25,7 @@ void CIMGUIListBox::Render()
 
 
 	ImGui::Text(m_Name);
-	if (ImGui::BeginListBox(m_Name, Size))
+	if (ImGui::ListBoxHeader(m_Name, Size))
 	{
 		size_t	Size = m_vecItem.size();
 
@@ -45,7 +45,7 @@ void CIMGUIListBox::Render()
 				ImGui::SetItemDefaultFocus();
 		}
 
-		ImGui::EndListBox();
+		ImGui::ListBoxFooter();
 	}
 
 	if (m_Font)

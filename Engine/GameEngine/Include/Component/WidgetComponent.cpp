@@ -9,6 +9,7 @@ CWidgetComponent::CWidgetComponent()
 	m_2DType = RT2D_Default;
 	m_3DType = RT3D_Default;
 	m_Space = WidgetComponent_Space::Space2D;
+	m_PrimitiveClassType = PrimitiveComponent_ClassType::Widget;
 	m_AlphaBlend = nullptr;
 }
 

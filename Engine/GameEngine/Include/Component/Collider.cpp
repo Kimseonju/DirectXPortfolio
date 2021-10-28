@@ -10,6 +10,7 @@ CCollider::CCollider()
 	m_SceneComponentType = SceneComponent_Type::Primitive;
 	m_ColliderSpace = Collider_Space::Collider3D;
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
+	m_PrimitiveClassType = PrimitiveComponent_ClassType::Collider;
 	m_3DType = RT3D_Default;
 
 	m_Profile = nullptr;
@@ -244,20 +245,20 @@ void CCollider::Render(float DeltaTime)
 	if (m_DebugRender)
 	{
 		CPrimitiveComponent::Render(DeltaTime);
-
+	
 		if (m_PrevCollisionList.empty())
 			m_CBuffer->SetColor(Vector4(0.f, 1.f, 0.f, 1.f));
-
+	
 		else
 			m_CBuffer->SetColor(Vector4(1.f, 0.f, 0.f, 1.f));
-
+	
 		if (m_MouseCollision)
 			m_CBuffer->SetColor(Vector4(1.f, 0.f, 0.f, 1.f));
-
+	
 		m_CBuffer->UpdateCBuffer();
-
+	
 		m_DebugShader->SetShader();
-
+	
 		m_DebugMesh->Render();
 	}
 }

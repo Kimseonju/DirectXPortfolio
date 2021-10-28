@@ -8,28 +8,16 @@ public:
 	virtual ~CIMGUICollider2DComponent();
 
 private:
-	class CIMGUITextInput* m_OffsetInputPosX;
-	class CIMGUITextInput* m_OffsetInputPosY;
+	class CIMGUIText* m_ColliderType;
+	class CIMGUIText* m_ColliderSpace;
 
-	class CIMGUITextInput* m_OffsetInputScaleX;
-	class CIMGUITextInput* m_OffsetInputScaleY;
-
-	class CIMGUIComboBox* m_Collider2DType;
-
+	class CCollider* m_Collider;
 
 public:
-	void SetPosition(const Vector2& Pos);
-	void SetScale(const Vector2& Pos);
-	void TypeComboCallback(int SelectIndex, const char* Item);
+	void InfoUpdate(CCollider* Collider);
 
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 
-public:
-	void InputPosX();
-	void InputPosY();
-
-	void InputScaleX();
-	void InputScaleY();
 };

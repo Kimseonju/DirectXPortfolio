@@ -28,5 +28,6 @@ private:
 private:
     void EditTileType();
     void EditTileImage();
+    void CreateAnimationSequence2D();
 };
 

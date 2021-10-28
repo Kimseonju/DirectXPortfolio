@@ -21,6 +21,12 @@ protected:
     SceneComponent_Type m_SceneComponentType;
 
 public:
+    SceneComponent_Type GetSceneComponentType() const
+    {
+        return m_SceneComponentType;
+    }
+
+public:
     virtual void Active(bool bActive);
     //SocketName은 3D할때 3D Animation에서 본(뼈대)이라는게있는데 그걸 쓸때 SocketName
     //2D는 안씀

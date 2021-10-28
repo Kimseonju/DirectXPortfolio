@@ -90,4 +90,5 @@ protected:
 public:
     virtual void SetShader(int Register, int ShaderType, int Index = 0);
     virtual void ResetShader(int Register, int ShaderType, int Index = 0);
+    virtual void Save(FILE* pFile);
 };

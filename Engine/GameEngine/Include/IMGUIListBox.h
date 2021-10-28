@@ -47,6 +47,7 @@ public:
 	void Clear()
 	{
 		m_vecItem.clear();
+		m_SelectIndex = -1;
 	}
 
 	void Sort(bool bSort)

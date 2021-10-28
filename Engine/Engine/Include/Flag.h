@@ -259,3 +259,13 @@ enum class Tile_Type
     None,
     Wall
 };
+enum class PrimitiveComponent_ClassType
+{
+    Default,
+    Mesh,
+    Sprite,
+    Collider,
+    Particle,
+    Widget,
+    TileMap
+};

@@ -431,6 +431,15 @@ bool CResourceManager::CreateMaterial(const std::string& Name)
 	return true;
 }
 
+CMaterial* CResourceManager::CreateMaterial()
+{
+	CMaterial* Material = new CMaterial;
+
+	Material->Init();
+
+	return Material;
+}
+
 bool CResourceManager::SetMaterialTransparency(const std::string& Name, bool bTransparency)
 {
 	CMaterial* pMaterial = FindMaterial(Name);

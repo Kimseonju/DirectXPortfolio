@@ -42,8 +42,13 @@ public:
 	void DeleteAllItem()
 	{
 		m_vecItem.clear();
+		m_PrevViewName = m_Name;
 	}
 
+	void SetPrevName(const std::string& Name)
+	{
+		m_PrevViewName = Name;
+	}
 	void Sort(bool bSort)
 	{
 		m_Sort = bSort;

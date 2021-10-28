@@ -9,6 +9,7 @@ CPrimitiveComponent::CPrimitiveComponent()
 {
     m_SceneComponentType = SceneComponent_Type::Primitive;
     m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
+    m_PrimitiveClassType = PrimitiveComponent_ClassType::Default;
 
     m_2DType = RT2D_None;
     m_3DType = RT3D_None;

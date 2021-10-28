@@ -19,6 +19,7 @@ CParticleSystemComponent::CParticleSystemComponent()    :
 {
     m_SceneComponentType = SceneComponent_Type::Primitive;
     m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+    m_PrimitiveClassType = PrimitiveComponent_ClassType::Particle;
 
     m_2DType = RT2D_Particle;
 

@@ -58,3 +58,31 @@ void CTile::PostUpdate(float DeltaTime)
 void CTile::Render(float DeltaTime)
 {
 }
+
+void CTile::Save(FILE* pFile)
+{
+	fwrite(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fwrite(&m_TileType, sizeof(Tile_Type), 1, pFile);
+	fwrite(&m_Pos, sizeof(Vector2), 1, pFile);
+	fwrite(&m_Size, sizeof(Vector2), 1, pFile);
+	fwrite(&m_Center, sizeof(Vector2), 1, pFile);
+	fwrite(&m_FrameStart, sizeof(Vector2), 1, pFile);
+	fwrite(&m_FrameEnd, sizeof(Vector2), 1, pFile);
+	fwrite(&m_IndexX, sizeof(int), 1, pFile);
+	fwrite(&m_IndexY, sizeof(int), 1, pFile);
+	fwrite(&m_Index, sizeof(int), 1, pFile);
+}
+
+void CTile::Load(FILE* pFile)
+{
+	fread(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fread(&m_TileType, sizeof(Tile_Type), 1, pFile);
+	fread(&m_Pos, sizeof(Vector2), 1, pFile);
+	fread(&m_Size, sizeof(Vector2), 1, pFile);
+	fread(&m_Center, sizeof(Vector2), 1, pFile);
+	fread(&m_FrameStart, sizeof(Vector2), 1, pFile);
+	fread(&m_FrameEnd, sizeof(Vector2), 1, pFile);
+	fread(&m_IndexX, sizeof(int), 1, pFile);
+	fread(&m_IndexY, sizeof(int), 1, pFile);
+	fread(&m_Index, sizeof(int), 1, pFile);
+}

@@ -50,6 +50,7 @@ public:
 
 public:
 	bool CreateMaterial(const std::string& Name);
+	class CMaterial* CreateMaterial();
 	bool SetMaterialTransparency(const std::string& Name,
 		bool bTransparency);
 	bool SetMaterialOpacity(const std::string& Name,

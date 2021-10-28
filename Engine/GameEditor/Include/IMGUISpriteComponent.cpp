@@ -22,18 +22,9 @@ CIMGUISpriteComponent::~CIMGUISpriteComponent()
 }
 bool CIMGUISpriteComponent::Init()
 {
-	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("À§Ä¡");
-	m_vecWidget.push_back(Text);
-	Text->SetFont("DefaultFont");
-
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Title", 100.f, 20.f);
-	m_vecWidget.push_back(Text);
-	Text->SetText("SpriteComponent");
 
 #pragma region Material
-
-
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Material", 100.f, 20.f);
+	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("Text_Material", 100.f, 20.f);
 	m_vecWidget.push_back(Text);
 	Text->SetText("Material");
 	CIMGUISameLine* SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
@@ -75,7 +66,7 @@ bool CIMGUISpriteComponent::Init()
 
 	m_Animation2DCombo = m_Owner->AddWidget<CIMGUIComboBox>("##Animation2DCombo", 100.f, 20.f);
 	m_vecWidget.push_back(m_Animation2DCombo);
-	m_Animation2DCombo->SetSelectCallback<CIMGUISpriteComponent>(this, &CIMGUISpriteComponent::TextureComboCallback);
+	m_Animation2DCombo->SetSelectCallback<CIMGUISpriteComponent>(this, &CIMGUISpriteComponent::Animation2DComboCallback);
 
 	m_vecWidget.push_back(SameLine);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
@@ -107,6 +98,14 @@ void CIMGUISpriteComponent::InfoUpdate(CSpriteComponent* Sprite)
 	m_Sprite = Sprite;
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	m_MaterialName->SetText(SpriteMtrl->GetName().c_str());
+	m_Animation2DCombo->DeleteAllItem();
+	if (m_Sprite->GetAnimation2D())
+	{
+		m_Animation2D = m_Sprite->GetAnimation2D();
+		std::string SequenceName=m_Animation2D->GetCurrentSequenceName();
+		m_Animation2DCombo->SetPrevName(SequenceName);
+	}
+
 	Enable(true);
 }
 
@@ -144,8 +143,12 @@ void CIMGUISpriteComponent::Animation2DComboCallback(int SelectIndex, const char
 		m_Sprite->CreateAnimation2D<CAnimation2D>();
 	}
 	m_Animation2D =m_Sprite->GetAnimation2D();
-	CAnimationSequence2D* AnimationSequence2D = CResourceManager::GetInst()->FindAnimationSequence2D(Item);
-	m_Animation2D->AddAnimationSequence2D(AnimationSequence2D, true);
+	if (!m_Animation2D->FindSequence(Item))
+	{
+		CAnimationSequence2D* AnimationSequence2D = CResourceManager::GetInst()->FindAnimationSequence2D(Item);
+		m_Animation2D->AddAnimationSequence2D(AnimationSequence2D, true);
+	}
+	m_Animation2D->ChangeAnimation(Item);
 }
 
 void CIMGUISpriteComponent::LoadAnimation2DButtonClick()

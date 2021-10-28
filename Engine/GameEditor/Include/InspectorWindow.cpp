@@ -15,6 +15,7 @@
 #include "IMGUITransformComponent.h"
 #include "IMGUISpriteComponent.h"
 #include "IMGUICollider2DComponent.h"
+#include "IMGUICameraComponent.h"
 CInspectorWindow::CInspectorWindow()
 {
 }
@@ -23,20 +24,18 @@ CInspectorWindow::~CInspectorWindow()
 {
 	SAFE_DELETE(m_Transform);
 	SAFE_DELETE(m_Sprite);
-	SAFE_DELETE(m_Collider2D);
+	SAFE_DELETE(m_Collider);
+	SAFE_DELETE(m_Camera);
 }
 
 bool CInspectorWindow::Init()
 {
-	CIMGUIText* Text = AddWidget<CIMGUIText>("À§Ä¡");
-	Text->SetFont("DefaultFont");
 	CreateTransform();
 	CreateSprite();
-	CreateCollider2D();
-	m_Transform->Enable(false);
-	m_Sprite->Enable(false);
-	m_Collider2D->Enable(false);
+	CreateCollider();
+	CreateCamera();
 
+	AllComponentClose();
 	return true;
 }
 
@@ -57,6 +56,15 @@ void CInspectorWindow::SpriteUpdate(CSpriteComponent* Sprite)
 	m_Sprite->InfoUpdate(Sprite);
 }
 
+void CInspectorWindow::ColliderUpdate(CCollider* Collider)
+{
+	m_Collider->InfoUpdate(Collider);
+}
+
+void CInspectorWindow::CameraUpdate(CCamera* Camera)
+{
+	m_Camera->InfoUpdate(Camera);
+}
 void CInspectorWindow::CreateTransform()
 {
 	if (m_Transform)
@@ -75,19 +83,29 @@ void CInspectorWindow::CreateSprite()
 	m_Sprite->Init();
 }
 
-void CInspectorWindow::CreateCollider2D()
+void CInspectorWindow::CreateCollider()
 {
-	if (m_Collider2D)
+	if (m_Collider)
 		return;
-	m_Collider2D = new CIMGUICollider2DComponent;
-	m_Collider2D->SetOwner(this);
-	m_Collider2D->Init();
+	m_Collider = new CIMGUICollider2DComponent;
+	m_Collider->SetOwner(this);
+	m_Collider->Init();
+}
+
+void CInspectorWindow::CreateCamera()
+{
+	if (m_Camera)
+		return;
+	m_Camera = new CIMGUICameraComponent;
+	m_Camera->SetOwner(this);
+	m_Camera->Init();
 }
 
 void CInspectorWindow::AllComponentClose()
 {
 	m_Transform->Enable(false);
 	m_Sprite->Enable(false);
-	m_Collider2D->Enable(false);
+	m_Collider->Enable(false);
+	m_Camera->Enable(false);
 }
 

@@ -10,15 +10,19 @@ public:
 private:
 	class CIMGUITransformComponent* m_Transform;
 	class CIMGUISpriteComponent* m_Sprite;
-	class CIMGUICollider2DComponent* m_Collider2D;
+	class CIMGUICollider2DComponent* m_Collider;
+	class CIMGUICameraComponent* m_Camera;
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 	void TransformUpdate(class CSceneComponent* Obj);
 	void SpriteUpdate(class CSpriteComponent* Sprite);
+	void ColliderUpdate(class CCollider* Collider);
+	void CameraUpdate(class CCamera* Camera);
 	void CreateTransform();
 	void CreateSprite();
-	void CreateCollider2D();
+	void CreateCollider();
+	void CreateCamera();
 	void AllComponentClose();
 	
 };

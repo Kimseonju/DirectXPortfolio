@@ -37,6 +37,9 @@
     <Filter Include="02. Scene">
       <UniqueIdentifier>{4add2836-263f-4bee-8694-67f4be2549ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. EditorGUI\Component\Camera">
+      <UniqueIdentifier>{2b49d847-e049-4284-bb79-85f45eaf4777}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -102,8 +105,11 @@
     <ClInclude Include="Editor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMode\EditorScene.h">
+    <ClInclude Include="Scene\EditorScene.h">
       <Filter>02. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUICameraComponent.h">
+      <Filter>01. EditorGUI\Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +164,11 @@
     <ClCompile Include="IMGUISpriteComponent.cpp">
       <Filter>01. EditorGUI\Component\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMode\EditorScene.cpp">
+    <ClCompile Include="Scene\EditorScene.cpp">
       <Filter>02. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUICameraComponent.cpp">
+      <Filter>01. EditorGUI\Component\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,7 @@ public:
 	{
 		return m_mapTexture;
 	}
+
 	std::unordered_map<std::string, class CAnimationSequence2D*>& GetMapAniatmion2D()
 	{
 		return m_mapAnimationSequence2D;
@@ -49,6 +50,7 @@ public:
 
 public:
 	bool CreateMaterial(const std::string& Name);
+	class CMaterial* CreateMaterial();
 	bool SetMaterialTransparency(const std::string& Name,
 		bool bTransparency);
 	bool SetMaterialOpacity(const std::string& Name,

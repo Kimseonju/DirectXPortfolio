@@ -51,6 +51,9 @@ protected:
     class CRenderState* m_RenderState[RST_End];
     float		m_Opacity;
     bool        m_bHorizontalReverse2D;
+    bool		m_PaperBurnEnable;
+    bool		m_DistortionEnable;
+
     std::list<MaterialCallback*>	m_SetMaterialList;
     std::list<MaterialCallback*>	m_ResetMaterialList;
 
@@ -138,6 +141,12 @@ public:
     virtual void SetMaterialEmptyShader();
     virtual void ResetMaterialEmptyShader();
     virtual CMaterial* Clone();
+    void Save(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+    virtual void Save(FILE* pFile);
+    void SaveFullPath(const TCHAR* FullPath);
+    void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+    virtual void Load(FILE* pFile);
+    void LoadFullPath(const TCHAR* FullPath);
 
 public:
     template <typename T>
