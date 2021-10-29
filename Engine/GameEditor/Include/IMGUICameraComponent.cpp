@@ -17,6 +17,7 @@
 #include <Scene/CameraManager.h>
 #include <Scene/Scene.h>
 #include <Resource/ResourceManager.h>
+#include "IMGUICollapsingHeader.h"
 CIMGUICameraComponent::CIMGUICameraComponent()
 {
 }
@@ -57,6 +58,8 @@ void CIMGUICameraComponent::InfoUpdate(CCamera* CCamera)
 
 bool CIMGUICameraComponent::Init()
 {
+	CIMGUIWidgetComponent::Init();
+	m_Header = m_Owner->AddWidget<CIMGUICollapsingHeader>("Camera");
 #pragma region Type
 
 	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("##Type");
@@ -112,6 +115,8 @@ bool CIMGUICameraComponent::Init()
 	m_CurrentCamera->SetFont("DefaultFont");
 	m_CurrentCamera->SetClickCallback<CIMGUICameraComponent>(this, &CIMGUICameraComponent::CurrentCameraButtonClick);
 
+	m_Header->WidgetPush(m_vecWidget);
+	m_vecWidget.push_back(m_Header);
 
 	return true;
 }

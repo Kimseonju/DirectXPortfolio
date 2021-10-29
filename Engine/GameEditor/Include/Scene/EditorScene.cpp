@@ -12,8 +12,13 @@
 #include <Resource/ResourceManager.h>
 #include "Scene/SceneResource.h"
 #include "Resource/ResourceManager.h"
-
-CEditorScene::CEditorScene()
+#include "../GlobalValue.h"
+#include "../ObjectWindow.h"
+#include "../PrefabWindow.h"
+#include "Scene/Scene.h"
+#include "Scene/SceneManager.h"
+CEditorScene::CEditorScene() :
+	m_CloneObjectCount(0)
 {
 }
 
@@ -34,9 +39,11 @@ bool CEditorScene::Init()
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveDown", KT_Push, this, &CEditorScene::MoveDown);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveLeft", KT_Push, this, &CEditorScene::MoveLeft);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveRight", KT_Push, this, &CEditorScene::MoveRight);
-    CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Push, this, &CEditorScene::MouseLButton);
+    CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Up, this, &CEditorScene::MouseLButton);
 
     m_TileMapWindow = (CTileMapWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapWindow");
+	m_ObjectWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
+	m_PrefabWindow = (CPrefabWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("PrefabWindow");
 
     return true;
 }
@@ -81,20 +88,38 @@ void CEditorScene::MoveRight(float DeltaTime)
 
 void CEditorScene::MouseLButton(float DeltaTime)
 {
-    if (!m_TileMapWindow->IsTileMap())
-        return;
+	CGlobalValue::MouseState = Mouse_State::World;
+	
+	switch (CGlobalValue::MouseState)
+	{
+	case Mouse_State::Normal:
+	{
+		break;
+	}
+	case Mouse_State::Tile:
+	{
+		if (!m_TileMapWindow->IsTileMap())
+			return;
 
-    Tile_Modify_Type    ModifyType = m_TileMapWindow->GetTileModifyType();
+		Tile_Modify_Type    ModifyType = m_TileMapWindow->GetTileModifyType();
+		switch (ModifyType)
+		{
+		case Tile_Modify_Type::Type:
+			EditTileType();
+			break;
+		case Tile_Modify_Type::Image:
+			EditTileImage();
+			break;
+		}
+		break;
+	}
 
-    switch (ModifyType)
-    {
-    case Tile_Modify_Type::Type:
-        EditTileType();
-        break;
-    case Tile_Modify_Type::Image:
-        EditTileImage();
-        break;
-    }
+	case Mouse_State::World:
+	{
+		EditMap();
+		break;
+	}
+	}
 }
 
 void CEditorScene::EditTileType()
@@ -111,17 +136,53 @@ void CEditorScene::EditTileType()
     if (Tile)
         Tile->SetTileType(Type);
 
-    switch (Type)
-    {
-    case Tile_Type::None:
-        break;
-    case Tile_Type::Wall:
-        break;
-    }
 }
 
 void CEditorScene::EditTileImage()
 {
+	int ImageFrameX = m_TileMapWindow->GetImageFrameX();
+	int ImageFrameY = m_TileMapWindow->GetImageFrameY();
+
+	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
+
+	CTileMapComponent* TileMap = m_TileMapWindow->GetTileMap();
+
+	if (ImageFrameX == -1 || ImageFrameY == -1)
+	{
+		TileMap->TileRemoveRender(Vector3(MousePos.x, MousePos.y, 0.f));
+
+		CTile* Tile = TileMap->GetTile(MousePos);
+
+		if (Tile)
+			Tile->SetTileType(Tile_Type::Wall);
+	}
+
+	else
+	{
+		TileMap->SetTileFrame(MousePos, ImageFrameX, ImageFrameY);
+	}
+}
+
+void CEditorScene::EditMap()
+{
+	CGameObject* Obj=m_PrefabWindow->GetSelectObject();
+	if (!Obj)
+		return;
+
+	CScene* Scene = CSceneManager::GetInst()->GetScene();
+	std::string str = Obj->GetName();
+	str += std::to_string(m_CloneObjectCount);
+	CGameObject* Obj2 = Scene->SpawnObject<CGameObject>(str);
+	CSceneComponent* Component = Obj->GetRootComponent()->Clone();
+	Obj2->SetRootCloneComponent(Component);
+	
+
+	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
+	Obj2->SetWorldPos(MousePos.x, MousePos.y, 0.f);
+	Obj2->SetWorldScale(100.f, 100.f, 0.f);
+	m_CloneObjectCount++;
+	m_ObjectWindow->AddObject(Obj2);
+
 }
 
 

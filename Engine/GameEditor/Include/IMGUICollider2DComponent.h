@@ -10,6 +10,14 @@ public:
 private:
 	class CIMGUIText* m_ColliderType;
 	class CIMGUIText* m_ColliderSpace;
+	class CIMGUIComboBox* m_ColliderProfileCombo;
+
+
+	class CIMGUIDrag* m_ColliderLengthX;
+	class CIMGUIDrag* m_ColliderLengthY;
+	
+
+	class CIMGUIDrag* m_ColliderRadius;
 
 	class CCollider* m_Collider;
 
@@ -19,5 +27,10 @@ public:
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
+	virtual void Enable(bool Enable);
 
+public:
+	void InputLength();
+	void InputRadius();
+	void ProfileComboCallback(int SelectIndex, const char* Item);
 };

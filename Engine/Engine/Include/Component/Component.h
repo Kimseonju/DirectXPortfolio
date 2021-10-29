@@ -20,6 +20,7 @@ public:
     {
         return m_pOwner;
     }
+
     class CScene* GetScene() const
     {
         return m_pScene;

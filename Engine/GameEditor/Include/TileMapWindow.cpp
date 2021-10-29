@@ -18,9 +18,12 @@
 #include "Component/TileMapComponent.h"
 
 #include "PathManager.h"
+#include "IMGUIImage.h"
 
 CTileMapWindow::CTileMapWindow() :
-	m_CreateTile(false)
+	m_CreateTile(false),
+	m_ImageFrameX(0),
+	m_ImageFrameY(0)
 {
 }
 
@@ -102,6 +105,16 @@ void CTileMapWindow::InputScaleY()
 
 void CTileMapWindow::InputScaleZ()
 {
+}
+
+void CTileMapWindow::InputImageFrameX()
+{
+	m_ImageFrameX = m_InputImageFrameX->GetValueInt();
+}
+
+void CTileMapWindow::InputImageFrameY()
+{
+	m_ImageFrameY = m_InputImageFrameY->GetValueInt();
 }
 
 void CTileMapWindow::InputTileCountX()
@@ -383,6 +396,40 @@ void CTileMapWindow::CreateTileMapInfo()
 
 	m_TileEditCombo->SetSelectCallback<CTileMapWindow>(this, &CTileMapWindow::TileEditComboCallback);
 
+	Text = AddWidget<CIMGUIText>("TileMap");
+	Text->SetFont("DefaultFont");
+	Text->SetText("ImageFrame");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
+	Label->SetText("X");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	m_InputImageFrameX = AddWidget<CIMGUITextInput>("##ImageFrameX", 100.f, 20.f);
+	m_InputImageFrameX->SetNumberInt(true);
+	m_InputImageFrameX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameX);
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
+	Label->SetText("Y");
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	m_InputImageFrameY = AddWidget<CIMGUITextInput>("##ImageFrameY", 100.f, 20.f);
+	m_InputImageFrameY->SetNumberInt(true);
+	m_InputImageFrameY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameY);
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+
+	m_TileImage = AddWidget<CIMGUIImage>("##TileImage", 100.f, 100.f);
+
+	m_TileImage->SetStartUV(0.f, 0.f);
+	m_TileImage->SetEndUV(0.2f, 1.f / 76.f);
+	m_TileImage->SetTexture("TileTexture", TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
+
+
 	Button = AddWidget<CIMGUIButton>("저장", 80.f, 40.f);
 
 	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::SaveTileMap);
@@ -424,23 +471,27 @@ void CTileMapWindow::CreateTileButton()
 	TileCountX = m_InputTileCountX->GetValueInt();
 	TileCountY = m_InputTileCountY->GetValueInt();
 
-	CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap",
-		Pos, Rot, Scale);
+	CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
 
 	CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 
 	MainMap->SetRootComponent(TileMap);
 
+	TileMap->SetWorldPos(Pos);
+	TileMap->SetWorldRotation(Rot);
+	TileMap->SetWorldScale(Scale);
+
+
 	// TileShape를 얻어온다.
 	TileMap->CreateTile<CTile>(m_TileShape, TileCountX, TileCountY, TileSize);
 
-	TileMap->SetMaterial(0, "MainMap");
-	TileMap->SetFrameMax(5, 76);
-	TileMap->SetTileDefaultFrame(3, 2);
+	//TileMap->SetMaterial(0, "MainMap");
+	//TileMap->SetFrameMax(5, 76);
+	//TileMap->SetTileDefaultFrame(3, 2);
 
-	/*TileMap->SetMaterial(0, "MainMapRect");
+	TileMap->SetMaterial(0, "MainMapRect");
 	TileMap->SetFrameMax(1, 5);
-	TileMap->SetTileDefaultFrame(0, 0);*/
+	TileMap->SetTileDefaultFrame(0, 0);
 	m_TileMap = TileMap;
 }
 
@@ -481,5 +532,26 @@ void CTileMapWindow::LoadTileMap()
 
 	if (dlg.DoModal() == IDOK)
 	{
+		if (!m_TileMap)
+		{
+			CScene* Scene = CSceneManager::GetInst()->GetScene();
+
+			CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+
+			CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+
+			MainMap->SetRootComponent(TileMap);
+
+			m_TileMap = TileMap;
+		}
+
+		m_TileMap->LoadFullPath(dlg.GetPathName());
+
+		m_InputTileCountX->SetInt(m_TileMap->GetTileCountX());
+		m_InputTileCountY->SetInt(m_TileMap->GetTileCountY());
+		m_InputTileSizeX->SetFloat(m_TileMap->GetTileSize().x);
+		m_InputTileSizeY->SetFloat(m_TileMap->GetTileSize().y);
+
+		m_CreateTile = true;
 	}
 }

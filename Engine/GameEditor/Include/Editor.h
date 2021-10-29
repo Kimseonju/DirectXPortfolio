@@ -7,3 +7,10 @@ enum class Tile_Modify_Type
 	Type,
 	Image
 };
+
+enum class Mouse_State
+{
+	Normal,
+	Tile,
+	World
+};

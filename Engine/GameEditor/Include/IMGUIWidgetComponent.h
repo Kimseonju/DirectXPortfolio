@@ -12,9 +12,10 @@ public:
 protected:
 	CIMGUIWindow* m_Owner;
 	std::vector<CIMGUIWidget*> m_vecWidget;
-
+	class CIMGUICollapsingHeader* m_Header;
 public:
-	void Enable(bool Enable);
+	virtual bool Init();
+	virtual void Enable(bool Enable);
 	void SetOwner(CIMGUIWindow* Owner)
 	{
 		m_Owner = Owner;

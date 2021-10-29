@@ -103,3 +103,17 @@ CollisionProfile* CCollisionManager::FindProfile(const std::string& Name)
 
 	return iter->second;
 }
+
+void CCollisionManager::GetProfileName(std::vector<std::string>& Name)
+{
+
+	{
+		auto	iter = m_mapProfile.begin();
+		auto	iterEnd = m_mapProfile.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			Name.push_back(iter->first);
+		}
+	}
+}

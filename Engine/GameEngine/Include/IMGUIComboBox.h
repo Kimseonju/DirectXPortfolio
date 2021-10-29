@@ -43,6 +43,7 @@ public:
 	{
 		m_vecItem.clear();
 		m_PrevViewName = m_Name;
+		m_SelectIndex = -1;
 	}
 
 	void SetPrevName(const std::string& Name)

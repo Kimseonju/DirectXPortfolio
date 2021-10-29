@@ -44,6 +44,11 @@ protected:
     ID3D11ShaderResourceView*   m_ArraySRV;
 
 public:
+    ID3D11ShaderResourceView* GetResource(int Index = 0) const
+    {
+        return m_vecResourceInfo[Index]->SRV;
+    }
+
     TextureResourceInfo* GetResourceInfo(int index=0) const
     {
         return m_vecResourceInfo[index];

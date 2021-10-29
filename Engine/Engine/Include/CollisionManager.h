@@ -19,5 +19,6 @@ public:
 		Collision_Interaction Interaction);
 	CollisionProfile* FindProfile(const std::string& Name);
 
+	void GetProfileName(std::vector<std::string>& Name);
 	DECLARE_SINGLE(CCollisionManager)
 };

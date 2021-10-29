@@ -3,7 +3,8 @@
 CIMGUIListBox::CIMGUIListBox()	:
 	m_SelectIndex(-1),
 	m_Select(false),
-	m_PageItemCount(3)
+	m_PageItemCount(3),
+	m_Border(true)
 {
 }
 
@@ -25,7 +26,33 @@ void CIMGUIListBox::Render()
 
 
 	ImGui::Text(m_Name);
-	if (ImGui::ListBoxHeader(m_Name, Size))
+	if (m_Border)
+	{
+		if (ImGui::ListBoxHeader(m_Name, Size))
+		{
+			size_t	Size = m_vecItem.size();
+
+			for (size_t i = 0; i < Size; ++i)
+			{
+				m_Select = m_SelectIndex == i;
+
+				if (ImGui::Selectable(m_vecItem[i].c_str(), m_Select))
+				{
+					if (m_SelectIndex != i && m_SelectCallback)
+						m_SelectCallback((int)i, m_vecItem[i].c_str());
+
+					m_SelectIndex = (int)i;
+				}
+
+				if (m_Select)
+					ImGui::SetItemDefaultFocus();
+			}
+
+			ImGui::ListBoxFooter();
+		}
+	}
+	
+	else
 	{
 		size_t	Size = m_vecItem.size();
 
@@ -44,8 +71,6 @@ void CIMGUIListBox::Render()
 			if (m_Select)
 				ImGui::SetItemDefaultFocus();
 		}
-
-		ImGui::ListBoxFooter();
 	}
 
 	if (m_Font)

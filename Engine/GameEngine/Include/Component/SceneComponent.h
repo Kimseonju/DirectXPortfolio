@@ -26,6 +26,17 @@ public:
         return m_SceneComponentType;
     }
 
+    void GetSceneComponent(std::vector<CSceneComponent*>& vec)
+    {
+        auto iter = m_vecChild.begin();
+        auto iterEnd = m_vecChild.end();
+
+        for (; iter != iterEnd; ++iter)
+        {
+            (*iter)->GetSceneComponent(vec);
+            vec.push_back(*iter);
+        }
+    }
 public:
     virtual void Active(bool bActive);
     //SocketName은 3D할때 3D Animation에서 본(뼈대)이라는게있는데 그걸 쓸때 SocketName

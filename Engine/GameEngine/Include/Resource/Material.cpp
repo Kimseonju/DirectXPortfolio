@@ -946,6 +946,7 @@ void CMaterial::Load(FILE* pFile)
 
 	m_pCBuffer->PaperBurnEnable(m_PaperBurnEnable);
 	m_pCBuffer->DistortionEnable(m_DistortionEnable);
+	m_pCBuffer->SetOpacity(m_Opacity);
 
 	for (int i = 0; i < RST_End; ++i)
 	{

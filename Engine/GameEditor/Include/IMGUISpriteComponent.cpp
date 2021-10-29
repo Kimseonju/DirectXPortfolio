@@ -12,6 +12,7 @@
 #include "ObjectWindow.h"
 #include "IMGUIManager.h"
 #include "Resource/ResourceManager.h"
+#include "IMGUICollapsingHeader.h"
 CIMGUISpriteComponent::CIMGUISpriteComponent():
 	m_Animation2D(nullptr)
 {
@@ -22,14 +23,22 @@ CIMGUISpriteComponent::~CIMGUISpriteComponent()
 }
 bool CIMGUISpriteComponent::Init()
 {
+	CIMGUIWidgetComponent::Init();
+	CIMGUIText* Text;
+	CIMGUISameLine* SameLine;
+
+	m_Header = m_Owner->AddWidget<CIMGUICollapsingHeader>("Sprite");
+
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_SpriteComponent", 100.f, 20.f);
+	m_vecWidget.push_back(Text);
+	Text->SetText("SpriteComponent");
 
 #pragma region Material
-	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("Text_Material", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Material", 100.f, 20.f);
 	m_vecWidget.push_back(Text);
 	Text->SetText("Material");
-	CIMGUISameLine* SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
-
 	m_MaterialName = m_Owner->AddWidget<CIMGUIText>("##MaterialName", 100.f, 20.f);
 	m_vecWidget.push_back(m_MaterialName);
 
@@ -86,6 +95,8 @@ bool CIMGUISpriteComponent::Init()
 
 #pragma endregion
 
+	m_Header->WidgetPush(m_vecWidget);
+	m_vecWidget.push_back(m_Header);
 	return true;
 }
 
@@ -102,6 +113,15 @@ void CIMGUISpriteComponent::InfoUpdate(CSpriteComponent* Sprite)
 	if (m_Sprite->GetAnimation2D())
 	{
 		m_Animation2D = m_Sprite->GetAnimation2D();
+		std::unordered_map<std::string, Sequence2DInfo*> m_mapSequence=m_Animation2D->GetMapSequence();
+		
+		auto iter = m_mapSequence.begin();
+		auto iterEnd = m_mapSequence.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			m_Animation2DCombo->AddItem(iter->first.c_str());
+		}
+		
 		std::string SequenceName=m_Animation2D->GetCurrentSequenceName();
 		m_Animation2DCombo->SetPrevName(SequenceName);
 	}

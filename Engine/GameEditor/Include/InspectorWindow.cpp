@@ -16,12 +16,15 @@
 #include "IMGUISpriteComponent.h"
 #include "IMGUICollider2DComponent.h"
 #include "IMGUICameraComponent.h"
+#include "IMGUIObjectInfoComponent.h"
+#include "GameObject.h"
 CInspectorWindow::CInspectorWindow()
 {
 }
 
 CInspectorWindow::~CInspectorWindow()
 {
+	SAFE_DELETE(m_Object);
 	SAFE_DELETE(m_Transform);
 	SAFE_DELETE(m_Sprite);
 	SAFE_DELETE(m_Collider);
@@ -30,6 +33,7 @@ CInspectorWindow::~CInspectorWindow()
 
 bool CInspectorWindow::Init()
 {
+	CreateObjectInfo();
 	CreateTransform();
 	CreateSprite();
 	CreateCollider();
@@ -43,6 +47,12 @@ void CInspectorWindow::Update(float DeltaTime)
 {
 	CIMGUIWindow::Update(DeltaTime);
 	m_Transform->Update(DeltaTime);
+}
+
+void CInspectorWindow::ObjectInfoUpdate(CGameObject* Obj)
+{
+	m_Object->InfoUpdate(Obj);
+
 }
 
 void CInspectorWindow::TransformUpdate(CSceneComponent* Component)
@@ -64,6 +74,14 @@ void CInspectorWindow::ColliderUpdate(CCollider* Collider)
 void CInspectorWindow::CameraUpdate(CCamera* Camera)
 {
 	m_Camera->InfoUpdate(Camera);
+}
+void CInspectorWindow::CreateObjectInfo()
+{
+	if (m_Object)
+		return;
+	m_Object = new CIMGUIObjectInfoComponent;
+	m_Object->SetOwner(this);
+	m_Object->Init();
 }
 void CInspectorWindow::CreateTransform()
 {
@@ -103,6 +121,8 @@ void CInspectorWindow::CreateCamera()
 
 void CInspectorWindow::AllComponentClose()
 {
+	if(!m_Object->IsObject())
+		m_Object->Enable(false);
 	m_Transform->Enable(false);
 	m_Sprite->Enable(false);
 	m_Collider->Enable(false);

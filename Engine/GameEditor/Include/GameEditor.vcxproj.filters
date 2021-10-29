@@ -19,9 +19,6 @@
     <Filter Include="EditorMain">
       <UniqueIdentifier>{be0832b2-c4cf-4fde-b5ed-bf42e90067ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. EditorGUI\Object">
-      <UniqueIdentifier>{031b2822-cf8e-4333-9db4-60930d028c93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. EditorGUI\Component">
       <UniqueIdentifier>{c56b6be9-b73c-48f0-8833-f6a68015b96c}</UniqueIdentifier>
     </Filter>
@@ -39,6 +36,27 @@
     </Filter>
     <Filter Include="01. EditorGUI\Component\Camera">
       <UniqueIdentifier>{2b49d847-e049-4284-bb79-85f45eaf4777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{dcf80e71-ad8c-4ff1-953a-c965ad042037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Mouse">
+      <UniqueIdentifier>{fd22b32e-0673-400a-89b9-9d985fe30697}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Object">
+      <UniqueIdentifier>{e5a74c66-5ad8-4a51-91dc-3e89074e3aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Particle">
+      <UniqueIdentifier>{ea6ce212-dea2-4331-9b72-9005117768b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Window">
+      <UniqueIdentifier>{031b2822-cf8e-4333-9db4-60930d028c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Window\Prefab">
+      <UniqueIdentifier>{1e636455-655d-4215-aa19-f46f9ed68969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Window\InspectorWindow">
+      <UniqueIdentifier>{9071ee7d-6bbc-47ab-97cd-3885db3573ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,13 +100,10 @@
       <Filter>EditorMain</Filter>
     </ClInclude>
     <ClInclude Include="DetailWindow.h">
-      <Filter>01. EditorGUI\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="InspectorWindow.h">
-      <Filter>01. EditorGUI\Object</Filter>
+      <Filter>01. EditorGUI\Window</Filter>
     </ClInclude>
     <ClInclude Include="Animation2DWindow.h">
-      <Filter>01. EditorGUI\Object</Filter>
+      <Filter>01. EditorGUI\Window</Filter>
     </ClInclude>
     <ClInclude Include="IMGUIWidgetComponent.h">
       <Filter>01. EditorGUI\Component</Filter>
@@ -110,6 +125,21 @@
     </ClInclude>
     <ClInclude Include="IMGUICameraComponent.h">
       <Filter>01. EditorGUI\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUIObjectInfoComponent.h">
+      <Filter>01. EditorGUI\Component\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUIParticleComponent.h">
+      <Filter>01. EditorGUI\Component\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="PrefabWindow.h">
+      <Filter>01. EditorGUI\Window\Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorWindow.h">
+      <Filter>01. EditorGUI\Window\InspectorWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,13 +174,10 @@
       <Filter>EditorMain</Filter>
     </ClCompile>
     <ClCompile Include="DetailWindow.cpp">
-      <Filter>01. EditorGUI\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="InspectorWindow.cpp">
-      <Filter>01. EditorGUI\Object</Filter>
+      <Filter>01. EditorGUI\Window</Filter>
     </ClCompile>
     <ClCompile Include="Animation2DWindow.cpp">
-      <Filter>01. EditorGUI\Object</Filter>
+      <Filter>01. EditorGUI\Window</Filter>
     </ClCompile>
     <ClCompile Include="IMGUIWidgetComponent.cpp">
       <Filter>01. EditorGUI\Component</Filter>
@@ -169,6 +196,21 @@
     </ClCompile>
     <ClCompile Include="IMGUICameraComponent.cpp">
       <Filter>01. EditorGUI\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIObjectInfoComponent.cpp">
+      <Filter>01. EditorGUI\Component\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIParticleComponent.cpp">
+      <Filter>01. EditorGUI\Component\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="PrefabWindow.cpp">
+      <Filter>01. EditorGUI\Window\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorWindow.cpp">
+      <Filter>01. EditorGUI\Window\InspectorWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

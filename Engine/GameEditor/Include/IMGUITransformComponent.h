@@ -25,6 +25,7 @@ private:
 	class CIMGUIDrag* m_InputPivotY;
 	class CIMGUIDrag* m_InputPivotZ;
 
+	
 	class CSceneComponent* m_Component;
 public:
 	void SetPosition(const Vector3& Pos);

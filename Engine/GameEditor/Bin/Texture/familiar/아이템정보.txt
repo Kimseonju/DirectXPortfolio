@@ -1,7 +1,0 @@
-brotherbobby 
-아이작이 공격하는 방향대로 공격
-sister
-위와동일
-
-sackofPennies 
-방 두개 클리어할때마다 돈을 드랍( 그냥 클리어할때마다 돈드랍하는걸로)

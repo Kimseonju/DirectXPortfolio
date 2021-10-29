@@ -42,14 +42,7 @@ bool CTileWindow::Init()
 
 	CIMGUIImageButton* ImageButton = AddWidget<CIMGUIImageButton>("Button100", 100.f, 100.f);
 
-	if (!CResourceManager::GetInst()->LoadTexture("tileAtlas", TEXT("Map/tileAtlas.png")))
-		return false;
-
-	if (!CResourceManager::GetInst()->LoadTexture("townAtlas", TEXT("Map/townAtlas.png")))
-		return false;
-	CTexture* Image = CResourceManager::GetInst()->FindTexture("townAtlas");
-
-	ImageButton->SetImage(Image);
+	ImageButton->SetTexture("tileAtlas", TEXT("Map/tileAtlas.png"));
 
 	CIMGUIButton* SaveButton = AddWidget<CIMGUIButton>("Save", 150.f, 20.f);
 	SaveButton->SetClickCallback<CTileWindow>(this, &CTileWindow::TestButtonClick);

@@ -12,6 +12,25 @@ CIMGUIImageButton::~CIMGUIImageButton()
 {
 }
 
+void CIMGUIImageButton::SetTexture(const std::string& Name, const TCHAR* FileName, const std::string& PathName)
+{
+    CResourceManager::GetInst()->LoadTexture(Name, FileName, PathName);
+
+    m_Texture = CResourceManager::GetInst()->FindTexture(Name);
+}
+
+void CIMGUIImageButton::SetTextureFullPath(const std::string& Name, const TCHAR* FullPath)
+{
+    CResourceManager::GetInst()->LoadTextureFullPath(Name, FullPath);
+
+    m_Texture = CResourceManager::GetInst()->FindTexture(Name);
+}
+
+void CIMGUIImageButton::SetTexture(CTexture* Texture)
+{
+    m_Texture = Texture;
+}
+
 bool CIMGUIImageButton::Init()
 {
 	return true;
@@ -21,13 +40,13 @@ void CIMGUIImageButton::Render()
 {
 	if (m_Font)
 		ImGui::PushFont(m_Font);
-    float m_tex_w= (float)m_Image->GetWidth();
-    float m_tex_h = (float)m_Image->GetHeight();
+    float m_tex_w= (float)m_Texture->GetWidth();
+    float m_tex_h = (float)m_Texture->GetHeight();
     int IdxX = (int)(m_tex_w / m_Size.x);
     int IdxY = (int)(m_tex_h / m_Size.y);
 
     //ID넘기기 SRV로 넘길수있다고 함
-    ImTextureID my_tex_id = m_Image->GetResourceInfo()->SRV;
+    ImTextureID my_tex_id = m_Texture->GetResourceInfo()->SRV;
     ImVec2 uv = ImVec2(16.f  / m_tex_w, 16.f / m_tex_h);
 
     for (int y = 1; y <= IdxY; ++y)

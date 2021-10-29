@@ -21,6 +21,7 @@
 #include "TileWindow.h"
 #include "TileMapWindow.h"
 #include "InspectorWindow.h"
+#include "PrefabWindow.h"
 #include "Scene/SceneManager.h"
 #include "Scene/Scene.h"
 #include "Scene/EditorScene.h"
@@ -112,7 +113,8 @@ void CGameEditorView::OnInitialUpdate()
 	CIMGUIManager::GetInst()->AddWindow<CObjectWindow>("ObjectWindow");
 	//CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
 	CIMGUIManager::GetInst()->AddWindow<CInspectorWindow>("InspectorWindow");
-
+	CIMGUIManager::GetInst()->AddWindow<CPrefabWindow>("PrefabWindow");
+	
 	CIMGUIWindow* Window = CIMGUIManager::GetInst()->FindIMGUIWindow("TileWindow");
 	Window->Open();
 

@@ -212,8 +212,11 @@
     <ClInclude Include="GameEditor.h" />
     <ClInclude Include="GameEditorDoc.h" />
     <ClInclude Include="GameEditorView.h" />
+    <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="IMGUICameraComponent.h" />
     <ClInclude Include="IMGUICollider2DComponent.h" />
+    <ClInclude Include="IMGUIObjectInfoComponent.h" />
+    <ClInclude Include="IMGUIParticleComponent.h" />
     <ClInclude Include="IMGUISpriteComponent.h" />
     <ClInclude Include="IMGUITransformComponent.h" />
     <ClInclude Include="IMGUIWidgetComponent.h" />
@@ -222,6 +225,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ObjectWindow.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PrefabWindow.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\EditorScene.h" />
     <ClInclude Include="targetver.h" />
@@ -235,8 +239,11 @@
     <ClCompile Include="GameEditor.cpp" />
     <ClCompile Include="GameEditorDoc.cpp" />
     <ClCompile Include="GameEditorView.cpp" />
+    <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="IMGUICameraComponent.cpp" />
     <ClCompile Include="IMGUICollider2DComponent.cpp" />
+    <ClCompile Include="IMGUIObjectInfoComponent.cpp" />
+    <ClCompile Include="IMGUIParticleComponent.cpp" />
     <ClCompile Include="IMGUISpriteComponent.cpp" />
     <ClCompile Include="IMGUITransformComponent.cpp" />
     <ClCompile Include="IMGUIWidgetComponent.cpp" />
@@ -250,6 +257,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PrefabWindow.cpp" />
     <ClCompile Include="Scene\EditorScene.cpp" />
     <ClCompile Include="TestWindow.cpp" />
     <ClCompile Include="TileMapWindow.cpp" />

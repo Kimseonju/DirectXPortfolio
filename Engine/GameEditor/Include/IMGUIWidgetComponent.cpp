@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "IMGUIWidgetComponent.h"
 #include "IMGUIWidget.h"
-
+#include <IMGUICollapsingHeader.h>
 CIMGUIWidgetComponent::CIMGUIWidgetComponent():
 	m_Owner(nullptr)
 {
@@ -9,6 +9,12 @@ CIMGUIWidgetComponent::CIMGUIWidgetComponent():
 
 CIMGUIWidgetComponent::~CIMGUIWidgetComponent()
 {
+}
+
+bool CIMGUIWidgetComponent::Init()
+{
+
+	return true;
 }
 
 void CIMGUIWidgetComponent::Enable(bool Enable)

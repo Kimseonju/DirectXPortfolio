@@ -61,6 +61,30 @@ void CGameObject::SetRootComponent(CSceneComponent* Root)
 	m_RootComponent = Root;
 }
 
+void CGameObject::SetRootCloneComponent(CSceneComponent* Root)
+{
+	{
+		auto	iter = m_SceneComponentList.begin();
+		auto	iterEnd = m_SceneComponentList.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			SAFE_RELEASE((*iter));
+			break;
+		}
+		m_SceneComponentList.clear();
+	}
+
+	std::vector<CSceneComponent*>VecComponent;
+	Root->GetAllComponent(VecComponent);
+	for (size_t i = 0; i < VecComponent.size(); i++)
+	{
+		m_SceneComponentList.push_back(VecComponent[i]);
+	}
+
+	m_RootComponent = Root;
+
+}
 CSceneComponent* CGameObject::FindSceneComponent(const std::string& Name)
 {
 	if (m_RootComponent == nullptr)

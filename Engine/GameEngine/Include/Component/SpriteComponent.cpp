@@ -15,11 +15,13 @@ CSpriteComponent::CSpriteComponent()
 CSpriteComponent::CSpriteComponent(const CSpriteComponent& com) :
 	CPrimitiveComponent(com)
 {
+	m_RefCount = 1;
 	m_pMesh = com.m_pMesh;
 
 	if (com.m_Animation)
 	{
 		m_Animation = com.m_Animation->Clone();
+		m_Animation->Release();
 	}
 }
 

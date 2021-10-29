@@ -229,6 +229,12 @@
     <Filter Include="01. Engine\09. IMGUI\03. Widget\Tree">
       <UniqueIdentifier>{d2f8f68a-5b0b-4cce-8fe1-e0dc074df487}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\Image">
+      <UniqueIdentifier>{db29cf5c-1126-48b0-b770-36ed37278a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\CollapsingHeader">
+      <UniqueIdentifier>{52fe388b-d20a-40f7-a02b-9a81000d25f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -591,9 +597,6 @@
     <ClInclude Include="UI\Text.h">
       <Filter>07. UI\01. Widget</Filter>
     </ClInclude>
-    <ClInclude Include="IMGUIImageButton.h">
-      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
-    </ClInclude>
     <ClInclude Include="Component\RigidBodyComponent.h">
       <Filter>05. Component\01. SceneComponent</Filter>
     </ClInclude>
@@ -659,6 +662,15 @@
     </ClInclude>
     <ClInclude Include="IMGUIDrag.h">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUIImageButton.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUIImage.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUICollapsingHeader.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\CollapsingHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -986,9 +998,6 @@
     <ClCompile Include="UI\Text.cpp">
       <Filter>07. UI\01. Widget</Filter>
     </ClCompile>
-    <ClCompile Include="IMGUIImageButton.cpp">
-      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Component\RigidBodyComponent.cpp">
       <Filter>05. Component\01. SceneComponent</Filter>
     </ClCompile>
@@ -1048,6 +1057,15 @@
     </ClCompile>
     <ClCompile Include="IMGUIDrag.cpp">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIImageButton.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIImage.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUICollapsingHeader.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\CollapsingHeader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

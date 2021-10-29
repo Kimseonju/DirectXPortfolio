@@ -90,6 +90,28 @@ public:
         return pObj;
     }
     template <typename T>
+    T* CloneObject(const std::string& Name, T* Obj, const Vector3& Pos = Vector3::Zero, const Vector3& Rot = Vector3::Zero,
+        const Vector3& Scale = Vector3::One)
+    {
+        T* pObj = Obj->Clone();
+
+        pObj->SetName(Name);
+        pObj->m_pScene = this;
+        pObj->SetRelativePos(Pos);
+        pObj->SetRelativeRotation(Rot);
+        pObj->SetRelativeScale(Scale);
+        if (!pObj->Init())
+        {
+            SAFE_RELEASE(pObj);
+            return nullptr;
+        }
+
+        m_ObjList.push_back(pObj);
+        pObj->Release();
+        return pObj;
+    }
+
+    template <typename T>
     bool SetSceneMode()
     {
         SAFE_DELETE(m_pSceneMode);

@@ -210,9 +210,11 @@
     <ClInclude Include="imgui.h" />
     <ClInclude Include="IMGUIButton.h" />
     <ClInclude Include="IMGUICheckBox.h" />
+    <ClInclude Include="IMGUICollapsingHeader.h" />
     <ClInclude Include="IMGUIComboBox.h" />
     <ClInclude Include="IMGUIConsole.h" />
     <ClInclude Include="IMGUIDrag.h" />
+    <ClInclude Include="IMGUIImage.h" />
     <ClInclude Include="IMGUIImageButton.h" />
     <ClInclude Include="IMGUILabel.h" />
     <ClInclude Include="IMGUIListBox.h" />
@@ -344,9 +346,11 @@
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="IMGUIButton.cpp" />
     <ClCompile Include="IMGUICheckBox.cpp" />
+    <ClCompile Include="IMGUICollapsingHeader.cpp" />
     <ClCompile Include="IMGUIComboBox.cpp" />
     <ClCompile Include="IMGUIConsole.cpp" />
     <ClCompile Include="IMGUIDrag.cpp" />
+    <ClCompile Include="IMGUIImage.cpp" />
     <ClCompile Include="IMGUIImageButton.cpp" />
     <ClCompile Include="IMGUILabel.cpp" />
     <ClCompile Include="IMGUIListBox.cpp" />

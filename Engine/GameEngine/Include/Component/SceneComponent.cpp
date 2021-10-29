@@ -17,7 +17,8 @@ CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
     CComponent(com)
 {
     *this = com;
-
+    //수정한부분
+    m_RefCount = 0;
     m_pTransform = com.m_pTransform->Clone();
 
     m_pTransform->m_pParent = nullptr;
@@ -28,20 +29,23 @@ CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
     m_pParent = nullptr;
 
     m_vecChild.clear();
-    size_t  Size = com.m_vecChild.size();
+    m_pScene = com.m_pScene;
 
+    size_t  Size = com.m_vecChild.size();
+    
     for (size_t i = 0; i < Size; ++i)
     {
-        CSceneComponent* CloneCom = m_vecChild[i]->Clone();
-
+        CSceneComponent* CloneCom = com.m_vecChild[i]->Clone();
+    
         CloneCom->m_pParent = this;
-
+    
         m_vecChild.push_back(CloneCom);
-
+    
         CloneCom->m_pTransform->m_pParent = m_pTransform;
-
+    
         m_pTransform->m_vecChild.push_back(CloneCom->m_pTransform);
     }
+
 }
 
 CSceneComponent::~CSceneComponent()

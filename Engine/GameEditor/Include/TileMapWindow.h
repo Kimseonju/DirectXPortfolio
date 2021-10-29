@@ -28,15 +28,31 @@ private:
 	class CIMGUITextInput* m_InputTileCountY;
 	class CIMGUITextInput* m_InputTileSizeX;
 	class CIMGUITextInput* m_InputTileSizeY;
+	class CIMGUITextInput* m_InputImageFrameX;
+	class CIMGUITextInput* m_InputImageFrameY;
 	Tile_Shape		m_TileShape;
 	class CIMGUIComboBox* m_TileModifyTypeCombo;
 	class CIMGUIComboBox* m_TileEditCombo;
+	class CIMGUIImage* m_TileImage;
 	Tile_Type			m_TileType;
 	Tile_Modify_Type	m_TileModifyType;
 	bool		m_CreateTile;
 	CSharedPtr<CTileMapComponent> m_TileMap;
+	int		m_ImageFrameX;
+	int		m_ImageFrameY;
+
 
 public:
+	int GetImageFrameX()	const
+	{
+		return m_ImageFrameX;
+	}
+
+	int GetImageFrameY()	const
+	{
+		return m_ImageFrameY;
+	}
+
 	CTileMapComponent* GetTileMap()	const
 	{
 		return m_TileMap;
@@ -79,6 +95,8 @@ public:
 	void InputScaleX();
 	void InputScaleY();
 	void InputScaleZ();
+	void InputImageFrameX();
+	void InputImageFrameY();
 
 public:
 	void InputTileCountX();

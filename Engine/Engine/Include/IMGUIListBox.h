@@ -15,6 +15,7 @@ protected:
 	int		m_SelectIndex;
 	int		m_PageItemCount;
 	bool	m_Sort;
+	bool	m_Border;
 	std::function<void(int, const char*)>	m_SelectCallback;
 
 public:
@@ -24,6 +25,10 @@ public:
 	}
 
 public:
+	void SetBorder(bool Border)
+	{
+		m_Border = Border;
+	}
 	void AddItem(const char* Item)
 	{
 		m_vecItem.push_back(Item);

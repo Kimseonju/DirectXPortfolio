@@ -36,6 +36,7 @@ public:
 	void SetFrameMax(int x, int y);
 	void SetTileDefaultFrame(int x, int y);
 	void SetTileFrame(int TileIndex, int x, int y);
+	void SetTileFrame(const Vector2& Pos, int x, int y);
 	void TileRemoveRender(const Vector3& Pos);
 	void TileRemoveRender(int TileIndexX, int TileIndexY);
 	void TileRemoveRender(int TileIndex);
@@ -58,6 +59,10 @@ public:
 	virtual void AddMaterial(const std::string& Name);
 
 public:
+	const Vector2& GetTileSize()	const
+	{
+		return m_TileSize;
+	}
 	int GetTileCount()	const
 	{
 		return m_CountX * m_CountY;

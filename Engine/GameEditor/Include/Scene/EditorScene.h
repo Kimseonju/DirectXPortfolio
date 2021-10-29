@@ -12,7 +12,9 @@ protected:
 
 private:
     class CTileMapWindow* m_TileMapWindow;
-
+    class CPrefabWindow* m_PrefabWindow;
+    class CObjectWindow* m_ObjectWindow;
+    int m_CloneObjectCount;
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
@@ -28,6 +30,7 @@ private:
 private:
     void EditTileType();
     void EditTileImage();
+    void EditMap();
     void CreateAnimationSequence2D();
 };
 

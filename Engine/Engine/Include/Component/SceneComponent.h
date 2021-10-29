@@ -19,10 +19,23 @@ protected:
     CSceneComponent* m_pParent;
     std::vector<CSharedPtr<CSceneComponent>>    m_vecChild;
     SceneComponent_Type m_SceneComponentType;
+
 public:
     SceneComponent_Type GetSceneComponentType() const
     {
         return m_SceneComponentType;
+    }
+
+    void GetSceneComponent(std::vector<CSceneComponent*>& vec)
+    {
+        auto iter = m_vecChild.begin();
+        auto iterEnd = m_vecChild.end();
+
+        for (; iter != iterEnd; ++iter)
+        {
+            (*iter)->GetSceneComponent(vec);
+            vec.push_back(*iter);
+        }
     }
 public:
     virtual void Active(bool bActive);

@@ -24,6 +24,7 @@ void CIMGUIText::Render()
 	if (m_Align)
 		ImGui::AlignTextToFramePadding();
 
+
 	ImGui::TextColored(m_Color, m_TextUTF8);
 
 

@@ -70,6 +70,10 @@ void CCollisionSection::Collision(float DeltaTime)
 			CollisionProfile* SrcProfile = Src->GetProfile();
 			CollisionProfile* DestProfile = Dest->GetProfile();
 
+			if (!SrcProfile || !DestProfile)
+			{
+				continue;
+			}
 			if (SrcProfile->vecChannel[(int)DestProfile->Channel].Interaction ==
 				Collision_Interaction::Ignore ||
 				DestProfile->vecChannel[(int)SrcProfile->Channel].Interaction ==

@@ -20,7 +20,6 @@ CTileMapComponent::CTileMapComponent() :
 	m_EditorMode(true)
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
-	m_PrimitiveClassType = PrimitiveComponent_ClassType::TileMap;
 	m_2DType = RT2D_MAP;
 	m_3DType = RT3D_Default;
 }
@@ -132,6 +131,17 @@ void CTileMapComponent::SetTileFrame(int TileIndex, int x, int y)
 {
 	m_vecTile[TileIndex]->SetFrameStart(m_TileImageFrameSize * Vector2((float)x, (float)y));
 	m_vecTile[TileIndex]->SetFrameEnd(m_TileImageFrameSize * Vector2((float)(x + 1), (float)(y + 1)));
+}
+
+void CTileMapComponent::SetTileFrame(const Vector2& Pos, int x, int y)
+{
+	int	TileIndex = GetTileIndex(Vector3(Pos.x, Pos.y, 0.f));
+
+	if (TileIndex == -1)
+		return;
+
+	SetTileFrame(TileIndex, x, y);
+
 }
 
 void CTileMapComponent::TileRemoveRender(const Vector3& Pos)
@@ -403,7 +413,6 @@ int CTileMapComponent::GetTileIndexY(const Vector3& Pos)
 		return IndexY * 2;
 
 	return -1;
-	return 0;
 }
 
 int CTileMapComponent::GetTileIndex(const Vector3& Pos)
@@ -919,6 +928,7 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 	Material->Load(pFile);
 
 	m_vecMaterialSlot[0] = Material;
+	m_vecMaterialSlot[0]->Release();
 
 	auto	iter = m_vecTile.begin();
 	auto	iterEnd = m_vecTile.end();
@@ -944,7 +954,12 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 		m_vecTile[i]->m_Owner = this;
 
 		m_vecTile[i]->Load(pFile);
+
+		m_vecTileInfo[i].Color = Vector4(1.f, 1.f, 1.f, 1.f);
+		m_vecTileInfo[i].Opacity = 1.f;
 	}
+
+	m_CBuffer->SetTileImageSize(m_TileImageSize);
 
 	fclose(pFile);
 

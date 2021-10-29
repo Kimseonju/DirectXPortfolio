@@ -22,6 +22,7 @@
 #include "DetailWindow.h"
 #include "IMGUIManager.h"
 #include "InspectorWindow.h"
+#include "PrefabWindow.h"
 
 CObjectWindow::CObjectWindow() :
 	m_CreateObjectCount(0),
@@ -72,12 +73,24 @@ bool CObjectWindow::Init()
 	LoadBtn->SetFont("DefaultFont");
 	LoadBtn->SetClickCallback<CObjectWindow>(this, &CObjectWindow::LoadButton);
 
+
+	CIMGUIButton* Prefab = AddWidget<CIMGUIButton>("AddPrefab", 100.f, 40.f);
+	Prefab->SetFont("DefaultFont");
+	Prefab->SetClickCallback<CObjectWindow>(this, &CObjectWindow::AddPrefab);
+
+
 	return true;
 }
 
 void CObjectWindow::Update(float DeltaTime)
 {
 	CIMGUIWindow::Update(DeltaTime);
+	m_ObjListBox->Clear();
+	for (size_t i = 0; i < m_VecObject.size(); i++)
+	{
+		m_ObjListBox->AddItem(m_VecObject[i]->GetName().c_str());
+	}
+	
 }
 
 
@@ -90,7 +103,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	CScene* Scene = CSceneManager::GetInst()->GetScene();
 
-	m_SelectObject = Scene->FindObject(SelectName);
+	m_SelectObject = m_VecObject[m_SelectObjectIndex];
 
 	// 가지고 있는 컴포넌트의 이름을 얻어온다.
 	std::vector<std::string>	vecName;
@@ -117,6 +130,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	CSceneComponent* Compoonent = m_SelectObject->FindSceneComponent(vecName[0]);
 	InspectorWindow->TransformUpdate(Compoonent);
+	InspectorWindow->ObjectInfoUpdate(m_SelectObject);
 
 }
 
@@ -128,58 +142,13 @@ void CObjectWindow::ComponentListCallback(int SelectIndex, const char* Item)
 
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	InspectorWindow->AllComponentClose();
-	SceneComponent_Type Type=m_SelectComponent->GetSceneComponentType();
-	switch (Type)
-	{
-	case SceneComponent_Type::Scene:
-	{
-		InspectorWindow->TransformUpdate(m_SelectComponent);
-
-		break; 
-	}
-	case SceneComponent_Type::Primitive:
-	{
-		InspectorWindow->TransformUpdate(m_SelectComponent);
-		CPrimitiveComponent* PrimitiveComponent = (CPrimitiveComponent*)m_SelectComponent.Get();
-		PrimitiveComponent_ClassType ClassType=PrimitiveComponent->GetPrimitiveClassType();
-
-		switch (ClassType)
-		{
-		case PrimitiveComponent_ClassType::Default:
-			break;
-		case PrimitiveComponent_ClassType::Mesh:
-			break;
-		case PrimitiveComponent_ClassType::Sprite:
-			InspectorWindow->SpriteUpdate((CSpriteComponent*)m_SelectComponent.Get());
-			break;
-		case PrimitiveComponent_ClassType::Collider:
-			InspectorWindow->ColliderUpdate((CCollider*)m_SelectComponent.Get());
-			
-		case PrimitiveComponent_ClassType::Particle:
-			break;
-		case PrimitiveComponent_ClassType::Widget:
-			break;
-		case PrimitiveComponent_ClassType::TileMap:
-			break;
-		}
-		break;
-	}
-	case SceneComponent_Type::Camera:
-	{
-		CCamera* CameraComponent = (CCamera*)m_SelectComponent.Get();
-		InspectorWindow->TransformUpdate(m_SelectComponent);
-		InspectorWindow->CameraUpdate(CameraComponent);
-		break;
-	}
-	case SceneComponent_Type::SpringArm:
-		InspectorWindow->TransformUpdate(m_SelectComponent);
-		break;
-	}
+	
+	ComponentInfoUpdate(m_SelectComponent.Get());
 }
 
 void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
 {
-	if (!m_SelectObject || !m_SelectComponent)
+	if (!m_SelectObject)
 		return;
 
 	m_CreateComponentIndex = SelectIndex;
@@ -198,12 +167,13 @@ void CObjectWindow::CreateObjectButtonClick()
 
 	CGameObject* Obj = Scene->SpawnObject<CGameObject>(ObjName);
 	Obj->SetWorldScale(100.f, 100.f, 1.f);
-	m_ObjListBox->AddItem(ObjName);
+	m_VecObject.push_back(Obj);
+	
 }
 
 void CObjectWindow::CreateComponentButtonClick()
 {
-	if (!m_SelectObject || !m_SelectComponent)
+	if (!m_SelectObject)
 		return;
 	// 이름을 지정하기 위한 Popup 창을 열어준다.
 	CIMGUIText* Text=AddPopupWidget<CIMGUIText>("CreateComponent");
@@ -213,9 +183,9 @@ void CObjectWindow::CreateComponentButtonClick()
 	Text->SetText("ComponentName");
 
 	CIMGUISameLine* SameLine = AddPopupWidget<CIMGUISameLine>("SameLine");
-	m_NameInput = AddPopupWidget<CIMGUITextInput>("##NameInput", 300.f, 20.f);
+	m_NameInput = AddPopupWidget<CIMGUITextInput>("##NameInput", 100.f, 20.f);
 
-	CIMGUIComboBox* ComponentCombo = AddPopupWidget<CIMGUIComboBox>("##ComponentCombo", 300.f, 100.f);
+	CIMGUIComboBox* ComponentCombo = AddPopupWidget<CIMGUIComboBox>("##ComponentCombo", 100.f, 100.f);
 
 	ComponentCombo->SetSelectCallback<CObjectWindow>(this, &CObjectWindow::ComponentComboCallback);
 
@@ -245,7 +215,8 @@ void CObjectWindow::InputComponentPopupButton()
 {
 	if (!m_SelectObject)
 		return;
-
+	if (m_CreateComponentIndex==-1)
+		return;
 	CSceneComponent* NewComponent = nullptr;
 
 	const char* Name = m_NameInput->GetTextMultibyte();
@@ -284,12 +255,107 @@ void CObjectWindow::InputComponentPopupButton()
 	}
 
 	m_ComponentListBox->AddItem(NewComponent->GetName().c_str());
+	if (m_SelectObject->GetRootComponent()->GetName() == "DefaultRoot")
+	{
+		m_SelectObject->SetRootComponent(NewComponent);
+		m_SelectComponent = NewComponent;
 
-	m_SelectComponent->AddChild(NewComponent);
+		std::vector<std::string>	vecName;
+
+		m_SelectObject->GetComponentName(vecName);
+
+		m_ComponentListBox->Clear();
+
+		size_t	Size = vecName.size();
+
+
+		for (size_t i = 0; i < vecName.size(); ++i)
+		{
+			m_ComponentListBox->AddItem(vecName[i].c_str());
+		}
+
+		CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+		InspectorWindow->AllComponentClose();
+		ComponentInfoUpdate(m_SelectComponent.Get());
+
+		
+	}
+	else
+	{
+		m_SelectObject->GetRootComponent()->AddChild(NewComponent);
+	}
 
 	NewComponent->SetRelativePos(10.f, 20.f, 30.f);
 
 	ClosePopup();
+}
+
+void CObjectWindow::AddPrefab()
+{
+	if (!m_SelectObject)
+	{
+		return;
+	}
+	if (!m_PrefabWindow)
+	{
+		m_PrefabWindow = (CPrefabWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("PrefabWindow");
+	}
+	m_PrefabWindow->AddPrefab(m_SelectObject);
+}
+
+void CObjectWindow::ComponentInfoUpdate(CSceneComponent* Compoonent)
+{
+	
+	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+	InspectorWindow->AllComponentClose();
+	SceneComponent_Type Type = Compoonent->GetSceneComponentType();
+
+	switch (Type)
+	{
+	case SceneComponent_Type::Scene:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case SceneComponent_Type::Primitive:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		CPrimitiveComponent* PrimitiveComponent = (CPrimitiveComponent*)Compoonent;
+		PrimitiveComponent_ClassType ClassType = PrimitiveComponent->GetPrimitiveClassType();
+
+		switch (ClassType)
+		{
+		case PrimitiveComponent_ClassType::Default:
+			break;
+		case PrimitiveComponent_ClassType::Mesh:
+			break;
+		case PrimitiveComponent_ClassType::Sprite:
+			InspectorWindow->SpriteUpdate((CSpriteComponent*)Compoonent);
+			break;
+		case PrimitiveComponent_ClassType::Collider:
+			InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
+
+		case PrimitiveComponent_ClassType::Particle:
+			break;
+		case PrimitiveComponent_ClassType::Widget:
+			break;
+		case PrimitiveComponent_ClassType::TileMap:
+			break;
+		}
+		break;
+	}
+	case SceneComponent_Type::Camera:
+	{
+		CCamera* CameraComponent = (CCamera*)Compoonent;
+		InspectorWindow->TransformUpdate(Compoonent);
+		InspectorWindow->CameraUpdate(CameraComponent);
+		break;
+	}
+	case SceneComponent_Type::SpringArm:
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+
 }
 
 
