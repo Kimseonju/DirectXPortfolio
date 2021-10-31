@@ -1,16 +1,19 @@
 #pragma once
-
-#include "IMGUIWindow.h"
+#include "IMGUIWidgetComponent.h"
 #include "Editor.h"
 #include "Component/TileMapComponent.h"
 #include "Resource/Texture.h"
-
-class CTileMapWindow :
-	public CIMGUIWindow
+#include <IMGUITabItem.h>
+class CIMGUITileMapComponent :
+	public CIMGUIWidgetComponent
 {
 public:
-	CTileMapWindow();
-	virtual ~CTileMapWindow();
+	CIMGUITileMapComponent();
+	virtual ~CIMGUITileMapComponent();
+
+private:
+
+
 
 private:
 	CSharedPtr<CTexture>	m_TileTexture;
@@ -49,11 +52,20 @@ private:
 	int		m_ImageFrameMaxX;
 	int		m_ImageFrameMaxY;
 private:
-	class CIMGUITabBar* m_TileMapTabBar;
-	class CIMGUITabItem* m_TileMapCreateTabItem;
-	class CIMGUITabItem* m_TileMapToolTabItem;
+	CIMGUITabItem* m_TileMapTabItem;
+	class CIMGUITileComponent* m_TileComponent;
 
 public:
+
+	void SetTileComponent(class CIMGUITileComponent* Component)
+	{
+		m_TileComponent = Component;
+	}
+
+	CIMGUITabItem* GetTabItem()
+	{
+		return m_TileMapTabItem;
+	}
 	int GetImageFrameX()	const
 	{
 		return m_ImageFrameX;
@@ -133,6 +145,5 @@ public:
 	void SaveTileMap();
 	void LoadTileMap();
 	void LoadTileImage();
+
 };
-
-

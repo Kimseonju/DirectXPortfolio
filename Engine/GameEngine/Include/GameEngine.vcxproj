@@ -220,6 +220,10 @@
     <ClInclude Include="IMGUIListBox.h" />
     <ClInclude Include="IMGUIManager.h" />
     <ClInclude Include="IMGUISameLine.h" />
+    <ClInclude Include="IMGUITabBar.h" />
+    <ClInclude Include="IMGUITabBarEnd.h" />
+    <ClInclude Include="IMGUITabItem.h" />
+    <ClInclude Include="IMGUITabItemEnd.h" />
     <ClInclude Include="IMGUIText.h" />
     <ClInclude Include="IMGUITextInput.h" />
     <ClInclude Include="IMGUITreeNode.h" />
@@ -356,6 +360,10 @@
     <ClCompile Include="IMGUIListBox.cpp" />
     <ClCompile Include="IMGUIManager.cpp" />
     <ClCompile Include="IMGUISameLine.cpp" />
+    <ClCompile Include="IMGUITabBar.cpp" />
+    <ClCompile Include="IMGUITabBarEnd.cpp" />
+    <ClCompile Include="IMGUITabItem.cpp" />
+    <ClCompile Include="IMGUITabItemEnd.cpp" />
     <ClCompile Include="IMGUIText.cpp" />
     <ClCompile Include="IMGUITextInput.cpp" />
     <ClCompile Include="IMGUITreeNode.cpp" />

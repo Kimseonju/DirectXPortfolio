@@ -235,6 +235,15 @@
     <Filter Include="01. Engine\09. IMGUI\03. Widget\CollapsingHeader">
       <UniqueIdentifier>{52fe388b-d20a-40f7-a02b-9a81000d25f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\Tab">
+      <UniqueIdentifier>{c7b6eabf-b163-418e-a308-933a6e34d2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\Tab\Bar">
+      <UniqueIdentifier>{f1b1018a-8a4d-4a63-81dc-241e285e7685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine\09. IMGUI\03. Widget\Tab\Item">
+      <UniqueIdentifier>{74a75a0c-384a-45b5-bf16-f4c72e35ce5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -672,6 +681,18 @@
     <ClInclude Include="IMGUICollapsingHeader.h">
       <Filter>01. Engine\09. IMGUI\03. Widget\CollapsingHeader</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUITabBarEnd.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITabBar.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITabItemEnd.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITabItem.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1066,6 +1087,18 @@
     </ClCompile>
     <ClCompile Include="IMGUICollapsingHeader.cpp">
       <Filter>01. Engine\09. IMGUI\03. Widget\CollapsingHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITabBar.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITabBarEnd.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITabItem.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITabItemEnd.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

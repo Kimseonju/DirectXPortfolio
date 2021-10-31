@@ -49,9 +49,9 @@ void CInspectorWindow::Update(float DeltaTime)
 	m_Transform->Update(DeltaTime);
 }
 
-void CInspectorWindow::ObjectInfoUpdate(CGameObject* Obj)
+void CInspectorWindow::ObjectUpdateInfo(CGameObject* Obj)
 {
-	m_Object->InfoUpdate(Obj);
+	m_Object->UpdateInfo(Obj);
 
 }
 
@@ -63,17 +63,17 @@ void CInspectorWindow::TransformUpdate(CSceneComponent* Component)
 
 void CInspectorWindow::SpriteUpdate(CSpriteComponent* Sprite)
 {
-	m_Sprite->InfoUpdate(Sprite);
+	m_Sprite->UpdateInfo(Sprite);
 }
 
 void CInspectorWindow::ColliderUpdate(CCollider* Collider)
 {
-	m_Collider->InfoUpdate(Collider);
+	m_Collider->UpdateInfo(Collider);
 }
 
 void CInspectorWindow::CameraUpdate(CCamera* Camera)
 {
-	m_Camera->InfoUpdate(Camera);
+	m_Camera->UpdateInfo(Camera);
 }
 void CInspectorWindow::CreateObjectInfo()
 {

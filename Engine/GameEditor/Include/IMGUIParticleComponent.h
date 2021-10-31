@@ -11,7 +11,7 @@ public:
 private:
 
 public:
-	void InfoUpdate(CGameObject* Object);
+	void UpdateInfo(CGameObject* Object);
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

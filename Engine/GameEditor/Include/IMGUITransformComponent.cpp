@@ -64,13 +64,16 @@ bool CIMGUITransformComponent::Init()
 #pragma region Position
 
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Title", 100.f, 10.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Title");
 	m_vecWidget.push_back(Text);
 	Text->SetText("Transform");
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Position", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Position");
 	m_vecWidget.push_back(Text);
 	Text->SetText("Position");
+
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
 
 	m_InputPosX = m_Owner->AddWidget<CIMGUIDrag>("##Input_PosX", 60.f, 20.f);
 	m_vecWidget.push_back(m_InputPosX);
@@ -93,9 +96,12 @@ bool CIMGUITransformComponent::Init()
 
 #pragma endregion
 #pragma region Rotation
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Rotation", 150.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Rotation");
 	Text->SetText("Rotation");
 	m_vecWidget.push_back(Text);
+
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
 
 	m_InputRotX = m_Owner->AddWidget<CIMGUIDrag>("##Input_RotationX", 60.f, 20.f);
 	m_InputRotX->SetNumberFloat(true);
@@ -121,9 +127,12 @@ bool CIMGUITransformComponent::Init()
 
 #pragma region Scale
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Scale", 250.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Scale");
 	Text->SetText("Scale");
 	m_vecWidget.push_back(Text);
+
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
 
 	m_InputScaleX = m_Owner->AddWidget<CIMGUIDrag>("##Input_ScaleX", 60.f, 20.f);
 	m_InputScaleX->SetNumberFloat(true);
@@ -151,11 +160,13 @@ bool CIMGUITransformComponent::Init()
 #pragma region Pivot
 
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Pivot", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Pivot");
 	Text->SetText("Pivot");
 	SameLine->SetSize(20.f, 20.f);
 	m_vecWidget.push_back(Text);
 
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine); 
 	m_InputPivotX = m_Owner->AddWidget<CIMGUIDrag>("##Input_PivotX", 100.f, 20.f);
 	m_InputPivotX->SetNumberFloat(true);
 	m_InputPivotX->SetInputCallback<CIMGUITransformComponent>(this, &CIMGUITransformComponent::InputPivotX);

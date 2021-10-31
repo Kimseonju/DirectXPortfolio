@@ -25,6 +25,7 @@
 #include "Scene/SceneManager.h"
 #include "Scene/Scene.h"
 #include "Scene/EditorScene.h"
+#include "TileMapToolWindow.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -109,7 +110,7 @@ void CGameEditorView::OnInitialUpdate()
 	CIMGUIManager::GetInst()->AddWindow<CTestWindow>("TestWindow");
 	CIMGUIManager::GetInst()->AddWindow<CLogWindow>("LogWindow");
 	CIMGUIManager::GetInst()->AddWindow<CTileWindow>("TileWindow");
-	CIMGUIManager::GetInst()->AddWindow<CTileMapWindow>("TileMapWindow");
+	CIMGUIManager::GetInst()->AddWindow<CTileMapToolWindow>("TileMapToolWindow");
 	CIMGUIManager::GetInst()->AddWindow<CObjectWindow>("ObjectWindow");
 	//CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
 	CIMGUIManager::GetInst()->AddWindow<CInspectorWindow>("InspectorWindow");

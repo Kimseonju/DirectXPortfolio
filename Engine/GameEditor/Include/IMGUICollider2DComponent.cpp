@@ -25,7 +25,7 @@ CIMGUICollider2DComponent::~CIMGUICollider2DComponent()
 {
 }
 
-void CIMGUICollider2DComponent::InfoUpdate(CCollider* Collider)
+void CIMGUICollider2DComponent::UpdateInfo(CCollider* Collider)
 {
 	m_Collider = Collider;
 	Collider_Shape Shape=m_Collider->GetColliderShape();
@@ -113,7 +113,7 @@ bool CIMGUICollider2DComponent::Init()
 #pragma endregion
 #pragma region Input
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Length", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Length");
 	Text->SetText("Length");
 	SameLine->SetSize(20.f, 20.f);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");

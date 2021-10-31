@@ -40,11 +40,12 @@ public:
 	void ComponentListCallback(int SelectIndex, const char* Item);
 	void ComponentComboCallback(int SelectIndex, const char* Item);
 	void CreateObjectButtonClick();
+	void DeleteObjectButtonClick();
 	void CreateComponentButtonClick();
 	void InputComponentPopupButton();
 
 	void AddPrefab();
-	void ComponentInfoUpdate(CSceneComponent* Compoonent);
+	void ComponentUpdateInfo(CSceneComponent* Compoonent);
 public:
 	void SetPosX(float x);
 	void SetPosY(float y);

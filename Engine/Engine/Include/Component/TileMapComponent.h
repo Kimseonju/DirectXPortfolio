@@ -78,6 +78,16 @@ public:
 		return m_CountY;
 	}
 
+	int GetImageFrameMaxX()	const
+	{
+		return m_FrameMaxX;
+	}
+
+	int GetImageFrameMaxY()	const
+	{
+		return m_FrameMaxY;
+	}
+
 	int GetTileIndexX(const Vector3& Pos);
 	int GetTileIndexY(const Vector3& Pos);
 	int GetTileIndex(const Vector3& Pos);
@@ -87,6 +97,7 @@ public:
 	CTile* GetTile(const Vector2& Pos);
 	CTile* GetTile(int x, int y);
 	CTile* GetTile(int Index);
+	void UpdateInfo();
 
 public:
 	virtual void Start();

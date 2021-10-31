@@ -9,6 +9,8 @@
 #include "IMGUIListBox.h"
 #include "IMGUIComboBox.h"
 #include "IMGUITextInput.h"
+#include "IMGUITabBar.h"
+#include "IMGUITabItem.h"
 #include "ObjectWindow.h"
 #include "IMGUIManager.h"
 #include "Scene/SceneManager.h"
@@ -20,10 +22,13 @@
 #include "PathManager.h"
 #include "IMGUIImage.h"
 
+
 CTileMapWindow::CTileMapWindow() :
 	m_CreateTile(false),
 	m_ImageFrameX(0),
-	m_ImageFrameY(0)
+	m_ImageFrameY(0),
+	m_ImageFrameMaxX(1),
+	m_ImageFrameMaxY(1)
 {
 }
 
@@ -40,11 +45,18 @@ void CTileMapWindow::SetPosition(const Vector3& Pos)
 
 bool CTileMapWindow::Init()
 {
+	m_TileMapTabBar = AddWidget<CIMGUITabBar>("TileMapTabBar");
+
+	m_TileMapCreateTabItem = AddWidget<CIMGUITabItem>("MapTool1");
+	m_TileMapToolTabItem = AddWidget<CIMGUITabItem>("MapTool2");
+
+	m_TileMapTabBar->WidgetPush(m_TileMapCreateTabItem);
+	m_TileMapTabBar->WidgetPush(m_TileMapToolTabItem);
 	CreateInputPos();
 	CreateInputRotation();
 	CreateInputScale();
-
 	CreateTileMapInfo();
+
 
 	m_TileShape = Tile_Shape::Rect;
 
@@ -110,11 +122,71 @@ void CTileMapWindow::InputScaleZ()
 void CTileMapWindow::InputImageFrameX()
 {
 	m_ImageFrameX = m_InputImageFrameX->GetValueInt();
+
+	if (m_ImageFrameX >= m_ImageFrameMaxX)
+		m_ImageFrameX = m_ImageFrameMaxX - 1;
+
+	else if (m_ImageFrameX < 0)
+		m_ImageFrameX = 0;
+
+	if (m_TileMap)
+		m_TileMap->UpdateInfo();
+
+	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
+		m_ImageFrameY / (float)m_ImageFrameMaxY);
+	m_TileImage->SetEndUV((m_ImageFrameX + 1) / (float)m_ImageFrameMaxX,
+		(m_ImageFrameY + 1) / (float)m_ImageFrameMaxY);
 }
 
 void CTileMapWindow::InputImageFrameY()
 {
 	m_ImageFrameY = m_InputImageFrameY->GetValueInt();
+
+	if (m_ImageFrameY >= m_ImageFrameMaxY)
+		m_ImageFrameY = m_ImageFrameMaxY - 1;
+
+	else if (m_ImageFrameY < 0)
+		m_ImageFrameY = 0;
+
+	if (m_TileMap)
+		m_TileMap->UpdateInfo();
+
+	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
+		m_ImageFrameY / (float)m_ImageFrameMaxY);
+	m_TileImage->SetEndUV((m_ImageFrameX + 1) / (float)m_ImageFrameMaxX,
+		(m_ImageFrameY + 1) / (float)m_ImageFrameMaxY);
+}
+
+void CTileMapWindow::InputImageFrameMaxX()
+{
+	m_ImageFrameMaxX = m_InputImageFrameMaxX->GetValueInt();
+
+	if (m_TileMap)
+	{
+		m_TileMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+		m_TileMap->UpdateInfo();
+	}
+
+	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
+		m_ImageFrameY / (float)m_ImageFrameMaxY);
+	m_TileImage->SetEndUV((m_ImageFrameX + 1) / (float)m_ImageFrameMaxX,
+		(m_ImageFrameY + 1) / (float)m_ImageFrameMaxY);
+}
+
+void CTileMapWindow::InputImageFrameMaxY()
+{
+	m_ImageFrameMaxY = m_InputImageFrameMaxY->GetValueInt();
+
+	if (m_TileMap)
+	{
+		m_TileMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+		m_TileMap->UpdateInfo();
+	}
+
+	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
+		m_ImageFrameY / (float)m_ImageFrameMaxY);
+	m_TileImage->SetEndUV((m_ImageFrameX + 1) / (float)m_ImageFrameMaxX,
+		(m_ImageFrameY + 1) / (float)m_ImageFrameMaxY);
 }
 
 void CTileMapWindow::InputTileCountX()
@@ -177,35 +249,29 @@ void CTileMapWindow::CreateInputPos()
 	Text->SetText("Position");
 
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	CIMGUILabel* Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputPosX = AddWidget<CIMGUITextInput>("##PosX", 50.f, 20.f);
 	m_InputPosX->SetNumberFloat(true);
 	m_InputPosX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputPosX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputPosX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputPosY = AddWidget<CIMGUITextInput>("##PosY", 50.f, 20.f);
 	m_InputPosY->SetNumberFloat(true);
 	m_InputPosY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputPosY);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Z", 30.f, 20.f);
-	Label->SetText("Z");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputPosY);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputPosZ = AddWidget<CIMGUITextInput>("##PosZ", 50.f, 20.f);
 	m_InputPosZ->SetNumberFloat(true);
 	m_InputPosZ->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputPosZ);
+	m_TileMapCreateTabItem->WidgetPush(m_InputPosZ);
 
 	m_InputPosX->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 	m_InputPosY->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
@@ -219,11 +285,8 @@ void CTileMapWindow::CreateInputScale()
 	Text->SetText("Scale");
 
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	CIMGUILabel* Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputScaleX = AddWidget<CIMGUITextInput>("##ScaleX", 50.f, 20.f);
 	m_InputScaleX->SetNumberFloat(true);
@@ -231,10 +294,8 @@ void CTileMapWindow::CreateInputScale()
 	m_InputScaleX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputScaleX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputScaleX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputScaleY = AddWidget<CIMGUITextInput>("##ScaleY", 50.f, 20.f);
 	m_InputScaleY->SetNumberFloat(true);
@@ -242,15 +303,14 @@ void CTileMapWindow::CreateInputScale()
 	m_InputScaleY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputScaleY);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Z", 30.f, 20.f);
-	Label->SetText("Z");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputScaleY);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputScaleZ = AddWidget<CIMGUITextInput>("##ScaleZ", 50.f, 20.f);
 	m_InputScaleZ->SetNumberFloat(true);
 	m_InputScaleZ->SetFloat(1.f);
 	m_InputScaleZ->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputScaleZ);
+	m_TileMapCreateTabItem->WidgetPush(m_InputScaleZ);
 
 	m_InputScaleX->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 	m_InputScaleY->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
@@ -259,40 +319,35 @@ void CTileMapWindow::CreateInputScale()
 
 void CTileMapWindow::CreateInputRotation()
 {
-	CIMGUIText* Text = AddWidget<CIMGUIText>("Rotation", 70.f);
+	CIMGUIText* Text = AddWidget<CIMGUIText>("Rotation");
 	Text->SetFont("DefaultFont");
 	Text->SetText("Rotation");
 
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
-	CIMGUILabel* Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputRotX = AddWidget<CIMGUITextInput>("##RotX", 50.f, 20.f);
 	m_InputRotX->SetNumberFloat(true);
 	m_InputRotX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputRotX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputRotX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputRotY = AddWidget<CIMGUITextInput>("##RotY", 50.f, 20.f);
 	m_InputRotY->SetNumberFloat(true);
 	m_InputRotY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputRotY);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Z", 30.f, 20.f);
-	Label->SetText("Z");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputRotY);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputRotZ = AddWidget<CIMGUITextInput>("##RotZ", 50.f, 20.f);
 	m_InputRotZ->SetNumberFloat(true);
 	m_InputRotZ->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputRotZ);
+	m_TileMapCreateTabItem->WidgetPush(m_InputRotZ);
 
 	m_InputRotX->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 	m_InputRotY->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
@@ -301,11 +356,15 @@ void CTileMapWindow::CreateInputRotation()
 
 void CTileMapWindow::CreateTileMapInfo()
 {
+
+
 	CIMGUIText* Text = AddWidget<CIMGUIText>("TileMap");
 	Text->SetFont("DefaultFont");
 	Text->SetText("TileShape");
 
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_TileShapeCombo = AddWidget<CIMGUIComboBox>("##TileShape", 300.f, 100.f);
 
@@ -313,31 +372,30 @@ void CTileMapWindow::CreateTileMapInfo()
 
 	m_TileShapeCombo->AddItem("Rect");
 	m_TileShapeCombo->AddItem("Rhombus");
+	m_TileMapCreateTabItem->WidgetPush(m_TileShapeCombo);
 
 	Text = AddWidget<CIMGUIText>("TileMap");
 	Text->SetFont("DefaultFont");
 	Text->SetText("TileCount");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	CIMGUILabel* Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputTileCountX = AddWidget<CIMGUITextInput>("##TileCountX", 100.f, 20.f);
 	m_InputTileCountX->SetNumberInt(true);
 	m_InputTileCountX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputTileCountX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputTileCountY = AddWidget<CIMGUITextInput>("##TileCountY", 100.f, 20.f);
 	m_InputTileCountY->SetNumberInt(true);
 	m_InputTileCountY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputTileCountY);
+
+	m_TileMapCreateTabItem->WidgetPush(m_InputTileCountX);
+	m_TileMapCreateTabItem->WidgetPush(m_InputTileCountY);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 
 	// Tile Size
@@ -346,28 +404,28 @@ void CTileMapWindow::CreateTileMapInfo()
 	Text->SetText("TileSize");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
-	Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputTileSizeX = AddWidget<CIMGUITextInput>("##TileSizeX", 100.f, 20.f);
 	m_InputTileSizeX->SetNumberFloat(true);
 	m_InputTileSizeX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputTileSizeX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputTileSizeX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 	m_InputTileSizeY = AddWidget<CIMGUITextInput>("##TileSizeY", 100.f, 20.f);
 	m_InputTileSizeY->SetNumberFloat(true);
 	m_InputTileSizeY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputTileSizeY);
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputTileSizeY);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	CIMGUIButton* Button = AddWidget<CIMGUIButton>("타일생성", 80.f, 20.f);
+	m_TileMapCreateTabItem->WidgetPush(Button);
 
 	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::CreateTileButton);
 
@@ -376,6 +434,8 @@ void CTileMapWindow::CreateTileMapInfo()
 	Text->SetText("ModifyType");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_TileModifyTypeCombo = AddWidget<CIMGUIComboBox>("##TileModifyType", 100.f, 100.f);
 
@@ -385,60 +445,124 @@ void CTileMapWindow::CreateTileMapInfo()
 	m_TileModifyTypeCombo->AddItem("Image");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_TileModifyTypeCombo);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	Text = AddWidget<CIMGUIText>("TileMapEdit");
 	Text->SetFont("DefaultFont");
 	Text->SetText("TileTypeEdit");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_TileEditCombo = AddWidget<CIMGUIComboBox>("##TileTypeEdit", 100.f, 100.f);
 
 	m_TileEditCombo->SetSelectCallback<CTileMapWindow>(this, &CTileMapWindow::TileEditComboCallback);
+	m_TileMapCreateTabItem->WidgetPush(m_TileEditCombo);
 
 	Text = AddWidget<CIMGUIText>("TileMap");
 	Text->SetFont("DefaultFont");
 	Text->SetText("ImageFrame");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+
+	Text = AddWidget<CIMGUIText>("FrameX", 70.f, 20.f);
+	Text->SetText("FrameX");
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
-
-	Label = AddWidget<CIMGUILabel>("X", 30.f, 20.f);
-	Label->SetText("X");
-
-	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputImageFrameX = AddWidget<CIMGUITextInput>("##ImageFrameX", 100.f, 20.f);
 	m_InputImageFrameX->SetNumberInt(true);
 	m_InputImageFrameX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameX);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputImageFrameX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
-	Label = AddWidget<CIMGUILabel>("Y", 30.f, 20.f);
-	Label->SetText("Y");
+	Text = AddWidget<CIMGUIText>("FrameY", 70.f, 20.f);
+	Text->SetText("FrameY");
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	m_InputImageFrameY = AddWidget<CIMGUITextInput>("##ImageFrameY", 100.f, 20.f);
 	m_InputImageFrameY->SetNumberInt(true);
 	m_InputImageFrameY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameY);
+	m_TileMapCreateTabItem->WidgetPush(m_InputImageFrameY);
+
+	Text = AddWidget<CIMGUIText>("FrameMaxX", 70.f, 20.f);
+	Text->SetText("FrameMaxX");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
+	m_InputImageFrameMaxX = AddWidget<CIMGUITextInput>("##ImageFrameMaxX", 100.f, 20.f);
+	m_InputImageFrameMaxX->SetNumberInt(true);
+	m_InputImageFrameMaxX->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameMaxX);
+	m_InputImageFrameMaxX->SetInt(1);
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_InputImageFrameMaxX);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
+
+	Text = AddWidget<CIMGUIText>("FrameMaxY", 70.f, 20.f);
+	Text->SetText("FrameMaxY");
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
+
+	m_InputImageFrameMaxY = AddWidget<CIMGUITextInput>("##ImageFrameMaxY", 100.f, 20.f);
+	m_InputImageFrameMaxY->SetNumberInt(true);
+	m_InputImageFrameMaxY->SetInputCallback<CTileMapWindow>(this, &CTileMapWindow::InputImageFrameMaxY);
+	m_InputImageFrameMaxY->SetInt(1);
+	m_TileMapCreateTabItem->WidgetPush(m_InputImageFrameMaxY);
+
+	Text = AddWidget<CIMGUIText>("TileImage", 70.f, 20.f);
+	Text->SetText("TileImage");
+
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Text);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
+
 	m_TileImage = AddWidget<CIMGUIImage>("##TileImage", 100.f, 100.f);
-
 	m_TileImage->SetStartUV(0.f, 0.f);
-	m_TileImage->SetEndUV(0.2f, 1.f / 76.f);
-	m_TileImage->SetTexture("TileTexture", TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
+	m_TileImage->SetEndUV(1.f, 1.f);
+	m_TileImage->SetTexture("DefaultImageSlot", TEXT("DefaultSlot.png"));
 
+	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(m_TileImage);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
+
+	Button = AddWidget<CIMGUIButton>("타일이미지 불러오기", 150.f, 100.f);
+
+	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::LoadTileImage);
+	m_TileMapCreateTabItem->WidgetPush(Button);
 
 	Button = AddWidget<CIMGUIButton>("저장", 80.f, 40.f);
 
 	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::SaveTileMap);
 
 	SameLine = AddWidget<CIMGUISameLine>("SameLine");
+	m_TileMapCreateTabItem->WidgetPush(Button);
+	m_TileMapCreateTabItem->WidgetPush(SameLine);
 
 	Button = AddWidget<CIMGUIButton>("불러오기", 80.f, 40.f);
 
 	Button->SetClickCallback<CTileMapWindow>(this, &CTileMapWindow::LoadTileMap);
+	m_TileMapCreateTabItem->WidgetPush(Button);
+
+
+
+
+
+}
+
+void CTileMapWindow::CreateMapTool()
+{
+
 }
 
 void CTileMapWindow::CreateTileButton()
@@ -484,14 +608,23 @@ void CTileMapWindow::CreateTileButton()
 
 	// TileShape를 얻어온다.
 	TileMap->CreateTile<CTile>(m_TileShape, TileCountX, TileCountY, TileSize);
+	TileMap->SetMaterial(0, "MainMap");
 
+	TileMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+	TileMap->SetTileDefaultFrame(m_ImageFrameX, m_ImageFrameY);
+
+	if (m_TileTexture)
+	{
+		TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+		TileMap->UpdateInfo();
+	}
 	//TileMap->SetMaterial(0, "MainMap");
 	//TileMap->SetFrameMax(5, 76);
 	//TileMap->SetTileDefaultFrame(3, 2);
 
-	TileMap->SetMaterial(0, "MainMapRect");
-	TileMap->SetFrameMax(1, 5);
-	TileMap->SetTileDefaultFrame(0, 0);
+	//TileMap->SetMaterial(0, "MainMapRect");
+	//TileMap->SetFrameMax(1, 5);
+	//TileMap->SetTileDefaultFrame(0, 0);
 	m_TileMap = TileMap;
 }
 
@@ -553,5 +686,44 @@ void CTileMapWindow::LoadTileMap()
 		m_InputTileSizeY->SetFloat(m_TileMap->GetTileSize().y);
 
 		m_CreateTile = true;
+	}
+}
+
+void CTileMapWindow::LoadTileImage()
+{
+	static TCHAR	Filter[] = TEXT("ImageFile(*.BMP, *.PNG, *.JPG, *.JPEG, *.TGA, *.DDS) | *.BMP;*.PNG;*.JPG;*.JPEG;*.TGA;*.DDS;*.bmp;*.png;*.jpg;*.jpeg;*.tga;*.dds |모든파일(*.*)|*.*||");
+
+	CFileDialog	dlg(TRUE, TEXT(".png"), TEXT(""), OFN_HIDEREADONLY,
+		Filter);
+
+	const PathInfo* Info = CPathManager::GetInst()->FindPath(TEXTURE_PATH);
+
+	dlg.m_pOFN->lpstrInitialDir = Info->pPath;
+
+	if (dlg.DoModal() == IDOK)
+	{
+		CScene* Scene = CSceneManager::GetInst()->GetScene();
+
+		std::string	Name = CT2CA(dlg.GetFileTitle());
+
+		Scene->GetResource()->LoadTextureFullPath(Name,
+			dlg.GetPathName().GetString());
+
+		m_TileTexture = Scene->GetResource()->FindTexture(Name);
+
+		m_TileImage->SetStartUV(0.f, 0.f);
+		m_TileImage->SetEndUV(1.f, 1.f);
+		m_TileImage->SetTexture(m_TileTexture);
+
+		if (m_TileMap)
+		{
+			m_TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+
+			if (m_TileTexture)
+			{
+				m_TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+				m_TileMap->UpdateInfo();
+			}
+		}
 	}
 }

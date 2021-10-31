@@ -11,7 +11,7 @@ protected:
     virtual ~CEditorScene();
 
 private:
-    class CTileMapWindow* m_TileMapWindow;
+    class CTileMapToolWindow* m_TileMapToolWindow;
     class CPrefabWindow* m_PrefabWindow;
     class CObjectWindow* m_ObjectWindow;
     int m_CloneObjectCount;

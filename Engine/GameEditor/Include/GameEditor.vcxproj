@@ -218,6 +218,8 @@
     <ClInclude Include="IMGUIObjectInfoComponent.h" />
     <ClInclude Include="IMGUIParticleComponent.h" />
     <ClInclude Include="IMGUISpriteComponent.h" />
+    <ClInclude Include="IMGUITileComponent.h" />
+    <ClInclude Include="IMGUITileMapComponent.h" />
     <ClInclude Include="IMGUITransformComponent.h" />
     <ClInclude Include="IMGUIWidgetComponent.h" />
     <ClInclude Include="InspectorWindow.h" />
@@ -230,6 +232,7 @@
     <ClInclude Include="Scene\EditorScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestWindow.h" />
+    <ClInclude Include="TileMapToolWindow.h" />
     <ClInclude Include="TileMapWindow.h" />
     <ClInclude Include="TileWindow.h" />
   </ItemGroup>
@@ -245,6 +248,8 @@
     <ClCompile Include="IMGUIObjectInfoComponent.cpp" />
     <ClCompile Include="IMGUIParticleComponent.cpp" />
     <ClCompile Include="IMGUISpriteComponent.cpp" />
+    <ClCompile Include="IMGUITileComponent.cpp" />
+    <ClCompile Include="IMGUITileMapComponent.cpp" />
     <ClCompile Include="IMGUITransformComponent.cpp" />
     <ClCompile Include="IMGUIWidgetComponent.cpp" />
     <ClCompile Include="InspectorWindow.cpp" />
@@ -260,6 +265,7 @@
     <ClCompile Include="PrefabWindow.cpp" />
     <ClCompile Include="Scene\EditorScene.cpp" />
     <ClCompile Include="TestWindow.cpp" />
+    <ClCompile Include="TileMapToolWindow.cpp" />
     <ClCompile Include="TileMapWindow.cpp" />
     <ClCompile Include="TileWindow.cpp" />
   </ItemGroup>

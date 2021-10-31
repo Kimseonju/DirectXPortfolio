@@ -115,6 +115,9 @@ void CCamera::PostUpdate(float DeltaTime)
 	{
 		Vector3	Axis = GetAxis((AXIS)i);
 		Vector3	Pos = GetWorldPos() * -1.f;
+
+		//임시값 (Object에붙으면 Z알아서계산되기때문
+		Pos.z = 0.f;
 		m_matView[3][i] = Axis.Dot(Pos);
 	}
 

@@ -17,6 +17,8 @@
 #include "../PrefabWindow.h"
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"
+#include "../TileWindow.h"
+#include "../TileMapToolWindow.h"
 CEditorScene::CEditorScene() :
 	m_CloneObjectCount(0)
 {
@@ -41,7 +43,7 @@ bool CEditorScene::Init()
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveRight", KT_Push, this, &CEditorScene::MoveRight);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Up, this, &CEditorScene::MouseLButton);
 
-    m_TileMapWindow = (CTileMapWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapWindow");
+    m_TileMapToolWindow = (CTileMapToolWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapToolWindow");
 	m_ObjectWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 	m_PrefabWindow = (CPrefabWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("PrefabWindow");
 
@@ -88,7 +90,7 @@ void CEditorScene::MoveRight(float DeltaTime)
 
 void CEditorScene::MouseLButton(float DeltaTime)
 {
-	CGlobalValue::MouseState = Mouse_State::World;
+	CGlobalValue::MouseState = Mouse_State::Tile;
 	
 	switch (CGlobalValue::MouseState)
 	{
@@ -98,10 +100,10 @@ void CEditorScene::MouseLButton(float DeltaTime)
 	}
 	case Mouse_State::Tile:
 	{
-		if (!m_TileMapWindow->IsTileMap())
+		if (!m_TileMapToolWindow->IsTileMap())
 			return;
 
-		Tile_Modify_Type    ModifyType = m_TileMapWindow->GetTileModifyType();
+		Tile_Modify_Type    ModifyType = m_TileMapToolWindow->GetTileModifyType();
 		switch (ModifyType)
 		{
 		case Tile_Modify_Type::Type:
@@ -124,11 +126,11 @@ void CEditorScene::MouseLButton(float DeltaTime)
 
 void CEditorScene::EditTileType()
 {
-    Tile_Type   Type = m_TileMapWindow->GetTileType();
+    Tile_Type   Type = m_TileMapToolWindow->GetTileType();
 
     Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 
-    CTileMapComponent* TileMap = m_TileMapWindow->GetTileMap();
+    CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileMap();
 
     // 마우스 위치를 이용해서 현재 마우스가 위치한 곳의 타일을 얻어온다.
     CTile* Tile = TileMap->GetTile(MousePos);
@@ -140,14 +142,13 @@ void CEditorScene::EditTileType()
 
 void CEditorScene::EditTileImage()
 {
-	int ImageFrameX = m_TileMapWindow->GetImageFrameX();
-	int ImageFrameY = m_TileMapWindow->GetImageFrameY();
+	Vector2 Frame= m_TileMapToolWindow->GetImageFrame();
 
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 
-	CTileMapComponent* TileMap = m_TileMapWindow->GetTileMap();
+	CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileMap();
 
-	if (ImageFrameX == -1 || ImageFrameY == -1)
+	if (Frame.x == -1 || Frame.y == -1)
 	{
 		TileMap->TileRemoveRender(Vector3(MousePos.x, MousePos.y, 0.f));
 
@@ -159,7 +160,7 @@ void CEditorScene::EditTileImage()
 
 	else
 	{
-		TileMap->SetTileFrame(MousePos, ImageFrameX, ImageFrameY);
+		TileMap->SetTileFrame(MousePos, Frame.x, Frame.y);
 	}
 }
 

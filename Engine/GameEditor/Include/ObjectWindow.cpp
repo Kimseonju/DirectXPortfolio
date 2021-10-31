@@ -56,6 +56,13 @@ bool CObjectWindow::Init()
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 
+	CreateObjButton = AddWidget<CIMGUIButton>("오브젝트삭제");
+
+	CreateObjButton->SetFont("DefaultFont");
+
+	CreateObjButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::DeleteObjectButtonClick);
+
+
 	CreateObjButton = AddWidget<CIMGUIButton>("컴포넌트생성");
 
 	CreateObjButton->SetFont("DefaultFont");
@@ -130,7 +137,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	CSceneComponent* Compoonent = m_SelectObject->FindSceneComponent(vecName[0]);
 	InspectorWindow->TransformUpdate(Compoonent);
-	InspectorWindow->ObjectInfoUpdate(m_SelectObject);
+	InspectorWindow->ObjectUpdateInfo(m_SelectObject);
 
 }
 
@@ -143,7 +150,7 @@ void CObjectWindow::ComponentListCallback(int SelectIndex, const char* Item)
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	InspectorWindow->AllComponentClose();
 	
-	ComponentInfoUpdate(m_SelectComponent.Get());
+	ComponentUpdateInfo(m_SelectComponent.Get());
 }
 
 void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
@@ -166,9 +173,28 @@ void CObjectWindow::CreateObjectButtonClick()
 	++m_CreateObjectCount;
 
 	CGameObject* Obj = Scene->SpawnObject<CGameObject>(ObjName);
-	Obj->SetWorldScale(100.f, 100.f, 1.f);
 	m_VecObject.push_back(Obj);
 	
+}
+
+void CObjectWindow::DeleteObjectButtonClick()
+{
+	size_t Size=m_VecObject.size();
+	auto iter = m_VecObject.begin();
+	auto iterEnd = m_VecObject.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		if ((*iter) == m_SelectObject)
+		{
+			m_VecObject.erase(iter);
+			m_SelectObject->Active(false);
+			m_SelectObject = nullptr;
+			break;
+		}
+	}
+	
+	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+	InspectorWindow->AllComponentClose();
 }
 
 void CObjectWindow::CreateComponentButtonClick()
@@ -276,7 +302,7 @@ void CObjectWindow::InputComponentPopupButton()
 
 		CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 		InspectorWindow->AllComponentClose();
-		ComponentInfoUpdate(m_SelectComponent.Get());
+		ComponentUpdateInfo(m_SelectComponent.Get());
 
 		
 	}
@@ -303,7 +329,7 @@ void CObjectWindow::AddPrefab()
 	m_PrefabWindow->AddPrefab(m_SelectObject);
 }
 
-void CObjectWindow::ComponentInfoUpdate(CSceneComponent* Compoonent)
+void CObjectWindow::ComponentUpdateInfo(CSceneComponent* Compoonent)
 {
 	
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");

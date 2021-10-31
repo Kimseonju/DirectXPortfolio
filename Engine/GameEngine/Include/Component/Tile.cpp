@@ -7,7 +7,9 @@ CTile::CTile() :
 	m_TileType(Tile_Type::None),
 	m_IndexX(-1),
 	m_IndexY(-1),
-	m_Index(-1)
+	m_Index(-1),
+	m_FrameX(0),
+	m_FrameY(0)
 {
 }
 

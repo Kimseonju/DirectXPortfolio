@@ -19,7 +19,7 @@ private:
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
-	void ObjectInfoUpdate(class CGameObject* Obj);
+	void ObjectUpdateInfo(class CGameObject* Obj);
 	void TransformUpdate(class CSceneComponent* Obj);
 	void SpriteUpdate(class CSpriteComponent* Sprite);
 	void ColliderUpdate(class CCollider* Collider);

@@ -20,6 +20,8 @@ private:
 	Matrix		m_matWorld;
 	Vector2		m_FrameStart;
 	Vector2		m_FrameEnd;
+	int			m_FrameX;
+	int			m_FrameY;
 	int			m_IndexX;
 	int			m_IndexY;
 	int			m_Index;
@@ -43,6 +45,16 @@ public:
 	int GetIndex()	const
 	{
 		return m_Index;
+	}
+
+	int GetFrameX()	const
+	{
+		return m_FrameX;
+	}
+
+	int GetFrameY()	const
+	{
+		return m_FrameY;
 	}
 
 	Tile_Type GetTileType()	const
@@ -140,6 +152,11 @@ public:
 		m_FrameEnd = Vector2(x, y);
 	}
 
+	void SetFrame(int x, int y)
+	{
+		m_FrameX = x;
+		m_FrameY = y;
+	}
 public:
 	virtual bool Init();
 	virtual void Start();

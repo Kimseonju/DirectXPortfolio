@@ -17,7 +17,7 @@ private:
 	class CIMGUIButton* m_CurrentCamera;
 
 public:
-	void InfoUpdate(CCamera* CCamera);
+	void UpdateInfo(CCamera* CCamera);
 
 public:
 	virtual bool Init();

@@ -16,7 +16,9 @@ private:
 public:
 	void AddPrefab(CGameObject* Prefab)
 	{
-		m_VecPrefab.push_back(Prefab);
+		CGameObject* Clone=Prefab->Clone();
+		m_VecPrefab.push_back(Clone);
+		Clone->Release();
 	}
 
 	CGameObject* GetSelectObject()

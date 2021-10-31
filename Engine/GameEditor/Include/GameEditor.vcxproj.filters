@@ -19,35 +19,14 @@
     <Filter Include="EditorMain">
       <UniqueIdentifier>{be0832b2-c4cf-4fde-b5ed-bf42e90067ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. EditorGUI\Component">
-      <UniqueIdentifier>{c56b6be9-b73c-48f0-8833-f6a68015b96c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Transform">
-      <UniqueIdentifier>{b2f65461-09d4-48d1-bd1c-88bcc9a7cfa0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Collider2D">
-      <UniqueIdentifier>{ddc83c43-46c9-43b8-b973-ddd8b8e8e9ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Sprite">
-      <UniqueIdentifier>{adef2d1a-0903-4a32-a1ec-df6dfc27b19b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Scene">
       <UniqueIdentifier>{4add2836-263f-4bee-8694-67f4be2549ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Camera">
-      <UniqueIdentifier>{2b49d847-e049-4284-bb79-85f45eaf4777}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{dcf80e71-ad8c-4ff1-953a-c965ad042037}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\Mouse">
       <UniqueIdentifier>{fd22b32e-0673-400a-89b9-9d985fe30697}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Object">
-      <UniqueIdentifier>{e5a74c66-5ad8-4a51-91dc-3e89074e3aa8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. EditorGUI\Component\Particle">
-      <UniqueIdentifier>{ea6ce212-dea2-4331-9b72-9005117768b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. EditorGUI\Window">
       <UniqueIdentifier>{031b2822-cf8e-4333-9db4-60930d028c93}</UniqueIdentifier>
@@ -57,6 +36,39 @@
     </Filter>
     <Filter Include="01. EditorGUI\Window\InspectorWindow">
       <UniqueIdentifier>{9071ee7d-6bbc-47ab-97cd-3885db3573ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component">
+      <UniqueIdentifier>{c56b6be9-b73c-48f0-8833-f6a68015b96c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Tab">
+      <UniqueIdentifier>{2638db05-3172-42f6-aa15-dbd5fd180919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header">
+      <UniqueIdentifier>{081cf3fe-46ad-448c-a179-34973ff962ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Collider2D">
+      <UniqueIdentifier>{ddc83c43-46c9-43b8-b973-ddd8b8e8e9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Camera">
+      <UniqueIdentifier>{2b49d847-e049-4284-bb79-85f45eaf4777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Object">
+      <UniqueIdentifier>{e5a74c66-5ad8-4a51-91dc-3e89074e3aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Particle">
+      <UniqueIdentifier>{ea6ce212-dea2-4331-9b72-9005117768b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Sprite">
+      <UniqueIdentifier>{adef2d1a-0903-4a32-a1ec-df6dfc27b19b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Header\Transform">
+      <UniqueIdentifier>{b2f65461-09d4-48d1-bd1c-88bcc9a7cfa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Component\Tab\TileMap">
+      <UniqueIdentifier>{0318b32e-5be6-44a8-9e14-e0ed17d73040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Window\TileMapWindow">
+      <UniqueIdentifier>{952052b7-a61b-4e8b-a7c2-38ea888b4e87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,13 +121,13 @@
       <Filter>01. EditorGUI\Component</Filter>
     </ClInclude>
     <ClInclude Include="IMGUITransformComponent.h">
-      <Filter>01. EditorGUI\Component\Transform</Filter>
+      <Filter>01. EditorGUI\Component\Header\Transform</Filter>
     </ClInclude>
     <ClInclude Include="IMGUICollider2DComponent.h">
-      <Filter>01. EditorGUI\Component\Collider2D</Filter>
+      <Filter>01. EditorGUI\Component\Header\Collider2D</Filter>
     </ClInclude>
     <ClInclude Include="IMGUISpriteComponent.h">
-      <Filter>01. EditorGUI\Component\Sprite</Filter>
+      <Filter>01. EditorGUI\Component\Header\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="Editor.h">
       <Filter>헤더 파일</Filter>
@@ -124,22 +136,31 @@
       <Filter>02. Scene</Filter>
     </ClInclude>
     <ClInclude Include="IMGUICameraComponent.h">
-      <Filter>01. EditorGUI\Component\Camera</Filter>
+      <Filter>01. EditorGUI\Component\Header\Camera</Filter>
     </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="IMGUIObjectInfoComponent.h">
-      <Filter>01. EditorGUI\Component\Object</Filter>
+      <Filter>01. EditorGUI\Component\Header\Object</Filter>
     </ClInclude>
     <ClInclude Include="IMGUIParticleComponent.h">
-      <Filter>01. EditorGUI\Component\Particle</Filter>
+      <Filter>01. EditorGUI\Component\Header\Particle</Filter>
     </ClInclude>
     <ClInclude Include="PrefabWindow.h">
       <Filter>01. EditorGUI\Window\Prefab</Filter>
     </ClInclude>
     <ClInclude Include="InspectorWindow.h">
       <Filter>01. EditorGUI\Window\InspectorWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITileMapComponent.h">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUITileComponent.h">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapToolWindow.h">
+      <Filter>01. EditorGUI\Window\TileMapWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -183,34 +204,43 @@
       <Filter>01. EditorGUI\Component</Filter>
     </ClCompile>
     <ClCompile Include="IMGUITransformComponent.cpp">
-      <Filter>01. EditorGUI\Component\Transform</Filter>
+      <Filter>01. EditorGUI\Component\Header\Transform</Filter>
     </ClCompile>
     <ClCompile Include="IMGUICollider2DComponent.cpp">
-      <Filter>01. EditorGUI\Component\Collider2D</Filter>
+      <Filter>01. EditorGUI\Component\Header\Collider2D</Filter>
     </ClCompile>
     <ClCompile Include="IMGUISpriteComponent.cpp">
-      <Filter>01. EditorGUI\Component\Sprite</Filter>
+      <Filter>01. EditorGUI\Component\Header\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="Scene\EditorScene.cpp">
       <Filter>02. Scene</Filter>
     </ClCompile>
     <ClCompile Include="IMGUICameraComponent.cpp">
-      <Filter>01. EditorGUI\Component\Camera</Filter>
+      <Filter>01. EditorGUI\Component\Header\Camera</Filter>
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="IMGUIObjectInfoComponent.cpp">
-      <Filter>01. EditorGUI\Component\Object</Filter>
+      <Filter>01. EditorGUI\Component\Header\Object</Filter>
     </ClCompile>
     <ClCompile Include="IMGUIParticleComponent.cpp">
-      <Filter>01. EditorGUI\Component\Particle</Filter>
+      <Filter>01. EditorGUI\Component\Header\Particle</Filter>
     </ClCompile>
     <ClCompile Include="PrefabWindow.cpp">
       <Filter>01. EditorGUI\Window\Prefab</Filter>
     </ClCompile>
     <ClCompile Include="InspectorWindow.cpp">
       <Filter>01. EditorGUI\Window\InspectorWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITileComponent.cpp">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITileMapComponent.cpp">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapToolWindow.cpp">
+      <Filter>01. EditorGUI\Window\TileMapWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,7 @@ CIMGUIObjectInfoComponent::~CIMGUIObjectInfoComponent()
 {
 }
 
-void CIMGUIObjectInfoComponent::InfoUpdate(CGameObject* Object)
+void CIMGUIObjectInfoComponent::UpdateInfo(CGameObject* Object)
 {
 	m_Object = Object;
 	m_ObjectName->SetText(m_Object->GetName().c_str());

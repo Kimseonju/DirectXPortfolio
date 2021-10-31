@@ -22,7 +22,7 @@ private:
 	class CCollider* m_Collider;
 
 public:
-	void InfoUpdate(CCollider* Collider);
+	void UpdateInfo(CCollider* Collider);
 
 public:
 	virtual bool Init();

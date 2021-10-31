@@ -15,7 +15,7 @@ private:
 	CSharedPtr<CGameObject> m_Object;
 
 public:
-	void InfoUpdate(CGameObject* Object);
+	void UpdateInfo(CGameObject* Object);
 	bool IsObject() const
 	{
 		if (!m_Object)

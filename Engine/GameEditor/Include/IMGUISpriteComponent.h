@@ -27,7 +27,7 @@ public:
 	virtual void Update(float DeltaTime);
 	
 public:
-	void InfoUpdate(CSpriteComponent* Sprite);
+	void UpdateInfo(CSpriteComponent* Sprite);
 	void SetMaterialName(const std::string& Name);
 	void TextureComboCallback(int SelectIndex, const char* Item);
 	void LoadTextureButtonClick();

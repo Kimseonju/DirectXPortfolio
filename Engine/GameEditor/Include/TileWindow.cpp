@@ -29,7 +29,8 @@ for (int i = 0; i < 8; i++)
 
 
 */
-CTileWindow::CTileWindow()
+CTileWindow::CTileWindow() :
+	m_ImageFrame(Vector2(-1,-1))
 {
 }
 
@@ -40,9 +41,10 @@ CTileWindow::~CTileWindow()
 bool CTileWindow::Init()
 {
 
-	CIMGUIImageButton* ImageButton = AddWidget<CIMGUIImageButton>("Button100", 100.f, 100.f);
+	m_ImageButton = AddWidget<CIMGUIImageButton>("Button100", 100.f, 100.f);
 
-	ImageButton->SetTexture("tileAtlas", TEXT("Map/tileAtlas.png"));
+	m_ImageButton->SetTexture("tileAtlas", TEXT("Map/tileAtlas.png"));
+	m_ImageButton->SetClickCallback<CTileWindow>(this, &CTileWindow::ImageButton);
 
 	CIMGUIButton* SaveButton = AddWidget<CIMGUIButton>("Save", 150.f, 20.f);
 	SaveButton->SetClickCallback<CTileWindow>(this, &CTileWindow::TestButtonClick);
@@ -82,55 +84,17 @@ bool CTileWindow::Init()
 	CIMGUIButton* DeleteDoorDown = AddWidget<CIMGUIButton>("DeleteDoor_Down", 150.f, 20.f);
 	DeleteDoorLeft->SetClickCallback(this, &CTileWindow::TestButtonClick);
 
-
-
-	CIMGUILabel* Label1 = AddWidget<CIMGUILabel>("Test", 100.f, 100.f);
-	Label1->SetFont("DefaultFont");
-
-	Label1->SetText("Labe 테스트입니다.");
-
-	CIMGUIText* Text1 = AddWidget<CIMGUIText>("Text", 100.f, 100.f);
-	Text1->SetFont("DefaultFont");
-
-	Text1->SetText("Text 테스트입니다.");
-
-	CIMGUIListBox* ListBox1 = AddWidget<CIMGUIListBox>("ListBox", 300.f, 100.f);
-
-	ListBox1->AddItem("AAA");
-	ListBox1->AddItem("CCC");
-	ListBox1->AddItem("EEE");
-	ListBox1->AddItem("FFF");
-	ListBox1->AddItem("BBB");
-	ListBox1->AddItem("ZZZ");
-
-	ListBox1->SetSelectCallback<CTileWindow>(this, &CTileWindow::ListCallback);
-	ListBox1->Sort(true);
-
-
-	CIMGUIComboBox* ComboBox1 = AddWidget<CIMGUIComboBox>("TestComboBox");
-
-	ComboBox1->AddItem("AAA");
-	ComboBox1->AddItem("CCC");
-	ComboBox1->AddItem("EEE");
-	ComboBox1->AddItem("FFF");
-	ComboBox1->AddItem("BBB");
-	ComboBox1->AddItem("ZZZ");
-
-	ComboBox1->SetSelectCallback<CTileWindow>(this, &CTileWindow::ListCallback);
-
-	CIMGUITextInput* TextInput1 = AddWidget<CIMGUITextInput>("TextInput", 100.f, 100.f);
-	TextInput1->SetFont("DefaultFont");
-
-	TextInput1->SetMultiLine(true);
-	TextInput1->SetNumberInt(true);
-	Text1->SetText("Text 테스트입니다.");
-
 	return true;
 }
 
 void CTileWindow::Update(float DeltaTime)
 {
 	CIMGUIWindow::Update(DeltaTime);
+}
+
+void CTileWindow::ImageButton()
+{
+	m_ImageFrame =m_ImageButton->GetImageFrame();
 }
 
 void CTileWindow::TestButtonClick()

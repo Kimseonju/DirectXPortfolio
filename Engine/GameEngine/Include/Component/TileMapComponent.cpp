@@ -124,6 +124,7 @@ void CTileMapComponent::SetTileDefaultFrame(int x, int y)
 	{
 		(*iter)->SetFrameStart(m_TileImageFrameSize * Vector2((float)x, (float)y));
 		(*iter)->SetFrameEnd(m_TileImageFrameSize * Vector2((float)(x + 1), (float)(y + 1)));
+		(*iter)->SetFrame(x, y);
 	}
 }
 
@@ -650,6 +651,33 @@ CTile* CTileMapComponent::GetTile(int x, int y)
 CTile* CTileMapComponent::GetTile(int Index)
 {
 	return m_vecTile[Index];
+}
+
+void CTileMapComponent::UpdateInfo()
+{
+	const MaterialTextureInfo* pInfo = m_vecMaterialSlot[0]->GetMaterialTextureInfo();
+
+	if (pInfo)
+	{
+		m_TileImageSize.x = (float)pInfo->pTexture->GetWidth();
+		m_TileImageSize.y = (float)pInfo->pTexture->GetHeight();
+
+		m_CBuffer->SetTileImageSize(m_TileImageSize);
+
+		m_TileImageFrameSize.x = m_TileImageSize.x / m_FrameMaxX;
+		m_TileImageFrameSize.y = m_TileImageSize.y / m_FrameMaxY;
+
+		size_t	Size = m_vecTile.size();
+
+		for (size_t i = 0; i < m_vecTile.size(); ++i)
+		{
+			int	x = m_vecTile[i]->GetFrameX();
+			int y = m_vecTile[i]->GetFrameY();
+
+			m_vecTile[i]->SetFrameStart(m_TileImageFrameSize * Vector2((float)x, (float)y));
+			m_vecTile[i]->SetFrameEnd(m_TileImageFrameSize * Vector2((float)(x + 1), (float)(y + 1)));
+		}
+	}
 }
 
 

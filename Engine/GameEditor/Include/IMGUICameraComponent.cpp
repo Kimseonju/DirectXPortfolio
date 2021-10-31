@@ -26,7 +26,7 @@ CIMGUICameraComponent::~CIMGUICameraComponent()
 {
 }
 
-void CIMGUICameraComponent::InfoUpdate(CCamera* CCamera)
+void CIMGUICameraComponent::UpdateInfo(CCamera* CCamera)
 {
 	m_Camera = CCamera;
 	float Zoom=m_Camera->GetCameraZoom();

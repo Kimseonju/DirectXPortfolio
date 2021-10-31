@@ -29,12 +29,12 @@ bool CIMGUISpriteComponent::Init()
 
 	m_Header = m_Owner->AddWidget<CIMGUICollapsingHeader>("Sprite");
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_SpriteComponent", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_SpriteComponent", 120.f, 20.f);
 	m_vecWidget.push_back(Text);
 	Text->SetText("SpriteComponent");
 
 #pragma region Material
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Material", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Material");
 	m_vecWidget.push_back(Text);
 	Text->SetText("Material");
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
@@ -46,7 +46,7 @@ bool CIMGUISpriteComponent::Init()
 
 #pragma region Texture
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Texture", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Texture");
 	Text->SetText("Texture");
 	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
@@ -67,7 +67,7 @@ bool CIMGUISpriteComponent::Init()
 
 #pragma region Animation
 
-	Text = m_Owner->AddWidget<CIMGUIText>("Text_Texture", 100.f, 20.f);
+	Text = m_Owner->AddWidget<CIMGUIText>("Text_Texture");
 	m_vecWidget.push_back(Text);
 	Text->SetText("Animation");
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
@@ -104,7 +104,7 @@ void CIMGUISpriteComponent::Update(float DeltaTime)
 {
 }
 
-void CIMGUISpriteComponent::InfoUpdate(CSpriteComponent* Sprite)
+void CIMGUISpriteComponent::UpdateInfo(CSpriteComponent* Sprite)
 {
 	m_Sprite = Sprite;
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);

@@ -13,8 +13,13 @@ protected:
 	wchar_t	m_Text[1024];
 	char	m_TextUTF8[1024];
 	bool	m_Align;
-
+	ImColor	m_ButtonColor;
+	bool	m_SizeText;
 public:
+	void SetSizeText(bool SizeText)
+	{
+		m_SizeText = SizeText;
+	}
 	void SetText(const char* Text)
 	{
 		// 변환할 문자열 수를 얻어온다.

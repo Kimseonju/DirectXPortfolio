@@ -27,11 +27,8 @@ CIMGUIParticleComponent::~CIMGUIParticleComponent()
 {
 }
 
-void CIMGUIParticleComponent::InfoUpdate(CGameObject* Object)
+void CIMGUIParticleComponent::UpdateInfo(CGameObject* Object)
 {
-	m_Object = Object;
-	m_ObjectName->SetText(m_Object->GetName().c_str());
-	m_EnableCheckBox->SetCheck(m_Object->IsEnable());
 	Enable(true);
 }
 
@@ -57,15 +54,8 @@ bool CIMGUIParticleComponent::Init()
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_ObjectName = m_Owner->AddWidget<CIMGUITextInput>("##ObjectName", 100.f, 20.f);
-	m_ObjectName->SetInputCallback<CIMGUIParticleComponent>(this, &CIMGUIParticleComponent::InputObjectName);
-	m_ObjectName->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
-	m_vecWidget.push_back(m_ObjectName);
 
 #pragma endregion
-	m_EnableCheckBox = m_Owner->AddWidget<CIMGUICheckBox>("Enable", 300.f, 20.f);
-	m_EnableCheckBox->SetCheckCallback<CIMGUIParticleComponent>(this, &CIMGUIParticleComponent::EnableCheckBoxClick);
-	m_vecWidget.push_back(m_EnableCheckBox);
 
 
 	m_Header->WidgetPush(m_vecWidget);
@@ -75,14 +65,4 @@ bool CIMGUIParticleComponent::Init()
 
 void CIMGUIParticleComponent::Update(float DeltaTime)
 {
-}
-
-void CIMGUIParticleComponent::InputObjectName()
-{
-	m_Object->SetName(m_ObjectName->GetTextMultibyte());
-}
-
-void CIMGUIParticleComponent::EnableCheckBoxClick(bool Enable)
-{
-	m_Object->Enable(Enable);
 }
