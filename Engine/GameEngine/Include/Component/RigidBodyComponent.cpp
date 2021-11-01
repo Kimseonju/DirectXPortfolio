@@ -42,9 +42,6 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	//가속도 
 	//아이작 가속도 다 가속도...
 	Vector3 moveDir= Vector3::Zero;
-	//임시
-	if (DeltaTime > 0.005f)
-		return;
 	if (m_Gravity)
 	{
 		//공중상태

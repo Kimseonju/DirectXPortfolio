@@ -2,7 +2,7 @@
 #include "Room.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-
+#include "GlobalValue.h"
 CRoom::CRoom() :
 	m_NextDoor(false),
 	m_LeftRoom(nullptr),

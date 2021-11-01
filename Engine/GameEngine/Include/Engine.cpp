@@ -218,6 +218,12 @@ void CEngine::Logic()
 
 	m_GlobalCBuffer->UpdateCBuffer();
 
+	if (Collision(DeltaTime))
+	{
+		CIMGUIManager::GetInst()->Render();
+		return;
+	}
+
 	if (PostUpdate(DeltaTime))
 	{
 		CIMGUIManager::GetInst()->Render();
@@ -225,11 +231,6 @@ void CEngine::Logic()
 	}
 	
 
-	if (Collision(DeltaTime))
-	{
-		CIMGUIManager::GetInst()->Render();
-		return;
-	}
 
 	if (Render(DeltaTime))
 		return;

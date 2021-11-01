@@ -40,13 +40,20 @@ bool CInspectorWindow::Init()
 	CreateCamera();
 
 	AllComponentClose();
+
+
 	return true;
 }
 
 void CInspectorWindow::Update(float DeltaTime)
 {
 	CIMGUIWindow::Update(DeltaTime);
-	m_Transform->Update(DeltaTime);
+	if (m_Transform->IsEnable())
+	{
+		m_Transform->Update(DeltaTime);
+	}
+
+	
 }
 
 void CInspectorWindow::ObjectUpdateInfo(CGameObject* Obj)

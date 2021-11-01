@@ -77,9 +77,12 @@ void CGameObject::SetRootCloneComponent(CSceneComponent* Root)
 
 	std::vector<CSceneComponent*>VecComponent;
 	Root->GetAllComponent(VecComponent);
+	Root->Start();
 	for (size_t i = 0; i < VecComponent.size(); i++)
 	{
 		m_SceneComponentList.push_back(VecComponent[i]);
+		VecComponent[i]->SetOwner(this);
+		VecComponent[i]->Start();
 	}
 
 	m_RootComponent = Root;

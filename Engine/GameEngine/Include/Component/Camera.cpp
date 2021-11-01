@@ -15,6 +15,11 @@ CCamera::CCamera()
 	m_CameraLeft = 0.f;
 	m_CameraBottom = 0.f;
 	m_CameraZoom = 1.f;
+	m_MinX = INT_MIN;
+	m_MinY = INT_MIN;
+
+	m_MaxX = INT_MAX;
+	m_MaxY = INT_MAX;
 }
 
 CCamera::CCamera(const CCamera& com) :
@@ -114,8 +119,24 @@ void CCamera::PostUpdate(float DeltaTime)
 	for (int i = 0; i < AXIS_END; ++i)
 	{
 		Vector3	Axis = GetAxis((AXIS)i);
-		Vector3	Pos = GetWorldPos() * -1.f;
-
+		Vector3	Pos = GetWorldPos();
+		if (Pos.x < m_MinX)
+		{
+			Pos.x = m_MinX;
+		}
+		if (Pos.x > m_MaxX)
+		{
+			Pos.x = m_MaxX;
+		}
+		if (Pos.y < m_MinY)
+		{
+			Pos.x = m_MinY;
+		}
+		if (Pos.y > m_MaxY)
+		{
+			Pos.y = m_MaxY;
+		}
+		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문
 		Pos.z = 0.f;
 		m_matView[3][i] = Axis.Dot(Pos);

@@ -693,6 +693,9 @@
     <ClInclude Include="IMGUITabItem.h">
       <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUIRadioButton.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1099,6 +1102,9 @@
     </ClCompile>
     <ClCompile Include="IMGUITabItemEnd.cpp">
       <Filter>01. Engine\09. IMGUI\03. Widget\Tab\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUIRadioButton.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

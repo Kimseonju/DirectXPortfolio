@@ -3,7 +3,7 @@
 #include "UI/Image.h"
 #include "UI/Button.h"
 #include <Device.h>
-#include "../Stage.h"
+#include "../Stage/Stage.h"
 #include "../Room.h"
 CStageMap::CStageMap() :
 	m_StageUpdate(true),

@@ -26,7 +26,7 @@ public:
 	{
 		m_Active = bActive;
 	}
-	bool IsActive()
+	virtual bool IsActive()
 	{
 		return m_Active;
 	}

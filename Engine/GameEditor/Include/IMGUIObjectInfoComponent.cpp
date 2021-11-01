@@ -30,6 +30,10 @@ CIMGUIObjectInfoComponent::~CIMGUIObjectInfoComponent()
 void CIMGUIObjectInfoComponent::UpdateInfo(CGameObject* Object)
 {
 	m_Object = Object;
+	if (!m_Object)
+	{
+		return;
+	}
 	m_ObjectName->SetText(m_Object->GetName().c_str());
 	m_EnableCheckBox->SetCheck(m_Object->IsEnable());
 	Enable(true);

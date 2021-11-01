@@ -46,6 +46,7 @@ bool CBird::Init()
 	m_Sprite->CreateAnimation2D<CBirdAnimation2D>();
 
 	m_Animation2D = m_Sprite->GetAnimation2D();
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default);
 
 	return true;
 }

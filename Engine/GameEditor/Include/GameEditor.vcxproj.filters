@@ -70,6 +70,12 @@
     <Filter Include="01. EditorGUI\Window\TileMapWindow">
       <UniqueIdentifier>{952052b7-a61b-4e8b-a7c2-38ea888b4e87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. EditorGUI\Window\State">
+      <UniqueIdentifier>{ac682daa-1ea1-4796-b109-7550c5858e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditorGUI\Window\Object">
+      <UniqueIdentifier>{202f0d15-4c73-4222-a0ae-371f06060e14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -88,12 +94,6 @@
       <Filter>01. EditorGUI</Filter>
     </ClInclude>
     <ClInclude Include="LogWindow.h">
-      <Filter>01. EditorGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectWindow.h">
-      <Filter>01. EditorGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="TileWindow.h">
       <Filter>01. EditorGUI</Filter>
     </ClInclude>
     <ClInclude Include="TileMapWindow.h">
@@ -162,6 +162,15 @@
     <ClInclude Include="TileMapToolWindow.h">
       <Filter>01. EditorGUI\Window\TileMapWindow</Filter>
     </ClInclude>
+    <ClInclude Include="StateWindow.h">
+      <Filter>01. EditorGUI\Window\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentWindow.h">
+      <Filter>01. EditorGUI\Window\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectWindow.h">
+      <Filter>01. EditorGUI\Window\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -170,13 +179,7 @@
     <ClCompile Include="TestWindow.cpp">
       <Filter>01. EditorGUI</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectWindow.cpp">
-      <Filter>01. EditorGUI</Filter>
-    </ClCompile>
     <ClCompile Include="LogWindow.cpp">
-      <Filter>01. EditorGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="TileWindow.cpp">
       <Filter>01. EditorGUI</Filter>
     </ClCompile>
     <ClCompile Include="TileMapWindow.cpp">
@@ -241,6 +244,15 @@
     </ClCompile>
     <ClCompile Include="TileMapToolWindow.cpp">
       <Filter>01. EditorGUI\Window\TileMapWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="StateWindow.cpp">
+      <Filter>01. EditorGUI\Window\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentWindow.cpp">
+      <Filter>01. EditorGUI\Window\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectWindow.cpp">
+      <Filter>01. EditorGUI\Window\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

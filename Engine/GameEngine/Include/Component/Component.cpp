@@ -1,6 +1,6 @@
 
 #include "Component.h"
-
+#include "../GameObject.h"
 CComponent::CComponent()
 {
 }
@@ -16,6 +16,15 @@ CComponent::~CComponent()
 void CComponent::Active(bool bActive)
 {
     CRef::Active(bActive);
+}
+
+bool CComponent::IsActive() const
+{
+    if (!m_pOwner->IsActive() || !m_Active)
+    {
+        return false;
+    }
+    return true;
 }
 
 void CComponent::Start()

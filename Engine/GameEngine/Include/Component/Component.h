@@ -16,6 +16,11 @@ protected:
     class CScene* m_pScene;
     class CGameObject* m_pOwner;
 public:
+    void SetOwner(class CGameObject* Owner)
+    {
+        m_pOwner = Owner;
+    }
+
     class CGameObject* GetOwner()   const
     {
         return m_pOwner;
@@ -26,6 +31,7 @@ public:
         return m_pScene;
     }
     virtual void Active(bool bActive);
+    virtual bool IsActive() const;
 public:
     virtual void Start();
     virtual bool Init();

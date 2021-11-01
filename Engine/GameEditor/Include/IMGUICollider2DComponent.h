@@ -15,9 +15,6 @@ private:
 
 	class CIMGUIDrag* m_ColliderLengthX;
 	class CIMGUIDrag* m_ColliderLengthY;
-	
-
-	class CIMGUIDrag* m_ColliderRadius;
 
 	class CCollider* m_Collider;
 
@@ -31,6 +28,5 @@ public:
 
 public:
 	void InputLength();
-	void InputRadius();
 	void ProfileComboCallback(int SelectIndex, const char* Item);
 };

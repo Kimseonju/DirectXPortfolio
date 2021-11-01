@@ -45,7 +45,6 @@ void CIMGUICollider2DComponent::UpdateInfo(CCollider* Collider)
 	{
 		m_ColliderType->SetText("Circle");
 		CircleInfo info = ((CColliderCircle*)m_Collider)->GetInfo();
-		m_ColliderRadius->SetFloat(info.Radius);
 		break;
 	}
 	case Collider_Shape::Pixel:
@@ -66,20 +65,11 @@ void CIMGUICollider2DComponent::UpdateInfo(CCollider* Collider)
 	}
 
 
-	m_ColliderProfileCombo = m_Owner->AddWidget<CIMGUIComboBox>("##TextureCombo", 100.f, 20.f);
-	m_vecWidget.push_back(m_ColliderProfileCombo);
-	m_ColliderProfileCombo->SetSelectCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::ProfileComboCallback);
-	std::vector<std::string> Name;
-	CCollisionManager::GetInst()->GetProfileName(Name);
-
-	for (size_t i = 0; i < Name.size(); i++)
-	{
-		m_ColliderProfileCombo->AddItem(Name[i].c_str());
-	}
 	if (m_Collider->GetProfile())
 	{
 		m_ColliderProfileCombo->SetPrevName(m_Collider->GetProfile()->Name);
 	}
+	
 	Enable(true);
 
 }
@@ -91,24 +81,24 @@ bool CIMGUICollider2DComponent::Init()
 	m_Header = m_Owner->AddWidget<CIMGUICollapsingHeader>("Collider2D");
 #pragma region Type
 
-	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("##Type");
+	CIMGUIText* Text = m_Owner->AddWidget<CIMGUIText>("Type");
 	Text->SetText("Type");
 	m_vecWidget.push_back(Text);
 	CIMGUISameLine* SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_ColliderType = m_Owner->AddWidget<CIMGUIText>("##ColliderType", 300.f, 100.f);
+	m_ColliderType = m_Owner->AddWidget<CIMGUIText>("##ColliderType", 300.f, 20.f);
 	
 	m_vecWidget.push_back(m_ColliderType);
 
-	Text = m_Owner->AddWidget<CIMGUIText>("##Space");
+	Text = m_Owner->AddWidget<CIMGUIText>("Space");
 	Text->SetText("Space");
 	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_ColliderSpace = m_Owner->AddWidget<CIMGUIText>("##ColliderSpace", 300.f, 100.f);
-	m_vecWidget.push_back(m_ColliderType);
+	m_ColliderSpace = m_Owner->AddWidget<CIMGUIText>("##ColliderSpace", 300.f, 20.f);
+	m_vecWidget.push_back(m_ColliderSpace);
 
 #pragma endregion
 #pragma region Input
@@ -133,11 +123,28 @@ bool CIMGUICollider2DComponent::Init()
 	m_vecWidget.push_back(m_ColliderLengthY);
 
 
-	m_ColliderRadius = m_Owner->AddWidget<CIMGUIDrag>("##ColliderRadius", 100.f, 20.f);
-	m_ColliderRadius->SetNumberFloat(true);
-	m_ColliderRadius->SetInputCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::InputRadius);
-	m_vecWidget.push_back(m_ColliderRadius);
 #pragma endregion
+
+#pragma region Profile
+	Text = m_Owner->AddWidget<CIMGUIText>("Length");
+	Text->SetText("Length");
+	SameLine->SetSize(20.f, 20.f);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(Text);
+	m_vecWidget.push_back(SameLine);
+	m_ColliderProfileCombo = m_Owner->AddWidget<CIMGUIComboBox>("##ProfileCombo", 100.f, 20.f);
+	m_vecWidget.push_back(m_ColliderProfileCombo);
+	m_ColliderProfileCombo->SetSelectCallback<CIMGUICollider2DComponent>(this, &CIMGUICollider2DComponent::ProfileComboCallback);
+	std::vector<std::string> Name;
+	CCollisionManager::GetInst()->GetProfileName(Name);
+
+	for (size_t i = 0; i < Name.size(); i++)
+	{
+		m_ColliderProfileCombo->AddItem(Name[i].c_str());
+	}
+
+#pragma endregion
+
 	m_Header->WidgetPush(m_vecWidget);
 	m_vecWidget.push_back(m_Header);
 	return true;
@@ -158,7 +165,6 @@ void CIMGUICollider2DComponent::Enable(bool Enable)
 	{
 	case Collider_Shape::Box2D:
 	{
-		m_ColliderRadius->Enable(false);
 		break;
 	}
 	case Collider_Shape::Circle:
@@ -171,7 +177,6 @@ void CIMGUICollider2DComponent::Enable(bool Enable)
 	{
 		m_ColliderLengthX->Enable(false);
 		m_ColliderLengthY->Enable(false);
-		m_ColliderRadius->Enable(false);
 		break;
 	}
 	}
@@ -183,12 +188,6 @@ void CIMGUICollider2DComponent::InputLength()
 	float Y = m_ColliderLengthY->GetValueFloat();
 
 	((CColliderBox2D*)m_Collider)->SetExtent(X, Y);
-}
-
-void CIMGUICollider2DComponent::InputRadius()
-{
-	float Radius = m_ColliderRadius->GetValueFloat();
-	((CColliderCircle*)m_Collider)->SetRadius(Radius);
 }
 
 void CIMGUICollider2DComponent::ProfileComboCallback(int SelectIndex, const char* Item)

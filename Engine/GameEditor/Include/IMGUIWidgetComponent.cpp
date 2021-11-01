@@ -3,7 +3,8 @@
 #include "IMGUIWidget.h"
 #include <IMGUICollapsingHeader.h>
 CIMGUIWidgetComponent::CIMGUIWidgetComponent():
-	m_Owner(nullptr)
+	m_Owner(nullptr),
+	m_Enable(false)
 {
 }
 
@@ -24,4 +25,5 @@ void CIMGUIWidgetComponent::Enable(bool Enable)
 	{
 		m_vecWidget[i]->Enable(Enable);
 	}
+	m_Enable = Enable;
 }

@@ -54,7 +54,14 @@ private:
 public:
 	void AddCollider(class CCollider* Collider);
 	void AddWidget(CWidget* Widget);
-
+	CCollider* GetMouseCollisionCollider_Edit()
+	{
+		return m_MouseCollisionCollider.Get();
+	}
+	void ResetMouseCollisionCollider_Edit()
+	{
+		m_MouseCollisionCollider = nullptr;
+	}
 	//움직였다면 호출
 	void SetCenter(const Vector3& Center)
 	{

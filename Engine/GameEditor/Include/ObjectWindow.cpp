@@ -12,22 +12,17 @@
 #include "GameObject.h"
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"
-#include "Component/SpriteComponent.h"
-#include "Component/ColliderBox2D.h"
-#include "Component/ColliderCircle.h"
-#include "Component/ColliderPixel.h"
-#include "Component/Camera.h"
-#include "Component/SpringArm.h"
-#include "Component/SpringArm2D.h"
 #include "DetailWindow.h"
 #include "IMGUIManager.h"
 #include "InspectorWindow.h"
 #include "PrefabWindow.h"
-
+#include <Scene/Scene.h>
+#include <Scene/SceneCollision.h>
+#include <Scene/SceneManager.h>
+#include "Component/Collider.h"
+#include "ComponentWindow.h"
 CObjectWindow::CObjectWindow() :
 	m_CreateObjectCount(0),
-	m_SelectObjectIndex(-1),
-	m_SelectComponentIndex(-1),
 	m_CreateComponentIndex(-1)
 {
 }
@@ -36,18 +31,16 @@ CObjectWindow::~CObjectWindow()
 {
 }
 
+
+
 bool CObjectWindow::Init()
 {
 	m_ObjListBox = AddWidget<CIMGUIListBox>("ObjectListBox", 300.f, 100.f);
-
+	m_ObjListBox->SetBorder(false);
 	m_ObjListBox->SetSelectCallback<CObjectWindow>(this, &CObjectWindow::ListCallback);
 
-	m_ComponentListBox = AddWidget<CIMGUIListBox>("ComponentListBox", 300.f, 100.f);
 
-	m_ComponentListBox->SetSelectCallback<CObjectWindow>(this, &CObjectWindow::ComponentListCallback);
-
-
-	CIMGUIButton* CreateObjButton = AddWidget<CIMGUIButton>("오브젝트생성");
+	CIMGUIButton* CreateObjButton = AddWidget<CIMGUIButton>("오브젝트생성",100.f,30.f);
 
 	CreateObjButton->SetFont("DefaultFont");
 
@@ -56,34 +49,30 @@ bool CObjectWindow::Init()
 	CIMGUISameLine* SameLine = AddWidget<CIMGUISameLine>("SameLine");
 
 
-	CreateObjButton = AddWidget<CIMGUIButton>("오브젝트삭제");
+	CreateObjButton = AddWidget<CIMGUIButton>("오브젝트삭제", 100.f, 30.f);
 
 	CreateObjButton->SetFont("DefaultFont");
 
 	CreateObjButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::DeleteObjectButtonClick);
 
 
-	CreateObjButton = AddWidget<CIMGUIButton>("컴포넌트생성");
-
-	CreateObjButton->SetFont("DefaultFont");
-
-	CreateObjButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::CreateComponentButtonClick);
 
 
-	CIMGUIButton* SaveBtn = AddWidget<CIMGUIButton>("저장", 100.f, 40.f);
+	CIMGUIButton* SaveBtn = AddWidget<CIMGUIButton>("저장", 100.f, 30.f);
 	SaveBtn->SetFont("DefaultFont");
 	SaveBtn->SetClickCallback<CObjectWindow>(this, &CObjectWindow::SaveButton);
 
 	CIMGUISameLine* Line2 = AddWidget<CIMGUISameLine>("");
 
-	CIMGUIButton* LoadBtn = AddWidget<CIMGUIButton>("불러오기", 100.f, 40.f);
+	CIMGUIButton* LoadBtn = AddWidget<CIMGUIButton>("불러오기", 100.f, 30.f);
 	LoadBtn->SetFont("DefaultFont");
 	LoadBtn->SetClickCallback<CObjectWindow>(this, &CObjectWindow::LoadButton);
 
-
-	CIMGUIButton* Prefab = AddWidget<CIMGUIButton>("AddPrefab", 100.f, 40.f);
+	 
+	CIMGUIButton* Prefab = AddWidget<CIMGUIButton>("AddPrefab", 100.f, 30.f);
 	Prefab->SetFont("DefaultFont");
 	Prefab->SetClickCallback<CObjectWindow>(this, &CObjectWindow::AddPrefab);
+
 
 
 	return true;
@@ -100,11 +89,38 @@ void CObjectWindow::Update(float DeltaTime)
 	
 }
 
+void CObjectWindow::DeleteColliderMouseObject()
+{
+	CCollider* Collision=m_Scene->GetCollisionManager()->GetMouseCollisionCollider_Edit();
+	if (Collision)
+	{
+		CGameObject* Obj=Collision->GetOwner();
+
+		size_t Size = m_VecObject.size();
+		auto iter = m_VecObject.begin();
+		auto iterEnd = m_VecObject.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			if ((*iter) == Obj)
+			{
+				m_VecObject.erase(iter);
+				Obj->Active(false);
+				break;
+			}
+		}
+		CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+		InspectorWindow->AllComponentClose();
+	}
+}
 
 void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 {
 	m_SelectObjectIndex = SelectIndex;
-	m_SelectComponent = nullptr;
+	if (!m_ComponentWindow)
+	{
+		m_ComponentWindow = (CComponentWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ComponentWindow");
+	}
+	m_ComponentWindow->SetSelectComponent(nullptr);
 
 	std::string SelectName = Item;
 
@@ -117,7 +133,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 	m_SelectObject->GetComponentName(vecName);
 
-	m_ComponentListBox->Clear();
+	m_ComponentWindow->Clear();
 	
 	size_t	Size = vecName.size();
 
@@ -132,7 +148,7 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 	InspectorWindow->AllComponentClose();
 	for (size_t i = 0; i < vecName.size(); ++i)
 	{
-		m_ComponentListBox->AddItem(vecName[i].c_str());
+		m_ComponentWindow->AddItem(vecName[i].c_str());
 	}
 
 	CSceneComponent* Compoonent = m_SelectObject->FindSceneComponent(vecName[0]);
@@ -141,26 +157,6 @@ void CObjectWindow::ListCallback(int SelectIndex, const char* Item)
 
 }
 
-void CObjectWindow::ComponentListCallback(int SelectIndex, const char* Item)
-{
-	m_SelectComponentIndex = SelectIndex;
-
-	m_SelectComponent = m_SelectObject->FindSceneComponent(Item);
-
-	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
-	InspectorWindow->AllComponentClose();
-	
-	ComponentUpdateInfo(m_SelectComponent.Get());
-}
-
-void CObjectWindow::ComponentComboCallback(int SelectIndex, const char* Item)
-{
-	if (!m_SelectObject)
-		return;
-
-	m_CreateComponentIndex = SelectIndex;
-	
-}
 
 void CObjectWindow::CreateObjectButtonClick()
 {
@@ -192,129 +188,12 @@ void CObjectWindow::DeleteObjectButtonClick()
 			break;
 		}
 	}
-	
+	m_ComponentWindow->Clear();
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+	InspectorWindow->ObjectUpdateInfo(nullptr);
 	InspectorWindow->AllComponentClose();
 }
 
-void CObjectWindow::CreateComponentButtonClick()
-{
-	if (!m_SelectObject)
-		return;
-	// 이름을 지정하기 위한 Popup 창을 열어준다.
-	CIMGUIText* Text=AddPopupWidget<CIMGUIText>("CreateComponent");
-	Text->SetText("CreateComponent");
-
-	Text = AddPopupWidget<CIMGUIText>("CreateComponent");
-	Text->SetText("ComponentName");
-
-	CIMGUISameLine* SameLine = AddPopupWidget<CIMGUISameLine>("SameLine");
-	m_NameInput = AddPopupWidget<CIMGUITextInput>("##NameInput", 100.f, 20.f);
-
-	CIMGUIComboBox* ComponentCombo = AddPopupWidget<CIMGUIComboBox>("##ComponentCombo", 100.f, 100.f);
-
-	ComponentCombo->SetSelectCallback<CObjectWindow>(this, &CObjectWindow::ComponentComboCallback);
-
-	ComponentCombo->AddItem("Scene");
-	ComponentCombo->AddItem("Sprite");
-	ComponentCombo->AddItem("Box2D");
-	ComponentCombo->AddItem("Circle");
-	ComponentCombo->AddItem("Pixel");
-	ComponentCombo->AddItem("Camera");
-	ComponentCombo->AddItem("SpringArm");
-	ComponentCombo->AddItem("SpringArm2D");
-
-
-	CIMGUIButton* CreateObjButton = AddPopupWidget<CIMGUIButton>("생성");
-
-	CreateObjButton->SetFont("DefaultFont");
-
-	CreateObjButton->SetClickCallback<CObjectWindow>(this, &CObjectWindow::InputComponentPopupButton);
-
-
-	SetPopupTitle("Component");
-	EnableModalPopup();
-}
-
-
-void CObjectWindow::InputComponentPopupButton()
-{
-	if (!m_SelectObject)
-		return;
-	if (m_CreateComponentIndex==-1)
-		return;
-	CSceneComponent* NewComponent = nullptr;
-
-	const char* Name = m_NameInput->GetTextMultibyte();
-
-	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
-	switch ((Component_Class_Type)m_CreateComponentIndex)
-	{
-	case Component_Class_Type::Scene:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSceneComponent>(Name);
-		break;
-	case Component_Class_Type::Sprite:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpriteComponent>(Name);
-		break;
-	case Component_Class_Type::Box2D:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderBox2D>(Name);
-		NewComponent->Start();
-		break;
-	case Component_Class_Type::Circle:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderCircle>(Name);
-		NewComponent->Start();
-		break;
-	case Component_Class_Type::Pixel:
-		NewComponent = m_SelectObject->CreateSceneComponent<CColliderPixel>(Name);
-		NewComponent->Start();
-		break;
-	case Component_Class_Type::Camera:
-		NewComponent = m_SelectObject->CreateSceneComponent<CCamera>(Name);
-		NewComponent->Start();
-		break;
-	case Component_Class_Type::SpringArm:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm>(Name);
-		break;
-	case Component_Class_Type::SpringArm2D:
-		NewComponent = m_SelectObject->CreateSceneComponent<CSpringArm2D>(Name);
-		break;
-	}
-
-	m_ComponentListBox->AddItem(NewComponent->GetName().c_str());
-	if (m_SelectObject->GetRootComponent()->GetName() == "DefaultRoot")
-	{
-		m_SelectObject->SetRootComponent(NewComponent);
-		m_SelectComponent = NewComponent;
-
-		std::vector<std::string>	vecName;
-
-		m_SelectObject->GetComponentName(vecName);
-
-		m_ComponentListBox->Clear();
-
-		size_t	Size = vecName.size();
-
-
-		for (size_t i = 0; i < vecName.size(); ++i)
-		{
-			m_ComponentListBox->AddItem(vecName[i].c_str());
-		}
-
-		CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
-		InspectorWindow->AllComponentClose();
-		ComponentUpdateInfo(m_SelectComponent.Get());
-
-		
-	}
-	else
-	{
-		m_SelectObject->GetRootComponent()->AddChild(NewComponent);
-	}
-
-	NewComponent->SetRelativePos(10.f, 20.f, 30.f);
-
-	ClosePopup();
-}
 
 void CObjectWindow::AddPrefab()
 {
@@ -329,193 +208,138 @@ void CObjectWindow::AddPrefab()
 	m_PrefabWindow->AddPrefab(m_SelectObject);
 }
 
-void CObjectWindow::ComponentUpdateInfo(CSceneComponent* Compoonent)
-{
-	
-	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
-	InspectorWindow->AllComponentClose();
-	SceneComponent_Type Type = Compoonent->GetSceneComponentType();
-
-	switch (Type)
-	{
-	case SceneComponent_Type::Scene:
-	{
-		InspectorWindow->TransformUpdate(Compoonent);
-		break;
-	}
-	case SceneComponent_Type::Primitive:
-	{
-		InspectorWindow->TransformUpdate(Compoonent);
-		CPrimitiveComponent* PrimitiveComponent = (CPrimitiveComponent*)Compoonent;
-		PrimitiveComponent_ClassType ClassType = PrimitiveComponent->GetPrimitiveClassType();
-
-		switch (ClassType)
-		{
-		case PrimitiveComponent_ClassType::Default:
-			break;
-		case PrimitiveComponent_ClassType::Mesh:
-			break;
-		case PrimitiveComponent_ClassType::Sprite:
-			InspectorWindow->SpriteUpdate((CSpriteComponent*)Compoonent);
-			break;
-		case PrimitiveComponent_ClassType::Collider:
-			InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
-
-		case PrimitiveComponent_ClassType::Particle:
-			break;
-		case PrimitiveComponent_ClassType::Widget:
-			break;
-		case PrimitiveComponent_ClassType::TileMap:
-			break;
-		}
-		break;
-	}
-	case SceneComponent_Type::Camera:
-	{
-		CCamera* CameraComponent = (CCamera*)Compoonent;
-		InspectorWindow->TransformUpdate(Compoonent);
-		InspectorWindow->CameraUpdate(CameraComponent);
-		break;
-	}
-	case SceneComponent_Type::SpringArm:
-		InspectorWindow->TransformUpdate(Compoonent);
-		break;
-	}
-
-}
-
 
 void CObjectWindow::SetPosX(float x)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Pos = m_SelectComponent->GetWorldPos();
+	Vector3	Pos = m_ComponentWindow->GetSelectComponent()->GetWorldPos();
 	Pos.x = x;
 
-	m_SelectComponent->SetWorldPos(Pos);
+	m_ComponentWindow->GetSelectComponent()->SetWorldPos(Pos);
 }
 
 void CObjectWindow::SetPosY(float y)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Pos = m_SelectComponent->GetWorldPos();
+	Vector3	Pos = m_ComponentWindow->GetSelectComponent()->GetWorldPos();
 	Pos.y = y;
 
-	m_SelectComponent->SetWorldPos(Pos);
+	m_ComponentWindow->GetSelectComponent()->SetWorldPos(Pos);
 }
 
 void CObjectWindow::SetPosZ(float z)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Pos = m_SelectComponent->GetWorldPos();
+	Vector3	Pos = m_ComponentWindow->GetSelectComponent()->GetWorldPos();
 	Pos.z = z;
 
-	m_SelectComponent->SetWorldPos(Pos);
+	m_ComponentWindow->GetSelectComponent()->SetWorldPos(Pos);
 }
 
 void CObjectWindow::SetRotX(float x)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
 	
-	Vector3	Rot = m_SelectComponent->GetWorldRotation();
+	Vector3	Rot = m_ComponentWindow->GetSelectComponent()->GetWorldRotation();
 	Rot.x = x;
 
-	m_SelectComponent->SetWorldRotation(Rot);
+	m_ComponentWindow->GetSelectComponent()->SetWorldRotation(Rot);
 }
 
 void CObjectWindow::SetRotY(float y)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Rot = m_SelectComponent->GetWorldRotation();
+	Vector3	Rot = m_ComponentWindow->GetSelectComponent()->GetWorldRotation();
 	Rot.y = y;
 
-	m_SelectComponent->SetWorldRotation(Rot);
+	m_ComponentWindow->GetSelectComponent()->SetWorldRotation(Rot);
 }
 
 void CObjectWindow::SetRotZ(float z)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Rot = m_SelectComponent->GetWorldRotation();
+	Vector3	Rot = m_ComponentWindow->GetSelectComponent()->GetWorldRotation();
 	Rot.z = z;
 
-	m_SelectComponent->SetWorldRotation(Rot);
+	m_ComponentWindow->GetSelectComponent()->SetWorldRotation(Rot);
 }
 
 void CObjectWindow::SetScaleX(float x)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetWorldScale();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetWorldScale();
 	Scale.x = x;
 
-	m_SelectComponent->SetWorldScale(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetScaleY(float y)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetWorldScale();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetWorldScale();
 	Scale.y = y;
 
-	m_SelectComponent->SetWorldScale(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetScaleZ(float z)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetWorldScale();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetWorldScale();
 	Scale.z = z;
 
-	m_SelectComponent->SetWorldScale(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetWorldScale(Scale);
 }
 
 void CObjectWindow::SetPivotX(float x)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetPivot();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetPivot();
 	Scale.x = x;
 
-	m_SelectComponent->SetPivot(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetPivot(Scale);
 }
 
 void CObjectWindow::SetPivotY(float y)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetPivot();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetPivot();
 	Scale.y = y;
 
-	m_SelectComponent->SetPivot(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetPivot(Scale);
 }
 
 void CObjectWindow::SetPivotZ(float z)
 {
-	if (!m_SelectComponent)
+	if (!m_ComponentWindow->GetSelectComponent())
 		return;
 
-	Vector3	Scale = m_SelectComponent->GetPivot();
+	Vector3	Scale = m_ComponentWindow->GetSelectComponent()->GetPivot();
 	Scale.z = z;
 
-	m_SelectComponent->SetPivot(Scale);
+	m_ComponentWindow->GetSelectComponent()->SetPivot(Scale);
 }
 
 void CObjectWindow::SaveButton()

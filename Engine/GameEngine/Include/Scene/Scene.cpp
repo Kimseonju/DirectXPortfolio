@@ -103,12 +103,10 @@ void CScene::Update(float DeltaTime)
     auto    iter = m_ObjList.begin();
     auto    iterEnd = m_ObjList.end();
 
-    for (; iter != iterEnd;)
+    for (; iter != iterEnd; ++iter)
     {
         if (!(*iter)->IsActive())
         {
-            iter = m_ObjList.erase(iter);
-            iterEnd = m_ObjList.end();
             continue;
         }
 
@@ -119,8 +117,6 @@ void CScene::Update(float DeltaTime)
 
             (*iter)->Update(DeltaTime);
         }
-
-        ++iter;
     }
 
     m_pCameraManager->Update(DeltaTime);

@@ -163,8 +163,11 @@
     <Filter Include="02. Object\Enemy\Boss\Belial">
       <UniqueIdentifier>{f9860b94-e649-4616-a9a8-15dbde0bdc95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="테스트파일%28Stage,Room%29">
-      <UniqueIdentifier>{4f4dc927-2d47-43ca-a541-5068705d7d98}</UniqueIdentifier>
+    <Filter Include="02. Object\Map">
+      <UniqueIdentifier>{81ff974b-256f-424c-bcc2-b496e536fc0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{9556f4e2-b438-42bc-9bd0-c79ad2c2197e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,12 +306,6 @@
     <ClCompile Include="Object\PlayerDash.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
-      <Filter>테스트파일%28Stage,Room%29</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>테스트파일%28Stage,Room%29</Filter>
-    </ClCompile>
     <ClCompile Include="Object\FlameEffect.cpp">
       <Filter>02. Object\수업듣기용\Effect</Filter>
     </ClCompile>
@@ -417,9 +414,6 @@
     <ClCompile Include="Animation2D\BelialHandAnimation2D.cpp">
       <Filter>03. Animation2D\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Object\TestTileMap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Object\BelialWeapon.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClCompile>
@@ -434,6 +428,18 @@
     </ClCompile>
     <ClCompile Include="Object\BelialWeaponHit.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TestTileMap.cpp">
+      <Filter>02. Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Door.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Stage.cpp">
+      <Filter>Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,12 +578,6 @@
     <ClInclude Include="Object\PlayerDash.h">
       <Filter>02. Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
-      <Filter>테스트파일%28Stage,Room%29</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>테스트파일%28Stage,Room%29</Filter>
-    </ClInclude>
     <ClInclude Include="Object\FlameEffect.h">
       <Filter>02. Object\수업듣기용\Effect</Filter>
     </ClInclude>
@@ -686,9 +686,6 @@
     <ClInclude Include="Animation2D\BelialHandAnimation2D.h">
       <Filter>03. Animation2D\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Object\TestTileMap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Object\BelialWeapon.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClInclude>
@@ -703,6 +700,18 @@
     </ClInclude>
     <ClInclude Include="Object\BelialWeaponHit.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TestTileMap.h">
+      <Filter>02. Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Door.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Stage.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

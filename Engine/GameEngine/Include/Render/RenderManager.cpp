@@ -322,7 +322,7 @@ void CRenderManager::AddPrimitiveComponent(CPrimitiveComponent* pPrimitive)
 		// 화면에 그려져야 하는지 판단한다.
 		CScene* Scene = CSceneManager::GetInst()->GetScene();
 
-		if (pPrimitive->GetRender2DType() != RT2D_Back)
+		if (pPrimitive->GetRender2DType() != RT2D_MAP)
 		{
 			CCamera* Camera = Scene->GetCameraManager()->GetCurrentCamera();
 

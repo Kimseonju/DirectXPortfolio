@@ -114,3 +114,36 @@ enum class Belial_Pattern
     Bullet,
     End
 };
+enum class Room
+{
+    L,
+    R,
+    U,
+    D,
+    LR,
+    LU,
+    LD,
+    LRU,
+    LRD,
+    LUD,
+    LRUD,
+    RU,
+    RD,
+    RUD,
+    UD,
+};
+enum Stage_Dir
+{
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN,
+    END
+};
+enum class Stage_State
+{
+    Idle,
+    Spawn,
+    Clear,
+    End
+};

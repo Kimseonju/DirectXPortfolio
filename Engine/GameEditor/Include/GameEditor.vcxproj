@@ -206,6 +206,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation2DWindow.h" />
+    <ClInclude Include="ComponentWindow.h" />
     <ClInclude Include="DetailWindow.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="framework.h" />
@@ -230,14 +231,15 @@
     <ClInclude Include="PrefabWindow.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\EditorScene.h" />
+    <ClInclude Include="StateWindow.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestWindow.h" />
     <ClInclude Include="TileMapToolWindow.h" />
     <ClInclude Include="TileMapWindow.h" />
-    <ClInclude Include="TileWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation2DWindow.cpp" />
+    <ClCompile Include="ComponentWindow.cpp" />
     <ClCompile Include="DetailWindow.cpp" />
     <ClCompile Include="GameEditor.cpp" />
     <ClCompile Include="GameEditorDoc.cpp" />
@@ -264,10 +266,10 @@
     </ClCompile>
     <ClCompile Include="PrefabWindow.cpp" />
     <ClCompile Include="Scene\EditorScene.cpp" />
+    <ClCompile Include="StateWindow.cpp" />
     <ClCompile Include="TestWindow.cpp" />
     <ClCompile Include="TileMapToolWindow.cpp" />
     <ClCompile Include="TileMapWindow.cpp" />
-    <ClCompile Include="TileWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameEditor.rc" />

@@ -3,7 +3,7 @@
 #include "GlobalValue.h"
 #include <GameObject.h>
 #include "GlobalValue.h"
-#include "Stage.h"
+#include "Stage/Stage.h"
 class CRoom
 {
 

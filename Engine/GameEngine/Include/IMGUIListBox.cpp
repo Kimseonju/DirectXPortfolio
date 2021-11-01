@@ -25,9 +25,9 @@ void CIMGUIListBox::Render()
 	ImVec2	Size = ImVec2(m_Size.x, m_PageItemCount * ImGui::GetTextLineHeightWithSpacing());
 
 
-	ImGui::Text(m_Name);
 	if (m_Border)
 	{
+		ImGui::Text(m_Name);
 		if (ImGui::ListBoxHeader(m_Name, Size))
 		{
 			size_t	Size = m_vecItem.size();

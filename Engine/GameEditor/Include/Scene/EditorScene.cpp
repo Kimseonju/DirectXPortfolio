@@ -17,8 +17,9 @@
 #include "../PrefabWindow.h"
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"
-#include "../TileWindow.h"
 #include "../TileMapToolWindow.h"
+#include <Component/Camera.h>
+#include <Scene/CameraManager.h>
 CEditorScene::CEditorScene() :
 	m_CloneObjectCount(0)
 {
@@ -36,12 +37,14 @@ bool CEditorScene::Init()
     CInput::GetInst()->CreateKey("MoveLeft", 'A');
     CInput::GetInst()->CreateKey("MoveRight", 'D');
     CInput::GetInst()->CreateKey("MouseLButton", VK_LBUTTON);
+	CInput::GetInst()->CreateKey("MouseRButton", VK_RBUTTON);
 
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveUp", KT_Push, this, &CEditorScene::MoveUp);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveDown", KT_Push, this, &CEditorScene::MoveDown);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveLeft", KT_Push, this, &CEditorScene::MoveLeft);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveRight", KT_Push, this, &CEditorScene::MoveRight);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Up, this, &CEditorScene::MouseLButton);
+	CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseRButton", KT_Push, this, &CEditorScene::MouseRButton);
 
     m_TileMapToolWindow = (CTileMapToolWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapToolWindow");
 	m_ObjectWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
@@ -90,7 +93,6 @@ void CEditorScene::MoveRight(float DeltaTime)
 
 void CEditorScene::MouseLButton(float DeltaTime)
 {
-	CGlobalValue::MouseState = Mouse_State::Tile;
 	
 	switch (CGlobalValue::MouseState)
 	{
@@ -118,7 +120,29 @@ void CEditorScene::MouseLButton(float DeltaTime)
 
 	case Mouse_State::World:
 	{
-		EditMap();
+		AddObjectMap();
+		break;
+	}
+	}
+}
+
+void CEditorScene::MouseRButton(float DeltaTime)
+{
+
+	switch (CGlobalValue::MouseState)
+	{
+	case Mouse_State::Normal:
+	{
+		break;
+	}
+	case Mouse_State::Tile:
+	{
+		
+	}
+
+	case Mouse_State::World:
+	{
+		DeleteObjectMap();
 		break;
 	}
 	}
@@ -145,7 +169,9 @@ void CEditorScene::EditTileImage()
 	Vector2 Frame= m_TileMapToolWindow->GetImageFrame();
 
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
-
+	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
+	float Zoom = Camera->GetCameraZoom();
+	MousePos *= Zoom;
 	CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileMap();
 
 	if (Frame.x == -1 || Frame.y == -1)
@@ -164,7 +190,7 @@ void CEditorScene::EditTileImage()
 	}
 }
 
-void CEditorScene::EditMap()
+void CEditorScene::AddObjectMap()
 {
 	CGameObject* Obj=m_PrefabWindow->GetSelectObject();
 	if (!Obj)
@@ -184,6 +210,11 @@ void CEditorScene::EditMap()
 	m_CloneObjectCount++;
 	m_ObjectWindow->AddObject(Obj2);
 
+}
+
+void CEditorScene::DeleteObjectMap()
+{
+	m_ObjectWindow->DeleteColliderMouseObject();
 }
 
 

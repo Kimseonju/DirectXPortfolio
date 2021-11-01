@@ -43,7 +43,7 @@ bool CBackGround::Init()
 	m_Sprite->SetRelativePos(0.f, 0.f, 0.f);
 	m_Sprite->SetPivot(0.f, 0.f, 0.f);
 	//나중에수정 이쪽은
-	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Particle);
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_MAP);
 
 
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);

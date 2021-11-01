@@ -24,7 +24,41 @@ protected:
 	float	m_CameraLeft;	//2D
 	Resolution	m_RS;
 	float	m_CameraZoom;
+
+	float	m_MinX;
+	float	m_MinY;
+
+	float	m_MaxX;
+	float	m_MaxY;
+
 public:
+
+	void SetMin(float x, float y)
+	{
+		m_MinX = x;
+		m_MinY = y;
+	}
+
+	void SetMax(float x, float y)
+	{
+		m_MaxX = x;
+		m_MaxY = y;
+	}
+	Vector2 GetMin()
+	{
+		Vector2 vec2;
+		vec2.x = m_MinX;
+		vec2.y = m_MinY;
+		return vec2;
+	}
+	Vector2 GetMax()
+	{
+		Vector2 vec2;
+		vec2.x = m_MaxX;
+		vec2.y = m_MaxY;
+		return vec2;
+	}
+
 	float GetCameraZoom() const
 	{
 		return m_CameraZoom;

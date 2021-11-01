@@ -81,9 +81,10 @@ bool CClientManager::Init()
         Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::EnemyAttack,
         Collision_Interaction::Ignore);
-
+    
+    CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
-    CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
+    //CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
     //CSceneManager::GetInst()->SetSceneMode<CTestMainScene>();
 
     CreateMouse();

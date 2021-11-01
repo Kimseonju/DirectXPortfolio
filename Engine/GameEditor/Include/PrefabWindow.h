@@ -19,6 +19,8 @@ public:
 		CGameObject* Clone=Prefab->Clone();
 		m_VecPrefab.push_back(Clone);
 		Clone->Release();
+		CSceneComponent* Component = Prefab->GetRootComponent()->Clone();
+		Prefab->SetRootCloneComponent(Component);
 	}
 
 	CGameObject* GetSelectObject()

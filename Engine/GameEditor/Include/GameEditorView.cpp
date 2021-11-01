@@ -18,7 +18,6 @@
 #include "LogWindow.h"
 #include "ObjectWindow.h"
 #include "DetailWindow.h"
-#include "TileWindow.h"
 #include "TileMapWindow.h"
 #include "InspectorWindow.h"
 #include "PrefabWindow.h"
@@ -26,7 +25,8 @@
 #include "Scene/Scene.h"
 #include "Scene/EditorScene.h"
 #include "TileMapToolWindow.h"
-
+#include "StateWindow.h"
+#include "ComponentWindow.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -109,17 +109,18 @@ void CGameEditorView::OnInitialUpdate()
 
 	CIMGUIManager::GetInst()->AddWindow<CTestWindow>("TestWindow");
 	CIMGUIManager::GetInst()->AddWindow<CLogWindow>("LogWindow");
-	CIMGUIManager::GetInst()->AddWindow<CTileWindow>("TileWindow");
 	CIMGUIManager::GetInst()->AddWindow<CTileMapToolWindow>("TileMapToolWindow");
 	CIMGUIManager::GetInst()->AddWindow<CObjectWindow>("ObjectWindow");
 	//CIMGUIManager::GetInst()->AddWindow<CDetailWindow>("DetailWindow");
 	CIMGUIManager::GetInst()->AddWindow<CInspectorWindow>("InspectorWindow");
 	CIMGUIManager::GetInst()->AddWindow<CPrefabWindow>("PrefabWindow");
-	
-	CIMGUIWindow* Window = CIMGUIManager::GetInst()->FindIMGUIWindow("TileWindow");
-	Window->Open();
+	CIMGUIManager::GetInst()->AddWindow<CStateWindow>("StateWindow");
+	CIMGUIManager::GetInst()->AddWindow<CComponentWindow>("ComponentWindow");
 
 	CSceneManager::GetInst()->SetSceneMode<CEditorScene>();
+	CObjectWindow* objWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
+	objWindow->SetScene(CSceneManager::GetInst()->GetScene());
+	objWindow->SetComponentWindow((CComponentWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ComponentWindow"));
 }
 
 

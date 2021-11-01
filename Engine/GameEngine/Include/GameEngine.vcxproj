@@ -219,6 +219,7 @@
     <ClInclude Include="IMGUILabel.h" />
     <ClInclude Include="IMGUIListBox.h" />
     <ClInclude Include="IMGUIManager.h" />
+    <ClInclude Include="IMGUIRadioButton.h" />
     <ClInclude Include="IMGUISameLine.h" />
     <ClInclude Include="IMGUITabBar.h" />
     <ClInclude Include="IMGUITabBarEnd.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="IMGUILabel.cpp" />
     <ClCompile Include="IMGUIListBox.cpp" />
     <ClCompile Include="IMGUIManager.cpp" />
+    <ClCompile Include="IMGUIRadioButton.cpp" />
     <ClCompile Include="IMGUISameLine.cpp" />
     <ClCompile Include="IMGUITabBar.cpp" />
     <ClCompile Include="IMGUITabBarEnd.cpp" />

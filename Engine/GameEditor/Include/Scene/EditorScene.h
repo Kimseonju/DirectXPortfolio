@@ -26,11 +26,13 @@ private:
     void MoveLeft(float DeltaTime);
     void MoveRight(float DeltaTime);
     void MouseLButton(float DeltaTime);
+    void MouseRButton(float DeltaTime);
 
 private:
     void EditTileType();
     void EditTileImage();
-    void EditMap();
+    void AddObjectMap();
+    void DeleteObjectMap();
     void CreateAnimationSequence2D();
 };
 

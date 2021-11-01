@@ -1,7 +1,7 @@
 
 #include "Stage.h"
 #include "Scene/Scene.h"
-#include "Room.h"
+#include "../Room.h"
 
 CStage::CStage() :
 	m_RoomSize(0),
@@ -43,7 +43,7 @@ void CStage::Start()
 
 bool CStage::Init()
 {
-	CRoom* room=new CRoom();
+	CRoom* room = new CRoom();
 	room->SetPos(4, 4);
 	room->SetStage(this);
 	SetRooms(4, 4, room);
@@ -56,9 +56,62 @@ bool CStage::Init()
 
 void CStage::Update(float DeltaTime)
 {
-	
-	//m_Rooms[m_Rooms.size() - 1].SetNextDoor(true);
-		
+	switch (m_State)
+	{
+	case Stage_State::Idle:
+	{
+		if (m_Enemy.size() > 0)
+		{
+			m_State = Stage_State::Spawn;
+			//적스폰
+		}
+		else
+		{
+			m_State = Stage_State::Clear;
+		}
+		break;
+	}
+	case Stage_State::Spawn:
+	{
+		//문닫기
+		for (int i = 0; i < 4; i++)
+		{
+			if (m_Doors[i] != nullptr)
+			{
+
+			}
+		}
+
+		//스폰시작
+		size_t Size = m_Enemy.size();
+		for (size_t i = 0; i < Size; i++)
+		{
+
+		}
+
+		if (m_Enemy.size() <= 0)
+		{
+			m_State = Stage_State::Clear;
+			//보물상자 스폰시키기
+		}
+
+
+		break;
+	}
+	case Stage_State::Clear:
+	{
+		//문열기
+		for (int i = 0; i < 4; i++)
+		{
+			if (m_Doors[i] != nullptr)
+			{
+
+			}
+		}
+		break;
+	}
+	}
+
 }
 
 void CStage::PostUpdate(float DeltaTime)
