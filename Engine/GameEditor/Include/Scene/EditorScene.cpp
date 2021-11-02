@@ -170,8 +170,6 @@ void CEditorScene::EditTileImage()
 
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
-	float Zoom = Camera->GetCameraZoom();
-	MousePos *= Zoom;
 	CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileMap();
 
 	if (Frame.x == -1 || Frame.y == -1)

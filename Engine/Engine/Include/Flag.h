@@ -208,16 +208,21 @@ enum class Component_Class_Type
 {
     Scene,
     Sprite,
-    Box2D,
-    Circle,
-    Pixel,
+    ColliderBox2D,
+    ColliderCircle,
+    ColliderPixel,
     Camera,
     SpringArm,
     SpringArm2D,
+    Primitive,
     ParticleSystem,
+    Mesh,
+    Collider,
+    Particle,
+    Widget,
+    TileMap,
     End
 };
-
 enum class Button_State
 {
     Normal,
@@ -257,15 +262,6 @@ enum class Tile_Shape
 enum class Tile_Type
 {
     None,
-    Wall
-};
-enum class PrimitiveComponent_ClassType
-{
-    Default,
-    Mesh,
-    Sprite,
-    Collider,
-    Particle,
-    Widget,
-    TileMap
+    Wall,
+    Crossed_Wall
 };

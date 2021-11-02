@@ -11,6 +11,7 @@ CSceneComponent::CSceneComponent()
     m_pParent = nullptr;
 
     m_SceneComponentType = SceneComponent_Type::Scene;
+    m_ComponentClassType = Component_Class_Type::Scene;
 }
 
 CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
@@ -282,6 +283,40 @@ void CSceneComponent::Render(float DeltaTime)
 CSceneComponent* CSceneComponent::Clone()
 {
     return new CSceneComponent(*this);
+}
+
+void CSceneComponent::Save(FILE* pFile)
+{
+    fwrite(&m_SceneComponentType, sizeof(SceneComponent_Type), 1, pFile);
+    Vector3	Pos, Rot, Scale, Pivot;
+    Pos = GetRelativePos();
+    Rot = GetRelativeRotation();
+    Scale = GetRelativeScale();
+    Pivot=GetPivot();
+    fwrite(&Pos, sizeof(Vector3), 1, pFile);
+    fwrite(&Rot, sizeof(Vector3), 1, pFile);
+    fwrite(&Scale, sizeof(Vector3), 1, pFile);
+    fwrite(&Pivot, sizeof(Vector3), 1, pFile);
+}
+
+void CSceneComponent::Load(FILE* pFile)
+{
+    SceneComponent_Type Type;
+
+    fread(&Type, sizeof(SceneComponent_Type), 1, pFile);
+    m_SceneComponentType = Type;
+    Vector3	Pos, Rot, Scale, Pivot;
+
+    fread(&Pos, sizeof(Vector3), 1, pFile);
+    fread(&Rot, sizeof(Vector3), 1, pFile);
+    fread(&Scale, sizeof(Vector3), 1, pFile);
+    fread(&Pivot, sizeof(Vector3), 1, pFile);
+    SetRelativePos(Pos);
+    SetRelativeRotation(Rot);
+    SetRelativeScale(Scale);
+    SetPivot(Pivot);
+
+
 }
 
 void CSceneComponent::SetAnimation2DEnable(bool Enable)

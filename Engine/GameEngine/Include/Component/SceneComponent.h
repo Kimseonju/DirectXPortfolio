@@ -19,13 +19,17 @@ protected:
     CSceneComponent* m_pParent;
     std::vector<CSharedPtr<CSceneComponent>>    m_vecChild;
     SceneComponent_Type m_SceneComponentType;
-
+    Component_Class_Type m_ComponentClassType;
 public:
     SceneComponent_Type GetSceneComponentType() const
     {
         return m_SceneComponentType;
     }
 
+    Component_Class_Type GetComponentClassType() const
+    {
+        return m_ComponentClassType;
+    }
     void GetSceneComponent(std::vector<CSceneComponent*>& vec)
     {
         auto iter = m_vecChild.begin();
@@ -57,7 +61,9 @@ public:
     virtual void PrevRender(float DeltaTime);
     virtual void Render(float DeltaTime);
     virtual CSceneComponent* Clone();
-
+public:
+    virtual void Save(FILE* pFile);
+    virtual void Load(FILE* pFile);
 public:
     void SetAnimation2DEnable(bool Enable);
     void SetHorizontalReverse2DEnable(bool Enable);

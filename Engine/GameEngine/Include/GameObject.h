@@ -191,7 +191,9 @@ public:
 
 private:
     void AddCamera(CCamera* Camera);
-
+public:
+    void SaveFullPath(const TCHAR* FullPath);
+    void LoadFullPath(const TCHAR* FullPath);
 public:
     template <typename T>
     T* CreateSceneComponent(const std::string& Name)

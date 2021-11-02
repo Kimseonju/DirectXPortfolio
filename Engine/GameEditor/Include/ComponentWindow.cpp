@@ -79,53 +79,92 @@ void CComponentWindow::ComponentUpdateInfo(CSceneComponent* Compoonent)
 	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
 	InspectorWindow->AllComponentClose();
 	SceneComponent_Type Type = Compoonent->GetSceneComponentType();
+	Component_Class_Type ClassType = Compoonent->GetComponentClassType();
 
-	switch (Type)
+
+	switch (ClassType)
 	{
-	case SceneComponent_Type::Scene:
+	case Component_Class_Type::Scene:
 	{
 		InspectorWindow->TransformUpdate(Compoonent);
 		break;
 	}
-	case SceneComponent_Type::Primitive:
+	case Component_Class_Type::Sprite:
 	{
 		InspectorWindow->TransformUpdate(Compoonent);
-		CPrimitiveComponent* PrimitiveComponent = (CPrimitiveComponent*)Compoonent;
-		PrimitiveComponent_ClassType ClassType = PrimitiveComponent->GetPrimitiveClassType();
-
-		switch (ClassType)
-		{
-		case PrimitiveComponent_ClassType::Default:
-			break;
-		case PrimitiveComponent_ClassType::Mesh:
-			break;
-		case PrimitiveComponent_ClassType::Sprite:
-			InspectorWindow->SpriteUpdate((CSpriteComponent*)Compoonent);
-			break;
-		case PrimitiveComponent_ClassType::Collider:
-			InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
-
-		case PrimitiveComponent_ClassType::Particle:
-			break;
-		case PrimitiveComponent_ClassType::Widget:
-			break;
-		case PrimitiveComponent_ClassType::TileMap:
-			break;
-		}
+		InspectorWindow->SpriteUpdate((CSpriteComponent*)Compoonent);
 		break;
 	}
-	case SceneComponent_Type::Camera:
+	case Component_Class_Type::ColliderBox2D:
 	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
+		break;
+	}
+	case Component_Class_Type::ColliderCircle:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
+		break;
+	}
+	case Component_Class_Type::ColliderPixel:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
+		break;
+	}
+	case Component_Class_Type::Camera:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
 		CCamera* CameraComponent = (CCamera*)Compoonent;
-		InspectorWindow->TransformUpdate(Compoonent);
 		InspectorWindow->CameraUpdate(CameraComponent);
 		break;
 	}
-	case SceneComponent_Type::SpringArm:
+	case Component_Class_Type::SpringArm:
+	{
 		InspectorWindow->TransformUpdate(Compoonent);
 		break;
 	}
-
+	case Component_Class_Type::SpringArm2D:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case Component_Class_Type::ParticleSystem:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case Component_Class_Type::Mesh:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case Component_Class_Type::Collider:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		InspectorWindow->ColliderUpdate((CCollider*)Compoonent);
+		break;
+	}
+	case Component_Class_Type::Particle:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case Component_Class_Type::Widget:
+	{
+		InspectorWindow->TransformUpdate(Compoonent);
+		break;
+	}
+	case Component_Class_Type::TileMap:
+	{
+		break;
+	}
+	case Component_Class_Type::End:
+	{
+		break;
+	}
+	}
 }
 
 void CComponentWindow::ComponentComboCallback(int SelectIndex, const char* Item)
@@ -192,15 +231,15 @@ void CComponentWindow::InputComponentPopupButton()
 	case Component_Class_Type::Sprite:
 		NewComponent = m_ObjectWindow->GetSelectObject()->CreateSceneComponent<CSpriteComponent>(Name);
 		break;
-	case Component_Class_Type::Box2D:
+	case Component_Class_Type::ColliderBox2D:
 		NewComponent = m_ObjectWindow->GetSelectObject()->CreateSceneComponent<CColliderBox2D>(Name);
 		NewComponent->Start();
 		break;
-	case Component_Class_Type::Circle:
+	case Component_Class_Type::ColliderCircle:
 		NewComponent = m_ObjectWindow->GetSelectObject()->CreateSceneComponent<CColliderCircle>(Name);
 		NewComponent->Start();
 		break;
-	case Component_Class_Type::Pixel:
+	case Component_Class_Type::ColliderPixel:
 		NewComponent = m_ObjectWindow->GetSelectObject()->CreateSceneComponent<CColliderPixel>(Name);
 		NewComponent->Start();
 		break;

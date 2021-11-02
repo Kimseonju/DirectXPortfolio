@@ -46,8 +46,27 @@ Vector2 CInput::GetMouse2DWorldPos() const
 	CCameraManager* CameraManager = Scene->GetCameraManager();
 
 	CCamera* Camera = CameraManager->GetCurrentCamera();
+	//m_MousePos 현재 마우스 위치
+	float Zoom = Camera->GetCameraZoom();
 
-	return m_MousePos + Vector2(Camera->GetWorldPos().x, Camera->GetWorldPos().y);
+	Resolution RS=CDevice::GetInst()->GetResolution();
+	Vector2 Size = { RS.Width / 2.f, RS.Height / 2.f };
+
+	Vector2 MouseRel;
+	MouseRel.x = m_MousePos.x / (float)RS.Width;
+	MouseRel.y = m_MousePos.y / (float)RS.Height;
+	
+	//반지름
+	Vector2 ZoomSize;
+	ZoomSize.x = Size.x / Zoom ;
+	ZoomSize.y = Size.y / Zoom ;
+	Vector2 MousePos;
+	MousePos.x = MouseRel.x * (ZoomSize.x * 2.f);
+	MousePos.y = MouseRel.y * (ZoomSize.y * 2.f);
+	
+	return MousePos + Vector2(Camera->GetWorldPos().x + (Size.x - ZoomSize.x), Camera->GetWorldPos().y + (Size.y - ZoomSize.y));
+
+
 }
 
 bool CInput::InitWindow()

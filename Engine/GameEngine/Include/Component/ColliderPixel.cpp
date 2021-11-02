@@ -13,6 +13,7 @@ CColliderPixel::CColliderPixel()
 	m_ColliderSpace = Collider_Space::Collider2D;
 
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_ComponentClassType = Component_Class_Type::ColliderPixel;
 	m_2DType = RT2D_Default;
 }
 

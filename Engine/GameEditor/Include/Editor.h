@@ -14,3 +14,9 @@ enum class Mouse_State
 	Tile,
 	World
 };
+
+enum class Enemy_Type
+{
+
+};
+

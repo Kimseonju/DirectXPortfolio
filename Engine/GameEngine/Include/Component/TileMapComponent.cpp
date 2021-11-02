@@ -774,6 +774,9 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 					case Tile_Type::Wall:
 						m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
 						break;
+					case Tile_Type::Crossed_Wall:
+						m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
+						break;
 					}
 				}
 

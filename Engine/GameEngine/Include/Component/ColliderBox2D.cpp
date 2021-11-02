@@ -12,6 +12,7 @@ CColliderBox2D::CColliderBox2D()
 	m_ColliderSpace = Collider_Space::Collider2D;
 
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_ComponentClassType = Component_Class_Type::ColliderBox2D;
 	m_2DType = RT2D_Default;
 }
 
@@ -141,6 +142,23 @@ void CColliderBox2D::Render(float DeltaTime)
 CColliderBox2D* CColliderBox2D::Clone()
 {
 	return new CColliderBox2D(*this);
+}
+
+void CColliderBox2D::Save(FILE* pFile)
+{
+	CCollider::Save(pFile);
+	fwrite(&m_Info.Length[0], sizeof(float), 1, pFile);
+	fwrite(&m_Info.Length[1], sizeof(float), 1, pFile);
+}
+
+void CColliderBox2D::Load(FILE* pFile)
+{
+	CCollider::Load(pFile);
+	float Length0=0.f;
+	float Length1=0.f;
+	fread(&Length0, sizeof(float), 1, pFile);
+	fread(&Length1, sizeof(float), 1, pFile);
+	SetExtent(Length0, Length1);
 }
 
 bool CColliderBox2D::Collision(CCollider* Dest)

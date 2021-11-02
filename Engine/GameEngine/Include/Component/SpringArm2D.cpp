@@ -5,6 +5,7 @@
 CSpringArm2D::CSpringArm2D()
 {
 	m_SceneComponentType = SceneComponent_Type::SpringArm;
+	m_ComponentClassType = Component_Class_Type::SpringArm2D;
 }
 
 CSpringArm2D::CSpringArm2D(const CSpringArm2D& com) :

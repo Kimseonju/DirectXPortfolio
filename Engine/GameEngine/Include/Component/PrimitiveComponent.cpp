@@ -9,7 +9,7 @@ CPrimitiveComponent::CPrimitiveComponent()
 {
     m_SceneComponentType = SceneComponent_Type::Primitive;
     m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
-    m_PrimitiveClassType = PrimitiveComponent_ClassType::Default;
+    m_ComponentClassType = Component_Class_Type::Primitive;
 
     m_2DType = RT2D_None;
     m_3DType = RT3D_None;
@@ -110,4 +110,45 @@ void CPrimitiveComponent::Render(float DeltaTime)
 CPrimitiveComponent* CPrimitiveComponent::Clone()
 {
     return new CPrimitiveComponent(*this);
+}
+
+void CPrimitiveComponent::Save(FILE* pFile)
+{
+    CSceneComponent::Save(pFile);
+
+    fwrite(&m_PrimitiveType, sizeof(PrimitiveComponent_Type), 1, pFile);
+
+    fwrite(&m_2DType, sizeof(Render_Type_2D), 1, pFile);
+    fwrite(&m_3DType, sizeof(Render_Type_3D), 1, pFile);
+    size_t Size=m_vecMaterialSlot.size();
+    fwrite(&Size, sizeof(size_t), 1, pFile);
+    for (size_t i = 0; i < Size; i++)
+    {
+        m_vecMaterialSlot[i]->Save(pFile);
+    }
+    fwrite(&m_DistortionEnable, sizeof(bool), 1, pFile);
+}
+
+void CPrimitiveComponent::Load(FILE* pFile)
+{
+    CSceneComponent::Load(pFile);
+    PrimitiveComponent_Type Type;
+    fread(&Type, sizeof(PrimitiveComponent_Type), 1, pFile);
+    m_PrimitiveType = Type;
+    Render_Type_2D _2DType= Render_Type_2D::RT2D_None;
+    Render_Type_3D _3DType= Render_Type_3D::RT3D_End;
+
+
+    fread(&_2DType, sizeof(Render_Type_2D), 1, pFile);
+    fread(&_3DType, sizeof(Render_Type_3D), 1, pFile);
+
+    size_t Size;
+    fread(&Size, sizeof(size_t), 1, pFile);
+    for (size_t i = 0; i < Size; i++)
+    {
+        m_vecMaterialSlot[i]->Load(pFile);
+    }
+    bool DistortionEnable;
+    fread(&DistortionEnable, sizeof(bool), 1, pFile);
+    m_DistortionEnable = DistortionEnable;
 }

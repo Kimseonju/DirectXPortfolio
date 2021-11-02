@@ -10,7 +10,7 @@ CCollider::CCollider()
 	m_SceneComponentType = SceneComponent_Type::Primitive;
 	m_ColliderSpace = Collider_Space::Collider3D;
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
-	m_PrimitiveClassType = PrimitiveComponent_ClassType::Collider;
+	m_ComponentClassType = Component_Class_Type::Collider;
 	m_3DType = RT3D_Default;
 
 	m_Profile = nullptr;
@@ -266,6 +266,34 @@ void CCollider::Render(float DeltaTime)
 CCollider* CCollider::Clone()
 {
 	return nullptr;
+}
+
+void CCollider::Save(FILE* pFile)
+{
+	CPrimitiveComponent::Save(pFile);
+	fwrite(&m_ColliderShape, sizeof(Collider_Shape), 1, pFile);
+	fwrite(&m_ColliderSpace, sizeof(Collider_Space), 1, pFile);
+	fwrite(&m_Min, sizeof(Vector3), 1, pFile);
+	fwrite(&m_Max, sizeof(Vector3), 1, pFile);
+
+}
+
+void CCollider::Load(FILE* pFile)
+{
+	CPrimitiveComponent::Load(pFile);
+	Collider_Shape Shape;
+	Collider_Space Space;
+	Vector3 Min;
+	Vector3 Max;
+
+	fread(&Shape, sizeof(Collider_Shape), 1, pFile);
+	fread(&Space, sizeof(Collider_Space), 1, pFile);
+	fread(&Min, sizeof(Vector3), 1, pFile);
+	fread(&Max, sizeof(Vector3), 1, pFile);
+	m_ColliderShape = Shape;
+	m_ColliderSpace = Space;
+	m_Min = Min;
+	m_Max = Max;
 }
 
 void CCollider::ClearFrame()

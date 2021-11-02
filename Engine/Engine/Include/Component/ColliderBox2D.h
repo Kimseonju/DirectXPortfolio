@@ -34,6 +34,10 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CColliderBox2D* Clone();
 public:
+
+	virtual void Save(FILE* pFile);
+	virtual void Load(FILE* pFile);
+public:
 	virtual bool Collision(CCollider* Dest);
 	virtual bool CollisionMouse(const Vector2& MousePos);
 };

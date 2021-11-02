@@ -12,6 +12,7 @@ CColliderLine2D::CColliderLine2D()
 	m_ColliderShape = Collider_Shape::Box2D;
 	m_ColliderSpace = Collider_Space::Collider2D;
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_ComponentClassType = Component_Class_Type::ColliderBox2D;
 	m_2DType = RT2D_Default;
 }
 

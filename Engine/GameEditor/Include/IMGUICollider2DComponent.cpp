@@ -64,12 +64,6 @@ void CIMGUICollider2DComponent::UpdateInfo(CCollider* Collider)
 		break;
 	}
 
-
-	if (m_Collider->GetProfile())
-	{
-		m_ColliderProfileCombo->SetPrevName(m_Collider->GetProfile()->Name);
-	}
-	
 	Enable(true);
 
 }

@@ -9,6 +9,7 @@ CCamera::CCamera()
 {
 	m_SceneComponentType = SceneComponent_Type::Camera;
 	m_CameraType = Camera_Type::Cam2D;
+	m_ComponentClassType = Component_Class_Type::Camera;
 
 	m_ViewAngle = 90.f;
 	m_Distance = 1000.f;
@@ -72,6 +73,24 @@ void CCamera::CreateProjectionMatrix()
 	}
 		break;
 	}
+}
+
+void CCamera::Save(FILE* pFile)
+{
+	CSceneComponent::Save(pFile);
+	fwrite(&m_CameraType, sizeof(Camera_Type), 1, pFile);
+	fwrite(&m_ViewAngle, sizeof(float), 1, pFile);
+	fwrite(&m_Distance, sizeof(float), 1, pFile);
+	fwrite(&m_CameraZoom, sizeof(float), 1, pFile);
+	fwrite(&m_MinX, sizeof(float), 1, pFile);
+	fwrite(&m_MinY, sizeof(float), 1, pFile);
+	fwrite(&m_MaxX, sizeof(float), 1, pFile);
+	fwrite(&m_MaxY, sizeof(float), 1, pFile);
+}
+
+void CCamera::Load(FILE* pFile)
+{
+	CSceneComponent::Load(pFile);
 }
 
 void CCamera::Start()

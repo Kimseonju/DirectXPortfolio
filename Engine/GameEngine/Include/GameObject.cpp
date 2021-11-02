@@ -2,6 +2,27 @@
 #include "Scene/Scene.h"
 #include "Scene/CameraManager.h"
 #include "Component/Transform.h"
+#include "Component/SpriteComponent.h"
+
+#include "Component/Camera.h"
+#include "Component/Collider.h"
+#include "Component/ColliderBox2D.h"
+#include "Component/ColliderCircle.h"
+#include "Component/ColliderLine2D.h"
+#include "Component/ColliderPixel.h"
+#include "Component/Component.h"
+#include "Component/DistortionComponent.h"
+#include "Component/ObjectComponent.h"
+#include "Component/PaperBurnComponent.h"
+#include "Component/ParticleSystemComponent.h"
+#include "Component/PrimitiveComponent.h"
+#include "Component/RigidBodyComponent.h"
+#include "Component/SceneComponent.h"
+#include "Component/SpringArm.h"
+#include "Component/SpringArm2D.h"
+#include "Component/SpriteComponent.h"
+#include "Component/Transform.h"
+#include "Component/WidgetComponent.h"
 CGameObject::CGameObject() :
 	m_Start(false),
 	m_pScene(nullptr),
@@ -593,4 +614,203 @@ void CGameObject::AddWorldPos(float x, float y, float z)
 void CGameObject::AddCamera(CCamera* Camera)
 {
 	m_pScene->GetCameraManager()->AddCamera(Camera);
+}
+
+void CGameObject::SaveFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "wb");
+
+	if (!pFile)
+		return;
+
+	int Length = strlen(GetName().c_str());
+	fwrite(&Length, sizeof(int), 1, pFile);
+	fwrite(GetName().c_str(), sizeof(char), Length, pFile);
+
+	Component_Class_Type  Type=m_RootComponent->GetComponentClassType();
+	fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
+
+	m_RootComponent->Save(pFile);
+	
+	{
+		Length=m_SceneComponentList.size();
+		fwrite(&Length, sizeof(int), 1, pFile);
+		auto iter = m_SceneComponentList.begin();
+		auto iterEnd = m_SceneComponentList.end();
+		
+		for (; iter != iterEnd; ++iter)
+		{
+			if (m_RootComponent != (*iter))
+			{
+				Component_Class_Type  Type = (*iter)->GetComponentClassType();
+				fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
+				(*iter)->Save(pFile);
+			}
+		}
+	}
+	
+	//{
+	//	auto iter = m_vecObjectComponent.begin();
+	//	auto iterEnd = m_vecObjectComponent.end();
+	//
+	//	for (; iter != iterEnd; ++iter)
+	//	{
+	//		(*iter)->Save(pFile);
+	//	}
+	//}
+
+	fclose(pFile);
+}
+
+void CGameObject::LoadFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "rb");
+
+	if (!pFile)
+		return;
+
+	int Length = -1;
+	char	Name[256] = {};
+	fread(&Length, sizeof(int), 1, pFile);
+	fread(Name, 1, Length, pFile);
+
+	SetName(Name);
+	Component_Class_Type  Type;
+	fread(&Type, sizeof(Component_Class_Type), 1, pFile);
+	CSceneComponent* Component=nullptr;
+	switch (Type)
+	{
+	case Component_Class_Type::Scene:
+		Component = CreateSceneComponent<CSceneComponent>("Scene");
+		break;
+	case Component_Class_Type::Sprite:
+		Component=CreateSceneComponent<CSpriteComponent>("Sprite");
+		break;
+	case Component_Class_Type::ColliderBox2D:
+		Component = CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+		break;
+	case Component_Class_Type::ColliderCircle:
+		Component = CreateSceneComponent<CColliderCircle>("ColliderCircle");
+		break;
+	case Component_Class_Type::ColliderPixel:
+		Component = CreateSceneComponent<CColliderPixel>("ColliderPixel");
+		break;
+	case Component_Class_Type::Camera:
+		Component = CreateSceneComponent<CCamera>("Camera");
+		break;
+	case Component_Class_Type::SpringArm:
+		Component = CreateSceneComponent<CSpringArm>("SpringArm");
+		break;
+	case Component_Class_Type::SpringArm2D:
+		Component = CreateSceneComponent<CSpringArm2D>("SpringArm2D");
+		break;
+	case Component_Class_Type::Primitive:
+		Component = CreateSceneComponent<CPrimitiveComponent>("Primitive");
+		break;
+	case Component_Class_Type::ParticleSystem:
+		break;
+	case Component_Class_Type::Mesh:
+		break;
+	case Component_Class_Type::Collider:
+		break;
+	case Component_Class_Type::Particle:
+		break;
+	case Component_Class_Type::Widget:
+		break;
+	case Component_Class_Type::TileMap:
+		break;
+	case Component_Class_Type::End:
+		break;
+	}
+	SetRootComponent(Component);
+	m_RootComponent->Load(pFile);
+
+	{
+		fread(&Length, sizeof(int), 1, pFile);
+
+		for (int i = 0; i < Length - 1; ++i)
+		{
+			fread(&Type, sizeof(Component_Class_Type), 1, pFile);
+			switch (Type)
+			{
+			case Component_Class_Type::Scene:
+				Component = CreateSceneComponent<CSceneComponent>("Scene");
+				break;
+			case Component_Class_Type::Sprite:
+				Component = CreateSceneComponent<CSpriteComponent>("Sprite");
+				break;
+			case Component_Class_Type::ColliderBox2D:
+				Component = CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+				break;
+			case Component_Class_Type::ColliderCircle:
+				Component = CreateSceneComponent<CColliderCircle>("ColliderCircle");
+				break;
+			case Component_Class_Type::ColliderPixel:
+				Component = CreateSceneComponent<CColliderPixel>("ColliderPixel");
+				break;
+			case Component_Class_Type::Camera:
+				Component = CreateSceneComponent<CCamera>("Camera");
+				break;
+			case Component_Class_Type::SpringArm:
+				Component = CreateSceneComponent<CSpringArm>("SpringArm");
+				break;
+			case Component_Class_Type::SpringArm2D:
+				Component = CreateSceneComponent<CSpringArm2D>("SpringArm2D");
+				break;
+			case Component_Class_Type::Primitive:
+				Component = CreateSceneComponent<CPrimitiveComponent>("Primitive");
+				break;
+			case Component_Class_Type::ParticleSystem:
+				break;
+			case Component_Class_Type::Mesh:
+				break;
+			case Component_Class_Type::Collider:
+				break;
+			case Component_Class_Type::Particle:
+				break;
+			case Component_Class_Type::Widget:
+				break;
+			case Component_Class_Type::TileMap:
+				break;
+			case Component_Class_Type::End:
+				break;
+			}
+
+			Component->Load(pFile);
+			m_RootComponent->AddChild(Component);
+		}
+		
+
+	}
+	fclose(pFile);
 }

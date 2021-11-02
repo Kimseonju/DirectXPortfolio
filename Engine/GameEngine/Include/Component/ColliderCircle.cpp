@@ -12,6 +12,7 @@ CColliderCircle::CColliderCircle()
 	m_ColliderSpace = Collider_Space::Collider2D;
 
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
+	m_ComponentClassType = Component_Class_Type::ColliderCircle;
 	m_2DType = RT2D_Default;
 
 	m_Info.Radius = 50.f;
@@ -113,6 +114,22 @@ void CColliderCircle::Render(float DeltaTime)
 CColliderCircle* CColliderCircle::Clone()
 {
 	return new CColliderCircle(*this);
+}
+
+void CColliderCircle::Save(FILE* pFile)
+{
+	CCollider::Save(pFile);
+	fwrite(&m_Info.Radius, sizeof(float), 1, pFile);
+
+
+}
+
+void CColliderCircle::Load(FILE* pFile)
+{
+	CCollider::Load(pFile);
+	float Radius = 0.f;
+	fread(&Radius, sizeof(float), 1, pFile);
+	SetRadius(Radius);
 }
 
 bool CColliderCircle::Collision(CCollider* Dest)

@@ -16,7 +16,6 @@ protected:
 
 protected:
     PrimitiveComponent_Type m_PrimitiveType;
-    PrimitiveComponent_ClassType m_PrimitiveClassType;
     Render_Type_2D      m_2DType;
     Render_Type_3D      m_3DType;
     
@@ -39,10 +38,6 @@ public:
         return m_PrimitiveType;
     }
 
-    PrimitiveComponent_ClassType GetPrimitiveClassType()  const
-    {
-        return m_PrimitiveClassType;
-    }
 
     Render_Type_2D GetRender2DType()  const
     {
@@ -90,5 +85,7 @@ public:
     virtual void PrevRender(float DeltaTime);
     virtual void Render(float DeltaTime);
     virtual CPrimitiveComponent* Clone();
+    virtual void Save(FILE* pFile);
+    virtual void Load(FILE* pFile);
 };
 

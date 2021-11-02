@@ -32,7 +32,13 @@ protected:
 	float	m_MaxY;
 
 public:
-
+	Vector2 CameraZoomSize()
+	{
+		Vector2 Size;
+		Size.x = m_RS.Width / m_CameraZoom;
+		Size.y = m_RS.Height/ m_CameraZoom;
+		return Size;
+	}
 	void SetMin(float x, float y)
 	{
 		m_MinX = x;
@@ -124,7 +130,10 @@ public:
 
 private:
 	void CreateProjectionMatrix();
+public:
 
+	virtual void Save(FILE* pFile);
+	virtual void Load(FILE* pFile);
 public:
 	virtual void Start();
 	virtual bool Init();

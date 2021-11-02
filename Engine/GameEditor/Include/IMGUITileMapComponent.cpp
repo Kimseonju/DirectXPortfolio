@@ -228,6 +228,7 @@ void CIMGUITileMapComponent::TileModifyTypeComboCallback(int SelectIndex,
 	case Tile_Modify_Type::Type:
 		m_TileEditCombo->AddItem("None");
 		m_TileEditCombo->AddItem("Wall");
+		m_TileEditCombo->AddItem("Crossed_Wall");
 		break;
 	case Tile_Modify_Type::Image:
 		break;

@@ -344,6 +344,10 @@ void CObjectWindow::SetPivotZ(float z)
 
 void CObjectWindow::SaveButton()
 {
+	if (!m_SelectObject.Get())
+	{
+		return;
+	}
 	static TCHAR Filter[] = TEXT("텍스트 파일(*.txt)|*.txt|모든파일(*.*)|*.*||");
 	CFileDialog	dlg(FALSE, TEXT("*.txt"), TEXT(""), OFN_OVERWRITEPROMPT,
 		Filter);
@@ -351,13 +355,17 @@ void CObjectWindow::SaveButton()
 	if (dlg.DoModal() == IDOK)
 	{
 		CString	Path = dlg.GetPathName();
-
-		AfxMessageBox(Path);
+		m_SelectObject->SaveFullPath(Path);
 	}
 }
 
 void CObjectWindow::LoadButton()
 {
+
+	CreateObjectButtonClick();
+
+	CGameObject* Obj= m_VecObject[m_VecObject.size()-1];
+
 	static TCHAR Filter[] = TEXT("텍스트 파일(*.txt)|*.txt|모든파일(*.*)|*.*||");
 	CFileDialog	dlg(TRUE, TEXT("*.txt"), TEXT(""), OFN_HIDEREADONLY,
 		Filter);
@@ -365,7 +373,6 @@ void CObjectWindow::LoadButton()
 	if (dlg.DoModal() == IDOK)
 	{
 		CString	Path = dlg.GetPathName();
-
-		AfxMessageBox(Path);
+		Obj->LoadFullPath(Path);
 	}
 }

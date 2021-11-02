@@ -29,7 +29,7 @@
 #include "../Object/Stage1MapEffect.h"
 #include "../Object/DoorEffect.h"
 
-#include "../Stage.h"
+#include "../Stage/Stage.h"
 #include "../UI/StageMap.h"
 #include "../UI/PlayerUI.h"
 #include "../UI/Inventory.h"

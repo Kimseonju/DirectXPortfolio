@@ -8,7 +8,7 @@
 CSpriteComponent::CSpriteComponent()
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
-	m_PrimitiveClassType = PrimitiveComponent_ClassType::Sprite;
+	m_ComponentClassType = Component_Class_Type::Sprite;
 	m_2DType = RT2D_Default;
 }
 
@@ -157,6 +157,57 @@ void CSpriteComponent::Render(float DeltaTime)
 CSpriteComponent* CSpriteComponent::Clone()
 {
 	return new CSpriteComponent(*this);
+}
+
+void CSpriteComponent::Save(FILE* pFile)
+{
+	CPrimitiveComponent::Save(pFile);
+	bool animationCheck = m_Animation;
+	fwrite(&animationCheck, sizeof(bool), 1, pFile);
+	if (m_Animation)
+	{
+		std::unordered_map<std::string, Sequence2DInfo*>	mapSequence =m_Animation->GetMapSequence();
+		size_t Size=mapSequence.size();
+		fwrite(&Size, sizeof(size_t), 1, pFile);
+		auto iter = mapSequence.begin();
+		auto iterEnd = mapSequence.end();
+		for (; iter != iterEnd; ++iter)
+		{
+			int	Length;
+			Length = strlen(iter->first.c_str());
+			fwrite(&Length, sizeof(int), 1, pFile);
+			fwrite(iter->first.c_str(), sizeof(char), Length, pFile);
+		}
+		
+	}
+
+}
+
+void CSpriteComponent::Load(FILE* pFile)
+{
+	CPrimitiveComponent::Load(pFile);
+
+	bool animationCheck =false;
+	fread(&animationCheck, sizeof(bool), 1, pFile);
+	if (animationCheck)
+	{
+		if (!m_Animation)
+		{
+			CreateAnimation2D<CAnimation2D>();
+		}
+		size_t Size = 0;
+		fread(&Size, sizeof(size_t), 1, pFile);
+		for (int i = 0; i < Size; ++i)
+		{
+			char	Name[256] = {};
+			int	Length;
+			fread(&Length, sizeof(int), 1, pFile);
+			fread(Name, sizeof(char), Length, pFile);
+			m_Animation->AddAnimationSequence2D(Name, true);
+		}
+
+	}
+
 }
 
 void CSpriteComponent::CallNotify(const std::string& Name)
