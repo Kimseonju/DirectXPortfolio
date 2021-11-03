@@ -50,6 +50,10 @@ public:
 	{
 		m_PrevViewName = Name;
 	}
+	void SetPrevName(int Index)
+	{
+		m_PrevViewName=m_vecItem[Index];
+	}
 	void Sort(bool bSort)
 	{
 		m_Sort = bSort;

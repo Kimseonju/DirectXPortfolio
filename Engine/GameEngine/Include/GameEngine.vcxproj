@@ -237,6 +237,10 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Navigation.h" />
+    <ClInclude Include="Navigation2D.h" />
+    <ClInclude Include="Navigation3D.h" />
+    <ClInclude Include="NavigationManager.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Ref.h" />
@@ -307,6 +311,7 @@
     <ClInclude Include="Sync.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="ThreadNavigation2D.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI\Button.h" />
     <ClInclude Include="UI\Image.h" />
@@ -380,6 +385,10 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Navigation.cpp" />
+    <ClCompile Include="Navigation2D.cpp" />
+    <ClCompile Include="Navigation3D.cpp" />
+    <ClCompile Include="NavigationManager.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Render\BlendState.cpp" />
@@ -445,6 +454,7 @@
     <ClCompile Include="Scene\Viewport.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="ThreadNavigation2D.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI\Button.cpp" />
     <ClCompile Include="UI\Image.cpp" />

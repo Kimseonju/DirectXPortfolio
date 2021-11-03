@@ -35,6 +35,9 @@ public:
 	}
 
 
+
+
+
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
 
@@ -46,10 +49,12 @@ public:
 	void DeleteColliderMouseObject();
 public:
 	void ListCallback(int SelectIndex, const char* Item);
-	void ComponentListCallback(int SelectIndex, const char* Item);
 	void CreateObjectButtonClick();
 	void DeleteObjectButtonClick();
-
+	void DeleteAllObject();
+	void SaveAllObject(FILE* pFile);
+	void ClientSaveObject(FILE* pFile);
+	void LoadAllObject(FILE* pFile);
 	void AddPrefab();
 public:
 	void SetPosX(float x);

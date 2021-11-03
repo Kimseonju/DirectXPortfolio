@@ -652,6 +652,10 @@ void CTileMapWindow::SaveTileMap()
 	}
 }
 
+void CTileMapWindow::SaveTileMap(FILE* pFile)
+{
+}
+
 void CTileMapWindow::LoadTileMap()
 {
 	static TCHAR	Filter[] = TEXT("MapFile(*.map)|*.map;|모든파일(*.*)|*.*||");
@@ -687,6 +691,10 @@ void CTileMapWindow::LoadTileMap()
 
 		m_CreateTile = true;
 	}
+}
+
+void CTileMapWindow::LoadTileMap(FILE* pFile)
+{
 }
 
 void CTileMapWindow::LoadTileImage()

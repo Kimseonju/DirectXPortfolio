@@ -231,6 +231,7 @@
     <ClCompile Include="SceneMode\TestMainScene.cpp" />
     <ClCompile Include="Stage\Door.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
+    <ClCompile Include="Stage\StageManager.cpp" />
     <ClCompile Include="TestWindow.cpp" />
     <ClCompile Include="UI\Ability.cpp" />
     <ClCompile Include="UI\AbilityWidget.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="SceneMode\TestMainScene.h" />
     <ClInclude Include="Stage\Door.h" />
     <ClInclude Include="Stage\Stage.h" />
+    <ClInclude Include="Stage\StageManager.h" />
     <ClInclude Include="TestWindow.h" />
     <ClInclude Include="UI\Ability.h" />
     <ClInclude Include="UI\AbilityWidget.h" />

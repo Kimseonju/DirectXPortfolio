@@ -51,12 +51,12 @@ bool CIMGUIObjectInfoComponent::Init()
 
 
 	Text = m_Owner->AddWidget<CIMGUIText>("##Title");
-	Text->SetText("ObjectInfo");
+	Text->SetText("Info");
 	m_vecWidget.push_back(Text);
 
 #pragma region Name
-	Text = m_Owner->AddWidget<CIMGUIText>("##ObjectName1");
-	Text->SetText("ObjectName");
+	Text = m_Owner->AddWidget<CIMGUIText>("ObjectName1");
+	Text->SetText("Name");
 	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
@@ -65,6 +65,59 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ObjectName->SetInputCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::InputObjectName);
 	m_ObjectName->AddFlag(ImGuiInputTextFlags_EnterReturnsTrue);
 	m_vecWidget.push_back(m_ObjectName);
+
+#pragma endregion
+
+#pragma region ClassType
+	Text = m_Owner->AddWidget<CIMGUIText>("ClassType");
+	Text->SetText("ClassType");
+	m_vecWidget.push_back(Text);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
+
+	m_ClassType = m_Owner->AddWidget<CIMGUIComboBox>("##ClassTypeCombo", 100.f, 20.f);
+
+	m_ClassType->AddItem("Default");
+	m_ClassType->AddItem("Object");
+	m_ClassType->AddItem("Enemy");
+	m_ClassType->AddItem("Boss");
+	m_ClassType->AddItem("TileColliderBox2D");
+	m_ClassType->AddItem("End");
+	m_ClassType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ClassTypeComboCallback);
+	m_vecWidget.push_back(m_ClassType);
+
+#pragma endregion
+
+#pragma region ObjectType
+	Text = m_Owner->AddWidget<CIMGUIText>("ObjectType");
+	Text->SetText("ObjectType");
+	m_vecWidget.push_back(Text);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
+
+	m_ObjectType = m_Owner->AddWidget<CIMGUIComboBox>("##ObjectTypeCombo", 100.f, 20.f);
+	m_ObjectType->AddItem("House");
+	m_ObjectType->AddItem("Door");
+	m_ObjectType->AddItem("End");
+	m_ObjectType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ObjectTypeComboCallback);
+	m_vecWidget.push_back(m_ObjectType);
+
+#pragma endregion
+
+#pragma region EnemyType
+	Text = m_Owner->AddWidget<CIMGUIText>("ObjectName1");
+	Text->SetText("Name");
+	m_vecWidget.push_back(Text);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
+
+	m_EnemyType = m_Owner->AddWidget<CIMGUIComboBox>("##EnemyTypeCombo", 100.f, 20.f);
+	m_EnemyType->AddItem("SmallSkel_Sword");
+	m_EnemyType->AddItem("SmallSkel_Bow");
+	m_EnemyType->AddItem("End");
+	m_EnemyType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::EnemyTypeComboCallback);
+
+	m_vecWidget.push_back(m_EnemyType);
 
 #pragma endregion
 	m_EnableCheckBox = m_Owner->AddWidget<CIMGUICheckBox>("Enable", 300.f, 20.f);
@@ -79,6 +132,12 @@ bool CIMGUIObjectInfoComponent::Init()
 
 void CIMGUIObjectInfoComponent::Update(float DeltaTime)
 {
+	Client_Class_Type ClassType=m_Object->GetClassType();
+	Client_Object_Type ObjectType = m_Object->GetObjectType();
+	Client_Enemy_Type EnemyType = m_Object->GetEnemyType();
+	m_ClassType->SetPrevName((int)ClassType);
+	m_ObjectType->SetPrevName((int)ObjectType);
+	m_EnemyType->SetPrevName((int)EnemyType);
 }
 
 void CIMGUIObjectInfoComponent::InputObjectName()
@@ -89,4 +148,19 @@ void CIMGUIObjectInfoComponent::InputObjectName()
 void CIMGUIObjectInfoComponent::EnableCheckBoxClick(bool Enable)
 {
 	m_Object->Enable(Enable);
+}
+
+void CIMGUIObjectInfoComponent::ClassTypeComboCallback(int SelectIndex, const char* Item)
+{
+	m_Object->SetClassType((Client_Class_Type)SelectIndex);
+}
+
+void CIMGUIObjectInfoComponent::ObjectTypeComboCallback(int SelectIndex, const char* Item)
+{
+	m_Object->SetObjectType((Client_Object_Type)SelectIndex);
+}
+
+void CIMGUIObjectInfoComponent::EnemyTypeComboCallback(int SelectIndex, const char* Item)
+{
+	m_Object->SetEnemyType((Client_Enemy_Type)SelectIndex);
 }

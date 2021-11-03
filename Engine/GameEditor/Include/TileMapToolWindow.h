@@ -27,6 +27,7 @@ public:
 	int GetImageFrameX();
 	int GetImageFrameY();
 	class CTileMapComponent* GetTileMap();
+	class CIMGUITileMapComponent* GetTileMapComponent();
 	bool IsTileMap();
 	Tile_Shape GetTileShape();
 	Tile_Type GetTileType();

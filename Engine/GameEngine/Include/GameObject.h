@@ -47,7 +47,36 @@ protected:
     std::list<CSceneComponent*> m_SceneComponentList;
     std::vector<CSharedPtr<CObjectComponent>>	m_vecObjectComponent;
     std::vector<CGameObject*>	    m_vecObject;
+protected:
+    Client_Class_Type  m_ClassType;
+    Client_Object_Type m_ObjectType;
+    Client_Enemy_Type m_EnemyType;
+public:
+    void SetClassType(Client_Class_Type Type)
+    {
+        m_ClassType = Type;
+    }
+    void SetObjectType(Client_Object_Type Type)
+    {
+        m_ObjectType = Type;
+    }
+    void SetEnemyType(Client_Enemy_Type Type)
+    {
+        m_EnemyType = Type;
+    }
 
+    Client_Class_Type GetClassType()
+    {
+        return m_ClassType;
+    }
+    Client_Object_Type GetObjectType()
+    {
+        return m_ObjectType;
+    }
+    Client_Enemy_Type GetEnemyType()
+    {
+        return m_EnemyType;
+    }
 public:
     void GetComponentName(std::vector<std::string>& vecName)
     {
@@ -194,6 +223,9 @@ private:
 public:
     void SaveFullPath(const TCHAR* FullPath);
     void LoadFullPath(const TCHAR* FullPath);
+    void Save(FILE* pFile);
+    void Load(FILE* pFile);
+    void ClientSave(FILE* pFile);
 public:
     template <typename T>
     T* CreateSceneComponent(const std::string& Name)

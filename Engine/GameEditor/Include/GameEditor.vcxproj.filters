@@ -76,6 +76,9 @@
     <Filter Include="01. EditorGUI\Window\Object">
       <UniqueIdentifier>{202f0d15-4c73-4222-a0ae-371f06060e14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. EditorGUI\Window\SaveLoad">
+      <UniqueIdentifier>{4a19d9b5-8a54-47d2-8e29-2a2eaaa9304f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="ObjectWindow.h">
       <Filter>01. EditorGUI\Window\Object</Filter>
     </ClInclude>
+    <ClInclude Include="SaveLoadWindow.h">
+      <Filter>01. EditorGUI\Window\SaveLoad</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -253,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="ObjectWindow.cpp">
       <Filter>01. EditorGUI\Window\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoadWindow.cpp">
+      <Filter>01. EditorGUI\Window\SaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

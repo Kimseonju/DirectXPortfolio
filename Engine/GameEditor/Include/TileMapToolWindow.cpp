@@ -81,6 +81,11 @@ CTileMapComponent* CTileMapToolWindow::GetTileMap()
 	return m_TileMap->GetTileMap();
 }
 
+CIMGUITileMapComponent* CTileMapToolWindow::GetTileMapComponent()
+{
+	return m_TileMap;
+}
+
 bool CTileMapToolWindow::IsTileMap()
 {
 	return m_TileMap->IsTileMap();

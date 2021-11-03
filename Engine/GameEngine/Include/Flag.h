@@ -265,3 +265,29 @@ enum class Tile_Type
     Wall,
     Crossed_Wall
 };
+
+
+/////////////////////////////////юс╫ц
+
+enum class Client_Class_Type
+{
+    Default,
+    Object,
+    Enemy,
+    Boss,
+    TileColliderBox2D,
+    End
+};
+
+enum class Client_Object_Type
+{
+    House,
+    Door,
+    End
+};
+enum class Client_Enemy_Type
+{
+    SmallSkel_Sword,
+    SmallSkel_Bow,
+    End
+};

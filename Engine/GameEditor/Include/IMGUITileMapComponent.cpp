@@ -658,6 +658,16 @@ void CIMGUITileMapComponent::SaveTileMap()
 	}
 }
 
+void CIMGUITileMapComponent::SaveTile(FILE* pFile)
+{
+	if (!m_TileMap)
+	{
+		AfxMessageBox(TEXT("타일맵을 생성하세요"));
+		return;
+	}
+	m_TileMap->Save(pFile);
+}
+
 void CIMGUITileMapComponent::LoadTileMap()
 {
 	static TCHAR	Filter[] = TEXT("MapFile(*.map)|*.map;|모든파일(*.*)|*.*||");
@@ -693,6 +703,31 @@ void CIMGUITileMapComponent::LoadTileMap()
 
 		m_CreateTile = true;
 	}
+}
+
+void CIMGUITileMapComponent::LoadTile(FILE* pFile)
+{
+	if (!m_TileMap)
+	{
+		CScene* Scene = CSceneManager::GetInst()->GetScene();
+
+		CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+
+		CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+
+		MainMap->SetRootComponent(TileMap);
+
+		m_TileMap = TileMap;
+	}
+
+	m_TileMap->Load(pFile);
+
+	m_InputTileCountX->SetInt(m_TileMap->GetTileCountX());
+	m_InputTileCountY->SetInt(m_TileMap->GetTileCountY());
+	m_InputTileSizeX->SetFloat(m_TileMap->GetTileSize().x);
+	m_InputTileSizeY->SetFloat(m_TileMap->GetTileSize().y);
+
+	m_CreateTile = true;
 }
 
 void CIMGUITileMapComponent::LoadTileImage()

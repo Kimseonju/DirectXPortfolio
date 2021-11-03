@@ -15,8 +15,4 @@ enum class Mouse_State
 	World
 };
 
-enum class Enemy_Type
-{
-
-};
 

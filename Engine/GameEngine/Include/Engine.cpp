@@ -17,6 +17,7 @@
 #include "Scene/Scene.h"
 #include "Scene/CameraManager.h"
 #include "ThreadManager.h"
+#include "NavigationManager.h"
 
 DEFINITION_SINGLE(CEngine)
 
@@ -32,6 +33,7 @@ CEngine::CEngine()
 	m_DebugLogWindow = nullptr;
 	m_OnLogFPS = false;
 	m_GlobalCBuffer = nullptr;
+	m_Start = false;
 }
 
 CEngine::~CEngine()
@@ -39,6 +41,8 @@ CEngine::~CEngine()
 	CSceneManager::DestroyInst();
 
 	CThreadManager::DestroyInst();
+
+	CNavigationManager::DestroyInst();
 
 	CInput::DestroyInst();
 
@@ -133,6 +137,10 @@ bool CEngine::Init(HINSTANCE hInst, HWND hWnd, int Width, int Height,
 	if(!CIMGUIManager::GetInst()->Init(m_hWnd))
 		return false;
 
+	// Navigation 관리자 초기화
+	if (!CNavigationManager::GetInst()->Init())
+		return false;
+
 	// 장면 관리자 초기화
 	if (!CSceneManager::GetInst()->Init())
 		return false;
@@ -181,6 +189,13 @@ void CEngine::RunNoLoop()
 
 void CEngine::Logic()
 {
+	if (!m_Start)
+	{
+		m_Start = true;
+
+		CNavigationManager::GetInst()->CreateNavigation();
+	}
+
 	m_pTimer->Update();
 
 	CDevice::GetInst()->Update();

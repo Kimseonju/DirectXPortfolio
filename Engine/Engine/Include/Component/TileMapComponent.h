@@ -110,8 +110,10 @@ public:
 
 public:
 	void Save(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+	void Save(FILE* pFile);
 	void SaveFullPath(const TCHAR* FullPath);
 	void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
+	void Load(FILE* pFile);
 	void LoadFullPath(const TCHAR* FullPath);
 private:
 	void SetWorldInfo();

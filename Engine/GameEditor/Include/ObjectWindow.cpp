@@ -21,6 +21,7 @@
 #include <Scene/SceneManager.h>
 #include "Component/Collider.h"
 #include "ComponentWindow.h"
+
 CObjectWindow::CObjectWindow() :
 	m_CreateObjectCount(0),
 	m_CreateComponentIndex(-1)
@@ -194,6 +195,66 @@ void CObjectWindow::DeleteObjectButtonClick()
 	InspectorWindow->AllComponentClose();
 }
 
+void CObjectWindow::DeleteAllObject()
+{
+	size_t Size = m_VecObject.size();
+	auto iter = m_VecObject.begin();
+	auto iterEnd = m_VecObject.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->Active(false);
+		
+	}
+	
+	m_SelectObject = nullptr;
+	m_ComponentWindow->Clear();
+	m_VecObject.clear();
+	CInspectorWindow* InspectorWindow = (CInspectorWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("InspectorWindow");
+	InspectorWindow->ObjectUpdateInfo(nullptr);
+	InspectorWindow->AllComponentClose();
+}
+
+void CObjectWindow::SaveAllObject(FILE* pFile)
+{
+	size_t Size = m_VecObject.size();
+	fwrite(&Size, sizeof(size_t), 1, pFile);
+	auto iter = m_VecObject.begin();
+	auto iterEnd = m_VecObject.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->Save(pFile);
+	}
+
+}
+
+void CObjectWindow::ClientSaveObject(FILE* pFile)
+{
+	size_t Size = m_VecObject.size();
+	fwrite(&Size, sizeof(size_t), 1, pFile);
+	auto iter = m_VecObject.begin();
+	auto iterEnd = m_VecObject.end();
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->ClientSave(pFile);
+	}
+}
+
+void CObjectWindow::LoadAllObject(FILE* pFile)
+{
+	DeleteAllObject();
+	size_t Size;
+	fread(&Size, sizeof(size_t), 1, pFile);
+	auto iter = m_VecObject.begin();
+	auto iterEnd = m_VecObject.end();
+	for (size_t i = 0; i < Size; i++)
+	{
+		CreateObjectButtonClick();
+		CGameObject* Obj = m_VecObject[m_VecObject.size() - 1];
+		Obj->Load(pFile);
+
+	}
+}
+
 
 void CObjectWindow::AddPrefab()
 {
@@ -362,9 +423,7 @@ void CObjectWindow::SaveButton()
 void CObjectWindow::LoadButton()
 {
 
-	CreateObjectButtonClick();
 
-	CGameObject* Obj= m_VecObject[m_VecObject.size()-1];
 
 	static TCHAR Filter[] = TEXT("텍스트 파일(*.txt)|*.txt|모든파일(*.*)|*.*||");
 	CFileDialog	dlg(TRUE, TEXT("*.txt"), TEXT(""), OFN_HIDEREADONLY,
@@ -372,6 +431,8 @@ void CObjectWindow::LoadButton()
 
 	if (dlg.DoModal() == IDOK)
 	{
+		CreateObjectButtonClick();
+		CGameObject* Obj = m_VecObject[m_VecObject.size() - 1];
 		CString	Path = dlg.GetPathName();
 		Obj->LoadFullPath(Path);
 	}

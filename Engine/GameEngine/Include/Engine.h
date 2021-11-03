@@ -18,6 +18,7 @@ private:
 	class CGlobalCBuffer* m_GlobalCBuffer;
 	float		m_AccTime;
 	CSharedPtr<CMouseWidget>	m_MouseWidget;
+	bool		m_Start;
 public:
 	void SetResolution(int Width, int Height)
 	{

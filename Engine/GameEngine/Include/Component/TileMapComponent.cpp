@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "../PathManager.h"
 #include "../Resource/ResourceManager.h"
+#include "../NavigationManager.h"
+#include "../Navigation2D.h"
 
 
 CTileMapComponent::CTileMapComponent() :
@@ -31,6 +33,11 @@ CTileMapComponent::CTileMapComponent(const CTileMapComponent& com) :
 
 CTileMapComponent::~CTileMapComponent()
 {
+
+	CNavigation2D* Navigation = (CNavigation2D*)CNavigationManager::GetInst()->GetNavigation();
+
+	Navigation->DeleteTileMapData(this);
+
 	SAFE_DELETE(m_WorldBuffer);
 	SAFE_DELETE(m_CBuffer);
 
@@ -698,6 +705,10 @@ bool CTileMapComponent::Init()
 
 	m_CBuffer->Init();
 
+	CNavigation2D* Navigation = (CNavigation2D*)CNavigationManager::GetInst()->GetNavigation();
+
+	Navigation->DeleteTileMapData(this);
+
 	return true;
 }
 
@@ -837,28 +848,8 @@ void CTileMapComponent::Save(const TCHAR* FileName,
 	SaveFullPath(FullPath);
 }
 
-void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
+void CTileMapComponent::Save(FILE* pFile)
 {
-	char	FullPathMultibyte[MAX_PATH] = {};
-
-#ifdef UNICODE
-
-	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
-	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
-
-#else
-
-	strcpy_s(FullPathMultibyte, FullPath);
-
-#endif // UNICODE
-
-	FILE* pFile = nullptr;
-
-	fopen_s(&pFile, FullPathMultibyte, "wb");
-
-	if (!pFile)
-		return;
-
 	Vector3	Pos, Rot, Scale;
 
 	Pos = GetWorldPos();
@@ -890,6 +881,31 @@ void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
 	{
 		m_vecTile[i]->Save(pFile);
 	}
+}
+
+void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "wb");
+
+	if (!pFile)
+		return;
+
+	Save(pFile);
 
 
 	fclose(pFile);
@@ -909,29 +925,8 @@ void CTileMapComponent::Load(const TCHAR* FileName, const std::string& PathName)
 	LoadFullPath(FullPath);
 }
 
-void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
+void CTileMapComponent::Load(FILE* pFile)
 {
-	char	FullPathMultibyte[MAX_PATH] = {};
-
-#ifdef UNICODE
-
-	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
-	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
-
-#else
-
-	strcpy_s(FullPathMultibyte, FullPath);
-
-#endif // UNICODE
-
-	FILE* pFile = nullptr;
-
-	fopen_s(&pFile, FullPathMultibyte, "rb");
-
-	if (!pFile)
-		return;
-
-
 	Vector3	Pos, Rot, Scale;
 
 	fread(&Pos, sizeof(Vector3), 1, pFile);
@@ -992,6 +987,33 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 
 	m_CBuffer->SetTileImageSize(m_TileImageSize);
 
+	SetWorldInfo();
+}
+
+void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
+{
+	char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+	strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+	FILE* pFile = nullptr;
+
+	fopen_s(&pFile, FullPathMultibyte, "rb");
+
+	if (!pFile)
+		return;
+
+	Load(pFile);
+	
 	fclose(pFile);
 
 

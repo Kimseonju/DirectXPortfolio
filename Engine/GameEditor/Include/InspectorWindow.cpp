@@ -53,6 +53,10 @@ void CInspectorWindow::Update(float DeltaTime)
 		m_Transform->Update(DeltaTime);
 	}
 
+	if (m_Object->IsEnable())
+	{
+		m_Object->Update(DeltaTime);
+	}
 	
 }
 

@@ -32,13 +32,18 @@ CGameObject::CGameObject() :
 {
 	m_SceneComponentList.resize(0);
 	m_RootComponent = CreateSceneComponent<CSceneComponent>("DefaultRoot");
-
+	m_ClassType = Client_Class_Type::End;
+	m_ObjectType = Client_Object_Type::End;
+	m_EnemyType = Client_Enemy_Type::End;
 	//m_SceneComponentList.push_back(m_RootComponent);
 }
 
 CGameObject::CGameObject(const CGameObject& obj)
 {
 	*this = obj;
+	m_ClassType = obj.m_ClassType;
+	m_ObjectType = obj.m_ObjectType;
+	m_EnemyType = obj.m_EnemyType;
 
 	m_RefCount = 1;
 }
@@ -637,43 +642,7 @@ void CGameObject::SaveFullPath(const TCHAR* FullPath)
 
 	if (!pFile)
 		return;
-
-	int Length = strlen(GetName().c_str());
-	fwrite(&Length, sizeof(int), 1, pFile);
-	fwrite(GetName().c_str(), sizeof(char), Length, pFile);
-
-	Component_Class_Type  Type=m_RootComponent->GetComponentClassType();
-	fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
-
-	m_RootComponent->Save(pFile);
-	
-	{
-		Length=m_SceneComponentList.size();
-		fwrite(&Length, sizeof(int), 1, pFile);
-		auto iter = m_SceneComponentList.begin();
-		auto iterEnd = m_SceneComponentList.end();
-		
-		for (; iter != iterEnd; ++iter)
-		{
-			if (m_RootComponent != (*iter))
-			{
-				Component_Class_Type  Type = (*iter)->GetComponentClassType();
-				fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
-				(*iter)->Save(pFile);
-			}
-		}
-	}
-	
-	//{
-	//	auto iter = m_vecObjectComponent.begin();
-	//	auto iterEnd = m_vecObjectComponent.end();
-	//
-	//	for (; iter != iterEnd; ++iter)
-	//	{
-	//		(*iter)->Save(pFile);
-	//	}
-	//}
-
+	Save(pFile);
 	fclose(pFile);
 }
 
@@ -698,23 +667,79 @@ void CGameObject::LoadFullPath(const TCHAR* FullPath)
 
 	if (!pFile)
 		return;
+	Load(pFile);
+	fclose(pFile);
+}
 
+void CGameObject::Save(FILE* pFile)
+{
+	int Length = strlen(GetName().c_str());
+	fwrite(&Length, sizeof(int), 1, pFile);
+	fwrite(GetName().c_str(), sizeof(char), Length, pFile);
+
+	fwrite(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
+	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
+	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+
+
+	Component_Class_Type  Type = m_RootComponent->GetComponentClassType();
+	fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
+
+	m_RootComponent->Save(pFile);
+
+	{
+		Length = m_SceneComponentList.size();
+		fwrite(&Length, sizeof(int), 1, pFile);
+		auto iter = m_SceneComponentList.begin();
+		auto iterEnd = m_SceneComponentList.end();
+
+		for (; iter != iterEnd; ++iter)
+		{
+			if (m_RootComponent != (*iter))
+			{
+				Component_Class_Type  Type = (*iter)->GetComponentClassType();
+				fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
+				(*iter)->Save(pFile);
+		}
+	}
+}
+
+	//{
+	//	auto iter = m_vecObjectComponent.begin();
+	//	auto iterEnd = m_vecObjectComponent.end();
+	//
+	//	for (; iter != iterEnd; ++iter)
+	//	{
+	//		(*iter)->Save(pFile);
+	//	}
+	//}
+
+}
+
+void CGameObject::Load(FILE* pFile)
+{
 	int Length = -1;
 	char	Name[256] = {};
 	fread(&Length, sizeof(int), 1, pFile);
 	fread(Name, 1, Length, pFile);
-
 	SetName(Name);
+
+
+	fread(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
+	fread(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
+	fread(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+
+
 	Component_Class_Type  Type;
 	fread(&Type, sizeof(Component_Class_Type), 1, pFile);
-	CSceneComponent* Component=nullptr;
+	CSceneComponent* Component = nullptr;
 	switch (Type)
 	{
 	case Component_Class_Type::Scene:
 		Component = CreateSceneComponent<CSceneComponent>("Scene");
 		break;
 	case Component_Class_Type::Sprite:
-		Component=CreateSceneComponent<CSpriteComponent>("Sprite");
+		Component = CreateSceneComponent<CSpriteComponent>("Sprite");
 		break;
 	case Component_Class_Type::ColliderBox2D:
 		Component = CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
@@ -809,8 +834,24 @@ void CGameObject::LoadFullPath(const TCHAR* FullPath)
 			Component->Load(pFile);
 			m_RootComponent->AddChild(Component);
 		}
-		
+
 
 	}
-	fclose(pFile);
+}
+
+void CGameObject::ClientSave(FILE* pFile)
+{
+	fwrite(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
+	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
+	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+
+	Vector3	Pos, Rot, Scale, Pivot;
+	Pos = GetWorldPos();
+	Rot = GetWorldRotation();
+	Scale = GetWorldScale();
+	Pivot = GetPivot();
+	fwrite(&Pos, sizeof(Vector3), 1, pFile);
+	fwrite(&Rot, sizeof(Vector3), 1, pFile);
+	fwrite(&Scale, sizeof(Vector3), 1, pFile);
+	fwrite(&Pivot, sizeof(Vector3), 1, pFile);
 }

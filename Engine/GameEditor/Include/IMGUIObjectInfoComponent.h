@@ -10,6 +10,9 @@ public:
 
 private:
 	class CIMGUITextInput* m_ObjectName;
+	class CIMGUIComboBox* m_ClassType;
+	class CIMGUIComboBox* m_ObjectType;
+	class CIMGUIComboBox* m_EnemyType;
 	class CIMGUICheckBox* m_EnableCheckBox;
 
 	CSharedPtr<CGameObject> m_Object;
@@ -29,5 +32,8 @@ public:
 public:
 	void InputObjectName();
 	void EnableCheckBoxClick(bool Enable);
+	void ClassTypeComboCallback(int SelectIndex, const char* Item);
+	void ObjectTypeComboCallback(int SelectIndex, const char* Item);
+	void EnemyTypeComboCallback(int SelectIndex, const char* Item);
 
 };

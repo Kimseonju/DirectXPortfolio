@@ -143,7 +143,9 @@ public:
 public:
 	void CreateTileButton();
 	void SaveTileMap();
+	void SaveTile(FILE* pFile);
 	void LoadTileMap();
+	void LoadTile(FILE* pFile);
 	void LoadTileImage();
 
 };

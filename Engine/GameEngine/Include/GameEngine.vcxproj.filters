@@ -244,6 +244,9 @@
     <Filter Include="01. Engine\09. IMGUI\03. Widget\Tab\Item">
       <UniqueIdentifier>{74a75a0c-384a-45b5-bf16-f4c72e35ce5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine\12. Navigation">
+      <UniqueIdentifier>{ec403df7-dcc5-4645-bc98-44060eabcc26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -696,6 +699,21 @@
     <ClInclude Include="IMGUIRadioButton.h">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
     </ClInclude>
+    <ClInclude Include="Navigation.h">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Navigation2D.h">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Navigation3D.h">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationManager.h">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadNavigation2D.h">
+      <Filter>01. Engine\10. Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1105,6 +1123,21 @@
     </ClCompile>
     <ClCompile Include="IMGUIRadioButton.cpp">
       <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationManager.cpp">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Navigation3D.cpp">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Navigation2D.cpp">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Navigation.cpp">
+      <Filter>01. Engine\12. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadNavigation2D.cpp">
+      <Filter>01. Engine\10. Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

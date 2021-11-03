@@ -441,6 +441,9 @@
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\StageManager.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -711,6 +714,9 @@
       <Filter>Stage</Filter>
     </ClInclude>
     <ClInclude Include="Stage\Stage.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\StageManager.h">
       <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>

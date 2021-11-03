@@ -74,5 +74,10 @@ public:
 
 		return m_Size == SIZE;
 	}
+
+	int Size()	const
+	{
+		return m_Size;
+	}
 };
 
