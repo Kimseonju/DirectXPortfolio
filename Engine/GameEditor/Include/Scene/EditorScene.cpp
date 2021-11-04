@@ -497,3 +497,91 @@ void CEditorScene::CreateAnimationSequence2D()
 
 
 }
+
+void CEditorScene::CreateParticle()
+{
+	CMaterial* SnowMaterial = m_pScene->GetResource()->FindMaterial("Snow");
+
+	m_pScene->GetResource()->CreateParticle("TestParticle");
+	m_pScene->GetResource()->SetParticleMaterial("TestParticle", SnowMaterial);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("TestParticle", 1000);
+	m_pScene->GetResource()->SetParticleStartColor("TestParticle", 0.68627f, 0.8745f, 0.89411f, 0.8f);
+	m_pScene->GetResource()->SetParticleEndColor("TestParticle", 0.68627f, 0.8745f, 0.89411f, 0.f);
+	m_pScene->GetResource()->SetParticleStartScale("TestParticle", 100.f, 100.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("TestParticle", 20.f, 20.f, 1.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("TestParticle", 2.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("TestParticle", 4.f);
+	m_pScene->GetResource()->SetParticleRange("TestParticle", 100.f, 0.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("TestParticle", 100.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("TestParticle", 200.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("TestParticle", true);
+	m_pScene->GetResource()->SetParticle2D("TestParticle", true);
+	m_pScene->GetResource()->SetParticleMoveDir("TestParticle", 0.f, 1.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveAngle("TestParticle", 0.f, 0.f, 90.f);
+
+	CMaterial* FlameMaterial = m_pScene->GetResource()->FindMaterial("Flame");
+
+	m_pScene->GetResource()->CreateParticle("FlameParticle");
+	m_pScene->GetResource()->SetParticleMaterial("FlameParticle", FlameMaterial);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("FlameParticle", 500);
+	m_pScene->GetResource()->SetParticleStartColor("FlameParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
+	m_pScene->GetResource()->SetParticleEndColor("FlameParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
+	m_pScene->GetResource()->SetParticleStartScale("FlameParticle", 20.f, 20.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("FlameParticle", 10.f, 10.f, 1.f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 10.5f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 10.8f);
+	m_pScene->GetResource()->SetParticleRange("FlameParticle", 0.f, 0.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("FlameParticle", 600.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("FlameParticle", 800.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("FlameParticle", true);
+	m_pScene->GetResource()->SetParticle2D("FlameParticle", true);
+	m_pScene->GetResource()->SetParticleMoveDir("FlameParticle", 0.f, 1.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveAngle("FlameParticle", 0.f, 0.f, 90.f);
+
+
+	CMaterial* StageMapMaterial = m_pScene->GetResource()->FindMaterial("StageMapMaterial");
+
+	m_pScene->GetResource()->CreateParticle("StageMapParticle");
+	m_pScene->GetResource()->SetParticleUpdateShader("StageMapParticle", "ParticleRandomScaleUpdateShader");
+	m_pScene->GetResource()->SetParticleMaterial("StageMapParticle", StageMapMaterial);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 500);
+	m_pScene->GetResource()->SetParticleStartColor("StageMapParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
+	m_pScene->GetResource()->SetParticleEndColor("StageMapParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
+	m_pScene->GetResource()->SetParticleStartScale("StageMapParticle", 20.f, 20.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("StageMapParticle", 10.f, 10.f, 1.f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("StageMapParticle", 2.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("StageMapParticle", 2.f);
+	m_pScene->GetResource()->SetParticleRange("StageMapParticle", 5000.f, 5000.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("StageMapParticle", 50.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("StageMapParticle", 50.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("StageMapParticle", true);
+	m_pScene->GetResource()->SetParticle2D("StageMapParticle", true);
+	//m_pScene->GetResource()->SetParticleMoveDir("StageMapParticle", 0.f, 1.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveAngle("StageMapParticle", 0.f, 0.f, 360.f);
+
+	CMaterial* StageMapMateria1l = m_pScene->GetResource()->FindMaterial("DoorParticle");
+
+	m_pScene->GetResource()->CreateParticle("DoorParticle");
+	m_pScene->GetResource()->SetParticleUpdateShader("DoorParticle", "ParticleDirUpdateShader");
+	m_pScene->GetResource()->SetParticleMaterial("DoorParticle", StageMapMateria1l);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 500);
+	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
+	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
+	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 40.f, 40.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 40.f, 40.f, 1.f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("DoorParticle", 10.5f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("DoorParticle", 10.8f);
+	m_pScene->GetResource()->SetParticleRange("DoorParticle", 200.f, 200.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("DoorParticle", 100.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("DoorParticle", 100.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("DoorParticle", true);
+	m_pScene->GetResource()->SetParticle2D("DoorParticle", true);
+	m_pScene->GetResource()->SetParticleMoveDir("DoorParticle", 0.f, 1.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveAngle("DoorParticle", 0.f, 0.f, 90.f);
+}

@@ -51,6 +51,7 @@ protected:
     Client_Class_Type  m_ClassType;
     Client_Object_Type m_ObjectType;
     Client_Enemy_Type m_EnemyType;
+    Door_Dir         m_DoorDir;
 public:
     void SetClassType(Client_Class_Type Type)
     {

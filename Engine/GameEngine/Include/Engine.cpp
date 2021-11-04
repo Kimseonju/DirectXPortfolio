@@ -158,6 +158,7 @@ bool CEngine::Init(HINSTANCE hInst, HWND hWnd, int Width, int Height,
 	m_GlobalCBuffer->SetResolution(Vector2((float)m_RS.Width, (float)m_RS.Height));
 	m_GlobalCBuffer->SetNoiseResolution(Vector2(340.f, 340.f));
 
+	CNavigationManager::GetInst()->CreateNavigation();
 	return true;
 }
 
@@ -193,7 +194,7 @@ void CEngine::Logic()
 	{
 		m_Start = true;
 
-		CNavigationManager::GetInst()->CreateNavigation();
+		//CNavigationManager::GetInst()->CreateNavigation();
 	}
 
 	m_pTimer->Update();
@@ -233,19 +234,17 @@ void CEngine::Logic()
 
 	m_GlobalCBuffer->UpdateCBuffer();
 
-	if (Collision(DeltaTime))
-	{
-		CIMGUIManager::GetInst()->Render();
-		return;
-	}
-
 	if (PostUpdate(DeltaTime))
 	{
 		CIMGUIManager::GetInst()->Render();
 		return;
 	}
-	
 
+	if (Collision(DeltaTime))
+	{
+		CIMGUIManager::GetInst()->Render();
+		return;
+	}
 
 	if (Render(DeltaTime))
 		return;

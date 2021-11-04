@@ -1,6 +1,5 @@
 #pragma once
 #include <math.h>
-#include <random>
 class CPlayer;
 class CBasicMouse;
 class CGlobalValue
@@ -8,7 +7,6 @@ class CGlobalValue
 public:
 	static CPlayer* MainPlayer;
     static CBasicMouse* MainMouse;
-    static int GetRandom(int Random);
 
 
     static float Lerp2DMax(float _Start, float _End, float _Ratio);
@@ -146,4 +144,28 @@ enum class Stage_State
     Spawn,
     Clear,
     End
+};
+
+
+
+struct StageInfo
+{
+    //방문했는지
+    bool visit;
+
+    //스테이지타입
+    //우선순위별
+    //-1 없음 0 일반 1 시작방 2 끝방 3 상점 4 식당
+    int StageType;
+
+    //벽 왼쪽부터 시계방향으로 (왼,위,오,아)
+    bool Wall[4];
+};
+
+enum class WallDir
+{
+    Left,
+    Up,
+    Right,
+    Down
 };

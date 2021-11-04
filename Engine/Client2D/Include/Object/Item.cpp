@@ -12,13 +12,16 @@ CItem::CItem() :
 	m_price(0),
 	m_Fire(false),
 	m_FireTime(0.f),
-	m_FireTimeMax(10.f)
+	m_FireTimeMax(10.f),
+	m_MapDrop(false),
+	m_UpdateDelay(0.f)
 {
 }
 
 CItem::CItem(const CItem& obj) :
 	CGameObject(obj)
 {
+	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
 	m_ItemImage = obj.m_ItemImage;
 	m_Type = obj.m_Type;
 	m_Rank = obj.m_Rank;
@@ -42,12 +45,36 @@ void CItem::Start()
 bool CItem::Init()
 {
 	CGameObject::Init();
+
+	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
+	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
+
+	SetRootComponent(m_Sprite);
+	m_Sprite->AddChild(m_Body);
+
+	m_Sprite->SetRelativeScale(38.f, 14.f, 1.f);
+	m_Collider2D->SetCollisionProfile("Player");
+	m_Collider2D->AddCollisionCallbackFunction<CItem>(Collision_State::Begin, this,
+		&CItem::DropCollisionBegin);
+	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Sprite->AddChild(m_Collider2D);
+
+
+	//m_Sprite->SetRelativeRotationZ(30.f);
+	m_Sprite->SetPivot(0.f, 0.5f, 0.f);
 	return true;
 }
 
 void CItem::Update(float DeltaTime)
 {
-	CGameObject::Update(DeltaTime);
+	if (m_UpdateDelay > 1.f)
+	{
+		CGameObject::Update(DeltaTime);
+	}
+	else
+		m_UpdateDelay += DeltaTime;
+	
 }
 
 void CItem::PostUpdate(float DeltaTime)
@@ -74,6 +101,14 @@ void CItem::Animation2DNotify(const std::string& Name)
 {
 }
 
+
+void CItem::StopMove()
+{
+	m_Body->SetJump(false);
+	m_Collider2D->Enable(false);
+	m_Body->Enable(false);
+	m_MapDrop = false;
+}
 
 void CItem::GetHit()
 {
@@ -275,4 +310,14 @@ int CItem::GetEvasion() const
 CTexture* CItem::GetItemTexture() const
 {
 	return m_ItemImage;
+}
+
+void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
+		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		StopMove();
+	}
+
 }

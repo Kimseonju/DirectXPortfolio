@@ -59,6 +59,11 @@ public:
 	virtual void AddMaterial(const std::string& Name);
 
 public:
+	Tile_Shape GetTileShape()	const
+	{
+		return m_Shape;
+	}
+
 	const Vector2& GetTileSize()	const
 	{
 		return m_TileSize;

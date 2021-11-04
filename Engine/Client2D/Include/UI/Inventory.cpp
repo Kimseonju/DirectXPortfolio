@@ -155,10 +155,12 @@ bool CInventory::Init()
 
 	CItem* Item = m_Scene->SpawnObject<CShortSword>("CShortSword1");
 	Item->Enable(false);
+	Item->StopMove();
 	m_Items[5]->SetItem(Item);
 
 	Item = m_Scene->SpawnObject<CMetalBoomerang>("MetalBoomerang");
 	Item->Enable(false);
+	Item->StopMove();
 	m_Items[2]->SetItem(Item);
 	CText* text= CreateWidget<CText>("GoldText");
 	text->SetText(L"1000");

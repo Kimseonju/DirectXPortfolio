@@ -1,5 +1,6 @@
 #include "BasicStatus.h"
 #include "GlobalValue.h"
+#include "EngineMath.h"
 CBasicStatus::CBasicStatus() :
 	m_HP(0),
 	m_HPMax(0),
@@ -124,10 +125,7 @@ float CBasicStatus::GetMoveSpeed() const
 
 int CBasicStatus::GetAttackDamage() const
 {
-	int Damage=m_DamageMax - m_Damage;
-	Damage=CGlobalValue::GetRandom(Damage);
-
-	return m_Damage+Damage;
+	return GetRandom(m_Damage, m_DamageMax);
 }
 
 int CBasicStatus::GetDamage() const

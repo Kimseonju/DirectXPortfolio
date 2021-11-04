@@ -4,16 +4,6 @@
 #include "Door.h"
 #include "Stage.h"
 
-
-struct tagStageInfo
-{
-	//방문했는지
-	bool visit;
-
-	//스테이지타입
-	int StageType; // 방의 타입 , -1 : 사용하지 않는 방, 0 : 일반방, 1 : 시작방, 2: 끝방 , 3 : 식당방, 4 : 상점방 
-	bool Wall[4]; // 방의 벽, (L T R B) 순서
-};
 class CStageManager
 {
 
@@ -22,7 +12,7 @@ class CStageManager
 private:
 	CStage* m_SelectStage;
 	std::vector<std::vector<CStage*>> m_vecStage;
-	std::vector<std::vector<tagStageInfo>> m_vecStageInfo;
+	std::vector<std::vector<StageInfo>> m_vecStageInfo;
 
 	int m_CurIndexX, m_CurIndexY;
 

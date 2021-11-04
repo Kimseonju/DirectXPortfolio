@@ -3,16 +3,6 @@
 CPlayer* CGlobalValue::MainPlayer;
 CBasicMouse* CGlobalValue::MainMouse;
 
-int CGlobalValue::GetRandom(int Random)
-{
-	std::random_device rd;
-	std::mt19937_64 rng1(rd());
-	std::uniform_int_distribution<int> dist(0, Random);
-
-
-	return dist(rng1);
-}
-
 float CGlobalValue::Lerp2DMax(float _Start, float _End, float _Ratio)
 {
     if (0 >= _Ratio)

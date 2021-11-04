@@ -2,29 +2,13 @@
 #include "Component/TileMapComponent.h"
 #include "Component/Tile.h"
 
+#include "Navigation2D.h"
 CThreadNavigation2D::CThreadNavigation2D()
 {
-	m_hExitEvent = CreateEvent(0, FALSE, FALSE, 0);
 }
 
 CThreadNavigation2D::~CThreadNavigation2D()
 {
-	SetLoop(false);
-
-	if (m_hExitEvent)
-	{
-		WaitForSingleObject(m_hExitEvent, INFINITE);
-		CloseHandle(m_hExitEvent);
-	}
-
-	while (!m_WorkQueue.Empty())
-	{
-		NavWorkInfo* Info = nullptr;
-
-		m_WorkQueue.Pop(Info);
-
-		SAFE_DELETE(Info);
-	}
 }
 
 void CThreadNavigation2D::CreateNavigationInfo(CTileMapComponent* TileMap)
@@ -33,7 +17,7 @@ void CThreadNavigation2D::CreateNavigationInfo(CTileMapComponent* TileMap)
 
 	m_NavInfo.vecNavInfo.resize((size_t)TileCount);
 	m_NavInfo.vecOpen.resize((size_t)TileCount);
-	m_NavInfo.vecClose.resize((size_t)TileCount);
+	m_NavInfo.vecUse.resize((size_t)TileCount);
 
 	m_NavInfo.CountX = TileMap->GetTileCountX();
 	m_NavInfo.CountY = TileMap->GetTileCountY();
@@ -51,4 +35,14 @@ void CThreadNavigation2D::CreateNavigationInfo(CTileMapComponent* TileMap)
 
 void CThreadNavigation2D::Run()
 {
+	NavWorkInfo Info;
+
+	if (!m_WorkQueue.Pop(Info))
+		return;
+
+	((CNavigation2D*)m_Navigation)->SetNavInfoManager(&m_NavInfo);
+
+	m_Navigation->FindPath(Info.Start, Info.Goal, m_vecResult);
+
+	//Info.CallbackComponent->Nav
 }

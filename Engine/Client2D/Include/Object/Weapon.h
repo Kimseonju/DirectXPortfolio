@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Item.h"
-#include "Component/SpriteComponent.h"
 #include "../GlobalValue.h"
 /*
 
@@ -21,7 +20,6 @@ protected:
 	virtual ~CWeapon();
 
 protected:
-	CSharedPtr<CSpriteComponent> m_Sprite;
 	class CAnimation2D* m_Animation2D;
 	
 protected:

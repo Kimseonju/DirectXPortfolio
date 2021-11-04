@@ -27,8 +27,8 @@ void CStageManager::CreateDungeon()
 				m_vecStageInfo[x][y].StageType = 0;
 			}
 		}
-		int startX = CGlobalValue::GetRandom(m_MapSize);
-		int startY = CGlobalValue::GetRandom(m_MapSize);
+		int startX = GetRandom(0,m_MapSize);
+		int startY = GetRandom(0,m_MapSize);
 		CreateStage(startX, startY);
 
 		if (CreateStage_Special()) 
@@ -50,7 +50,7 @@ void CStageManager::CreateStage(int x, int y)
 	{
 		if (checkDir[0] && checkDir[1] && checkDir[2] && checkDir[3]) break;
 
-		int Dir = CGlobalValue::GetRandom(4);
+		int Dir = GetRandom(0, 4);
 		if (checkDir[Dir]) continue;
 		checkDir[Dir] = true;
 
@@ -72,7 +72,114 @@ void CStageManager::CreateStage(int x, int y)
 
 bool CStageManager::CreateStage_Special()
 {
-	return false;
+	/*
+	
+	기본제작 (맵제작후수정필요)
+	*/
+	std::vector<Vector2> vecStagePos;
+	Vector2 StartPos;
+	Vector2 EndPos;
+	Vector2 ShopPos;
+	Vector2 RestaurantPos;
+
+	//시작방 체크할곳
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			//벽체크 (오른쪽출발맵 1개)
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	int RandomCount = GetRandom(0, vecStagePos.size());
+	StartPos = vecStagePos[RandomCount];
+	m_vecStageInfo[StartPos.x][StartPos.y].StageType = 1;
+
+	//끝방 체크
+	vecStagePos.clear();
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			if (StartPos.x == x && StartPos.y == y)
+				continue;
+			//벽체크 
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	RandomCount = GetRandom(0, vecStagePos.size());
+	EndPos = vecStagePos[RandomCount];
+	m_vecStageInfo[EndPos.x][EndPos.y].StageType = 2;
+
+	//상점
+
+	vecStagePos.clear();
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			//벽체크 
+			if (StartPos.x == x && StartPos.y == y)
+				continue;
+			if (EndPos.x == x && EndPos.y == y)
+				continue;
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	RandomCount = GetRandom(0,vecStagePos.size());
+	ShopPos = vecStagePos[RandomCount];
+	m_vecStageInfo[ShopPos.x][ShopPos.y].StageType = 3;
+	//레스토랑
+
+	vecStagePos.clear();
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			//벽체크 
+			if (StartPos.x == x && StartPos.y == y)
+				continue;
+			if (EndPos.x == x && EndPos.y == y)
+				continue;
+			if (ShopPos.x == x && ShopPos.y == y)
+				continue;
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	RandomCount = GetRandom(0, vecStagePos.size());
+	RestaurantPos = vecStagePos[RandomCount];
+	m_vecStageInfo[RestaurantPos.x][RestaurantPos.y].StageType = 4;
+
+
+	//방설정완료
+
+
+
+	return true;
 }
 
 DEFINITION_SINGLE(CStageManager)

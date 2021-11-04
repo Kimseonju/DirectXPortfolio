@@ -34,10 +34,6 @@ CTileMapComponent::CTileMapComponent(const CTileMapComponent& com) :
 CTileMapComponent::~CTileMapComponent()
 {
 
-	CNavigation2D* Navigation = (CNavigation2D*)CNavigationManager::GetInst()->GetNavigation();
-
-	Navigation->DeleteTileMapData(this);
-
 	SAFE_DELETE(m_WorldBuffer);
 	SAFE_DELETE(m_CBuffer);
 
@@ -707,7 +703,7 @@ bool CTileMapComponent::Init()
 
 	CNavigation2D* Navigation = (CNavigation2D*)CNavigationManager::GetInst()->GetNavigation();
 
-	Navigation->DeleteTileMapData(this);
+	Navigation->SetNavData(this);
 
 	return true;
 }

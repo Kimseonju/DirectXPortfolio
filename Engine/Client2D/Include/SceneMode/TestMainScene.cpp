@@ -28,6 +28,7 @@
 #include "../GlobalValue.h"
 #include "../Object/Stage1MapEffect.h"
 #include "../Object/DoorEffect.h"
+#include "../Object/ShortSword.h"
 
 #include "../Stage/Stage.h"
 #include "../UI/StageMap.h"
@@ -77,17 +78,27 @@ bool CTestMainScene::Init()
 
 
 	CPlayer* pPlayer = m_pScene->SpawnObject<CPlayer>("Player");
-	
-	//CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
-	CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
-	pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
+	pPlayer->SetWorldPos(0.f, 300.f, 0.f);
 	CGlobalValue::MainPlayer = pPlayer;
+
+	CPlayerUI* Widget1 = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
+	CInventory* Widget2 = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
+	pPlayer->SetInventory(Widget2);
+	pPlayer->SetPlayerUI(Widget1);
+
+
+	//CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
+
+	//벨리알테스트용
+	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
+	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
+
 	CCollisionObject* pCollisionObject = m_pScene->SpawnObject<CCollisionObject>("Collision1");
 	
 	CTeemo* pTeemo = m_pScene->SpawnObject<CTeemo>("Teemo");
 
 	pTeemo->SetRelativePos(500.f, 500.f, 0.f);
-
+	
 	//CPixelCollisionTest* pPixelCollisionTest = m_pScene->SpawnObject<CPixelCollisionTest>("PixelCollisionTest");
 	CStage1MapEffect* pPixelCollisionTest = m_pScene->SpawnObject<CStage1MapEffect>("PixelCollisionTest1");
 	//
@@ -99,10 +110,6 @@ bool CTestMainScene::Init()
 
 	//CStageMap* Widget1 = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMap");
 	//Widget1->SetStage(m_Stage);
-	CPlayerUI* Widget1 = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
-	CInventory* Widget2 = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
-	pPlayer->SetInventory(Widget2);
-	pPlayer->SetPlayerUI(Widget1);
 	//CItemInfoWidget* Widget3 = m_pScene->GetViewport()->AddWindow<CItemInfoWidget>("ItemInfoWidget");
 	//CAbilityWidget* Widget4 = m_pScene->GetViewport()->AddWindow<CAbilityWidget>("CAbilityWidget");
 	//Widget4->SetPos(500.f, 300.f);
@@ -150,7 +157,9 @@ void CTestMainScene::CreateMaterial()
 
 void CTestMainScene::CreateAnimationSequence2D()
 {
-
+	/*
+	Player
+	*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("PlayerIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("PlayerIdle",
 		"PlayerIdle", TEXT("Characters/Basic/player_idle.png"));
@@ -193,6 +202,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 23.f, 0), Vector2((i + 1) * 23.f, 14.f));
 	}
 
+	/*ShortSwordEfect*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("ShortSwordEffect");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("ShortSwordEffect",
 		"ShortSwordEffect", TEXT("Weapon/Melee/SwingFX.png"));
@@ -242,6 +252,43 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("ObjectDieEffect",
 			Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
 	}
+
+
+	/*
+	Door
+	*/
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
+		"Door", TEXT("Effect/object/door/door.png"));
+
+	for (int i = 0; i < 7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorIdle",
+		"Door", TEXT("Effect/object/door/door.png"));
+
+	for (int i = 7; i < 17; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorIdle",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
+		"Door", TEXT("Effect/object/door/door.png"));
+	for (int i = 17; i < 23; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	//가로 23
+
 
 	/*
 	Enemy

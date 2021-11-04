@@ -1,5 +1,19 @@
 #pragma once
 #include "Navigation.h"
+enum Neighbor_Dir
+{
+	ND_Top,
+	ND_RightTop,
+	ND_Right,
+	ND_RightBottom,
+	ND_Bottom,
+	ND_LeftBottom,
+	ND_Left,
+	ND_LeftTop,
+	ND_End
+};
+
+
 class CNavigation2D :
 	public CNavigation
 {
@@ -10,40 +24,35 @@ protected:
 	virtual ~CNavigation2D();
 
 private:
-	std::vector<CSharedPtr<CTileMapComponent>>	m_NavData;
+	CSharedPtr<CTileMapComponent>	m_NavData;
+	NavInfoManager* m_InfoManager;
 
 public:
-	CTileMapComponent* GetTileMap(int Index = 0)	const
+	CTileMapComponent* GetTileMap()	const
 	{
-		return m_NavData[Index];
+		return m_NavData;
 	}
 
-	CTileMapComponent* GetLastTileMap()	const
+	void SetNavData(CTileMapComponent* Data)
 	{
-		if (m_NavData.empty())
-			return nullptr;
-
-		return m_NavData[m_NavData.size() - 1];
+		m_NavData = Data;
 	}
 
-	void AddNavData(CTileMapComponent* Data)
+	void SetNavInfoManager(NavInfoManager* Info)
 	{
-		m_NavData.push_back(Data);
+		m_InfoManager = Info;
 	}
 
-	void DeleteTileMapData(CTileMapComponent* Data)
-	{
-		auto	iter = m_NavData.begin();
-		auto	iterEnd = m_NavData.end();
+public:
+	virtual bool FindPath(const Vector3& Start, const Vector3& Goal,
+		std::vector<Vector3>& vecPath);
 
-		for (; iter != iterEnd; ++iter)
-		{
-			if (*iter == Data)
-			{
-				m_NavData.erase(iter);
-				break;
-			}
-		}
-	}
+private:
+	bool FindNode(NavInfo* Node, NavInfo* GoalNode, const Vector3& Goal,
+		std::vector<Vector3>& vecPath);
+
+private:
+	static bool SortOpenList(NavInfo* Src, NavInfo* Dest);
+
 };
 

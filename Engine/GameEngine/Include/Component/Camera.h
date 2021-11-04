@@ -2,6 +2,7 @@
 
 #include "SceneComponent.h"
 
+
 class CCamera :
     public CSceneComponent
 {
@@ -31,6 +32,8 @@ protected:
 	float	m_MaxX;
 	float	m_MaxY;
 
+	std::queue<CameraShake> m_qCameraShake;
+	float	m_ShakeTime;
 public:
 	Vector2 CameraZoomSize()
 	{
@@ -132,6 +135,8 @@ private:
 	void CreateProjectionMatrix();
 public:
 
+	void AddCameraShake(float x, float y, float Time);
+	void AddCameraShake(const Vector2& Pos, float Time);
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
 public:

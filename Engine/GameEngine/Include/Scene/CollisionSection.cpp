@@ -59,10 +59,14 @@ void CCollisionSection::Collision(float DeltaTime)
 	{
 		CCollider* Src = m_vecCollider[i];
 
+		if (!Src->IsEnable())
+			continue;
 		for (size_t j = i + 1; j < Size; ++j)
 		{
 			CCollider* Dest = m_vecCollider[j];
 
+			if (!Dest->IsEnable())
+				continue;
 			// 현재 프레임에 다른 섹션에서 둘이 충돌처리를 해본적이 있을 경우
 			if (Src->CheckCurrentFrameCollision(Dest))
 				continue;

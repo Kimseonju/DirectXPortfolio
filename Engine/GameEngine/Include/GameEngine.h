@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <list>
 #include <vector>
+#include <queue>
 #include <unordered_map>
 #include <crtdbg.h>
 #include <functional>
@@ -396,7 +397,11 @@ struct TileMapCBuffer
     int		TileEndY;
     Vector2	TileSize;
 };
-
+struct CameraShake
+{
+    Vector2 Pos;
+    float	Time;
+};
 #pragma pack(push, 1)
 
 struct TileInfo
@@ -408,6 +413,75 @@ struct TileInfo
     Vector4	EmvColor;
     float	Opacity;
     Vector3	Empty;
+};
+
+enum class Nav_Insert_Type
+{
+    None,
+    Open,
+    Close
+};
+
+struct NavInfo
+{
+    class CTile* Tile;
+    float	Cost;
+    float	Dist;
+    float	Total;
+    Nav_Insert_Type	Type;
+    int		IndexX;
+    int		IndexY;
+    int		Index;
+    NavInfo* Parent;
+
+    NavInfo()
+    {
+        Tile = nullptr;
+        Parent = nullptr;
+        Cost = 0.f;
+        Dist = 0.f;
+        Total = 0.f;
+        IndexX = -1;
+        IndexY = -1;
+        Index = -1;
+        Type = Nav_Insert_Type::None;
+    }
+
+    void Clear()
+    {
+        Parent = nullptr;
+        Cost = 0.f;
+        Dist = 0.f;
+        Total = 0.f;
+        Type = Nav_Insert_Type::None;
+    }
+};
+
+struct NavInfoManager
+{
+    std::vector<NavInfo>	vecNavInfo;
+    std::vector<NavInfo*>	vecOpen;
+    std::vector<NavInfo*>	vecUse;
+    int		OpenCount;
+    int		UseCount;
+    int		CountX;
+    int		CountY;
+
+    NavInfo* GetNavInfo(int IndexX, int IndexY)
+    {
+        if (IndexX < 0 || IndexY < 0 || IndexX >= CountX || IndexY >= CountY)
+            return nullptr;
+
+        return &vecNavInfo[IndexY * CountX + IndexX];
+    }
+
+    NavInfoManager()
+    {
+        OpenCount = 0;
+        UseCount = 0;
+        CountX = 0;
+        CountY = 0;
+    }
 };
 
 #pragma pack(pop)

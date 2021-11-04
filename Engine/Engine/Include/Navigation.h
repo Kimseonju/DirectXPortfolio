@@ -12,6 +12,7 @@ protected:
 	virtual ~CNavigation() = 0;
 
 public:
-	//virtual bool FindPath(const Vector3& Start, const Vector3& Goal, )
+	virtual bool FindPath(const Vector3& Start, const Vector3& Goal,
+		std::vector<Vector3>& vecPath) = 0;
 };
 

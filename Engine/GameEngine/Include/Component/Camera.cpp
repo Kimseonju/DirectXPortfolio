@@ -21,6 +21,7 @@ CCamera::CCamera()
 
 	m_MaxX = INT_MAX;
 	m_MaxY = INT_MAX;
+	m_ShakeTime = 0.f;
 }
 
 CCamera::CCamera(const CCamera& com) :
@@ -73,6 +74,20 @@ void CCamera::CreateProjectionMatrix()
 	}
 		break;
 	}
+}
+
+
+void CCamera::AddCameraShake(float x, float y, float Time)
+{
+	AddCameraShake({ x,y }, Time);
+}
+
+void CCamera::AddCameraShake(const Vector2& Pos, float Time)
+{
+	CameraShake Shake;
+	Shake.Pos = Pos;
+	Shake.Time = Time;
+	m_qCameraShake.push(Shake);
 }
 
 void CCamera::Save(FILE* pFile)
@@ -155,12 +170,40 @@ void CCamera::PostUpdate(float DeltaTime)
 		{
 			Pos.y = m_MaxY;
 		}
+
+		while (true)
+		{
+			if (m_qCameraShake.size() != 0)
+			{
+				//있을때
+				if (m_ShakeTime < m_qCameraShake.front().Time)
+				{
+					int x= GetRandom(-m_qCameraShake.front().Pos.x, m_qCameraShake.front().Pos.x);
+					int y = GetRandom(-m_qCameraShake.front().Pos.y, m_qCameraShake.front().Pos.y);
+					Pos.x += (float)x;
+					Pos.y += (float)y;
+					m_ShakeTime += DeltaTime;
+					break;
+				}
+				else
+				{
+					m_ShakeTime = 0.f;
+					m_qCameraShake.pop();
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+
 		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문
 		Pos.z = 0.f;
 		m_matView[3][i] = Axis.Dot(Pos);
 	}
-
+	
 	/* 이동
 	1 0 0 0
 	0 1 0 0

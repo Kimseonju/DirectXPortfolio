@@ -223,3 +223,4 @@ void CIMGUICameraComponent::InputMaxY()
 	m_Camera->SetMax(x, y);
 }
 
+

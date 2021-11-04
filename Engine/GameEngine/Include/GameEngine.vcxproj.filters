@@ -714,6 +714,9 @@
     <ClInclude Include="ThreadNavigation2D.h">
       <Filter>01. Engine\10. Thread</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadNavigation.h">
+      <Filter>01. Engine\10. Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1137,6 +1140,9 @@
       <Filter>01. Engine\12. Navigation</Filter>
     </ClCompile>
     <ClCompile Include="ThreadNavigation2D.cpp">
+      <Filter>01. Engine\10. Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadNavigation.cpp">
       <Filter>01. Engine\10. Thread</Filter>
     </ClCompile>
   </ItemGroup>

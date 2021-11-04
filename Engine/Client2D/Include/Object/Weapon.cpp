@@ -19,7 +19,6 @@ CWeapon::CWeapon() :
 CWeapon::CWeapon(const CWeapon& obj) :
 	CItem(obj)
 {
-	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
 }
 
 CWeapon::~CWeapon()
@@ -35,13 +34,6 @@ bool CWeapon::Init()
 {
 	CItem::Init();
 
-	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-
-	SetRootComponent(m_Sprite);
-
-	m_Sprite->SetRelativeScale(38.f, 14.f, 1.f);
-	//m_Sprite->SetRelativeRotationZ(30.f);
-	m_Sprite->SetPivot(0.f, 0.5f, 0.f);
 
 	return true;
 }
@@ -49,41 +41,46 @@ bool CWeapon::Init()
 void CWeapon::Update(float DeltaTime)
 {
 	CItem::Update(DeltaTime);
-	if (m_Reload)
-	{
-		m_CurrentReloadDelay += DeltaTime;
-	}
-	m_CurrentAttackDelay += DeltaTime;
 
-	if (m_BulletMaxCount != 0 && m_BulletCount == 0)
+	if (!m_MapDrop)
 	{
-		Reload();
-	}
-
-	if (m_WeaponType == Weapon_Type::Range)
-	{
-		if (m_Rebound > 0.1f)
+		if (m_Reload)
 		{
-			m_Rebound -= DeltaTime * 100.f;
+			m_CurrentReloadDelay += DeltaTime;
 		}
-		else if (m_Rebound < -0.1f)
-			m_Rebound += DeltaTime * 100.f;
-		else if(m_Rebound>30.f || m_Rebound<30.f || m_Rebound<0.1f || m_Rebound>-0.1f)
-		{
-			m_Rebound = 0.f;
-		}
-	}
+		m_CurrentAttackDelay += DeltaTime;
 
-	if (m_Dir == Object_Dir::Left)
-	{
-		m_Sprite->SetRelativePos(10.f, 0.f, 0.f);
-		m_Sprite->SetVerticalReverse2DEnable(true);
+		if (m_BulletMaxCount != 0 && m_BulletCount == 0)
+		{
+			Reload();
+		}
+
+		if (m_WeaponType == Weapon_Type::Range)
+		{
+			if (m_Rebound > 0.1f)
+			{
+				m_Rebound -= DeltaTime * 100.f;
+			}
+			else if (m_Rebound < -0.1f)
+				m_Rebound += DeltaTime * 100.f;
+			else if (m_Rebound > 30.f || m_Rebound < 30.f || m_Rebound<0.1f || m_Rebound>-0.1f)
+			{
+				m_Rebound = 0.f;
+			}
+		}
+
+		//if (m_Dir == Object_Dir::Left)
+		//{
+		//	m_Sprite->SetRelativePos(10.f, 0.f, 0.f);
+		//	m_Sprite->SetVerticalReverse2DEnable(true);
+		//}
+		//else if (m_Dir == Object_Dir::Right)
+		//{
+		//	m_Sprite->SetRelativePos(-10.f, 0.f, 0.f);
+		//	m_Sprite->SetVerticalReverse2DEnable(false);
+		//}
 	}
-	else if (m_Dir == Object_Dir::Right)
-	{
-		m_Sprite->SetRelativePos(-10.f, 0.f, 0.f);
-		m_Sprite->SetVerticalReverse2DEnable(false);
-	}
+	
 }
 
 void CWeapon::PostUpdate(float DeltaTime)

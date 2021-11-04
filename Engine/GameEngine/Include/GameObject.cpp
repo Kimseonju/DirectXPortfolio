@@ -680,6 +680,7 @@ void CGameObject::Save(FILE* pFile)
 	fwrite(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
 	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+	fwrite(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
 
 	Component_Class_Type  Type = m_RootComponent->GetComponentClassType();
@@ -728,6 +729,7 @@ void CGameObject::Load(FILE* pFile)
 	fread(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
 	fread(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fread(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+	fread(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
 
 	Component_Class_Type  Type;
@@ -844,6 +846,7 @@ void CGameObject::ClientSave(FILE* pFile)
 	fwrite(&m_ClassType, sizeof(Client_Class_Type), 1, pFile);
 	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
+	fwrite(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
 	Vector3	Pos, Rot, Scale, Pivot;
 	Pos = GetWorldPos();

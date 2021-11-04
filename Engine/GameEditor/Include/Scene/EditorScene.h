@@ -34,5 +34,6 @@ private:
     void AddObjectMap();
     void DeleteObjectMap();
     void CreateAnimationSequence2D();
+    void CreateParticle();
 };
 

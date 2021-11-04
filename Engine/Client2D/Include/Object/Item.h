@@ -3,6 +3,9 @@
 #include "Component/SpriteComponent.h"
 #include "../BasicStatus.h"
 #include "../GlobalValue.h"
+#include "Component/SpriteComponent.h"
+#include <Component/RigidBodyComponent.h>
+#include "Component/ColliderBox2D.h"
 class CPlayer;
 
 
@@ -28,6 +31,12 @@ protected:
 	ITEM_TYPE m_Type;
 	ITEM_RANK m_Rank;
 	class CTexture* m_ItemImage;
+	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CRigidBodyComponent> m_Body;
+	CSharedPtr<CColliderBox2D> m_Collider2D;
+	float	m_UpdateDelay;
+	//∏ ø° ª—∏∞ªÛ≈¬
+	bool m_MapDrop;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -39,6 +48,11 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 public:
 
+	void Drop()
+	{
+		m_MapDrop = true;
+	}
+	void StopMove();
 	// ««∞›
 	virtual void GetHit(); 
 	// æ∆¿Ã≈€ ¿Â¬¯
@@ -95,5 +109,8 @@ public:
 	int GetCritical()	 const;
 	int GetEvasion()	 const;
 	CTexture* GetItemTexture() const;
+public:
+
+	void DropCollisionBegin(const HitResult& result, CCollider* Collider);
 };
 

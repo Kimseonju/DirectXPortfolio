@@ -28,5 +28,6 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CCollisionObject* Clone();
+	void CollisionBegin(const HitResult& result, CCollider* Collider);
 };
 

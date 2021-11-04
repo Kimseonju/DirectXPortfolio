@@ -121,7 +121,7 @@ bool CRoom::Init(RoomCreate_Dir PrevDir)
 	RoomCreate_Dir Dir;
 	for (;;)
 	{
-		Dir = (RoomCreate_Dir)CGlobalValue::GetRandom((int)RoomCreate_Dir::End);
+		Dir = (RoomCreate_Dir)GetRandom(0, (int)RoomCreate_Dir::End);
 		if (Dir != PrevDir)
 			break;
 	}

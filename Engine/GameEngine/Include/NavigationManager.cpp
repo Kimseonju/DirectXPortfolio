@@ -42,7 +42,7 @@ void CNavigationManager::CreateNavigation()
 
 void CNavigationManager::SetTileInfo()
 {
-	CTileMapComponent* TileMap = ((CNavigation2D*)m_Navigation)->GetLastTileMap();
+	CTileMapComponent* TileMap = ((CNavigation2D*)m_Navigation)->GetTileMap();
 
 	if (!TileMap)
 		return;
@@ -58,8 +58,31 @@ void CNavigationManager::SetTileInfo()
 		Thread->SetNavigation(m_Navigation);
 		Thread->CreateNavigationInfo(TileMap);
 
-		m_vecThread2D.push_back(Thread);
+		m_vecThread.push_back(Thread);
 
 		Thread->Start();
 	}
+}
+
+bool CNavigationManager::FindPath(const Vector3& Start, const Vector3& Goal,
+	CSceneComponent* Component, void(CSceneComponent::* Func)(std::vector<Vector3>&))
+{
+	if (m_vecThread.empty())
+		return false;
+
+	// 스레드에서 현재 작업양이 가장 작은 스레드를 찾아서 해당 스레드에게 작업을
+	// 할당해준다.
+	CThreadNavigation* Thread = m_vecThread[0];
+
+	size_t	Size = m_vecThread.size();
+
+	for (size_t i = 1; i < Size; ++i)
+	{
+		if (Thread->GetWorkCount() > m_vecThread[i]->GetWorkCount())
+			Thread = m_vecThread[i];
+	}
+
+	Thread->AddWorkInfo(Start, Goal, Component, Func);
+
+	return true;
 }

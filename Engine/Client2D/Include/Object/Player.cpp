@@ -82,11 +82,10 @@ bool CPlayer::Init()
 	m_Arm = CreateSceneComponent<CSpringArm2D>("Arm");
 	m_Camera = CreateSceneComponent<CCamera>("Camera");
 	m_PlayerInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("PlayerInfoWidget");
-
+	m_Camera->SetCameraZoom(1.f);
 	SetRootComponent(m_Sprite);
 
 	m_Sprite->SetRelativeScale(15.f, 20.f, 1.f);
-	m_Sprite->SetRelativePos(200.f, 300.f, 0.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
@@ -288,7 +287,11 @@ void CPlayer::Attack(float DeltaTime)
 {
 	if (CGlobalValue::MainMouse->GetState() == Mouse_State::World)
 	{
-		
+
+		CItem* Item = m_pScene->SpawnObject<CShortSword>("CShortSword3");
+		Item->SetWorldPos(GetWorldPos());
+		Item->Enable(true);
+		Item->Drop();
 		if (m_Weapon)
 		{
 			Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
@@ -300,6 +303,7 @@ void CPlayer::Attack(float DeltaTime)
 			{
 				m_OneAttack = !m_OneAttack;
 			}
+			m_Camera->AddCameraShake(3.f, 3.f, 0.3f);
 		}
 	}
 }

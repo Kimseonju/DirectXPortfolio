@@ -291,3 +291,12 @@ enum class Client_Enemy_Type
     SmallSkel_Bow,
     End
 };
+
+enum class Door_Dir
+{
+    Door_Left,
+    Door_Right,
+    Door_Up,
+    Door_Down,
+    End
+};

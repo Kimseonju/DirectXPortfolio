@@ -1,5 +1,8 @@
 #pragma once
 #include "IMGUIWidgetComponent.h"
+
+
+
 class CIMGUICameraComponent :
 	public CIMGUIWidgetComponent
 {
@@ -19,7 +22,6 @@ private:
 
 	class CCamera* m_Camera;
 	class CIMGUIButton* m_CurrentCamera;
-
 public:
 	void UpdateInfo(CCamera* CCamera);
 
@@ -35,5 +37,4 @@ public:
 	void InputMinY();
 	void InputMaxX();
 	void InputMaxY();
-
 };
