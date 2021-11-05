@@ -1,5 +1,4 @@
 #include "ObjectDieEffectObject.h"
-#include "../Animation2D/ObjectDieEffectAnimation2D.h"
 CObjectDieEffectObject::CObjectDieEffectObject()
 {
 }
@@ -24,11 +23,9 @@ bool CObjectDieEffectObject::Init()
 
 	m_Sprite->SetRelativeScale(Vector3(28.f, 40.f, 1.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	CSharedPtr<CMaterial> SpriteMtrl = m_Sprite->GetMaterial(0);
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
-	m_Sprite->CreateAnimation2D<CObjectDieEffectAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
-	m_Animation2D->SetSequencePlayRate("RevolverEffect", 4.f);
+
+	m_Animation2D->SetIdleAnimation2D("ObjectDieEffect", false);
+	m_Animation2D->SetFrameEndFunction< CObjectDieEffectObject>(this, &CEffectObject::AnimationFrameEnd);
 	return true;
 }
 
@@ -58,9 +55,5 @@ CObjectDieEffectObject* CObjectDieEffectObject::Clone()
 }
 
 void CObjectDieEffectObject::Animation2DNotify(const std::string& Name)
-{
-}
-
-void CObjectDieEffectObject::AnimationFrameEnd(const std::string& Name)
 {
 }

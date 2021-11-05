@@ -3,7 +3,6 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/BelialHandAnimation2D.h"
 #include "Engine.h"
 #include "SkelSmallDagger.h"
 #include "WeaponArm.h"
@@ -37,9 +36,9 @@ bool CBelialHand::Init()
 {
 	CEnemy::Init();
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->CreateAnimation2D<CBelialHandAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
 	m_Sprite->SetRelativeScale(228.f, 268.f, 1.f);
+	m_Animation2D->SetIdleAnimation2D("BelialHand_Idle");
+	m_Animation2D->SetAttackAnimation2D("BelialHand_Attack");
 
 	return true;
 }

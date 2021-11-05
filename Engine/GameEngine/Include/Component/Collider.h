@@ -20,7 +20,6 @@ protected:
 	CSharedPtr<CShader>	m_DebugShader;
 	class CColliderConstantBuffer* m_CBuffer;
 	bool	m_DebugRender;
-
 protected:
 	Collider_Shape	m_ColliderShape;
 	Collider_Space	m_ColliderSpace;
@@ -40,6 +39,7 @@ protected:
 	bool		m_MouseCollision;
 
 public:
+
 	bool GetDebugRender()	const
 	{
 		return m_DebugRender;

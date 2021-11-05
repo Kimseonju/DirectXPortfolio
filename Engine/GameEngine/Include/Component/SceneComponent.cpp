@@ -1,6 +1,8 @@
 
 #include "SceneComponent.h"
 #include "Transform.h"
+#include "../NavigationManager.h"
+#include "../Render/RenderManager.h"
 #include "../GameObject.h"
 CSceneComponent::CSceneComponent()
 {
@@ -12,6 +14,8 @@ CSceneComponent::CSceneComponent()
 
     m_SceneComponentType = SceneComponent_Type::Scene;
     m_ComponentClassType = Component_Class_Type::Scene;
+
+    m_MoveSpeed = 300.f;
 }
 
 CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
@@ -52,6 +56,24 @@ CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
 CSceneComponent::~CSceneComponent()
 {
     SAFE_DELETE(m_pTransform);
+}
+
+void CSceneComponent::Move(const Vector2& Target)
+{
+    Move(Vector3(Target.x, Target.y, 0.f));
+}
+
+void CSceneComponent::Move(const Vector3& Target)
+{
+    m_vecNavPath.clear();
+
+    CNavigationManager::GetInst()->FindPath(GetWorldPos(), Target, this);
+}
+
+void CSceneComponent::NavigationCallback(const std::vector<Vector3>& vecPath)
+{
+    m_vecNavPath.clear();
+    m_vecNavPath = vecPath;
 }
 
 void CSceneComponent::Active(bool bActive)
@@ -183,6 +205,37 @@ bool CSceneComponent::Init()
 void CSceneComponent::Update(float DeltaTime)
 {
     CComponent::Update(DeltaTime);
+
+    {
+        if (!m_vecNavPath.empty())
+        {
+            Vector3 NextPos = m_vecNavPath.back();
+            Vector3 Pos = GetWorldPos();
+
+            if (CRenderManager::GetInst()->GetRenderSpace() == Render_Space::Render2D)
+            {
+                NextPos.z = 0.f;
+                Pos.z = 0.f;
+            }
+
+            Vector3 Dir = NextPos - Pos;
+            Dir.Normalize();
+
+            AddRelativePos(Dir * DeltaTime * m_MoveSpeed);
+
+            Pos = GetWorldPos();
+
+            float   Dist = Pos.Distance(NextPos);
+
+            if (Dist <= 5.f)
+            {
+                SetWorldPos(NextPos);
+                m_vecNavPath.pop_back();
+            }
+        }
+    }
+
+
     m_pTransform->Update(DeltaTime);
 
     auto    iter = m_vecChild.begin();

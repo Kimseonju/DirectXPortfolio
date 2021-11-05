@@ -4,7 +4,6 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/PlayerAnimation2D.h"
 #include "Engine.h"
 #include "Weapon.h"
 #include "WeaponArm.h"
@@ -14,15 +13,12 @@
 #include "../UI/PlayerWorldInfoWidget.h"
 #include "MetalBoomerang.h"
 #include "PlayerDash.h"
-#include "../UI/Inventory.h"
 #include "../UI/BasicMouse.h"
-#include "../UI/PlayerUI.h"
+#include "../UI/UIManager.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
-	m_Inventory(nullptr),
 	m_Weapon(nullptr),
 	m_WeaponArm(nullptr),
-	m_PlayerUI(nullptr),
 	m_Angle(0.f),
 	m_Dir(Object_Dir::Left)
 {
@@ -39,10 +35,8 @@ CPlayer::CPlayer(const CPlayer& obj) :
 	m_Camera = (CCamera*)FindSceneComponent("Camera");
 
 	m_OneAttack = obj.m_OneAttack;
-	m_Inventory = obj.m_Inventory->Clone();
 	m_WeaponArm = obj.m_WeaponArm->Clone();
 	m_Weapon = obj.m_Weapon->Clone();
-	m_PlayerUI = obj.m_PlayerUI->Clone();
 	m_OneAttack = obj.m_OneAttack;
 	//임시 삭제용
 
@@ -51,16 +45,6 @@ CPlayer::CPlayer(const CPlayer& obj) :
 
 CPlayer::~CPlayer()
 {
-}
-
-void CPlayer::SetInventory(CInventory* Inventory)
-{
-	m_Inventory = Inventory;
-}
-
-void CPlayer::SetPlayerUI(CPlayerUI* PlayerUI)
-{
-	m_PlayerUI = PlayerUI;
 }
 
 void CPlayer::Start()
@@ -92,6 +76,8 @@ bool CPlayer::Init()
 	m_Collider2D->SetCollisionProfile("Player");
 	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::Begin, this,
 		&CPlayer::CollisionBegin);
+	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
+		&CPlayer::CollisionEnd);
 	m_Collider2D->SetExtent(50.f, 50.f);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_Body);
@@ -107,10 +93,12 @@ bool CPlayer::Init()
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 	//SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 
-	m_Sprite->CreateAnimation2D<CPlayerAnimation2D>();
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
 
-	m_Animation2D = m_Sprite->GetAnimation2D();
-
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
+	m_Animation2D->SetIdleAnimation2D("PlayerIdle");
+	m_Animation2D->SetMoveAnimation2D("PlayerRun");
+	m_Animation2D->SetJumpAnimation2D("PlayerJump");
 
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Left", KT_Push, this, &CPlayer::LeftMove);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Right", KT_Push, this, &CPlayer::RightMove);
@@ -137,6 +125,11 @@ bool CPlayer::Init()
 	m_PlayerInfoWidgetComponent->SetRelativeScale(200.f, 120.f, 1.f);
 	m_Sprite->AddChild(m_PlayerInfoWidgetComponent);
 
+
+	m_BodyFSM.CreateState("Idle", this, &CPlayer::BodyIdleStay, &CPlayer::BodyIdleStart);
+	m_BodyFSM.CreateState("Move", this, &CPlayer::BodyMoveStay, &CPlayer::BodyMoveStart);
+	m_BodyFSM.CreateState("Jump", this, &CPlayer::BodyJumpStay, &CPlayer::BodyJumpStart);
+	m_BodyFSM.ChangeState("Idle");
 	return true;
 }
 
@@ -144,6 +137,7 @@ void CPlayer::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 	m_Status.Update(DeltaTime);
+	m_BodyFSM.Update();
 
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Vector3 Pos = m_WeaponArm->GetWorldPos();
@@ -161,7 +155,7 @@ void CPlayer::Update(float DeltaTime)
 	}
 
 	m_WeaponArm->SetDir(m_Dir);
-	CWeapon* Item= (CWeapon*)m_Inventory->GetWeapon();
+	CWeapon* Item= (CWeapon*)CUIManager::GetInst()->GetInventory()->GetWeapon();
 	if (Item)
 	{
 		if (m_Weapon != Item)
@@ -223,17 +217,9 @@ void CPlayer::Update(float DeltaTime)
 		CPlayerDash* obj = m_pScene->SpawnObject<CPlayerDash>("CPlayerDash");
 		obj->SetWorldPos(GetWorldPos());
 		obj->SetDir(m_Dir);
-		//m_vDashTexture.push_back(obj);
 		m_Body->SetDashEffect(false);
 	}
-	//if (!m_Body->IsDash())
-	//{
-	//	for (size_t i = 0; i < m_vDashTexture.size(); ++i)
-	//	{
-	//		m_vDashTexture[i]->Active(false);
-	//	}
-	//	m_vDashTexture.clear();
-	//}
+
 	m_Angle = angle;
 }
 
@@ -287,11 +273,6 @@ void CPlayer::Attack(float DeltaTime)
 {
 	if (CGlobalValue::MainMouse->GetState() == Mouse_State::World)
 	{
-
-		CItem* Item = m_pScene->SpawnObject<CShortSword>("CShortSword3");
-		Item->SetWorldPos(GetWorldPos());
-		Item->Enable(true);
-		Item->Drop();
 		if (m_Weapon)
 		{
 			Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
@@ -326,14 +307,14 @@ void CPlayer::Dash(float DeltaTime)
 
 void CPlayer::InventoryOnOff(float DeltaTime)
 {
-	if (m_Inventory->IsEnable())
+	if (CUIManager::GetInst()->GetInventory()->IsEnable())
 	{
-		m_Inventory->Enable(false);
+		CUIManager::GetInst()->GetInventory()->Enable(false);
 		CGlobalValue::MainMouse->SetState(Mouse_State::World);
 	}
 	else
 	{
-		m_Inventory->Enable(true);
+		CUIManager::GetInst()->GetInventory()->Enable(true);
 		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
 	}
 }
@@ -353,6 +334,15 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
 	{
 		m_Body->SetJump(true);
-		m_PlayerUI->Hit();
+		CUIManager::GetInst()->GetPlayerUI()->Hit();
+	}
+}
+
+void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
+		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		m_Body->SetGravity(true);
 	}
 }

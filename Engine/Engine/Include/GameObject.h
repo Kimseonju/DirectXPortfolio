@@ -66,6 +66,10 @@ public:
         m_EnemyType = Type;
     }
 
+    void SetDoorDir(Door_Dir Dir)
+    {
+        m_DoorDir = Dir;
+    }
     Client_Class_Type GetClassType()
     {
         return m_ClassType;
@@ -77,6 +81,10 @@ public:
     Client_Enemy_Type GetEnemyType()
     {
         return m_EnemyType;
+    }
+    Door_Dir GetDoorDir()
+    {
+        return m_DoorDir;
     }
 public:
     void GetComponentName(std::vector<std::string>& vecName)
@@ -136,6 +144,10 @@ public:
     virtual CGameObject* Clone();
     virtual void Animation2DNotify(const std::string& Name);
     void ClearTransformState();
+
+public:
+    void Move(const Vector2& Target);
+    void Move(const Vector3& Target);
 
 public:
     Vector3 GetVelocityScale()  const;

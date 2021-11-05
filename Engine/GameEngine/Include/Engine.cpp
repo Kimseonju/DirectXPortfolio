@@ -221,6 +221,8 @@ void CEngine::Logic()
 
 	CIMGUIManager::GetInst()->Update(DeltaTime);
 
+	CNavigationManager::GetInst()->Update(DeltaTime);
+
 	if (Update(DeltaTime))
 	{
 		CIMGUIManager::GetInst()->Render();

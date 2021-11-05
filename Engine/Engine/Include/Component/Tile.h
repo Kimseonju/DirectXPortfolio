@@ -26,8 +26,32 @@ private:
 	int			m_IndexY;
 	int			m_Index;
 	class CTileMapComponent* m_Owner;
+	float		m_NodeDistW;	// 가로 길이
+	float		m_NodeDistH;	// 세로 길이
+	float		m_NodeDistD;	// 대각선 길이
+	float		m_NodeDistDHalf;	// 대각선 반 길이
 
 public:
+	float GetDistW()	const
+	{
+		return m_NodeDistW;
+	}
+
+	float GetDistH()	const
+	{
+		return m_NodeDistH;
+	}
+
+	float GetDistD()	const
+	{
+		return m_NodeDistD;
+	}
+
+	float GetDistDHalf()	const
+	{
+		return m_NodeDistDHalf;
+	}
+
 	bool GetRender()	const
 	{
 		return m_FrameStart.x != 0.f || m_FrameStart.y != 0.f || m_FrameEnd.x != 0.f || m_FrameEnd.y != 0.f;

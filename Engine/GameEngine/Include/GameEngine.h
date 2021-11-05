@@ -290,7 +290,11 @@ struct ParticleCBuffer
     Vector3	MoveAngle;
     int		Gravity;
     int     Twinkle;
-    Vector3	Empty;
+    int		Animation2DEnable;
+    Vector2	Animation2DSize;
+    int		Animation2DCount;
+    float	Animation2DPlayRate;
+    Vector3 Empty3;
 };
 
 struct ParticleInfo
@@ -482,6 +486,12 @@ struct NavInfoManager
         CountX = 0;
         CountY = 0;
     }
+};
+
+struct NavMessage
+{
+    class CSceneComponent* Component;
+    std::vector<Vector3>	vecPath;
 };
 
 #pragma pack(pop)

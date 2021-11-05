@@ -1,5 +1,4 @@
 #pragma once
-
 #include "GameObject.h"
 #include "Component/SpriteComponent.h"
 #include "Component/Camera.h"
@@ -9,6 +8,16 @@
 #include "Component/WidgetComponent.h"
 #include "../GlobalValue.h"
 #include "../PlayerStatus.h"
+#include <EngineFSM.h>
+#include "../Animation2D/Animation2D_FSM.h"
+
+enum class ePlayerState
+{
+	Idle,
+	Move,
+	Jump
+};
+
 class CPlayer :
 	public CGameObject
 {
@@ -19,7 +28,7 @@ protected:
 	CPlayer(const CPlayer& obj);
 	virtual ~CPlayer();
 
-protected:
+private:
 
 	std::vector<CGameObject*> m_vDashTexture;
 	CPlayerStatus m_Status;
@@ -29,20 +38,20 @@ protected:
 	CSharedPtr<CCamera> m_Camera;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
-	CSharedPtr<CAnimation2D> m_Animation2D;
+	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
 	class CWeaponArm* m_WeaponArm;
 
+	CEngineFSM<CPlayer>m_BodyFSM;
 
 	class CWeapon*  m_Weapon;
-
-
-	class CInventory* m_Inventory;
-	class CPlayerUI* m_PlayerUI;
 
 
 	bool m_OneAttack;
 	float m_Angle;
 	Object_Dir m_Dir;
+
+	ePlayerState m_State;
+	ePlayerState m_PrevState;
 protected:
 public:
 	CPlayerStatus& GetStatus()
@@ -62,8 +71,6 @@ public:
 		return m_Body->GetForce();
 	}
 public:
-	void SetInventory(CInventory* Inventory);
-	void SetPlayerUI(CPlayerUI* PlayerUI);
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -85,4 +92,13 @@ public:
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
+	void CollisionEnd(const HitResult& result, CCollider* Collider);
+public:
+	//FSM
+	void BodyIdleStart();
+	void BodyIdleStay();
+	void BodyMoveStart();
+	void BodyMoveStay();
+	void BodyJumpStart();
+	void BodyJumpStay();
 };

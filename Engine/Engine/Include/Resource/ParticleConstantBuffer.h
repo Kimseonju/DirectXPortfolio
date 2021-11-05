@@ -25,15 +25,6 @@ public:
 	}
 
 public:
-
-	void SetGravityEnable(int Enable)
-	{
-		m_BufferData.Gravity = Enable;
-	}
-	void SetTwinkleEnable(int Enable)
-	{
-		m_BufferData.Twinkle = Enable;
-	}
 	void SetDefaultZ(float Z)
 	{
 		m_BufferData.DefaultZ = Z;
@@ -157,6 +148,35 @@ public:
 	void SetSpawnCount(unsigned int Count)
 	{
 		m_BufferData.SpawnCount = Count;
+	}
+
+	void SetTwinkleEnable(int Enable)
+	{
+		m_BufferData.Twinkle = Enable;
+	}
+
+	void SetGravityEnable(int Enable)
+	{
+		m_BufferData.Gravity = Enable;
+	}
+
+
+
+	void SetAnimation2DEnable(int Enable)
+	{
+		m_BufferData.Animation2DEnable = Enable;
+	}
+	void SetAnimation2DSize(const Vector2& Size)
+	{
+		m_BufferData.Animation2DSize = Size;
+	}
+	void SetAnimation2DCount(int Count)
+	{
+		m_BufferData.Animation2DCount = Count;
+	}
+	void SetAnimation2DPlayRate(float PlayRate)
+	{
+		m_BufferData.Animation2DPlayRate = PlayRate;
 	}
 
 	int GetSpawnCountMax()	const

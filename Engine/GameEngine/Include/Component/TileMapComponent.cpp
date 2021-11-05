@@ -687,6 +687,13 @@ void CTileMapComponent::UpdateInfo()
 void CTileMapComponent::Start()
 {
 	CPrimitiveComponent::Start();
+
+	size_t	Size = m_vecTile.size();
+
+	for (size_t i = 0; i < Size; ++i)
+	{
+		m_vecTile[i]->Start();
+	}
 }
 
 bool CTileMapComponent::Init()

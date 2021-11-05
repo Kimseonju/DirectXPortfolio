@@ -19,7 +19,7 @@ protected:
 	class CAnimation2D* m_Animation2D;
 	CSharedPtr<CColliderBox2D> m_Body;
 	float m_Speed;
-
+	float m_SpawnCount;
 public:
 	virtual void Start();
 	virtual bool Init();

@@ -47,12 +47,6 @@ public:
 	virtual CItem* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
-
-	void Drop()
-	{
-		m_MapDrop = true;
-	}
-	void StopMove();
 	// 피격
 	virtual void GetHit(); 
 	// 아이템 장착
@@ -110,7 +104,14 @@ public:
 	int GetEvasion()	 const;
 	CTexture* GetItemTexture() const;
 public:
-
+	
 	void DropCollisionBegin(const HitResult& result, CCollider* Collider);
+
+public:
+	//동전이 드랍됬을때
+	void Drop(float Angle, float Power);
+	void Drop();
+	//플레이어가 아이템과 충돌시
+	virtual void StatePlayerItem();
 };
 

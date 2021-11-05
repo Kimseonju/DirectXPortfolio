@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Component/SpriteComponent.h"
 #include "Component/ColliderBox2D.h"
-
+#include "../Animation2D/Animation2D_FSM.h"
 class CEffectObject :
 	public CGameObject
 {
@@ -17,7 +17,7 @@ protected:
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
-	class CAnimation2D* m_Animation2D;
+	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
 
 protected:
 
@@ -32,7 +32,7 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 
 public:
-	void AnimationFrameEnd(const std::string& Name);
+	virtual void AnimationFrameEnd(const std::string& Name);
 };
 
 

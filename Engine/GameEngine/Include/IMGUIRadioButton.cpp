@@ -22,9 +22,9 @@ void CIMGUIRadioButton::Render()
 		ImGui::PushFont(m_Font);
 
 
-	size_t	Size = m_vecItem.size();
+	int	Size = (int)m_vecItem.size();
 
-	for (size_t i = 0; i < Size; ++i)
+	for (int i = 0; i < Size; ++i)
 	{
 		m_Select = m_SelectIndex == i;
 		

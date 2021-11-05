@@ -30,7 +30,7 @@ public:
 	virtual CMainStageMapEffect* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 
-	void SetDir(Effect_Dir Dir);
+	void SetDir(Object_Dir Dir);
 	void SetRange(const Vector3& Range);
 	void SetRange(float x, float y, float z);
 };

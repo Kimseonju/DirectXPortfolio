@@ -70,5 +70,10 @@ public:
 	void SetMoveAngle(float x, float y, float z);
 	void SetGravityEnable(bool Enable);
 	void SetTwinkleEnable(bool Enable);
+	void SetAnimation2DEnable(bool Enable);
+	void SetAnimation2DSize(const Vector2& Size);
+	void SetAnimation2DCount(int Count);
+	void SetAnimation2DPlayRate(float PlayRate);
+
 };
 

@@ -84,6 +84,7 @@ void CRigidBodyComponent::Update(float DeltaTime)
 		if (m_Dir != Vector3::Zero)
 		{
 			moveDir += m_Dir * m_Speed * DeltaTime;
+			moveDir += m_Force * DeltaTime;
 			m_Dir = Vector3::Zero;
 		}
 	}

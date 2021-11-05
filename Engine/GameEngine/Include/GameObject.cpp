@@ -286,6 +286,16 @@ void CGameObject::ClearTransformState()
 	}
 }
 
+void CGameObject::Move(const Vector2& Target)
+{
+	m_RootComponent->Move(Target);
+}
+
+void CGameObject::Move(const Vector3& Target)
+{
+	m_RootComponent->Move(Target);
+}
+
 Vector3 CGameObject::GetVelocityScale() const
 {
 	return m_RootComponent.Get()->GetVelocityScale();
@@ -673,7 +683,7 @@ void CGameObject::LoadFullPath(const TCHAR* FullPath)
 
 void CGameObject::Save(FILE* pFile)
 {
-	int Length = strlen(GetName().c_str());
+	int Length = (int)strlen(GetName().c_str());
 	fwrite(&Length, sizeof(int), 1, pFile);
 	fwrite(GetName().c_str(), sizeof(char), Length, pFile);
 
@@ -689,7 +699,7 @@ void CGameObject::Save(FILE* pFile)
 	m_RootComponent->Save(pFile);
 
 	{
-		Length = m_SceneComponentList.size();
+		Length = (int)m_SceneComponentList.size();
 		fwrite(&Length, sizeof(int), 1, pFile);
 		auto iter = m_SceneComponentList.begin();
 		auto iterEnd = m_SceneComponentList.end();

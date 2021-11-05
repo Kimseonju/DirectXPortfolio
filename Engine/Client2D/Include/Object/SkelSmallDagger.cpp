@@ -4,10 +4,10 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/EnemyWeaponAnimation2D.h"
 #include "Engine.h"
 #include "EffectObject.h"
 #include "EnemyAttack.h"
+#include "../Animation2D/Animation2D_FSM.h"
 CSkelSmallDagger::CSkelSmallDagger() 
 {
 	Enable(true);
@@ -39,8 +39,11 @@ bool CSkelSmallDagger::Init()
 
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 	//SpriteMtrl->AddTexture("ShortSword", TEXT("MeleeWeapon/ShortSword.png"));
-	m_Sprite->CreateAnimation2D<CEnemyWeaponAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
+	m_Animation2D->SetIdleAnimation2D("SmallEnemyDaggerIdle");
+	m_Animation2D->SetAttackAnimation2D("SmallEnemyDaggerAttack", false);
+
 	m_Animation2D->SetFrameEndFunction<CSkelSmallDagger>(this, &CSkelSmallDagger::AnimationFrameEnd);
 	m_Sprite->SetWorldScale(78.f, 90.f, 0.f);
 	m_Sprite->SetPivot(0.5f, 0.5f,0.f);
@@ -113,5 +116,5 @@ void CSkelSmallDagger::Equip()
 void CSkelSmallDagger::AnimationFrameEnd(const std::string& Name)
 {
 	m_PlayAttack = false;
-	m_Animation2D->ChangeAnimation("SmallEnemyDaggerIdle");
+	m_Animation2D->ChangeIdleAnimation2D();
 }

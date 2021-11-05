@@ -4,8 +4,11 @@
 #include "Resource/Material.h"
 #include <Device.h>
 #include <Component/Transform.h>
+#include "Item.h"
+#include "ShortSword.h"
 CCollisionObject::CCollisionObject() :
-	m_Speed(200)
+	m_Speed(200),
+	m_SpawnCount(0.f)
 {
 }
 
@@ -46,6 +49,20 @@ bool CCollisionObject::Init()
 void CCollisionObject::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	//m_SpawnCount += DeltaTime;
+	//if (m_SpawnCount > 0.1f)
+	//{
+	//	m_SpawnCount -= 0.1f;
+	//	CItem* Item=m_pScene->SpawnObject< CShortSword>("Spawn");
+	//	Vector3 Pos = GetWorldPos();
+	//	Pos.y += 40.f;
+	//	
+	//	Item->SetWorldPos(Pos);
+ 	//	Item->Drop((float)GetRandom(0, 180), 300.f);
+	//	Item->Enable(true);
+	//	Item->Drop();
+	//
+	//}
 }
 
 void CCollisionObject::PostUpdate(float DeltaTime)

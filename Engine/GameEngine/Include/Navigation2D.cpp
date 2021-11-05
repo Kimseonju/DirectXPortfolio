@@ -214,6 +214,106 @@ bool CNavigation2D::FindNode(NavInfo* Node, NavInfo* GoalNode,
 		}
 
 		// 도착했는지 판단하고 아니라면 열린목록을 지정해준다.
+
+		if (Neighbor[i] == GoalNode)
+		{
+			// 기존 경로를 제거한다.
+			vecPath.clear();
+
+			// 도착 위치를 넣어준다.
+			vecPath.push_back(Goal);
+
+			NavInfo* Parent = Node;
+
+			while (Parent)
+			{
+				Vector2	Center = Parent->Tile->GetCenter();
+
+				vecPath.push_back(Vector3(Center.x, Center.y, 0.f));
+
+				Parent = Parent->Parent;
+			}
+
+			vecPath.pop_back();
+
+			return true;
+		}
+
+		// 현재의 이웃노드로부터 도착점 까지의 직선 거리를 구한다.
+		Vector2	Center = Neighbor[i]->Tile->GetCenter();
+		Vector2	CenterDist = Center - Vector2(Goal.x, Goal.y);
+
+		float	Dist = CenterDist.x * CenterDist.x + CenterDist.y * CenterDist.y;
+
+		float	Cost = 0.f;
+
+		// 방향에 따라 간선 비용을 구해준다.
+		// 간선 비용은 타일의 모양에 따라서 달라진다.
+		if (m_NavData->GetTileShape() == Tile_Shape::Rect)
+		{
+			switch (i)
+			{
+			case ND_Top:
+			case ND_Bottom:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistH();
+				break;
+			case ND_Right:
+			case ND_Left:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistW();
+				break;
+			default:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistD();
+				break;
+			}
+		}
+
+		else
+		{
+			switch (i)
+			{
+			case ND_Top:
+			case ND_Bottom:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistH();
+				break;
+			case ND_Right:
+			case ND_Left:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistW();
+				break;
+			default:
+				Cost = Node->Cost + Neighbor[i]->Tile->GetDistDHalf();
+				break;
+			}
+		}
+
+		// 만약 현재의 이웃노드가 열린목록에 이미 들어가 있는 노드일 경우에는
+		// 기존의 비용과 현재 구해준 비용을 비교하여 더 작은 비용으로
+		// 교체를 해주도록 한다.
+		if (Neighbor[i]->Type == Nav_Insert_Type::Open)
+		{
+			if (Neighbor[i]->Cost > Cost)
+			{
+				Neighbor[i]->Parent = Node;
+				Neighbor[i]->Cost = Cost;
+				Neighbor[i]->Dist = Dist;
+				Neighbor[i]->Total = Cost + Dist;
+			}
+		}
+
+		// 열린 목록에 들어간 노드가 아니라면 비용을 대입하여 열린목록에 넣어주도록 한다.
+		else
+		{
+			m_InfoManager->vecUse[m_InfoManager->UseCount] = Neighbor[i];
+			++m_InfoManager->UseCount;
+
+			Neighbor[i]->Type = Nav_Insert_Type::Open;
+			Neighbor[i]->Parent = Node;
+			Neighbor[i]->Cost = Cost;
+			Neighbor[i]->Dist = Dist;
+			Neighbor[i]->Total = Cost + Dist;
+
+			m_InfoManager->vecOpen[m_InfoManager->OpenCount] = Neighbor[i];
+			++m_InfoManager->OpenCount;
+		}
 	}
 
 	return false;

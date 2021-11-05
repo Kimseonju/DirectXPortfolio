@@ -29,19 +29,14 @@ bool CEffectObject::Init()
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	SetRootComponent(m_Sprite);
-
+	m_Sprite->CreateAnimation2D< CAnimation2D_FSM>();
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 	return true;
 }
 
 void CEffectObject::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	if (m_Animation2D)
-	{
-		if (m_Animation2D->GetFrameEnd())
-			Active(false);
-	
-	}
 }
 
 void CEffectObject::PostUpdate(float DeltaTime)
@@ -70,4 +65,5 @@ void CEffectObject::Animation2DNotify(const std::string& Name)
 
 void CEffectObject::AnimationFrameEnd(const std::string& Name)
 {
+	Active(false);
 }

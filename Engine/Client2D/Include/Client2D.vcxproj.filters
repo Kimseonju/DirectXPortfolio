@@ -18,17 +18,11 @@
     <Filter Include="03. Animation2D">
       <UniqueIdentifier>{269655eb-ea83-458f-aebe-1f372126653e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Animation2D\01. Player">
-      <UniqueIdentifier>{314f2943-d226-4755-9366-2d9f546c4eea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\수업듣기용">
       <UniqueIdentifier>{c3ee4a27-d3ad-493c-8202-b672dd91f7c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{96b85ae0-6740-4410-b60b-87e342ea9af2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\02. BossEffect">
-      <UniqueIdentifier>{caaf4e5b-cd81-454e-955f-4b6a5aabcaaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\수업듣기용\UI">
       <UniqueIdentifier>{25615c8c-5362-42d7-a872-04a7f1ff0045}</UniqueIdentifier>
@@ -48,14 +42,8 @@
     <Filter Include="02. Object\Effect">
       <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Animation2D\Enemy">
-      <UniqueIdentifier>{df34b61b-3829-4e70-abe8-9758810d4474}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Status">
       <UniqueIdentifier>{62782876-f820-43b6-98b1-9e40320f2373}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI">
-      <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{62e5cda9-4071-44e1-94bc-90003a9d0033}</UniqueIdentifier>
@@ -75,23 +63,11 @@
     <Filter Include="02. Object\Item\Weapon\EnemyWeapon">
       <UniqueIdentifier>{8620f0dd-f792-4e04-935e-25b418f565c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Animation2D\Enemy\Weapon">
-      <UniqueIdentifier>{cb02ee7f-a6c3-4c42-9af1-b49fabb00ecb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Effect\RevolverEffect">
       <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Effect\ShortSwordEffect">
       <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\WeaponEffect">
-      <UniqueIdentifier>{96136b21-dd16-4db2-af81-96991a2cb5b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\WeaponEffect\Revolver">
-      <UniqueIdentifier>{2a309288-43d7-44e4-a4db-ad841f351e3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\WeaponEffect\ShortSword">
-      <UniqueIdentifier>{fbd6b3d4-59fc-4c5c-be82-936c3589e688}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Item\Weapon\Revolver">
       <UniqueIdentifier>{52f6370c-7cbb-46c7-b068-65afc4c93b08}</UniqueIdentifier>
@@ -102,14 +78,8 @@
     <Filter Include="02. Object\Item\Weapon\MetalBoomerang">
       <UniqueIdentifier>{9467faa2-0175-44e4-8c88-062d04b7abdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Animation2D\WeaponEffect\MetalBoomerang">
-      <UniqueIdentifier>{2b7c4be4-ca42-4384-a7d3-4d5697580dbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Effect\MetalBoomerangEffect">
       <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\ObjectDie">
-      <UniqueIdentifier>{82da748a-0f20-47c5-bc3e-a23c0d0376e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Effect\ObjectDieEffectObject">
       <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
@@ -126,21 +96,6 @@
     <Filter Include="03. Animation2D\UI">
       <UniqueIdentifier>{787d6e5f-a996-4c42-bc30-b6680775432b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UI\Mouse">
-      <UniqueIdentifier>{b2d49b42-918b-4238-ad79-a89d11d3480a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI\WidgetWindow">
-      <UniqueIdentifier>{6d2f1ca1-2e60-4603-b7e9-5d149460db30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI\Widget">
-      <UniqueIdentifier>{82598922-bda6-4e89-9110-a6055f621a2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI\WidgetWindow\Ability">
-      <UniqueIdentifier>{9893ff9d-4ce0-4db1-9710-803d06baf1e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI\WidgetWindow\Inventory">
-      <UniqueIdentifier>{5894384b-857a-4572-8712-f1c5e2800fba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -151,15 +106,6 @@
     <Filter Include="02. Object\Enemy\Boss">
       <UniqueIdentifier>{3d822338-2c79-4826-93ae-ae4e421e61f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UI\WidgetWindow\BossUI">
-      <UniqueIdentifier>{1ae272e4-6f06-4dce-992a-fbe32ec698fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UI\WidgetWindow\PlayerUI">
-      <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\Boss">
-      <UniqueIdentifier>{73e5fa10-4da7-45bd-bf93-f9ef89400fd6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Enemy\Boss\Belial">
       <UniqueIdentifier>{f9860b94-e649-4616-a9a8-15dbde0bdc95}</UniqueIdentifier>
     </Filter>
@@ -168,6 +114,45 @@
     </Filter>
     <Filter Include="Stage">
       <UniqueIdentifier>{9556f4e2-b438-42bc-9bd0-c79ad2c2197e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\World">
+      <UniqueIdentifier>{10627bcc-a73a-47d1-95fd-4004b3763555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI">
+      <UniqueIdentifier>{8146b02a-fe0e-4fcc-a43a-24536e67edfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\Mouse">
+      <UniqueIdentifier>{b2d49b42-918b-4238-ad79-a89d11d3480a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\Widget">
+      <UniqueIdentifier>{82598922-bda6-4e89-9110-a6055f621a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow">
+      <UniqueIdentifier>{6d2f1ca1-2e60-4603-b7e9-5d149460db30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\Ability">
+      <UniqueIdentifier>{9893ff9d-4ce0-4db1-9710-803d06baf1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\Inventory">
+      <UniqueIdentifier>{5894384b-857a-4572-8712-f1c5e2800fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\BossUI">
+      <UniqueIdentifier>{1ae272e4-6f06-4dce-992a-fbe32ec698fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\PlayerUI">
+      <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\NewFilter1">
+      <UniqueIdentifier>{8e3ac30e-c451-451c-a8ec-7094098de1e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Player\Effect">
+      <UniqueIdentifier>{c71bb729-4cd5-44d9-bdea-b4f4327acd4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\FSM">
+      <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -180,9 +165,6 @@
     <ClCompile Include="ClientManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\PlayerAnimation2D.cpp">
-      <Filter>03. Animation2D\01. Player</Filter>
-    </ClCompile>
     <ClCompile Include="TestWindow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -191,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="Object\Stage1MapEffect.cpp">
       <Filter>Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\BossDieEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\02. BossEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\MainStageMapEffect.cpp">
       <Filter>Effect</Filter>
@@ -231,12 +210,6 @@
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp">
       <Filter>02. Object\수업듣기용\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\EnemyAnimation2D.cpp">
-      <Filter>03. Animation2D\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\EnemyShotAnimation2D.cpp">
-      <Filter>03. Animation2D\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="BasicStatus.cpp">
       <Filter>Status</Filter>
     </ClCompile>
@@ -258,9 +231,6 @@
     <ClCompile Include="Object\SkelSmallDagger.cpp">
       <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\EnemyWeaponAnimation2D.cpp">
-      <Filter>03. Animation2D\Enemy\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="Object\EnemyAttack.cpp">
       <Filter>02. Object\Enemy</Filter>
     </ClCompile>
@@ -273,37 +243,19 @@
     <ClCompile Include="Object\ShortSwordEffectObject.cpp">
       <Filter>02. Object\Effect\ShortSwordEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\WeaponEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\WeaponEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\RevolverEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\WeaponEffect\Revolver</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\ShortSwordEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\WeaponEffect\ShortSword</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Bullet.cpp">
       <Filter>02. Object\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Object\MetalBoomerang.cpp">
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\MetalBoomerangEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\WeaponEffect\MetalBoomerang</Filter>
-    </ClCompile>
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp">
       <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\ObjectDieEffectAnimation2D.cpp">
-      <Filter>03. Animation2D\ObjectDie</Filter>
     </ClCompile>
     <ClCompile Include="Object\ObjectDieEffectObject.cpp">
       <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
     </ClCompile>
     <ClCompile Include="Object\Player.cpp">
-      <Filter>02. Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\PlayerDash.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Object\FlameEffect.cpp">
@@ -334,55 +286,52 @@
       <Filter>03. Animation2D\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\BasicMouse.cpp">
-      <Filter>02. Object\UI\Mouse</Filter>
+      <Filter>UI\UI\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="UI\TitleWidget.cpp">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\EnemyWorldInfoWidget.cpp">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="UI\InventoryButton.cpp">
-      <Filter>02. Object\UI\Widget</Filter>
+      <Filter>UI\UI\Widget</Filter>
     </ClCompile>
     <ClCompile Include="UI\StageMap.cpp">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="SceneMode\LoadingScene.cpp">
       <Filter>01. SceneMode</Filter>
     </ClCompile>
     <ClCompile Include="UI\LoadingUI.cpp">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="SceneMode\LoadingThread.cpp">
       <Filter>01. SceneMode</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget_Wrath.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget_Arcane.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget_Greed.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget_Patience.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\AbilityWidget_Swiftness.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\Ability.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\Inventory.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="UI\ItemInfoWidget.cpp">
-      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStatus.cpp">
       <Filter>Status</Filter>
@@ -393,17 +342,11 @@
     <ClCompile Include="Object\WeaponArm.cpp">
       <Filter>02. Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\PlayerAttack.cpp">
-      <Filter>02. Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="UI\BossUI.cpp">
-      <Filter>02. Object\UI\WidgetWindow\BossUI</Filter>
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClCompile>
     <ClCompile Include="UI\PlayerUI.cpp">
-      <Filter>02. Object\UI\WidgetWindow\PlayerUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\BelialAnimation2D.cpp">
-      <Filter>03. Animation2D\Boss</Filter>
+      <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
     </ClCompile>
     <ClCompile Include="Object\Belial.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
@@ -411,17 +354,8 @@
     <ClCompile Include="Object\BelialHand.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClCompile>
-    <ClCompile Include="Animation2D\BelialHandAnimation2D.cpp">
-      <Filter>03. Animation2D\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="Object\BelialWeapon.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\BelialWeaponChargeAnimation2D.cpp">
-      <Filter>03. Animation2D\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation2D\BelialWeaponHitAnimation2D.cpp">
-      <Filter>03. Animation2D\Boss</Filter>
     </ClCompile>
     <ClCompile Include="Object\BelialWeaponCharge.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
@@ -444,6 +378,30 @@
     <ClCompile Include="Stage\StageManager.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UIManager.cpp">
+      <Filter>UI\UI\WidgetWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\EnemyWorldInfoWidget.cpp">
+      <Filter>UI\World</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldNumberEffect.cpp">
+      <Filter>UI\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerAttack.cpp">
+      <Filter>02. Object\Player\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerDash.cpp">
+      <Filter>02. Object\Player\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FSM\PlayerFSM.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation2D\Animation2D_FSM.cpp">
+      <Filter>03. Animation2D\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SmallSkelFSM.cpp">
+      <Filter>02. Object\Enemy\SmallSkel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -451,9 +409,6 @@
     </ClInclude>
     <ClInclude Include="SceneMode\MainScene.h">
       <Filter>01. SceneMode</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\PlayerAnimation2D.h">
-      <Filter>03. Animation2D\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="ClientManager.h">
       <Filter>02. Object</Filter>
@@ -466,9 +421,6 @@
     </ClInclude>
     <ClInclude Include="Object\Stage1MapEffect.h">
       <Filter>Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\BossDieEffectAnimation2D.h">
-      <Filter>03. Animation2D\02. BossEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\MainStageMapEffect.h">
       <Filter>Effect</Filter>
@@ -506,12 +458,6 @@
     <ClInclude Include="UI\PlayerWorldInfoWidget.h">
       <Filter>02. Object\수업듣기용\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Animation2D\EnemyAnimation2D.h">
-      <Filter>03. Animation2D\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\EnemyShotAnimation2D.h">
-      <Filter>03. Animation2D\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="BasicStatus.h">
       <Filter>Status</Filter>
     </ClInclude>
@@ -533,9 +479,6 @@
     <ClInclude Include="Object\SkelSmallDagger.h">
       <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="Animation2D\EnemyWeaponAnimation2D.h">
-      <Filter>03. Animation2D\Enemy\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="Object\EnemyAttack.h">
       <Filter>02. Object\Enemy</Filter>
     </ClInclude>
@@ -548,37 +491,19 @@
     <ClInclude Include="Object\ShortSwordEffectObject.h">
       <Filter>02. Object\Effect\ShortSwordEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Animation2D\WeaponEffectAnimation2D.h">
-      <Filter>03. Animation2D\WeaponEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\RevolverEffectAnimation2D.h">
-      <Filter>03. Animation2D\WeaponEffect\Revolver</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\ShortSwordEffectAnimation2D.h">
-      <Filter>03. Animation2D\WeaponEffect\ShortSword</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Bullet.h">
       <Filter>02. Object\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Object\MetalBoomerang.h">
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClInclude>
-    <ClInclude Include="Animation2D\MetalBoomerangEffectAnimation2D.h">
-      <Filter>03. Animation2D\WeaponEffect\MetalBoomerang</Filter>
-    </ClInclude>
     <ClInclude Include="Object\MetalBoomerangEffectObject.h">
       <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\ObjectDieEffectAnimation2D.h">
-      <Filter>03. Animation2D\ObjectDie</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectDieEffectObject.h">
       <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
     </ClInclude>
     <ClInclude Include="Object\Player.h">
-      <Filter>02. Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\PlayerDash.h">
       <Filter>02. Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Object\FlameEffect.h">
@@ -609,55 +534,52 @@
       <Filter>03. Animation2D\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\BasicMouse.h">
-      <Filter>02. Object\UI\Mouse</Filter>
+      <Filter>UI\UI\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="UI\TitleWidget.h">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\EnemyWorldInfoWidget.h">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="UI\InventoryButton.h">
-      <Filter>02. Object\UI\Widget</Filter>
+      <Filter>UI\UI\Widget</Filter>
     </ClInclude>
     <ClInclude Include="UI\StageMap.h">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="SceneMode\LoadingScene.h">
       <Filter>01. SceneMode</Filter>
     </ClInclude>
     <ClInclude Include="UI\LoadingUI.h">
-      <Filter>02. Object\UI\WidgetWindow</Filter>
+      <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="SceneMode\LoadingThread.h">
       <Filter>01. SceneMode</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\Ability.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\Inventory.h">
-      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="UI\ItemInfoWidget.h">
-      <Filter>02. Object\UI\WidgetWindow\Inventory</Filter>
+      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Arcane.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Greed.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Patience.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Swiftness.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Wrath.h">
-      <Filter>02. Object\UI\WidgetWindow\Ability</Filter>
+      <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStatus.h">
       <Filter>Status</Filter>
@@ -668,17 +590,11 @@
     <ClInclude Include="Object\WeaponArm.h">
       <Filter>02. Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\PlayerAttack.h">
-      <Filter>02. Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="UI\BossUI.h">
-      <Filter>02. Object\UI\WidgetWindow\BossUI</Filter>
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClInclude>
     <ClInclude Include="UI\PlayerUI.h">
-      <Filter>02. Object\UI\WidgetWindow\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\BelialAnimation2D.h">
-      <Filter>03. Animation2D\Boss</Filter>
+      <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Object\Belial.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
@@ -686,17 +602,8 @@
     <ClInclude Include="Object\BelialHand.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClInclude>
-    <ClInclude Include="Animation2D\BelialHandAnimation2D.h">
-      <Filter>03. Animation2D\Boss</Filter>
-    </ClInclude>
     <ClInclude Include="Object\BelialWeapon.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\BelialWeaponChargeAnimation2D.h">
-      <Filter>03. Animation2D\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation2D\BelialWeaponHitAnimation2D.h">
-      <Filter>03. Animation2D\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Object\BelialWeaponCharge.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
@@ -718,6 +625,24 @@
     </ClInclude>
     <ClInclude Include="Stage\StageManager.h">
       <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIManager.h">
+      <Filter>UI\UI\WidgetWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\EnemyWorldInfoWidget.h">
+      <Filter>UI\World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldNumberEffect.h">
+      <Filter>UI\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerDash.h">
+      <Filter>02. Object\Player\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerAttack.h">
+      <Filter>02. Object\Player\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation2D\Animation2D_FSM.h">
+      <Filter>03. Animation2D\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

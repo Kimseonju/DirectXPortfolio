@@ -49,7 +49,7 @@ bool CEditorScene::Init()
     m_TileMapToolWindow = (CTileMapToolWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapToolWindow");
 	m_ObjectWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 	m_PrefabWindow = (CPrefabWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("PrefabWindow");
-
+	m_TileMapToolWindow->SetScene(m_pScene);
     return true;
 }
 
@@ -218,7 +218,9 @@ void CEditorScene::DeleteObjectMap()
 
 void CEditorScene::CreateAnimationSequence2D()
 {
-
+	/*
+	Player
+	*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("PlayerIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("PlayerIdle",
 		"PlayerIdle", TEXT("Characters/Basic/player_idle.png"));
@@ -261,6 +263,7 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 23.f, 0), Vector2((i + 1) * 23.f, 14.f));
 	}
 
+	/*ShortSwordEfect*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("ShortSwordEffect");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("ShortSwordEffect",
 		"ShortSwordEffect", TEXT("Weapon/Melee/SwingFX.png"));
@@ -310,6 +313,43 @@ void CEditorScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("ObjectDieEffect",
 			Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
 	}
+
+
+	/*
+	Door
+	*/
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
+		"Door", TEXT("Effect/object/door/door.png"));
+
+	for (int i = 0; i < 7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorIdle",
+		"Door", TEXT("Effect/object/door/door.png"));
+
+	for (int i = 7; i < 17; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorIdle",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
+		"Door", TEXT("Effect/object/door/door.png"));
+	for (int i = 17; i < 23; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
+			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+	}
+
+	//°¡·Î 23
+
 
 	/*
 	Enemy

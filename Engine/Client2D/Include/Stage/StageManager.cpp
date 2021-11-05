@@ -97,9 +97,9 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	int RandomCount = GetRandom(0, vecStagePos.size());
+	int RandomCount = GetRandom(0, (int)vecStagePos.size());
 	StartPos = vecStagePos[RandomCount];
-	m_vecStageInfo[StartPos.x][StartPos.y].StageType = 1;
+	m_vecStageInfo[(int)StartPos.x][(int)StartPos.y].StageType = 1;
 
 	//끝방 체크
 	vecStagePos.clear();
@@ -119,9 +119,9 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	RandomCount = GetRandom(0, vecStagePos.size());
+	RandomCount = GetRandom(0, (int)vecStagePos.size());
 	EndPos = vecStagePos[RandomCount];
-	m_vecStageInfo[EndPos.x][EndPos.y].StageType = 2;
+	m_vecStageInfo[(int)EndPos.x][(int)EndPos.y].StageType = 2;
 
 	//상점
 
@@ -144,9 +144,9 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	RandomCount = GetRandom(0,vecStagePos.size());
+	RandomCount = GetRandom(0, (int)vecStagePos.size());
 	ShopPos = vecStagePos[RandomCount];
-	m_vecStageInfo[ShopPos.x][ShopPos.y].StageType = 3;
+	m_vecStageInfo[(int)ShopPos.x][(int)ShopPos.y].StageType = 3;
 	//레스토랑
 
 	vecStagePos.clear();
@@ -170,9 +170,9 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	RandomCount = GetRandom(0, vecStagePos.size());
+	RandomCount = GetRandom(0, (int)vecStagePos.size());
 	RestaurantPos = vecStagePos[RandomCount];
-	m_vecStageInfo[RestaurantPos.x][RestaurantPos.y].StageType = 4;
+	m_vecStageInfo[(int)RestaurantPos.x][(int)RestaurantPos.y].StageType = 4;
 
 
 	//방설정완료

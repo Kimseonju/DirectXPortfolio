@@ -1,5 +1,4 @@
 #include "BelialWeaponHit.h"
-#include "../Animation2D/BelialWeaponHitAnimation2D.h"
 CBelialWeaponHit::CBelialWeaponHit()
 {
 }
@@ -23,9 +22,11 @@ bool CBelialWeaponHit::Init()
 {
 	if (!CGameObject::Init())
 		return false;
+
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-	m_Sprite->CreateAnimation2D<CBelialWeaponHitAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
+	SetRootComponent(m_Sprite);
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 	return true;
 }
 

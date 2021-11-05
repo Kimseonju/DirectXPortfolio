@@ -14,6 +14,13 @@ private:
 	class CIMGUITileComponent* m_Tile;
 
 	class CIMGUITabBar* m_TabBar;
+	class CIMGUIText* m_CameraPosX;
+	class CIMGUIText* m_CameraPosY;
+	class CIMGUIText* m_MousePosX;
+	class CIMGUIText* m_MousePosY;
+	class CIMGUIText* m_TileIndexX;
+	class CIMGUIText* m_TileIndexY;
+	class CScene*	  m_pScene;
 public:
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -23,6 +30,10 @@ public:
 public:
 
 	void SetPosition(const Vector3& Pos);
+	void SetScene(class CScene* Scene)
+	{
+		m_pScene = Scene;
+	}
 public:
 	int GetImageFrameX();
 	int GetImageFrameY();

@@ -177,6 +177,9 @@
     <ClInclude Include="SaveLoadWindow.h">
       <Filter>01. EditorGUI\Window\SaveLoad</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUITileCollisionCmponent.h">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="SaveLoadWindow.cpp">
       <Filter>01. EditorGUI\Window\SaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUITileCollisionCmponent.cpp">
+      <Filter>01. EditorGUI\Component\Tab\TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

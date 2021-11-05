@@ -1,5 +1,4 @@
 #include "ShortSwordEffectObject.h"
-#include "../Animation2D/ShortSwordEffectAnimation2D.h"
 CShortSwordEffectObject::CShortSwordEffectObject()
 {
 }
@@ -24,11 +23,10 @@ bool CShortSwordEffectObject::Init()
 
 	m_Sprite->SetRelativeScale(Vector3(28.f, 40.f, 1.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	CSharedPtr<CMaterial> SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->CreateAnimation2D<CShortSwordEffectAnimation2D>();
 	
-	m_Animation2D = m_Sprite->GetAnimation2D();
-	
+	m_Animation2D->SetIdleAnimation2D("ShortSwordEffect", false);
+	m_Animation2D->SetFrameEndFunction<CShortSwordEffectObject>(this, &CEffectObject::AnimationFrameEnd);
+
 	return true;
 }
 
@@ -58,9 +56,5 @@ CShortSwordEffectObject* CShortSwordEffectObject::Clone()
 }
 
 void CShortSwordEffectObject::Animation2DNotify(const std::string& Name)
-{
-}
-
-void CShortSwordEffectObject::AnimationFrameEnd(const std::string& Name)
 {
 }

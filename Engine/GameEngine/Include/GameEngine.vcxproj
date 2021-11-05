@@ -195,6 +195,7 @@
     <ClInclude Include="DebugLogWindow.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineFSM.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="fmod.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="IMGUIManager.h" />
     <ClInclude Include="IMGUIRadioButton.h" />
     <ClInclude Include="IMGUISameLine.h" />
+    <ClInclude Include="IMGUISeparator.h" />
     <ClInclude Include="IMGUITabBar.h" />
     <ClInclude Include="IMGUITabBarEnd.h" />
     <ClInclude Include="IMGUITabItem.h" />
@@ -273,6 +275,7 @@
     <ClInclude Include="Resource\NumberCBuffer.h" />
     <ClInclude Include="Resource\NumberShader.h" />
     <ClInclude Include="Resource\PaperBurnCBuffer.h" />
+    <ClInclude Include="Resource\ParticleAnimation2DShader.h" />
     <ClInclude Include="Resource\ParticleConstantBuffer.h" />
     <ClInclude Include="Resource\ParticleDirUpdateShader.h" />
     <ClInclude Include="Resource\ParticleRandomScaleUpdateShader.h" />
@@ -368,6 +371,7 @@
     <ClCompile Include="IMGUIManager.cpp" />
     <ClCompile Include="IMGUIRadioButton.cpp" />
     <ClCompile Include="IMGUISameLine.cpp" />
+    <ClCompile Include="IMGUISeparator.cpp" />
     <ClCompile Include="IMGUITabBar.cpp" />
     <ClCompile Include="IMGUITabBarEnd.cpp" />
     <ClCompile Include="IMGUITabItem.cpp" />
@@ -419,6 +423,7 @@
     <ClCompile Include="Resource\NumberCBuffer.cpp" />
     <ClCompile Include="Resource\NumberShader.cpp" />
     <ClCompile Include="Resource\PaperBurnCBuffer.cpp" />
+    <ClCompile Include="Resource\ParticleAnimation2DShader.cpp" />
     <ClCompile Include="Resource\ParticleConstantBuffer.cpp" />
     <ClCompile Include="Resource\ParticleDirUpdateShader.cpp" />
     <ClCompile Include="Resource\ParticleRandomScaleUpdateShader.cpp" />

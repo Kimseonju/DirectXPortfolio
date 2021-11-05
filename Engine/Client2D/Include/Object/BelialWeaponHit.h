@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Component/SpriteComponent.h"
+#include "../Animation2D/Animation2D_FSM.h"
 class CBelialWeaponHit :
 	public CGameObject
 {
@@ -13,7 +14,7 @@ protected:
 private:
 
 	CSharedPtr<CSpriteComponent> m_Sprite;
-	CSharedPtr<CAnimation2D> m_Animation2D;
+	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
 public:
 	virtual void Start();
 	virtual bool Init();

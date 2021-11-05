@@ -3,7 +3,6 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/EnemyAnimation2D.h"
 #include "Engine.h"
 #include "SkelSmallDagger.h"
 #include "WeaponArm.h"
@@ -32,16 +31,15 @@ void CSmallSkel::Start()
 bool CSmallSkel::Init()
 {
 	CEnemy::Init();
-	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->CreateAnimation2D<CEnemyAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
 
 	m_AttackRangeCollider2D->SetExtent(55.f, 50.f);
 	m_AttackRangeCollider2D->SetCollisionProfile("Enemy");
 	m_AttackRangeCollider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionAttackRangeBegin);
-	m_Sprite->AddChild(m_AttackRangeCollider2D);
 
+	m_Animation2D->SetIdleAnimation2D("SmallEnemyIdle");
+	m_Animation2D->SetMoveAnimation2D("SmallEnemyMove");
+	m_Animation2D->SetAttackAnimation2D("SmallEnemyIdle");
 
 	m_Weapon = m_pScene->SpawnObject<CSkelSmallDagger>("SkelSmallDagger");
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);

@@ -195,7 +195,7 @@ void CAnimation2D::ResetShader()
 }
 
 
-void CAnimation2D::AddAnimationSequence2D(const std::string& Name, bool Loop)
+Sequence2DInfo* CAnimation2D::AddAnimationSequence2D(const std::string& Name, bool Loop)
 {
 	CAnimationSequence2D* pSequence = nullptr;
 
@@ -218,9 +218,11 @@ void CAnimation2D::AddAnimationSequence2D(const std::string& Name, bool Loop)
 
 	if (!m_CurrentSequence)
 		m_CurrentSequence = pInfo;
+
+	return pInfo;
 }
 
-void CAnimation2D::AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop)
+Sequence2DInfo* CAnimation2D::AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop)
 {
 	Sequence2DInfo* pInfo = new Sequence2DInfo;
 
@@ -231,6 +233,8 @@ void CAnimation2D::AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool L
 
 	if (!m_CurrentSequence)
 		m_CurrentSequence = pInfo;
+
+	return pInfo;
 }
 
 void CAnimation2D::SetSequencePlayRate(const std::string& Name, float PlayRate)
@@ -274,12 +278,14 @@ void CAnimation2D::ChangeAnimation(const std::string& Name)
 
 	m_FrameTime = 0.f;
 	m_Frame = 0;
-
+	m_End = false;
 	m_CurrentSequence = pInfo;
 }
 
 void CAnimation2D::ChangeAnimation(Sequence2DInfo* Info)
 {
+	if (!Info)
+		return;
 	if (m_CurrentSequence == Info)
 		return;
 
@@ -293,7 +299,7 @@ void CAnimation2D::ChangeAnimation(Sequence2DInfo* Info)
 
 	m_FrameTime = 0.f;
 	m_Frame = 0;
-
+	m_End = false;
 	m_CurrentSequence = Info;
 }
 

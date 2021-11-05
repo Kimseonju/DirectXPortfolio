@@ -37,6 +37,16 @@ bool CTile::Init()
 
 void CTile::Start()
 {
+	m_Center = m_Pos + m_Size / 2.f;
+
+	m_NodeDistW = m_Size.x * m_Size.x;
+	m_NodeDistH = m_Size.y * m_Size.y;
+	m_NodeDistD = m_Size.x * m_Size.x + m_Size.y * m_Size.y;
+
+	float	HalfW = m_Size.x * 0.5f;
+	float	HalfH = m_Size.y * 0.5f;
+
+	m_NodeDistDHalf = HalfW * HalfW + HalfH * HalfH;
 }
 
 void CTile::Update(float DeltaTime)

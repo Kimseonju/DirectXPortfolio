@@ -163,13 +163,13 @@ enum class Collision_Channel
     Static,
     Player,
     PlayerAttack,
-    Monster,
     Enemy,
     EnemyAttack,
     Tile_Nopass,
     Tile_pass,
-    Custom7,
-    Custom8,
+    NextStage,
+    Item,
+    Monster,
     Custom9,
     Custom10,
     Custom11,
@@ -263,7 +263,7 @@ enum class Tile_Type
 {
     None,
     Wall,
-    Crossed_Wall
+    Crossed_Wall //통과할수있는 벽
 };
 
 

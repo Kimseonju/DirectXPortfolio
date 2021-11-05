@@ -327,3 +327,23 @@ void CParticleSystemComponent::SetTwinkleEnable(bool Enable)
 {
     m_CBuffer->SetTwinkleEnable(Enable);
 }
+
+void CParticleSystemComponent::SetAnimation2DEnable(bool Enable)
+{
+    m_CBuffer->SetAnimation2DEnable(Enable);
+}
+
+void CParticleSystemComponent::SetAnimation2DSize(const Vector2& Size)
+{
+    m_CBuffer->SetAnimation2DSize(Size);
+}
+
+void CParticleSystemComponent::SetAnimation2DCount(int Count)
+{
+    m_CBuffer->SetAnimation2DCount(Count);
+}
+
+void CParticleSystemComponent::SetAnimation2DPlayRate(float PlayRate)
+{
+    m_CBuffer->SetAnimation2DPlayRate(PlayRate);
+}

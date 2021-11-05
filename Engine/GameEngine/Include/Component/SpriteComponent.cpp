@@ -174,7 +174,7 @@ void CSpriteComponent::Save(FILE* pFile)
 		for (; iter != iterEnd; ++iter)
 		{
 			int	Length;
-			Length = strlen(iter->first.c_str());
+			Length = (int)strlen(iter->first.c_str());
 			fwrite(&Length, sizeof(int), 1, pFile);
 			fwrite(iter->first.c_str(), sizeof(char), Length, pFile);
 		}

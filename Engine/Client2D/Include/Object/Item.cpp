@@ -48,19 +48,20 @@ bool CItem::Init()
 
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
+	m_Body->SetGravityPower(500.f);
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Body);
 
 	m_Sprite->SetRelativeScale(38.f, 14.f, 1.f);
-	m_Collider2D->SetCollisionProfile("Player");
+	m_Collider2D->SetCollisionProfile("Item");
 	m_Collider2D->AddCollisionCallbackFunction<CItem>(Collision_State::Begin, this,
 		&CItem::DropCollisionBegin);
-	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Collider2D->SetExtent(10.f, 10.f);
 	m_Sprite->AddChild(m_Collider2D);
-
-
+	m_Body->SetGravity(true);
+	m_Body->SetGravityPower(500.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.f, 0.5f, 0.f);
 	return true;
@@ -102,13 +103,6 @@ void CItem::Animation2DNotify(const std::string& Name)
 }
 
 
-void CItem::StopMove()
-{
-	m_Body->SetJump(false);
-	m_Collider2D->Enable(false);
-	m_Body->Enable(false);
-	m_MapDrop = false;
-}
 
 void CItem::GetHit()
 {
@@ -317,7 +311,30 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		StopMove();
+		m_Body->SetGravity(false);
 	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		StatePlayerItem();
+	}
+}
 
+void CItem::Drop(float Angle, float Power)
+{
+	m_Body->SetForce2D(Angle, Power);
+	Drop();
+}
+
+void CItem::Drop()
+{
+	m_MapDrop = true;
+	m_UpdateDelay = 1.f;
+}
+
+void CItem::StatePlayerItem()
+{
+	m_MapDrop = false;
+	m_Body->SetGravity(false);
+	m_Collider2D->Enable(false);
+	Enable(false);
 }

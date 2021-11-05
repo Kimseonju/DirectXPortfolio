@@ -38,6 +38,8 @@
 #include "../UI/AbilityWidget.h"
 #include "../Object/Belial.h"
 #include "../Object/TestTileMap.h"
+#include "../Stage/Door.h"
+#include "../UI/UIManager.h"
 CTestMainScene::CTestMainScene() :
 	m_Stage(nullptr),
 	m_Minrooms(-1),
@@ -49,6 +51,7 @@ CTestMainScene::CTestMainScene() :
 CTestMainScene::~CTestMainScene()
 {
 	delete m_Stage;
+	CUIManager::GetInst()->DestroyInst();
 }
 
 bool CTestMainScene::Init()
@@ -76,15 +79,17 @@ bool CTestMainScene::Init()
 
 	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
 
+	CDoor* Door= m_pScene->SpawnObject<CDoor>("Door");
+	Door->SetWorldPos(200.f, 300.f, 0.f);
 
+
+	Door = m_pScene->SpawnObject<CDoor>("Door");
+	Door->SetWorldPos(200.f, 300.f, 0.f);
+	Door->SetDir(Object_Dir::Left);
 	CPlayer* pPlayer = m_pScene->SpawnObject<CPlayer>("Player");
 	pPlayer->SetWorldPos(0.f, 300.f, 0.f);
 	CGlobalValue::MainPlayer = pPlayer;
-
-	CPlayerUI* Widget1 = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
-	CInventory* Widget2 = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
-	pPlayer->SetInventory(Widget2);
-	pPlayer->SetPlayerUI(Widget1);
+	CUIManager::GetInst()->Init(m_pScene);
 
 
 	//CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
@@ -104,7 +109,7 @@ bool CTestMainScene::Init()
 	//
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 	CDoorEffect* pDoorEffect = m_pScene->SpawnObject<CDoorEffect>("DoorEffect");
-	pDoorEffect->SetDir(Effect_Dir::Left);
+	pDoorEffect->SetDir(Object_Dir::Left);
 	//CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
 	//Widget->SetPlayer(pPlayer);
 
@@ -258,19 +263,19 @@ void CTestMainScene::CreateAnimationSequence2D()
 	Door
 	*/
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
-		"Door", TEXT("Effect/object/door/door.png"));
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
+		"Door", TEXT("object/door/door.png"));
 
 	for (int i = 0; i < 7; ++i)
 	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorIdle",
-		"Door", TEXT("Effect/object/door/door.png"));
+		"Door", TEXT("object/door/door.png"));
 
 	for (int i = 7; i < 17; ++i)
 	{
@@ -278,12 +283,12 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
-		"Door", TEXT("Effect/object/door/door.png"));
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
+		"Door", TEXT("object/door/door.png"));
 	for (int i = 17; i < 23; ++i)
 	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
@@ -550,8 +555,8 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 500);
 	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
 	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
-	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 40.f, 40.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 40.f, 40.f, 1.f);
+	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 4.f, 4.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 4.f, 4.f, 1.f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
 	m_pScene->GetResource()->SetParticleLifeTimeMin("DoorParticle", 10.5f);

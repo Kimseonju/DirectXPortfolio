@@ -9,6 +9,7 @@
 #include "Component/WidgetComponent.h"
 #include "../BasicStatus.h"
 #include "../GlobalValue.h"
+#include <EngineFSM.h>
 
 class CEnemy :
 	public CGameObject
@@ -26,10 +27,11 @@ protected:
 	CSharedPtr<CColliderBox2D> m_AttackRangeCollider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
 	CSharedPtr<CWidgetComponent> m_EnemyInfoWidgetComponent;
+	CEngineFSM<CEnemy> m_EnemyFSM;
 	class CEnemyWorldInfoWidget* m_EnemyInfoWidget;
 
 	Enemy_State m_State;
-	class CAnimation2D* m_Animation2D;
+	class CAnimation2D_FSM* m_Animation2D;
 	CBasicStatus m_Status;
 	class CWeapon* m_Weapon;
 	class CWeaponArm* m_WeaponArm;
@@ -58,4 +60,18 @@ public:
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+
+public:
+	virtual void FindStart() {}
+	virtual void FindStay() {}
+	virtual void FindEnd() {}
+	virtual void MoveStart() {}
+	virtual void MoveStay() {}
+	virtual void MoveEnd() {}
+	virtual void AttackStart() {}
+	virtual void AttackStay() {}
+	virtual void AttackEnd() {}
+	virtual void DieStart();
+	virtual void DieStay();
+	virtual void DieEnd() {}
 };

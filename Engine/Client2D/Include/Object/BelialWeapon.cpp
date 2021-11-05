@@ -1,6 +1,5 @@
 #include "BelialWeapon.h"
 #include "Resource/Material.h"
-#include "../Animation2D/BelialHandAnimation2D.h"
 #include "BelialWeaponCharge.h"
 #include "Player.h"
 #include "../GlobalValue.h"

@@ -161,22 +161,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation2D\BelialAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\BelialHandAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\BelialWeaponChargeAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\BelialWeaponHitAnimation2D.cpp" />
+    <ClCompile Include="Animation2D\Animation2D_FSM.cpp" />
     <ClCompile Include="Animation2D\BirdAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\BossDieEffectAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\EnemyAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\EnemyShotAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\EnemyWeaponAnimation2D.cpp" />
     <ClCompile Include="Animation2D\LifeWaveAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\MetalBoomerangEffectAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\ObjectDieEffectAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\PlayerAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\RevolverEffectAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\ShortSwordEffectAnimation2D.cpp" />
-    <ClCompile Include="Animation2D\WeaponEffectAnimation2D.cpp" />
     <ClCompile Include="BasicStatus.cpp" />
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
@@ -195,6 +182,7 @@
     <ClCompile Include="Object\Enemy.cpp" />
     <ClCompile Include="Object\EnemyAttack.cpp" />
     <ClCompile Include="Object\FlameEffect.cpp" />
+    <ClCompile Include="Object\FSM\PlayerFSM.cpp" />
     <ClCompile Include="Object\Item.cpp" />
     <ClCompile Include="Object\MainStageMapEffect.cpp" />
     <ClCompile Include="Object\MetalBoomerang.cpp" />
@@ -213,6 +201,7 @@
     <ClCompile Include="Object\ShortSwordEffectObject.cpp" />
     <ClCompile Include="Object\SkelSmallDagger.cpp" />
     <ClCompile Include="Object\SmallSkel.cpp" />
+    <ClCompile Include="Object\SmallSkelFSM.cpp" />
     <ClCompile Include="Object\Stage1MapEffect.cpp" />
     <ClCompile Include="Object\StartScene\BackGround.cpp" />
     <ClCompile Include="Object\StartScene\Bird.cpp" />
@@ -252,24 +241,13 @@
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp" />
     <ClCompile Include="UI\StageMap.cpp" />
     <ClCompile Include="UI\TitleWidget.cpp" />
+    <ClCompile Include="UI\UIManager.cpp" />
+    <ClCompile Include="WorldNumberEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation2D\BelialAnimation2D.h" />
-    <ClInclude Include="Animation2D\BelialHandAnimation2D.h" />
-    <ClInclude Include="Animation2D\BelialWeaponChargeAnimation2D.h" />
-    <ClInclude Include="Animation2D\BelialWeaponHitAnimation2D.h" />
+    <ClInclude Include="Animation2D\Animation2D_FSM.h" />
     <ClInclude Include="Animation2D\BirdAnimation2D.h" />
-    <ClInclude Include="Animation2D\BossDieEffectAnimation2D.h" />
-    <ClInclude Include="Animation2D\EnemyAnimation2D.h" />
-    <ClInclude Include="Animation2D\EnemyShotAnimation2D.h" />
-    <ClInclude Include="Animation2D\EnemyWeaponAnimation2D.h" />
     <ClInclude Include="Animation2D\LifeWaveAnimation2D.h" />
-    <ClInclude Include="Animation2D\MetalBoomerangEffectAnimation2D.h" />
-    <ClInclude Include="Animation2D\ObjectDieEffectAnimation2D.h" />
-    <ClInclude Include="Animation2D\PlayerAnimation2D.h" />
-    <ClInclude Include="Animation2D\RevolverEffectAnimation2D.h" />
-    <ClInclude Include="Animation2D\ShortSwordEffectAnimation2D.h" />
-    <ClInclude Include="Animation2D\WeaponEffectAnimation2D.h" />
     <ClInclude Include="BasicStatus.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
@@ -345,6 +323,8 @@
     <ClInclude Include="UI\PlayerWorldInfoWidget.h" />
     <ClInclude Include="UI\StageMap.h" />
     <ClInclude Include="UI\TitleWidget.h" />
+    <ClInclude Include="UI\UIManager.h" />
+    <ClInclude Include="WorldNumberEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client2D.rc" />

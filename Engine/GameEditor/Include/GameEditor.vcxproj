@@ -219,6 +219,7 @@
     <ClInclude Include="IMGUIObjectInfoComponent.h" />
     <ClInclude Include="IMGUIParticleComponent.h" />
     <ClInclude Include="IMGUISpriteComponent.h" />
+    <ClInclude Include="IMGUITileCollisionCmponent.h" />
     <ClInclude Include="IMGUITileComponent.h" />
     <ClInclude Include="IMGUITileMapComponent.h" />
     <ClInclude Include="IMGUITransformComponent.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="IMGUIObjectInfoComponent.cpp" />
     <ClCompile Include="IMGUIParticleComponent.cpp" />
     <ClCompile Include="IMGUISpriteComponent.cpp" />
+    <ClCompile Include="IMGUITileCollisionCmponent.cpp" />
     <ClCompile Include="IMGUITileComponent.cpp" />
     <ClCompile Include="IMGUITileMapComponent.cpp" />
     <ClCompile Include="IMGUITransformComponent.cpp" />

@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/PlayerAnimation2D.h"
+#include "../Animation2D/Animation2D_FSM.h"
 #include "Engine.h"
 #include "../UI/PlayerWorldInfoWidget.h"
 
@@ -96,7 +96,7 @@ bool CPlayer2D::Init()
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 
-	m_Sprite->CreateAnimation2D<CPlayerAnimation2D>();
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
 
 	m_Animation2D = m_Sprite->GetAnimation2D();
 

@@ -247,6 +247,9 @@
     <Filter Include="01. Engine\12. Navigation">
       <UniqueIdentifier>{ec403df7-dcc5-4645-bc98-44060eabcc26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine\FSM">
+      <UniqueIdentifier>{279d7ef1-4800-4521-bb53-e27b11e69e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -717,6 +720,15 @@
     <ClInclude Include="ThreadNavigation.h">
       <Filter>01. Engine\10. Thread</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUISeparator.h">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFSM.h">
+      <Filter>01. Engine\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ParticleAnimation2DShader.h">
+      <Filter>02. Resource\02. Shader\03. Shader\03. Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1144,6 +1156,12 @@
     </ClCompile>
     <ClCompile Include="ThreadNavigation.cpp">
       <Filter>01. Engine\10. Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUISeparator.cpp">
+      <Filter>01. Engine\09. IMGUI\03. Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ParticleAnimation2DShader.cpp">
+      <Filter>02. Resource\02. Shader\03. Shader\03. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

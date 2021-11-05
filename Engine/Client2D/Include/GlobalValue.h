@@ -18,6 +18,8 @@ enum class Object_Dir
 {
     Left,
     Right,
+    Up,
+    Down,
     End
 };
 
@@ -37,13 +39,6 @@ enum class Room_Dir
     Up,
     Down,
     End
-};
-enum class Effect_Dir
-{
-    Left,
-    Right,
-    Up,
-    Down
 };
 
 enum class Weapon_Type

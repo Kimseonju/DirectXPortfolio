@@ -8,7 +8,6 @@ struct NavWorkInfo
 	Vector3	Start;
 	Vector3	Goal;
 	class CSceneComponent* CallbackComponent;
-	std::function<void(std::vector<Vector3>&)>	func;
 };
 
 class CThreadNavigation :
@@ -40,14 +39,13 @@ public:
 	}
 
 	void AddWorkInfo(const Vector3& Start, const Vector3& Goal,
-		class CSceneComponent* Component, void(CSceneComponent::* Func)(std::vector<Vector3>&))
+		class CSceneComponent* Component)
 	{
 		NavWorkInfo Info;
 
 		Info.Start = Start;
 		Info.Goal = Goal;
 		Info.CallbackComponent = Component;
-		Info.func = std::bind(Func, Component, std::placeholders::_1);
 
 		m_WorkQueue.Push(Info);
 	}

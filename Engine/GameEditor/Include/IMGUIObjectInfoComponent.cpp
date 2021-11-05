@@ -120,6 +120,26 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_vecWidget.push_back(m_EnemyType);
 
 #pragma endregion
+
+	
+#pragma region Doordir
+	Text = m_Owner->AddWidget<CIMGUIText>("ObjectName2");
+	Text->SetText("Name");
+	m_vecWidget.push_back(Text);
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(SameLine);
+
+	m_DoorDir = m_Owner->AddWidget<CIMGUIComboBox>("##DoorDirCombo", 100.f, 20.f);
+	m_DoorDir->AddItem("Door_Left");
+	m_DoorDir->AddItem("Door_Right");
+	m_DoorDir->AddItem("Door_Up");
+	m_DoorDir->AddItem("Door_Down");
+	m_DoorDir->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::DoorDirComboCallback);
+
+	m_vecWidget.push_back(m_DoorDir);
+
+#pragma endregion
+
 	m_EnableCheckBox = m_Owner->AddWidget<CIMGUICheckBox>("Enable", 300.f, 20.f);
 	m_EnableCheckBox->SetCheckCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::EnableCheckBoxClick);
 	m_vecWidget.push_back(m_EnableCheckBox);
@@ -135,9 +155,11 @@ void CIMGUIObjectInfoComponent::Update(float DeltaTime)
 	Client_Class_Type ClassType=m_Object->GetClassType();
 	Client_Object_Type ObjectType = m_Object->GetObjectType();
 	Client_Enemy_Type EnemyType = m_Object->GetEnemyType();
+	Door_Dir DoorDir = m_Object->GetDoorDir();
 	m_ClassType->SetPrevName((int)ClassType);
 	m_ObjectType->SetPrevName((int)ObjectType);
 	m_EnemyType->SetPrevName((int)EnemyType);
+	m_DoorDir->SetPrevName((int)DoorDir);
 }
 
 void CIMGUIObjectInfoComponent::InputObjectName()
@@ -163,4 +185,9 @@ void CIMGUIObjectInfoComponent::ObjectTypeComboCallback(int SelectIndex, const c
 void CIMGUIObjectInfoComponent::EnemyTypeComboCallback(int SelectIndex, const char* Item)
 {
 	m_Object->SetEnemyType((Client_Enemy_Type)SelectIndex);
+}
+
+void CIMGUIObjectInfoComponent::DoorDirComboCallback(int SelectIndex, const char* Item)
+{
+	m_Object->SetDoorDir((Door_Dir)SelectIndex);
 }

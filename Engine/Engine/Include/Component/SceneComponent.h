@@ -20,6 +20,29 @@ protected:
     std::vector<CSharedPtr<CSceneComponent>>    m_vecChild;
     SceneComponent_Type m_SceneComponentType;
     Component_Class_Type m_ComponentClassType;
+    std::vector<Vector3>        m_vecNavPath;
+    float       m_MoveSpeed;
+
+public:
+    void SetMoveSpeed(float Speed)
+    {
+        m_MoveSpeed = Speed;
+    }
+
+    const std::vector<Vector3>& GetNavPath()    const
+    {
+        return m_vecNavPath;
+    }
+
+    void StopMovement()
+    {
+        m_vecNavPath.clear();
+    }
+
+    void Move(const Vector2& Target);
+    void Move(const Vector3& Target);
+    void NavigationCallback(const std::vector<Vector3>& vecPath);
+
 public:
     SceneComponent_Type GetSceneComponentType() const
     {

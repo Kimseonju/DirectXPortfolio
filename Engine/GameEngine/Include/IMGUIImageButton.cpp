@@ -17,8 +17,8 @@ CIMGUIImageButton::~CIMGUIImageButton()
 
 void CIMGUIImageButton::SetFrameMax(int x, int y)
 {
-    m_TileImageSize.x = m_Texture->GetWidth();
-    m_TileImageSize.y = m_Texture->GetHeight();
+    m_TileImageSize.x = (float)m_Texture->GetWidth();
+    m_TileImageSize.y = (float)m_Texture->GetHeight();
 
     m_FrameMaxX = x;
     m_FrameMaxY = y;

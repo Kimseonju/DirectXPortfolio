@@ -75,8 +75,8 @@ public:
 	void ResetShader();
 
 public:
-	void AddAnimationSequence2D(const std::string& Name, bool Loop = true);
-	void AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop = true);
+	Sequence2DInfo* AddAnimationSequence2D(const std::string& Name, bool Loop = true);
+	Sequence2DInfo* AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop = true);
 	void SetSequencePlayRate(const std::string& Name, float PlayRate);
 	void AddSequencePlayRate(const std::string& Name, float PlayRate);
 	void ChangeAnimation(const std::string& Name);

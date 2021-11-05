@@ -4,7 +4,6 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/EnemyAnimation2D.h"
 #include "Engine.h"
 #include "SkelSmallDagger.h"
 #include "WeaponArm.h"
@@ -67,8 +66,8 @@ bool CEnemy::Init()
 	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	//CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	//m_Sprite->CreateAnimation2D<CEnemyAnimation2D>();
-	//m_Animation2D = m_Sprite->GetAnimation2D();
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 
 
 	m_Collider2D->SetExtent(50.f, 50.f);
@@ -93,12 +92,24 @@ bool CEnemy::Init()
 	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
 	m_Status.SetHP(30);
 	m_Status.SetHPMax(30);
+	m_Sprite->AddChild(m_AttackRangeCollider2D);
+
+
+	m_EnemyFSM.CreateState("Find", this, &CEnemy::FindStay, &CEnemy::FindStart, &CEnemy::FindEnd);
+	m_EnemyFSM.CreateState("Move", this, &CEnemy::MoveStay, &CEnemy::MoveStart, &CEnemy::MoveEnd);
+	m_EnemyFSM.CreateState("Attack", this, &CEnemy::AttackStay, &CEnemy::AttackStart, &CEnemy::AttackEnd);
+	m_EnemyFSM.CreateState("Die", this, &CEnemy::DieStay, &CEnemy::DieStart, &CEnemy::DieEnd);
+	m_EnemyFSM.ChangeState("Find");
+
 	return true;
 }
 
 void CEnemy::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	m_EnemyFSM.Update();
+
+
 	if (!m_StartGravity)
 	{
 		m_StartGravity = true;
@@ -164,6 +175,16 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 		m_EnemyInfoWidget->Enable(true);
 	}
 
+}
+
+void CEnemy::DieStart()
+{
+	//죽으면 이펙트생성 후 삭제
+}
+
+void CEnemy::DieStay()
+{
+	Active(false);
 }
 
 void CEnemy::CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider)

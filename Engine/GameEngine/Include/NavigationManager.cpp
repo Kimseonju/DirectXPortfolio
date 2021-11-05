@@ -65,7 +65,7 @@ void CNavigationManager::SetTileInfo()
 }
 
 bool CNavigationManager::FindPath(const Vector3& Start, const Vector3& Goal,
-	CSceneComponent* Component, void(CSceneComponent::* Func)(std::vector<Vector3>&))
+	CSceneComponent* Component)
 {
 	if (m_vecThread.empty())
 		return false;
@@ -82,7 +82,18 @@ bool CNavigationManager::FindPath(const Vector3& Start, const Vector3& Goal,
 			Thread = m_vecThread[i];
 	}
 
-	Thread->AddWorkInfo(Start, Goal, Component, Func);
+	Thread->AddWorkInfo(Start, Goal, Component);
 
 	return true;
+}
+void CNavigationManager::Update(float DeltaTime)
+{
+	while (!m_NavMsgQueue.Empty())
+	{
+		NavMessage	Msg;
+
+		m_NavMsgQueue.Pop(Msg);
+
+		Msg.Component->NavigationCallback(Msg.vecPath);
+	}
 }

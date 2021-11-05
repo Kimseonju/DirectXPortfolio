@@ -43,12 +43,10 @@ protected:
 	std::function<void(const std::string&)>	m_FrameEndFunction;
 
 public:
-
 	std::unordered_map<std::string, Sequence2DInfo*>& GetMapSequence()
 	{
 		return m_mapSequence;
 	}
-
 	void SetScene(class CScene* pScene)
 	{
 		m_pScene = pScene;
@@ -77,8 +75,8 @@ public:
 	void ResetShader();
 
 public:
-	void AddAnimationSequence2D(const std::string& Name, bool Loop = true);
-	void AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop = true);
+	Sequence2DInfo* AddAnimationSequence2D(const std::string& Name, bool Loop = true);
+	Sequence2DInfo* AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop = true);
 	void SetSequencePlayRate(const std::string& Name, float PlayRate);
 	void AddSequencePlayRate(const std::string& Name, float PlayRate);
 	void ChangeAnimation(const std::string& Name);

@@ -26,5 +26,12 @@ public:
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+public:
+
+	void FindStay() override;
+	void MoveStart() override;
+	void MoveStay() override;
+	void AttackStart()override;
+	void AttackStay() override;
 };
 

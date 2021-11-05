@@ -16,11 +16,11 @@ CCamera::CCamera()
 	m_CameraLeft = 0.f;
 	m_CameraBottom = 0.f;
 	m_CameraZoom = 1.f;
-	m_MinX = INT_MIN;
-	m_MinY = INT_MIN;
+	m_MinX = (float)INT_MIN;
+	m_MinY = (float)INT_MIN;
 
-	m_MaxX = INT_MAX;
-	m_MaxY = INT_MAX;
+	m_MaxX = (float)INT_MAX;
+	m_MaxY = (float)INT_MAX;
 	m_ShakeTime = 0.f;
 }
 
@@ -178,8 +178,8 @@ void CCamera::PostUpdate(float DeltaTime)
 				//¿÷¿ª∂ß
 				if (m_ShakeTime < m_qCameraShake.front().Time)
 				{
-					int x= GetRandom(-m_qCameraShake.front().Pos.x, m_qCameraShake.front().Pos.x);
-					int y = GetRandom(-m_qCameraShake.front().Pos.y, m_qCameraShake.front().Pos.y);
+					int x= GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
+					int y = GetRandom(-(int)m_qCameraShake.front().Pos.y, (int)m_qCameraShake.front().Pos.y);
 					Pos.x += (float)x;
 					Pos.y += (float)y;
 					m_ShakeTime += DeltaTime;

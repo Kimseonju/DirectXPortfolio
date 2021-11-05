@@ -4,7 +4,6 @@
 #include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/EnemyAnimation2D.h"
 #include "Engine.h"
 #include "Weapon.h"
 #include "WeaponArm.h"
@@ -50,12 +49,6 @@ bool CEnemyAttack::Init()
 	m_Collider2D->SetCollisionProfile("EnemyAttack");
 
 	m_Sprite->AddChild(m_Collider2D);
-
-
-	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-
-	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 
 	return true;
 }

@@ -1,8 +1,9 @@
 #include "ThreadNavigation2D.h"
 #include "Component/TileMapComponent.h"
 #include "Component/Tile.h"
-
 #include "Navigation2D.h"
+#include "NavigationManager.h"
+
 CThreadNavigation2D::CThreadNavigation2D()
 {
 }
@@ -45,4 +46,6 @@ void CThreadNavigation2D::Run()
 	m_Navigation->FindPath(Info.Start, Info.Goal, m_vecResult);
 
 	//Info.CallbackComponent->Nav
+	CNavigationManager::GetInst()->AddMessage(Info.CallbackComponent,
+		m_vecResult);
 }

@@ -34,12 +34,12 @@ protected:
     float   m_ObjectMaxSpeed; //오브젝트가 가할때 힘 최대치
     float   m_MaxSpeed;    // 최대속력 
     Vector3 m_PrevMoveDir;
-    float   m_DashAngle;
+    float   m_DashRadian;
 public:
 
     void Dash(float Angle)
     {
-        m_DashAngle = DegreeToRadian(Angle);
+        m_DashRadian = DegreeToRadian(Angle);
         m_Gravity = true;
         m_DashTimer = 0.1f;
         m_DashEffectTime = 0.015f;
@@ -49,8 +49,15 @@ public:
     }
     void Dashing(float DeltaTime)
     {
-        m_Force.x += cosf(m_DashAngle) * 50.f* DeltaTime* m_Speed;
-        m_Force.y += sinf(m_DashAngle) * 100.f* DeltaTime* m_Speed;
+        m_Force.x += cosf(m_DashRadian) * 50.f* DeltaTime* m_Speed;
+        m_Force.y += sinf(m_DashRadian) * 100.f* DeltaTime* m_Speed;
+    }
+
+    void SetForce2D(float Angle, float Power)
+    {
+        float Radian = DegreeToRadian(Angle);
+
+
     }
     bool IsDash() const
     {
@@ -102,6 +109,11 @@ public:
     Vector3 GetForce()const
     {
         return m_Force;
+    }
+
+    void SetGravityPower(float Power)
+    {
+        m_GravityPower = Power;
     }
 public:
     virtual void Start();

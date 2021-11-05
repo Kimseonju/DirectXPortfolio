@@ -33,12 +33,6 @@ protected:
 	bool m_Open;
 public:
 	
-
-	void SetDir(Object_Dir Dir)
-	{
-		m_Dir = Dir;
-	}
-	
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -50,5 +44,8 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 	void testDoorOnOff(float DeltaTime);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
+	void CollisionBegin_NextStage(const HitResult& result, CCollider* Collider);
 
+public:
+	void SetDir(Object_Dir Dir);
 };

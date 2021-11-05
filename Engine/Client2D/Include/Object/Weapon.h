@@ -2,6 +2,7 @@
 
 #include "Item.h"
 #include "../GlobalValue.h"
+#include "../Animation2D/Animation2D_FSM.h"
 /*
 
 무기공격시 90도 움직이면서 공격한다.
@@ -20,7 +21,7 @@ protected:
 	virtual ~CWeapon();
 
 protected:
-	class CAnimation2D* m_Animation2D;
+	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
 	
 protected:
 	float m_CurrentAttackDelay; 

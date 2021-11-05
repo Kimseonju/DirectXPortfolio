@@ -13,6 +13,7 @@ private:
 	class CIMGUIComboBox* m_ClassType;
 	class CIMGUIComboBox* m_ObjectType;
 	class CIMGUIComboBox* m_EnemyType;
+	class CIMGUIComboBox* m_DoorDir;
 	class CIMGUICheckBox* m_EnableCheckBox;
 
 	CSharedPtr<CGameObject> m_Object;
@@ -35,5 +36,6 @@ public:
 	void ClassTypeComboCallback(int SelectIndex, const char* Item);
 	void ObjectTypeComboCallback(int SelectIndex, const char* Item);
 	void EnemyTypeComboCallback(int SelectIndex, const char* Item);
+	void DoorDirComboCallback(int SelectIndex, const char* Item);
 
 };

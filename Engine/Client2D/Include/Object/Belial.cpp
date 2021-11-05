@@ -1,7 +1,6 @@
 #include "Belial.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
-#include "../Animation2D/BelialAnimation2D.h"
 #include "Player.h"
 #include "BelialHand.h"
 #include "BelialWeapon.h"
@@ -61,9 +60,9 @@ bool CBelial::Init()
 {
 	CEnemy::Init();
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->CreateAnimation2D<CBelialAnimation2D>();
-	m_Animation2D = m_Sprite->GetAnimation2D();
 	m_Sprite->SetRelativeScale(280.f, 512.f, 1.f);
+	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
+	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack");
 	return true;
 }
 

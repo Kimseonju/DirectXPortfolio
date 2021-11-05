@@ -73,28 +73,28 @@ void CMainStageMapEffect::Animation2DNotify(const std::string& Name)
 {
 }
 
-void CMainStageMapEffect::SetDir(Effect_Dir Dir)
+void CMainStageMapEffect::SetDir(Object_Dir Dir)
 {
 
 	switch (Dir)
 	{
-	case Effect_Dir::Left:
+	case Object_Dir::Left:
 	{
 		m_Particle->SetMoveDir({ -1,0,0 });
 		break;
 	}
-	case Effect_Dir::Right:
+	case Object_Dir::Right:
 	{
 		m_Particle->SetMoveDir({ 1,0,0 });
 		break;
 	}
-	case Effect_Dir::Up:
+	case Object_Dir::Up:
 	{
 
 		m_Particle->SetMoveDir({ 0,1,0 });
 		break;
 	}
-	case Effect_Dir::Down:
+	case Object_Dir::Down:
 	{
 
 		m_Particle->SetMoveDir({ 0,-1,0 });
