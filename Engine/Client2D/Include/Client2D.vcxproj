@@ -174,6 +174,7 @@
     <ClCompile Include="Object\BelialWeapon.cpp" />
     <ClCompile Include="Object\BelialWeaponCharge.cpp" />
     <ClCompile Include="Object\BelialWeaponHit.cpp" />
+    <ClCompile Include="Object\BossDieParticle.cpp" />
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
     <ClCompile Include="Object\CollisionObject.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="Object\BelialWeapon.h" />
     <ClInclude Include="Object\BelialWeaponCharge.h" />
     <ClInclude Include="Object\BelialWeaponHit.h" />
+    <ClInclude Include="Object\BossDieParticle.h" />
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Cloud.h" />
     <ClInclude Include="Object\CollisionObject.h" />

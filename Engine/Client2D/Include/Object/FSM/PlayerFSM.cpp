@@ -65,7 +65,7 @@ void CPlayer::BodyJumpStart()
 {
 	m_State = ePlayerState::Jump;
 	m_Animation2D->ChangeJumpAnimation2D();
-	m_Owner->SetRelativeScale(17.f, 21.f, 0.f);
+	SetRelativeScale(17.f, 21.f, 0.f);
 }
 
 void CPlayer::BodyJumpStay()

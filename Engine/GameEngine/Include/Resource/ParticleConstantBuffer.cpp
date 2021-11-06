@@ -15,6 +15,13 @@ CParticleConstantBuffer::CParticleConstantBuffer() :
     m_BufferData.MinSpeed = 1.f;
     m_BufferData.SpawnCountMax = 100;
     m_BufferData.Range = Vector3(3.f, 3.f, 1.f);
+    m_BufferData.Gravity = 0;
+    m_BufferData.Twinkle = 0;
+    m_BufferData.Animation2DEnable = 0;
+    m_BufferData.Animation2DSize = Vector2(0.f,0.f);
+    m_BufferData.Animation2DCount = 0;
+    m_BufferData.Animation2DPlayRate = 1.f;
+    
 }
 
 CParticleConstantBuffer::CParticleConstantBuffer(const CParticleConstantBuffer& buffer) :

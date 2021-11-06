@@ -39,9 +39,6 @@
     <Filter Include="02. Object\임시오브젝트">
       <UniqueIdentifier>{212378bc-1725-4bea-a9ec-8d2e3b3737a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Effect">
-      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Status">
       <UniqueIdentifier>{62782876-f820-43b6-98b1-9e40320f2373}</UniqueIdentifier>
     </Filter>
@@ -63,12 +60,6 @@
     <Filter Include="02. Object\Item\Weapon\EnemyWeapon">
       <UniqueIdentifier>{8620f0dd-f792-4e04-935e-25b418f565c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Effect\RevolverEffect">
-      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect\ShortSwordEffect">
-      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Item\Weapon\Revolver">
       <UniqueIdentifier>{52f6370c-7cbb-46c7-b068-65afc4c93b08}</UniqueIdentifier>
     </Filter>
@@ -77,12 +68,6 @@
     </Filter>
     <Filter Include="02. Object\Item\Weapon\MetalBoomerang">
       <UniqueIdentifier>{9467faa2-0175-44e4-8c88-062d04b7abdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect\MetalBoomerangEffect">
-      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect\ObjectDieEffectObject">
-      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Player">
       <UniqueIdentifier>{12d31ce6-b2bf-4546-aecb-e5b65a901f8b}</UniqueIdentifier>
@@ -154,6 +139,21 @@
     <Filter Include="03. Animation2D\FSM">
       <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect_Particle">
+      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\RevolverEffect">
+      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\ShortSwordEffect">
+      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\MetalBoomerangEffect">
+      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\ObjectDieEffectObject">
+      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -205,7 +205,7 @@
       <Filter>02. Object\임시오브젝트</Filter>
     </ClCompile>
     <ClCompile Include="Object\EffectObject.cpp">
-      <Filter>02. Object\Effect</Filter>
+      <Filter>02. Object\Effect_Particle</Filter>
     </ClCompile>
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp">
       <Filter>02. Object\수업듣기용\UI</Filter>
@@ -238,10 +238,10 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClCompile>
     <ClCompile Include="Object\RevolverEffectObject.cpp">
-      <Filter>02. Object\Effect\RevolverEffect</Filter>
+      <Filter>02. Object\Effect_Particle\RevolverEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ShortSwordEffectObject.cpp">
-      <Filter>02. Object\Effect\ShortSwordEffect</Filter>
+      <Filter>02. Object\Effect_Particle\ShortSwordEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\Bullet.cpp">
       <Filter>02. Object\Bullet</Filter>
@@ -250,10 +250,10 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClCompile>
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp">
-      <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\Effect_Particle\MetalBoomerangEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ObjectDieEffectObject.cpp">
-      <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
+      <Filter>02. Object\Effect_Particle\ObjectDieEffectObject</Filter>
     </ClCompile>
     <ClCompile Include="Object\Player.cpp">
       <Filter>02. Object\Player</Filter>
@@ -402,6 +402,9 @@
     <ClCompile Include="Object\SmallSkelFSM.cpp">
       <Filter>02. Object\Enemy\SmallSkel</Filter>
     </ClCompile>
+    <ClCompile Include="Object\BossDieParticle.cpp">
+      <Filter>02. Object\Effect_Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -453,7 +456,7 @@
       <Filter>02. Object\임시오브젝트</Filter>
     </ClInclude>
     <ClInclude Include="Object\EffectObject.h">
-      <Filter>02. Object\Effect</Filter>
+      <Filter>02. Object\Effect_Particle</Filter>
     </ClInclude>
     <ClInclude Include="UI\PlayerWorldInfoWidget.h">
       <Filter>02. Object\수업듣기용\UI</Filter>
@@ -486,10 +489,10 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClInclude>
     <ClInclude Include="Object\RevolverEffectObject.h">
-      <Filter>02. Object\Effect\RevolverEffect</Filter>
+      <Filter>02. Object\Effect_Particle\RevolverEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ShortSwordEffectObject.h">
-      <Filter>02. Object\Effect\ShortSwordEffect</Filter>
+      <Filter>02. Object\Effect_Particle\ShortSwordEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\Bullet.h">
       <Filter>02. Object\Bullet</Filter>
@@ -498,10 +501,10 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClInclude>
     <ClInclude Include="Object\MetalBoomerangEffectObject.h">
-      <Filter>02. Object\Effect\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\Effect_Particle\MetalBoomerangEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectDieEffectObject.h">
-      <Filter>02. Object\Effect\ObjectDieEffectObject</Filter>
+      <Filter>02. Object\Effect_Particle\ObjectDieEffectObject</Filter>
     </ClInclude>
     <ClInclude Include="Object\Player.h">
       <Filter>02. Object\Player</Filter>
@@ -643,6 +646,9 @@
     </ClInclude>
     <ClInclude Include="Animation2D\Animation2D_FSM.h">
       <Filter>03. Animation2D\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossDieParticle.h">
+      <Filter>02. Object\Effect_Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

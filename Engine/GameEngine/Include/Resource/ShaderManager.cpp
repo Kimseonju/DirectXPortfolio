@@ -9,6 +9,7 @@
 #include "ParticleShader.h"
 #include "ParticleDirUpdateShader.h"
 #include "ParticleRandomScaleUpdateShader.h"
+#include "ParticleAnimation2DShader.h"
 #include "FullScreenShader.h"
 #include "FullScreenDistortionShader.h"
 #include "UIImageShader.h"
@@ -16,6 +17,7 @@
 #include "NumberShader.h"
 #include "MouseShader.h"
 #include "TileMapShader.h"
+
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -64,6 +66,9 @@ bool CShaderManager::Init()
         return false;
 
     if (!CreateShader<CParticleRandomScaleUpdateShader>("ParticleRandomScaleUpdateShader"))
+        return false;
+
+    if (!CreateShader<CParticleAnimation2DShader>("ParticleAnimation2DShader"))
         return false;
 
     if (!CreateShader<CParticleShader>("ParticleShader"))

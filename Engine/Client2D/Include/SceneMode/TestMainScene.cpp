@@ -40,6 +40,7 @@
 #include "../Object/TestTileMap.h"
 #include "../Stage/Door.h"
 #include "../UI/UIManager.h"
+#include "../Object/BossDieParticle.h"
 CTestMainScene::CTestMainScene() :
 	m_Stage(nullptr),
 	m_Minrooms(-1),
@@ -108,8 +109,9 @@ bool CTestMainScene::Init()
 	CStage1MapEffect* pPixelCollisionTest = m_pScene->SpawnObject<CStage1MapEffect>("PixelCollisionTest1");
 	//
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
-	CDoorEffect* pDoorEffect = m_pScene->SpawnObject<CDoorEffect>("DoorEffect");
-	pDoorEffect->SetDir(Object_Dir::Left);
+
+	CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
+
 	//CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
 	//Widget->SetPlayer(pPlayer);
 
@@ -151,6 +153,11 @@ void CTestMainScene::CreateMaterial()
 		TEXT("Map/MapEffect.png"));
 	m_pScene->GetResource()->SetMaterialTransparency("DoorParticle", true);
 	
+
+	m_pScene->GetResource()->CreateMaterial("BossDieParticle");
+	m_pScene->GetResource()->AddMaterialTexture("BossDieParticle", "BossDieParticle",
+		TEXT("Boss/Effect/Finish.png"));
+	m_pScene->GetResource()->SetMaterialTransparency("BossDieParticle", true);
 
 	//юс╫ц
 	m_pScene->GetResource()->CreateMaterial("MainMap");
@@ -568,4 +575,23 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->SetParticle2D("DoorParticle", true);
 	m_pScene->GetResource()->SetParticleMoveDir("DoorParticle", 0.f, 1.f, 0.f);
 	m_pScene->GetResource()->SetParticleMoveAngle("DoorParticle", 0.f, 0.f, 90.f);
+
+	CMaterial* BossDieParticle = m_pScene->GetResource()->FindMaterial("BossDieParticle");
+
+	m_pScene->GetResource()->CreateParticle("BossDieParticle");
+	m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleAnimation2DShader");
+	//m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleDirUpdateShader");
+	m_pScene->GetResource()->SetParticleMaterial("BossDieParticle", BossDieParticle);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("BossDieParticle", 500);
+	m_pScene->GetResource()->SetParticleStartColor("BossDieParticle", 1.f,1.f,1.f,1.f);
+	m_pScene->GetResource()->SetParticleEndColor("BossDieParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleStartScale("BossDieParticle", 40.f, 40.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("BossDieParticle", 40.f, 40.f, 1.f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("BossDieParticle", 10.5f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("BossDieParticle", 10.8f);
+	m_pScene->GetResource()->SetParticleRange("BossDieParticle", 500.f, 500.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("BossDieParticle", false);
+	m_pScene->GetResource()->SetParticle2D("BossDieParticle", true);
 }

@@ -41,8 +41,6 @@ bool CDoor::Init()
 	SetLifeTimeCheck(false);
 	m_Particle->SetTwinkleEnable(false);
 	//m_Particle->SetGravityEnable(true);
-	SetRootComponent(m_Particle);
-
 
 	SetRootComponent(m_Sprite);
 

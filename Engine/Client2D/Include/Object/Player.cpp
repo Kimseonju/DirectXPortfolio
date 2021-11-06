@@ -340,6 +340,8 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 
 void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
 {
+	if (result.DestCollider == nullptr || result.DestCollider == nullptr)
+		return;
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{

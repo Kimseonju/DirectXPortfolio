@@ -165,7 +165,7 @@ bool CCollision::CollisionBox2DToBox2D(HitResult& SrcResult, HitResult& DestResu
 	if (CenterDot > r1 + r2)
 		return false;
 
- 	return true;
+	return true;
 }
 
 bool CCollision::CollisionCircleToCircle(HitResult& SrcResult, HitResult& DestResult,

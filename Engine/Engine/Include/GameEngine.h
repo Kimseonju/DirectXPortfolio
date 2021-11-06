@@ -267,35 +267,41 @@ struct HitResult
     Vector3		HitPoint;
 };
 
-
-
 struct ParticleCBuffer
 {
     Vector3	Pos;
     unsigned int	SpawnCount;
+
     Vector3	StartScale;
     unsigned int	SpawnCountMax;
+
     Vector3	EndScale;
     float	LifeTimeMin;
+
     Vector3	Range;
     float	LifeTimeMax;
+
     Vector4	StartColor;
     Vector4	EndColor;
     float	MinSpeed;
     float	MaxSpeed;
     int		Move;
     int		Particle2D;
+
     Vector3	MoveDir;
     float	DefaultZ;
+
     Vector3	MoveAngle;
     int		Gravity;
+
     int     Twinkle;
     int		Animation2DEnable;
     Vector2	Animation2DSize;
+
     int		Animation2DCount;
     float	Animation2DPlayRate;
-    Vector3 Empty3;
-};
+    Vector2 Empty2;
+}; 
 
 struct ParticleInfo
 {
@@ -309,6 +315,10 @@ struct ParticleInfo
     float	FallTime;
     float	FallStartY;
     Vector3	Scale;
+    Vector2	Animation2DStart;
+    Vector2	Animation2DEnd;
+    int	    Animation2DCount;
+    Vector3 Empty;
 };
 
 struct ParticleInfoShared
@@ -324,8 +334,12 @@ struct ParticleInfoShared
 
     int	GravityEnable;
     int TwinkleEnable;
+    int		Animation2DEnable;
+    int	    Animation2DCount;
+    Vector2	Animation2DSize;
+    float	Animation2DPlayRate;
+    float	Empty;
 };
-
 
 struct GlobalCBuffer
 {

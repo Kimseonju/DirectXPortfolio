@@ -26,7 +26,7 @@ cbuffer ParticleCBuffer : register(b11)
 	float2	g_ParticleAnimation2DSize;
 	int		g_ParticleAnimation2DCount;
 	float	g_ParticleAnimation2DPlayRate;
-	float3  g_Empty2;
+	float2  g_Empty2;
 };
 
 #define	GRAVITY	9.8f
@@ -46,6 +46,7 @@ struct ParticleInfo
 	float2	Animation2DStart;
 	float2	Animation2DEnd;
 	int	    Animation2DCount;
+	float3  Empty;
 };
 
 struct ParticleInfoShared
@@ -62,36 +63,11 @@ struct ParticleInfoShared
 	int	    Animation2DCount;
 	float2	Animation2DSize;
 	float	Animation2DPlayRate;
-
+	float	Empty;
 };
 
 RWStructuredBuffer<ParticleInfo>		g_ParticleArray	: register(u0);
 RWStructuredBuffer<ParticleInfoShared>	g_ParticleShare	: register(u1);
-
-
-float2 ParticleAnimation2DUV(float2 UV, uint ID)
-{
-	if (g_ParticleAnimation2DEnable == 0)
-		return UV;
-
-	float2	ResultUV;
-
-	if (UV.x <= 0.f)
-		ResultUV.x = g_ParticleArray[ID].Animation2DStart.x;
-
-	else
-		ResultUV.x = g_ParticleArray[ID].Animation2DEnd.x;
-
-	if (UV.y <= 0.f)
-		ResultUV.y = g_ParticleArray[ID].Animation2DStart.y;
-
-	else
-		ResultUV.y = g_ParticleArray[ID].Animation2DEnd.y;
-
-
-
-	return ResultUV;
-}
 
 
 [numthreads(64, 1, 1)]
@@ -109,7 +85,6 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 	g_ParticleShare[0].Animation2DSize = g_ParticleAnimation2DSize;
 	g_ParticleShare[0].Animation2DPlayRate = g_ParticleAnimation2DPlayRate;
 
-	
 	if (g_ParticleSpawnCountMax <= ThreadID.x)
 		return;
 
@@ -181,14 +156,14 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 		g_ParticleArray[ThreadID.x].FallStartY =
 			g_ParticleArray[ThreadID.x].WorldPos.y;
 
+
+		g_ParticleArray[ThreadID.x].MaxLifeTime = RandomPos.x * (g_ParticleLifeTimeMax - g_ParticleLifeTimeMin) + g_ParticleLifeTimeMin;
 		g_ParticleArray[ThreadID.x].LifeTime = 0.f;
 		g_ParticleArray[ThreadID.x].Animation2DCount = 0.f;
-
 		if (g_ParticleMove == 1)
 		{
 			g_ParticleArray[ThreadID.x].Speed = RandomPos.x * (g_MaxSpeed - g_MinSpeed) + g_MinSpeed;
-			float2	RandomDir = RandomPos.xy * 2.f - 1.f;
-			g_ParticleArray[ThreadID.x].Dir = normalize(normalize(float3(RandomDir, 0.f)) + g_ParticleMoveDir);
+			g_ParticleArray[ThreadID.x].Dir = normalize(g_ParticleMoveDir);
 			//g_ParticleArray[ThreadID.x].Dir = normalize(PosRange);
 		}
 	}
@@ -197,54 +172,77 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 	else
 	{
 		g_ParticleArray[ThreadID.x].LifeTime += g_DeltaTime;
+
 		if (g_ParticleShare[0].Animation2DPlayRate <= g_ParticleArray[ThreadID.x].LifeTime)
 		{
 			g_ParticleArray[ThreadID.x].LifeTime -= g_ParticleShare[0].Animation2DPlayRate;
-			g_ParticleArray[ThreadID.x].Animation2DCount++;
+			g_ParticleArray[ThreadID.x].Animation2DCount= g_ParticleArray[ThreadID.x].Animation2DCount+1;
 		}
 		float x = g_ParticleShare[0].Animation2DSize.x / g_ParticleShare[0].Animation2DCount;
-		g_ParticleArray[ThreadID.x].Animation2DStart.x =  x* g_ParticleArray[ThreadID.x].Animation2DCount / g_ParticleShare[0].Animation2DSize.x;
+		g_ParticleArray[ThreadID.x].Animation2DStart.x = x * (float)g_ParticleArray[ThreadID.x].Animation2DCount / g_ParticleShare[0].Animation2DSize.x;
 		g_ParticleArray[ThreadID.x].Animation2DStart.y = 0.f;
-		g_ParticleArray[ThreadID.x].Animation2DEnd.x = x*(g_ParticleArray[ThreadID.x].Animation2DCount +1) / g_ParticleShare[0].Animation2DSize.x;
-		g_ParticleArray[ThreadID.x].Animation2DEnd.y= 1.f;
+		g_ParticleArray[ThreadID.x].Animation2DEnd.x = x * (float)(g_ParticleArray[ThreadID.x].Animation2DCount + 1) / g_ParticleShare[0].Animation2DSize.x;
+		g_ParticleArray[ThreadID.x].Animation2DEnd.y = 1.f;
 
-
-		float	ConvertY = g_ParticleArray[ThreadID.x].WorldPos.y - g_CameraBottom;
-
-		float	RatioZ = ConvertY / (g_Resolution.y * 2.f);
-
-		if (g_ParticleDefaultZ >= 0.7f)
+		if (g_ParticleMove == 1)
 		{
-			// Min : 0.7f   Max : 0.99999f 
-			g_ParticleArray[ThreadID.x].WorldPos.z =
-				(0.99999f - 0.7f) * RatioZ + 0.7f;
+			g_ParticleArray[ThreadID.x].WorldPos.xy +=
+				g_ParticleArray[ThreadID.x].Dir.xy *
+				g_ParticleArray[ThreadID.x].Speed * g_DeltaTime;
+
+
+			if (g_ParticleShare[0].GravityEnable)
+			{
+				g_ParticleArray[ThreadID.x].FallTime += g_DeltaTime * 10.f;
+
+				float	Velocity = 0.1f * g_ParticleArray[ThreadID.x].Speed *
+					g_ParticleArray[ThreadID.x].FallTime;
+
+				g_ParticleArray[ThreadID.x].WorldPos.y =
+					g_ParticleArray[ThreadID.x].FallStartY +
+					(Velocity - 0.5f * GRAVITY * g_ParticleArray[ThreadID.x].FallTime * g_ParticleArray[ThreadID.x].FallTime);
+			}
+
+			float	ConvertY = g_ParticleArray[ThreadID.x].WorldPos.y - g_CameraBottom;
+
+			float	RatioZ = ConvertY / (g_Resolution.y * 2.f);
+
+			if (g_ParticleDefaultZ >= 0.7f)
+			{
+				// Min : 0.7f   Max : 0.99999f 
+				g_ParticleArray[ThreadID.x].WorldPos.z =
+					(0.99999f - 0.7f) * RatioZ + 0.7f;
+			}
+
+			// Default
+			else if (g_ParticleDefaultZ >= 0.3f)
+			{
+				// Min : 0.3f   Max : 0.69999f 
+				g_ParticleArray[ThreadID.x].WorldPos.z =
+					(0.69999f - 0.3f) * RatioZ + 0.3f;
+			}
+
+			// Particle
+			else
+			{
+				// Min : 0.f   Max : 0.29999f 
+				g_ParticleArray[ThreadID.x].WorldPos.z =
+					0.29999f * RatioZ;
+			}
 		}
-
-		// Default
-		else if (g_ParticleDefaultZ >= 0.3f)
-		{
-			// Min : 0.3f   Max : 0.69999f 
-			g_ParticleArray[ThreadID.x].WorldPos.z =
-				(0.69999f - 0.3f) * RatioZ + 0.3f;
-		}
-
-		// Particle
-		else
-		{
-			// Min : 0.f   Max : 0.29999f 
-			g_ParticleArray[ThreadID.x].WorldPos.z =
-				0.29999f * RatioZ;
-		}
-
-
-
 
 		if (g_ParticleArray[ThreadID.x].Animation2DCount >=
 			g_ParticleShare[0].Animation2DCount)
 		{
 			g_ParticleArray[ThreadID.x].Alive = 0;
 		}
+		//if (g_ParticleArray[ThreadID.x].LifeTime >=
+		//	g_ParticleArray[ThreadID.x].MaxLifeTime)
+		//{
+		//	g_ParticleArray[ThreadID.x].Alive = 0;
+		//}
 	}
+	
 }
 
 [numthreads(64, 1, 1)]
@@ -827,11 +825,8 @@ void ParticleGS(point VS_OUTPUT_PARTICLE input[1],
 	}
 
 
-	if (g_ParticleShareInput[0].Animation2DEnable)
+	if (g_ParticleShareInput[0].Animation2DEnable == 1)
 	{
-		float2	Animation2DStart;
-		float2	Animation2DEnd;
-		;
 		OutputArray[0].UV = float2(g_ParticleArrayInput[InstanceID].Animation2DStart.x, g_ParticleArrayInput[InstanceID].Animation2DStart.y);
 		OutputArray[1].UV = float2(g_ParticleArrayInput[InstanceID].Animation2DEnd.x, g_ParticleArrayInput[InstanceID].Animation2DStart.y);
 		OutputArray[2].UV = float2(g_ParticleArrayInput[InstanceID].Animation2DEnd.x, g_ParticleArrayInput[InstanceID].Animation2DEnd.y);
