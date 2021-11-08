@@ -1,7 +1,8 @@
 
 #include "Tile.h"
 #include "TileMapComponent.h"
-
+#include "../Scene/Scene.h"
+#include "ColliderBox2D.h"
 CTile::CTile() :
 	m_Shape(Tile_Shape::Rect),
 	m_TileType(Tile_Type::None),
@@ -32,6 +33,35 @@ Vector2 CTile::GetPos()	const
 
 bool CTile::Init()
 {
+	m_Center = m_Pos + m_Size / 2.f;
+	if (m_Shape == Tile_Shape::Rect)
+	{
+		m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject");
+
+		m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+		m_ColliderBox2DComponent->SetExtent(m_Size.x / 2.f, m_Size.y / 2.f);
+		m_ColliderBox2DComponent->SetWorldPos(Vector3(m_Center.x, m_Center.y, 0.f));
+		m_CollisionObject->SetRootComponent(m_ColliderBox2DComponent);
+		//m_Center = m_Pos + m_Size / 2.f;
+		switch (m_TileType)
+		{
+		case Tile_Type::None:
+		{
+			m_ColliderBox2DComponent->Enable(false);
+			break;
+		}
+		case Tile_Type::Wall:
+		{
+			m_ColliderBox2DComponent->Enable(true);
+			break;
+		}
+		case Tile_Type::Crossed_Wall:
+		{
+			m_ColliderBox2DComponent->Enable(true);
+			break;
+		}
+		}
+	}
 	return true;
 }
 
@@ -97,4 +127,34 @@ void CTile::Load(FILE* pFile)
 	fread(&m_IndexX, sizeof(int), 1, pFile);
 	fread(&m_IndexY, sizeof(int), 1, pFile);
 	fread(&m_Index, sizeof(int), 1, pFile);
+}
+
+void CTile::SetCollisionProfile(const std::string& TilePass, const std::string& TileNoPass)
+{
+	switch (m_TileType)
+	{
+	case Tile_Type::None:
+	{
+		m_ColliderBox2DComponent->Enable(false);
+		break;
+	}
+	case Tile_Type::Wall:
+	{
+		m_ColliderBox2DComponent->Enable(true);
+		m_ColliderBox2DComponent->SetCollisionProfile(TileNoPass);
+		break;
+	}
+	case Tile_Type::Crossed_Wall:
+	{
+		m_ColliderBox2DComponent->Enable(true);
+		m_ColliderBox2DComponent->SetCollisionProfile(TilePass);
+		break;
+	}
+	}
+}
+
+void CTile::MapClear()
+{
+	m_CollisionObject->Active(false);
+	m_ColliderBox2DComponent->Active(false);
 }

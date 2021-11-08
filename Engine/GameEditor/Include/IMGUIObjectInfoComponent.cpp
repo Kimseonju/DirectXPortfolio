@@ -96,6 +96,7 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_vecWidget.push_back(SameLine);
 
 	m_ObjectType = m_Owner->AddWidget<CIMGUIComboBox>("##ObjectTypeCombo", 100.f, 20.f);
+	m_ObjectType->AddItem("MainDoor");
 	m_ObjectType->AddItem("House");
 	m_ObjectType->AddItem("Door");
 	m_ObjectType->AddItem("End");

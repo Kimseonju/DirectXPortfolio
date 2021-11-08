@@ -122,14 +122,14 @@ bool CIMGUICameraComponent::Init()
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_CameraMinX = m_Owner->AddWidget<CIMGUIDrag>("##CameraMinX", 300.f, 20.f);
+	m_CameraMinX = m_Owner->AddWidget<CIMGUIDrag>("##CameraMinX", 100.f, 20.f);
 	m_CameraMinX->SetInputCallback<CIMGUICameraComponent>(this, &CIMGUICameraComponent::InputMinX);
 	m_CameraMinX->SetNumberFloat(true);
 	m_vecWidget.push_back(m_CameraMinX);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_CameraMinY = m_Owner->AddWidget<CIMGUIDrag>("##m_CameraMinY", 300.f, 20.f);
+	m_CameraMinY = m_Owner->AddWidget<CIMGUIDrag>("##m_CameraMinY", 100.f, 20.f);
 	m_CameraMinY->SetInputCallback<CIMGUICameraComponent>(this, &CIMGUICameraComponent::InputMinY);
 	m_CameraMinY->SetNumberFloat(true);
 	m_vecWidget.push_back(m_CameraMinY);
@@ -141,14 +141,14 @@ bool CIMGUICameraComponent::Init()
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_CameraMaxX = m_Owner->AddWidget<CIMGUIDrag>("##CameraMaxX", 300.f, 20.f);
+	m_CameraMaxX = m_Owner->AddWidget<CIMGUIDrag>("##CameraMaxX", 100.f, 20.f);
 	m_CameraMaxX->SetInputCallback<CIMGUICameraComponent>(this, &CIMGUICameraComponent::InputMaxX);
 	m_CameraMaxX->SetNumberFloat(true);
 	m_vecWidget.push_back(m_CameraMaxX);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
 
-	m_CameraMaxY = m_Owner->AddWidget<CIMGUIDrag>("##m_CameraMinY", 300.f, 20.f);
+	m_CameraMaxY = m_Owner->AddWidget<CIMGUIDrag>("##m_CameraMinY", 100.f, 20.f);
 	m_CameraMaxY->SetInputCallback<CIMGUICameraComponent>(this, &CIMGUICameraComponent::InputMaxY);
 	m_CameraMaxY->SetNumberFloat(true);
 	m_vecWidget.push_back(m_CameraMaxY);

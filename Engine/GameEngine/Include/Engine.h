@@ -20,6 +20,7 @@ private:
 	CSharedPtr<CMouseWidget>	m_MouseWidget;
 	bool		m_Start;
 public:
+
 	void SetResolution(int Width, int Height)
 	{
 		m_RS.Width = Width;
@@ -45,6 +46,8 @@ public:
 	}
 
 	void Exit();
+public:
+	float GetFPS();
 public:
 
 

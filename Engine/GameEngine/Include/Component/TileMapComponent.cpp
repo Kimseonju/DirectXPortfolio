@@ -983,7 +983,7 @@ void CTileMapComponent::Load(FILE* pFile)
 		m_vecTile[i]->m_Owner = this;
 
 		m_vecTile[i]->Load(pFile);
-
+		m_vecTile[i]->Init();
 		m_vecTileInfo[i].Color = Vector4(1.f, 1.f, 1.f, 1.f);
 		m_vecTileInfo[i].Opacity = 1.f;
 	}
@@ -1023,6 +1023,15 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 	SetWorldInfo();
 }
 
+void CTileMapComponent::SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass)
+{
+	for (size_t i = 0; i < m_vecTile.size(); ++i)
+	{
+		m_vecTile[i]->SetCollisionProfile(TilePass, TileNoPass);
+		
+	}
+}
+
 
 void CTileMapComponent::SetWorldInfo()
 {
@@ -1033,5 +1042,13 @@ void CTileMapComponent::SetWorldInfo()
 	{
 		SAFE_DELETE(m_WorldBuffer);
 		return;
+	}
+}
+
+void CTileMapComponent::MapClear()
+{
+	for (size_t i = 0; i < m_vecTile.size(); ++i)
+	{
+		m_vecTile[i]->MapClear();
 	}
 }

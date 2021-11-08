@@ -242,6 +242,8 @@ void CCollider::PrevRender(float DeltaTime)
 
 void CCollider::Render(float DeltaTime)
 {
+	if (!IsEnable())
+		return;
 	if (m_DebugRender)
 	{
 		CPrimitiveComponent::Render(DeltaTime);

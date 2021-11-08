@@ -21,6 +21,9 @@
 #include "Editor.h"
 #include "GlobalValue.h"
 #include "IMGUITileMapComponent.h"
+#include <Scene/Scene.h>
+#include <Scene/CameraManager.h>
+#include <Scene/SceneResource.h>
 CSaveLoadWindow::CSaveLoadWindow()
 {
 }
@@ -188,6 +191,14 @@ void CSaveLoadWindow::ClientSave(const TCHAR* FullPath)
 	CIMGUITileMapComponent* TileMapComponent = TielMapToolWindow->GetTileMapComponent();
 	objWindow->ClientSaveObject(pFile);
 	TileMapComponent->SaveTile(pFile);
+
+	CScene* Scene=objWindow->GetScene();
+	CCamera* Camera=Scene->GetCameraManager()->GetCurrentCamera();
+	Vector2 Min=Camera->GetMin();
+	Vector2 Max = Camera->GetMax();
+
+	fwrite(&Min, sizeof(Vector2), 1, pFile);
+	fwrite(&Max, sizeof(Vector2), 1, pFile);
 
 	fclose(pFile);
 }

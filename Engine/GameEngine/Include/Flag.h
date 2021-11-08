@@ -281,6 +281,7 @@ enum class Client_Class_Type
 
 enum class Client_Object_Type
 {
+    MainDoor,
     House,
     Door,
     End

@@ -601,17 +601,26 @@ void CIMGUITileMapComponent::CreateTileButton()
 	TileCountX = m_InputTileCountX->GetValueInt();
 	TileCountY = m_InputTileCountY->GetValueInt();
 
-	CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+	if (m_MainMap.Get())
+	{
+		m_MainMap->Active(false);
+	}
+	if (m_TileMap.Get())
+	{
+		m_TileMap->Active(false);
+		m_TileMap->MapClear();
+	}
+	m_MainMap = Scene->SpawnObject<CGameObject>("MainMap");
 
-	CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+	CTileMapComponent* TileMap = m_MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 
-	MainMap->SetRootComponent(TileMap);
+	m_MainMap->SetRootComponent(TileMap);
 
 	TileMap->SetWorldPos(Pos);
 	TileMap->SetWorldRotation(Rot);
 	TileMap->SetWorldScale(Scale);
 
-
+	
 	// TileShape를 얻어온다.
 	TileMap->CreateTile<CTile>(m_TileShape, TileCountX, TileCountY, TileSize);
 	TileMap->SetMaterial(0, "MainMap");

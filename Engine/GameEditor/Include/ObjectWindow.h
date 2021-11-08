@@ -46,6 +46,11 @@ public:
 	{
 		m_Scene = Scene;
 	}
+
+	class CScene* GetScene() const
+	{
+		return m_Scene;
+	}
 	void DeleteColliderMouseObject();
 public:
 	void ListCallback(int SelectIndex, const char* Item);

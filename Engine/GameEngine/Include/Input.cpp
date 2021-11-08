@@ -52,19 +52,21 @@ Vector2 CInput::GetMouse2DWorldPos() const
 	Resolution RS=CDevice::GetInst()->GetResolution();
 	Vector2 Size = { RS.Width / 2.f, RS.Height / 2.f };
 
-	Vector2 MouseRel;
-	MouseRel.x = m_MousePos.x / (float)RS.Width;
-	MouseRel.y = m_MousePos.y / (float)RS.Height;
+	double MouseRel_x;
+	double MouseRel_y;
+	MouseRel_x = m_MousePos.x / (float)RS.Width;
+	MouseRel_y = m_MousePos.y / (float)RS.Height;
 	
 	//¹ÝÁö¸§
-	Vector2 ZoomSize;
-	ZoomSize.x = Size.x / Zoom ;
-	ZoomSize.y = Size.y / Zoom ;
+	double ZoomSize_x;
+	double ZoomSize_y;
+	ZoomSize_x = Size.x / Zoom ;
+	ZoomSize_y = Size.y / Zoom ;
 	Vector2 MousePos;
-	MousePos.x = MouseRel.x * (ZoomSize.x * 2.f);
-	MousePos.y = MouseRel.y * (ZoomSize.y * 2.f);
+	MousePos.x = MouseRel_x * (ZoomSize_x * 2.f);
+	MousePos.y = MouseRel_y * (ZoomSize_y * 2.f);
 	
-	return MousePos + Vector2(Camera->GetWorldPos().x + (Size.x - ZoomSize.x), Camera->GetWorldPos().y + (Size.y - ZoomSize.y));
+	return MousePos + Vector2(Camera->GetWorldPos().x + (Size.x - ZoomSize_x), Camera->GetWorldPos().y + (Size.y - ZoomSize_y));
 
 
 }

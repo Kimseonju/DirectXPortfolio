@@ -85,7 +85,15 @@ bool CClientManager::Init()
         Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::EnemyAttack,
         Collision_Interaction::Ignore);
-    
+
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_pass,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_Nopass,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_pass,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_Nopass,
+        Collision_Interaction::Ignore);
     //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
     //CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();

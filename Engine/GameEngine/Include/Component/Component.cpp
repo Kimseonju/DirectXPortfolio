@@ -11,6 +11,7 @@ CComponent::CComponent(const CComponent& com)
 
 CComponent::~CComponent()
 {
+    m_pOwner = nullptr;
 }
 
 void CComponent::Active(bool bActive)
@@ -20,10 +21,15 @@ void CComponent::Active(bool bActive)
 
 bool CComponent::IsActive() const
 {
-    if (!m_pOwner->IsActive() || !m_Active)
+    if (!m_Active)
     {
         return false;
     }
+    if (!m_pOwner->IsActive())
+    {
+        return false;
+    }
+        
     return true;
 }
 

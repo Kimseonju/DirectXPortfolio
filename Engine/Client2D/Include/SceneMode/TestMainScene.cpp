@@ -299,6 +299,43 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
+
+	//MainMapDoor
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorClose",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 0; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorClose",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorCloseIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorCloseIdle",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 6; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorCloseIdle",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorOpen");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorOpen",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 6; i >=0 ; --i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorOpen",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorOpenIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorOpenIdle",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 0; i <1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorOpenIdle",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
 	//°¡·Î 23
 
 

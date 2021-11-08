@@ -30,7 +30,8 @@ private:
 	float		m_NodeDistH;	// 세로 길이
 	float		m_NodeDistD;	// 대각선 길이
 	float		m_NodeDistDHalf;	// 대각선 반 길이
-
+	class CGameObject* m_CollisionObject;
+	class CColliderBox2D* m_ColliderBox2DComponent;
 public:
 	float GetDistW()	const
 	{
@@ -189,5 +190,8 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
+public:
+	void SetCollisionProfile(const std::string& TilePass, const std::string& TileNoPass);
+	void MapClear();
 };
 

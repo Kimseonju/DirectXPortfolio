@@ -458,6 +458,8 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 			m_MouseCollisionCollider = nullptr;
 		}
 	}
+
+	CInput::GetInst()->SetMouseCollision(MouseCollision);
 }
 int CSceneCollision::SortZOrder(CSharedPtr<CWidget> Src, CSharedPtr<CWidget> Dest)
 {

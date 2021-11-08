@@ -27,6 +27,7 @@
 #include "TileMapToolWindow.h"
 #include "StateWindow.h"
 #include "ComponentWindow.h"
+#include "SaveLoadWindow.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -116,11 +117,13 @@ void CGameEditorView::OnInitialUpdate()
 	CIMGUIManager::GetInst()->AddWindow<CPrefabWindow>("PrefabWindow");
 	CIMGUIManager::GetInst()->AddWindow<CStateWindow>("StateWindow");
 	CIMGUIManager::GetInst()->AddWindow<CComponentWindow>("ComponentWindow");
+	CIMGUIManager::GetInst()->AddWindow<CSaveLoadWindow>("SaveLoadWindow");
 
 	CSceneManager::GetInst()->SetSceneMode<CEditorScene>();
 	CObjectWindow* objWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
 	objWindow->SetScene(CSceneManager::GetInst()->GetScene());
 	objWindow->SetComponentWindow((CComponentWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ComponentWindow"));
+	
 }
 
 

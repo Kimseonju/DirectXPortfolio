@@ -263,7 +263,7 @@ enum class Tile_Type
 {
     None,
     Wall,
-    Crossed_Wall //통과할수있는 벽
+    Crossed_Wall
 };
 
 
@@ -281,6 +281,7 @@ enum class Client_Class_Type
 
 enum class Client_Object_Type
 {
+    MainDoor,
     House,
     Door,
     End

@@ -35,5 +35,6 @@ private:
     void DeleteObjectMap();
     void CreateAnimationSequence2D();
     void CreateParticle();
+    void CreateCollisionProfile();
 };
 

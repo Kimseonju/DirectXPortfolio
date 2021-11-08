@@ -120,9 +120,11 @@ public:
 	void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
 	void Load(FILE* pFile);
 	void LoadFullPath(const TCHAR* FullPath);
+public:
+	void SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass);
+	void MapClear();
 private:
 	void SetWorldInfo();
-
 public:
 	template <typename T>
 	void CreateTile(Tile_Shape Shape, int CountX, int CountY,

@@ -24,5 +24,7 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CTestTileMap* Clone();
+public:
+	void SetTileTypeCollision(const std::string& TilePass, const std::string& TileNoPass);
 };
 

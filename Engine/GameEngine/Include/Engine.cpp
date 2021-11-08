@@ -82,6 +82,11 @@ void CEngine::Exit()
 	DestroyWindow(m_hWnd);
 }
 
+float CEngine::GetFPS()
+{
+	return m_pTimer->GetFPS();
+}
+
 bool CEngine::Init(const TCHAR* pClass, const TCHAR* pTitle, HINSTANCE hInst,
     int IconID, int iSmallIconID, int Width, int Height, bool ScreenMode)
 {

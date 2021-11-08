@@ -30,11 +30,12 @@ bool CTestTileMap::Init()
 
 	SetRootComponent(m_TileMap);
 
-	m_TileMap->CreateTile<CTile>(Tile_Shape::Rhombus, 100, 100, Vector2(160.f, 80.f));
-	
-	m_TileMap->SetMaterial(0, "MainMap");
-	m_TileMap->SetFrameMax(5, 76);
-	m_TileMap->SetTileDefaultFrame(3, 2);
+	m_TileMap->Load(TEXT("TestMap.map"));
+	m_TileMap->SetCollisionTileType("Tile_pass", "Tile_Nopass");
+	//m_TileMap->SetTileTypeCollision()
+	//m_TileMap->SetMaterial(0, "MainMap");
+	//m_TileMap->SetFrameMax(5, 76);
+	//m_TileMap->SetTileDefaultFrame(3, 2);
 
 	//m_TileMap->CreateTile<CTile>(Tile_Shape::Rect, 100, 100, Vector2(64.f, 64.f));
 	//
@@ -67,4 +68,8 @@ void CTestTileMap::Render(float DeltaTime)
 CTestTileMap* CTestTileMap::Clone()
 {
 	return new CTestTileMap(*this);
+}
+
+void CTestTileMap::SetTileTypeCollision(const std::string& TilePass, const std::string& TileNoPass)
+{
 }

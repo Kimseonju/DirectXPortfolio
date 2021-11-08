@@ -47,6 +47,7 @@ private:
 	Tile_Modify_Type	m_TileModifyType;
 	bool		m_CreateTile;
 	CSharedPtr<CTileMapComponent> m_TileMap;
+	CSharedPtr<CGameObject>	m_MainMap;
 	int		m_ImageFrameX;
 	int		m_ImageFrameY;
 	int		m_ImageFrameMaxX;

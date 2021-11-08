@@ -20,6 +20,7 @@
 #include "../TileMapToolWindow.h"
 #include <Component/Camera.h>
 #include <Scene/CameraManager.h>
+#include <CollisionManager.h>
 CEditorScene::CEditorScene() :
 	m_CloneObjectCount(0)
 {
@@ -32,6 +33,7 @@ CEditorScene::~CEditorScene()
 bool CEditorScene::Init()
 {
 	CreateAnimationSequence2D();
+	CreateCollisionProfile();
     CInput::GetInst()->CreateKey("MoveUp", 'W');
     CInput::GetInst()->CreateKey("MoveDown", 'S');
     CInput::GetInst()->CreateKey("MoveLeft", 'A');
@@ -43,7 +45,7 @@ bool CEditorScene::Init()
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveDown", KT_Push, this, &CEditorScene::MoveDown);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveLeft", KT_Push, this, &CEditorScene::MoveLeft);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveRight", KT_Push, this, &CEditorScene::MoveRight);
-    CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Up, this, &CEditorScene::MouseLButton);
+    CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Push, this, &CEditorScene::MouseLButton);
 	CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseRButton", KT_Push, this, &CEditorScene::MouseRButton);
 
     m_TileMapToolWindow = (CTileMapToolWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapToolWindow");
@@ -159,8 +161,12 @@ void CEditorScene::EditTileType()
     // 마우스 위치를 이용해서 현재 마우스가 위치한 곳의 타일을 얻어온다.
     CTile* Tile = TileMap->GetTile(MousePos);
 
-    if (Tile)
-        Tile->SetTileType(Type);
+	if (Tile)
+	{
+		Tile->SetTileType(Type);
+		Tile->SetCollisionProfile("Tile_pass", "Tile_Nopass");
+	}
+        
 
 }
 
@@ -179,7 +185,9 @@ void CEditorScene::EditTileImage()
 		CTile* Tile = TileMap->GetTile(MousePos);
 
 		if (Tile)
+		{
 			Tile->SetTileType(Tile_Type::Wall);
+		}
 	}
 
 	else
@@ -190,6 +198,8 @@ void CEditorScene::EditTileImage()
 
 void CEditorScene::AddObjectMap()
 {
+	if (CInput::GetInst()->GetMouseCollision())
+		return;
 	CGameObject* Obj=m_PrefabWindow->GetSelectObject();
 	if (!Obj)
 		return;
@@ -624,4 +634,54 @@ void CEditorScene::CreateParticle()
 	m_pScene->GetResource()->SetParticle2D("DoorParticle", true);
 	m_pScene->GetResource()->SetParticleMoveDir("DoorParticle", 0.f, 1.f, 0.f);
 	m_pScene->GetResource()->SetParticleMoveAngle("DoorParticle", 0.f, 0.f, 90.f);
+}
+
+void CEditorScene::CreateCollisionProfile()
+{
+	CCollisionManager::GetInst()->CreateChannel("Static", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("Player", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("PlayerAttack", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("Enemy", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("EnemyAttack", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("Tile_Nopass", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("Tile_pass", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("NextStage", Collision_Interaction::Block);
+	CCollisionManager::GetInst()->CreateChannel("Item", Collision_Interaction::Block);
+
+	CCollisionManager::GetInst()->CreateProfile("Static", Collision_Channel::Static);
+	CCollisionManager::GetInst()->CreateProfile("Player", Collision_Channel::Player);
+	CCollisionManager::GetInst()->CreateProfile("PlayerAttack", Collision_Channel::PlayerAttack);
+	CCollisionManager::GetInst()->CreateProfile("Enemy", Collision_Channel::Enemy);
+	CCollisionManager::GetInst()->CreateProfile("EnemyAttack", Collision_Channel::EnemyAttack);
+	CCollisionManager::GetInst()->CreateProfile("Tile_Nopass", Collision_Channel::Tile_Nopass);
+	CCollisionManager::GetInst()->CreateProfile("Tile_pass", Collision_Channel::Tile_pass);
+	CCollisionManager::GetInst()->CreateProfile("NextStage", Collision_Channel::NextStage);
+	CCollisionManager::GetInst()->CreateProfile("Item", Collision_Channel::Item);
+
+	CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Player,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Enemy,
+		Collision_Interaction::Ignore);
+
+	CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::PlayerAttack,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::PlayerAttack,
+		Collision_Interaction::Ignore);
+
+	CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::EnemyAttack,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::EnemyAttack,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::EnemyAttack,
+		Collision_Interaction::Ignore);
+
+
+	CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_pass,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_Nopass,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_pass,
+		Collision_Interaction::Ignore);
+	CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_Nopass,
+		Collision_Interaction::Ignore);
 }

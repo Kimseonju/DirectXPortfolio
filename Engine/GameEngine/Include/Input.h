@@ -54,8 +54,17 @@ private:
     bool                m_ShiftState;
     Vector2             m_MousePos;
     Vector2             m_MouseMove;
-
+    bool                m_MouseCollision;
 public:
+    void SetMouseCollision(bool Collision)
+    {
+        m_MouseCollision = Collision;
+    }
+
+    bool GetMouseCollision() const
+    {
+        return m_MouseCollision;
+    }
     Vector2 GetMousePos()   const
     {
         return m_MousePos;

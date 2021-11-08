@@ -11,6 +11,7 @@ public:
 private:
 
 	class CIMGUIRadioButton* m_MosueStateRadioButton;
+	class CIMGUIText* m_FPS;
 public:
 public:
 
