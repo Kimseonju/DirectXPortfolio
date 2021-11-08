@@ -46,8 +46,10 @@ private:
 	Tile_Type			m_TileType;
 	Tile_Modify_Type	m_TileModifyType;
 	bool		m_CreateTile;
-	CSharedPtr<CTileMapComponent> m_TileMap;
-	CSharedPtr<CGameObject>	m_MainMap;
+	CSharedPtr<CTileMapComponent> m_TileMapComponent;
+	CSharedPtr<CTileMapComponent> m_TileMapObjectComponent;
+	CSharedPtr<CGameObject>	m_TileMap;
+	CSharedPtr<CGameObject>	m_TileObjectMap;
 	int		m_ImageFrameX;
 	int		m_ImageFrameY;
 	int		m_ImageFrameMaxX;
@@ -77,11 +79,15 @@ public:
 		return m_ImageFrameY;
 	}
 
-	CTileMapComponent* GetTileMap()	const
+	CTileMapComponent* GetTileMapComponent()	const
 	{
-		return m_TileMap;
+		return m_TileMapComponent;
 	}
 
+	CTileMapComponent* GetTileMapObjectComponent()	const
+	{
+		return m_TileMapObjectComponent;
+	}
 	bool IsTileMap()	const
 	{
 		return m_CreateTile;

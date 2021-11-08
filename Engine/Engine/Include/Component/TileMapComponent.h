@@ -128,7 +128,7 @@ private:
 public:
 	template <typename T>
 	void CreateTile(Tile_Shape Shape, int CountX, int CountY,
-		const Vector2& TileSize)
+		const Vector2& TileSize, bool Collision = true)
 	{
 		m_Shape = Shape;
 		m_CountX = CountX;
@@ -145,7 +145,7 @@ public:
 				T* Tile = new T;
 
 				Tile->m_Owner = this;
-
+				Tile->SetCollision(Collision);
 				m_vecTile[i * m_CountX + j] = Tile;
 
 				m_vecTileInfo[i * m_CountX + j].Color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -213,7 +213,6 @@ public:
 		}
 		break;
 		}
-
 		SetWorldInfo();
 	}
 };

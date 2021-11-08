@@ -31,6 +31,7 @@ private:
 private:
     void EditTileType();
     void EditTileImage();
+    void EditTileObjectImage();
     void AddObjectMap();
     void DeleteObjectMap();
     void CreateAnimationSequence2D();

@@ -119,12 +119,26 @@ void CEditorScene::MouseLButton(float DeltaTime)
 		}
 		break;
 	}
-
+	case Mouse_State::TileObject:
+	{ 
+		Tile_Modify_Type    ModifyType = m_TileMapToolWindow->GetTileModifyType();
+		switch (ModifyType)
+		{
+		case Tile_Modify_Type::Type:
+			EditTileType();
+			break;
+		case Tile_Modify_Type::Image:
+			EditTileObjectImage();
+			break;
+		}
+		break;
+	}
 	case Mouse_State::World:
 	{
 		AddObjectMap();
 		break;
 	}
+
 	}
 }
 
@@ -177,6 +191,33 @@ void CEditorScene::EditTileImage()
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 	CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileMap();
+
+	if (Frame.x == -1 || Frame.y == -1)
+	{
+		TileMap->TileRemoveRender(Vector3(MousePos.x, MousePos.y, 0.f));
+
+		CTile* Tile = TileMap->GetTile(MousePos);
+
+		if (Tile)
+		{
+			Tile->SetTileType(Tile_Type::Wall);
+		}
+	}
+
+	else
+	{
+		TileMap->SetTileFrame(MousePos, Frame.x, Frame.y);
+	}
+}
+
+void CEditorScene::EditTileObjectImage()
+{
+
+	Vector2 Frame = m_TileMapToolWindow->GetImageFrame();
+
+	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
+	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
+	CTileMapComponent* TileMap = m_TileMapToolWindow->GetTileObjectMap();
 
 	if (Frame.x == -1 || Frame.y == -1)
 	{

@@ -12,7 +12,6 @@
 #include "../NavigationManager.h"
 #include "../Navigation2D.h"
 
-
 CTileMapComponent::CTileMapComponent() :
 	m_WorldBuffer(nullptr),
 	m_CBuffer(nullptr),
@@ -33,7 +32,6 @@ CTileMapComponent::CTileMapComponent(const CTileMapComponent& com) :
 
 CTileMapComponent::~CTileMapComponent()
 {
-
 	SAFE_DELETE(m_WorldBuffer);
 	SAFE_DELETE(m_CBuffer);
 
@@ -281,6 +279,7 @@ int CTileMapComponent::GetTileIndexX(const Vector3& Pos)
 
 		return IndexX;
 	}
+
 	int	IndexY = GetTileIndexY(Pos);
 
 	if (IndexY < 0 || IndexY >= m_CountY)
@@ -300,7 +299,6 @@ int CTileMapComponent::GetTileIndexX(const Vector3& Pos)
 		return -1;
 
 	return IndexX;
-
 }
 
 int CTileMapComponent::GetTileIndexY(const Vector3& Pos)
@@ -683,7 +681,6 @@ void CTileMapComponent::UpdateInfo()
 	}
 }
 
-
 void CTileMapComponent::Start()
 {
 	CPrimitiveComponent::Start();
@@ -723,13 +720,13 @@ void CTileMapComponent::Update(float DeltaTime)
 	for (size_t i = 0; i < Size; ++i)
 	{
 		m_vecTile[i]->Update(DeltaTime);
-	}
-	*/
+	}*/
 }
 
 void CTileMapComponent::PostUpdate(float DeltaTime)
 {
 	CPrimitiveComponent::PostUpdate(DeltaTime);
+
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 	Resolution	RS = Camera->GetResolution();
@@ -760,14 +757,12 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 	EndX = EndX >= m_CountX ? m_CountX - 1 : EndX;
 	EndY = EndY >= m_CountY ? m_CountY - 1 : EndY;
 
-
-
 	Matrix	matView, matProj;
 	matView = Camera->GetViewMatrix();
 	matProj = Camera->GetProjMatrix();
 
 	m_RenderCount = 0;
-	
+
 	for (int i = StartY; i <= EndY; ++i)
 	{
 		for (int j = StartX; j <= EndX; ++j)
@@ -787,9 +782,6 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 						break;
 					case Tile_Type::Wall:
 						m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
-						break;
-					case Tile_Type::Crossed_Wall:
-						m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
 						break;
 					}
 				}
@@ -836,7 +828,7 @@ CTileMapComponent* CTileMapComponent::Clone()
 	return new CTileMapComponent(*this);
 }
 
-void CTileMapComponent::Save(const TCHAR* FileName, 
+void CTileMapComponent::Save(const TCHAR* FileName,
 	const std::string& PathName)
 {
 	const PathInfo* Info = CPathManager::GetInst()->FindPath(PathName);
@@ -884,6 +876,7 @@ void CTileMapComponent::Save(FILE* pFile)
 	{
 		m_vecTile[i]->Save(pFile);
 	}
+
 }
 
 void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
@@ -908,7 +901,37 @@ void CTileMapComponent::SaveFullPath(const TCHAR* FullPath)
 	if (!pFile)
 		return;
 
-	Save(pFile);
+	Vector3	Pos, Rot, Scale;
+
+	Pos = GetWorldPos();
+	Rot = GetWorldRotation();
+	Scale = GetWorldScale();
+
+	fwrite(&Pos, sizeof(Vector3), 1, pFile);
+	fwrite(&Rot, sizeof(Vector3), 1, pFile);
+	fwrite(&Scale, sizeof(Vector3), 1, pFile);
+
+	fwrite(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fwrite(&m_CountX, sizeof(int), 1, pFile);
+	fwrite(&m_CountY, sizeof(int), 1, pFile);
+
+	fwrite(&m_TileSize, sizeof(Vector2), 1, pFile);
+	fwrite(&m_TileImageSize, sizeof(Vector2), 1, pFile);
+	fwrite(&m_TileImageFrameSize, sizeof(Vector2), 1, pFile);
+
+	fwrite(&m_FrameMaxX, sizeof(int), 1, pFile);
+	fwrite(&m_FrameMaxY, sizeof(int), 1, pFile);
+
+	// 재질 정보 저장.
+	m_vecMaterialSlot[0]->Save(pFile);
+
+	// 타일 저장
+	size_t	Size = m_vecTile.size();
+
+	for (size_t i = 0; i < Size; ++i)
+	{
+		m_vecTile[i]->Save(pFile);
+	}
 
 
 	fclose(pFile);
@@ -984,6 +1007,7 @@ void CTileMapComponent::Load(FILE* pFile)
 
 		m_vecTile[i]->Load(pFile);
 		m_vecTile[i]->Init();
+		//m_vecTile[i]->Init();
 		m_vecTileInfo[i].Color = Vector4(1.f, 1.f, 1.f, 1.f);
 		m_vecTileInfo[i].Opacity = 1.f;
 	}
@@ -1015,26 +1039,76 @@ void CTileMapComponent::LoadFullPath(const TCHAR* FullPath)
 	if (!pFile)
 		return;
 
-	Load(pFile);
-	
+	Vector3	Pos, Rot, Scale;
+
+	fread(&Pos, sizeof(Vector3), 1, pFile);
+	fread(&Rot, sizeof(Vector3), 1, pFile);
+	fread(&Scale, sizeof(Vector3), 1, pFile);
+
+	SetWorldPos(Pos);
+	SetWorldRotation(Rot);
+	SetWorldScale(Scale);
+
+	fread(&m_Shape, sizeof(Tile_Shape), 1, pFile);
+	fread(&m_CountX, sizeof(int), 1, pFile);
+	fread(&m_CountY, sizeof(int), 1, pFile);
+
+	fread(&m_TileSize, sizeof(Vector2), 1, pFile);
+	fread(&m_TileImageSize, sizeof(Vector2), 1, pFile);
+	fread(&m_TileImageFrameSize, sizeof(Vector2), 1, pFile);
+
+	fread(&m_FrameMaxX, sizeof(int), 1, pFile);
+	fread(&m_FrameMaxY, sizeof(int), 1, pFile);
+
+	// 재질 정보 불러오기.
+	CMaterial* Material = CResourceManager::GetInst()->CreateMaterial();
+
+	Material->Load(pFile);
+
+	m_vecMaterialSlot[0] = Material;
+	m_vecMaterialSlot[0]->Release();
+
+	auto	iter = m_vecTile.begin();
+	auto	iterEnd = m_vecTile.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		SAFE_DELETE((*iter));
+	}
+
+	m_vecTile.clear();
+
+
+	// 타일 불러오기
+	int	Count = m_CountX * m_CountY;
+
+	m_vecTile.resize(Count);
+	m_vecTileInfo.resize(Count);
+
+	for (int i = 0; i < Count; ++i)
+	{
+		m_vecTile[i] = new CTile;
+
+		m_vecTile[i]->m_Owner = this;
+
+		m_vecTile[i]->Load(pFile);
+		m_vecTile[i]->Init();
+		m_vecTileInfo[i].Color = Vector4(1.f, 1.f, 1.f, 1.f);
+		m_vecTileInfo[i].Opacity = 1.f;
+	}
+
+	m_CBuffer->SetTileImageSize(m_TileImageSize);
+
 	fclose(pFile);
 
 
 	SetWorldInfo();
 }
 
-void CTileMapComponent::SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass)
-{
-	for (size_t i = 0; i < m_vecTile.size(); ++i)
-	{
-		m_vecTile[i]->SetCollisionProfile(TilePass, TileNoPass);
-		
-	}
-}
-
-
 void CTileMapComponent::SetWorldInfo()
 {
+	CNavigationManager::GetInst()->SetTileInfo();
+
 	m_WorldBuffer = new CStructuredBuffer;
 
 	if (!m_WorldBuffer->Init("TileMapBuffer", sizeof(TileInfo),
@@ -1042,6 +1116,15 @@ void CTileMapComponent::SetWorldInfo()
 	{
 		SAFE_DELETE(m_WorldBuffer);
 		return;
+	}
+}
+
+void CTileMapComponent::SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass)
+{
+	for (size_t i = 0; i < m_vecTile.size(); ++i)
+	{
+		m_vecTile[i]->SetCollisionProfile(TilePass, TileNoPass);
+
 	}
 }
 

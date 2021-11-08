@@ -12,6 +12,7 @@ enum class Mouse_State
 {
 	Normal,
 	Tile,
+	TileObject,
 	World
 };
 

@@ -126,8 +126,8 @@ void CIMGUITileMapComponent::InputImageFrameX()
 	else if (m_ImageFrameX < 0)
 		m_ImageFrameX = 0;
 
-	if (m_TileMap)
-		m_TileMap->UpdateInfo();
+	if (m_TileMapComponent)
+		m_TileMapComponent->UpdateInfo();
 
 	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
 		m_ImageFrameY / (float)m_ImageFrameMaxY);
@@ -145,8 +145,8 @@ void CIMGUITileMapComponent::InputImageFrameY()
 	else if (m_ImageFrameY < 0)
 		m_ImageFrameY = 0;
 
-	if (m_TileMap)
-		m_TileMap->UpdateInfo();
+	if (m_TileMapComponent)
+		m_TileMapComponent->UpdateInfo();
 
 	m_TileImage->SetStartUV(m_ImageFrameX / (float)m_ImageFrameMaxX,
 		m_ImageFrameY / (float)m_ImageFrameMaxY);
@@ -160,8 +160,8 @@ void CIMGUITileMapComponent::InputImageFrameMaxX()
 
 	if (m_TileMap)
 	{
-		m_TileMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
-		m_TileMap->UpdateInfo();
+		m_TileMapComponent->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+		m_TileMapComponent->UpdateInfo();
 	}
 	if (m_TileComponent)
 	{
@@ -180,8 +180,8 @@ void CIMGUITileMapComponent::InputImageFrameMaxY()
 
 	if (m_TileMap)
 	{
-		m_TileMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
-		m_TileMap->UpdateInfo();
+		m_TileMapComponent->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+		m_TileMapComponent->UpdateInfo();
 	}
 
 	if (m_TileComponent)
@@ -601,20 +601,23 @@ void CIMGUITileMapComponent::CreateTileButton()
 	TileCountX = m_InputTileCountX->GetValueInt();
 	TileCountY = m_InputTileCountY->GetValueInt();
 
-	if (m_MainMap.Get())
-	{
-		m_MainMap->Active(false);
-	}
 	if (m_TileMap.Get())
 	{
 		m_TileMap->Active(false);
-		m_TileMap->MapClear();
+		m_TileMapComponent->Active(false);
+		m_TileMapComponent->MapClear();
 	}
-	m_MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+	if (m_TileObjectMap.Get())
+	{
+		m_TileObjectMap->Active(false);
+		m_TileMapObjectComponent->Active(false);
+		m_TileMapObjectComponent->MapClear();
+	}
+	m_TileMap = Scene->SpawnObject<CGameObject>("TileMap");
 
-	CTileMapComponent* TileMap = m_MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+	CTileMapComponent* TileMap = m_TileMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 
-	m_MainMap->SetRootComponent(TileMap);
+	m_TileMap->SetRootComponent(TileMap);
 
 	TileMap->SetWorldPos(Pos);
 	TileMap->SetWorldRotation(Rot);
@@ -633,14 +636,37 @@ void CIMGUITileMapComponent::CreateTileButton()
 		TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
 		TileMap->UpdateInfo();
 	}
-	//TileMap->SetMaterial(0, "MainMap");
-	//TileMap->SetFrameMax(5, 76);
-	//TileMap->SetTileDefaultFrame(3, 2);
 
-	//TileMap->SetMaterial(0, "MainMapRect");
-	//TileMap->SetFrameMax(1, 5);
-	//TileMap->SetTileDefaultFrame(0, 0);
-	m_TileMap = TileMap;
+	m_TileMapComponent = TileMap;
+
+	//오브젝트타일용
+	m_TileObjectMap = Scene->SpawnObject<CGameObject>("TileObjectMap");
+
+	CTileMapComponent* TileObjectMap = m_TileObjectMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+
+	m_TileObjectMap->SetRootComponent(TileObjectMap);
+
+	TileObjectMap->SetWorldPos(Pos);
+	TileObjectMap->SetWorldRotation(Rot);
+	TileObjectMap->SetWorldScale(Scale);
+
+
+	// TileShape를 얻어온다.
+	TileObjectMap->CreateTile<CTile>(m_TileShape, TileCountX, TileCountY, TileSize, false);
+	TileObjectMap->SetMaterial(0, "MainMap");
+
+	TileObjectMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
+	//빈공간 선택
+	TileObjectMap->SetTileDefaultFrame(3, 0);
+
+	if (m_TileTexture)
+	{
+		TileObjectMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+		TileObjectMap->UpdateInfo();
+	}
+
+	m_TileMapObjectComponent = TileObjectMap;
+
 }
 
 
@@ -663,7 +689,29 @@ void CIMGUITileMapComponent::SaveTileMap()
 
 	if (dlg.DoModal() == IDOK)
 	{
-		m_TileMap->SaveFullPath(dlg.GetPathName());
+		char	FullPathMultibyte[MAX_PATH] = {};
+
+#ifdef UNICODE
+
+		int ConvertLength = WideCharToMultiByte(CP_ACP, 0, dlg.GetPathName(), -1, nullptr, 0, nullptr, nullptr);
+		WideCharToMultiByte(CP_ACP, 0, dlg.GetPathName(), -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+#else
+
+		strcpy_s(FullPathMultibyte, FullPath);
+
+#endif // UNICODE
+
+		FILE* pFile = nullptr;
+
+		fopen_s(&pFile, FullPathMultibyte, "wb");
+
+		if (!pFile)
+			return;
+
+		SaveTile(pFile);
+
+		fclose(pFile);
 	}
 }
 
@@ -674,7 +722,8 @@ void CIMGUITileMapComponent::SaveTile(FILE* pFile)
 		AfxMessageBox(TEXT("타일맵을 생성하세요"));
 		return;
 	}
-	m_TileMap->Save(pFile);
+	m_TileMapComponent->Save(pFile);
+	m_TileMapObjectComponent->Save(pFile);
 }
 
 void CIMGUITileMapComponent::LoadTileMap()
@@ -690,27 +739,28 @@ void CIMGUITileMapComponent::LoadTileMap()
 
 	if (dlg.DoModal() == IDOK)
 	{
-		if (!m_TileMap)
-		{
-			CScene* Scene = CSceneManager::GetInst()->GetScene();
+		char	FullPathMultibyte[MAX_PATH] = {};
 
-			CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+#ifdef UNICODE
 
-			CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+		int ConvertLength = WideCharToMultiByte(CP_ACP, 0, dlg.GetPathName(), -1, nullptr, 0, nullptr, nullptr);
+		WideCharToMultiByte(CP_ACP, 0, dlg.GetPathName(), -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
 
-			MainMap->SetRootComponent(TileMap);
+#else
 
-			m_TileMap = TileMap;
-		}
+		strcpy_s(FullPathMultibyte, FullPath);
 
-		m_TileMap->LoadFullPath(dlg.GetPathName());
+#endif // UNICODE
 
-		m_InputTileCountX->SetInt(m_TileMap->GetTileCountX());
-		m_InputTileCountY->SetInt(m_TileMap->GetTileCountY());
-		m_InputTileSizeX->SetFloat(m_TileMap->GetTileSize().x);
-		m_InputTileSizeY->SetFloat(m_TileMap->GetTileSize().y);
+		FILE* pFile = nullptr;
 
-		m_CreateTile = true;
+		fopen_s(&pFile, FullPathMultibyte, "rb");
+
+		if (!pFile)
+			return;
+		LoadTile(pFile);
+
+		fclose(pFile);
 	}
 }
 
@@ -720,23 +770,36 @@ void CIMGUITileMapComponent::LoadTile(FILE* pFile)
 	{
 		CScene* Scene = CSceneManager::GetInst()->GetScene();
 
-		CGameObject* MainMap = Scene->SpawnObject<CGameObject>("MainMap");
+		m_TileMap = Scene->SpawnObject<CGameObject>("TileMap");
 
-		CTileMapComponent* TileMap = MainMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+		CTileMapComponent* TileMap = m_TileMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 
-		MainMap->SetRootComponent(TileMap);
+		m_TileMap->SetRootComponent(TileMap);
 
-		m_TileMap = TileMap;
+		m_TileMapComponent = TileMap;
 	}
+	if (!m_TileObjectMap)
+	{
+		CScene* Scene = CSceneManager::GetInst()->GetScene();
 
-	m_TileMap->Load(pFile);
+		m_TileObjectMap = Scene->SpawnObject<CGameObject>("TileObjectMap");
 
-	m_InputTileCountX->SetInt(m_TileMap->GetTileCountX());
-	m_InputTileCountY->SetInt(m_TileMap->GetTileCountY());
-	m_InputTileSizeX->SetFloat(m_TileMap->GetTileSize().x);
-	m_InputTileSizeY->SetFloat(m_TileMap->GetTileSize().y);
+		CTileMapComponent* TileMap = m_TileObjectMap->CreateSceneComponent<CTileMapComponent>("TileMap");
+
+		m_TileObjectMap->SetRootComponent(TileMap);
+
+		m_TileMapObjectComponent = TileMap;
+	}
+	m_TileMapComponent->Load(pFile);
+	m_TileMapObjectComponent->Load(pFile);
+
+	m_InputTileCountX->SetInt(m_TileMapComponent->GetTileCountX());
+	m_InputTileCountY->SetInt(m_TileMapComponent->GetTileCountY());
+	m_InputTileSizeX->SetFloat(m_TileMapComponent->GetTileSize().x);
+	m_InputTileSizeY->SetFloat(m_TileMapComponent->GetTileSize().y);
 
 	m_CreateTile = true;
+	m_TileMapComponent->SetCollisionTileType("Tile_pass", "Tile_Nopass");
 }
 
 void CIMGUITileMapComponent::LoadTileImage()
@@ -767,14 +830,24 @@ void CIMGUITileMapComponent::LoadTileImage()
 		if(m_TileComponent)
 			m_TileComponent->SetTexture(m_TileTexture);
 
-		if (m_TileMap)
+		if (m_TileMapComponent)
 		{
-			m_TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+			m_TileMapComponent->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
 
 			if (m_TileTexture)
 			{
-				m_TileMap->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
-				m_TileMap->UpdateInfo();
+				m_TileMapComponent->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+				m_TileMapComponent->UpdateInfo();
+			}
+		}
+		if (m_TileMapObjectComponent)
+		{
+			m_TileMapObjectComponent->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+
+			if (m_TileTexture)
+			{
+				m_TileMapObjectComponent->GetMaterial(0)->SetTexture("MainMap", m_TileTexture);
+				m_TileMapObjectComponent->UpdateInfo();
 			}
 		}
 	}

@@ -41,6 +41,7 @@ bool CStateWindow::Init()
 	m_MosueStateRadioButton->SetSelectCallback<CStateWindow>(this, &CStateWindow::MouseRadioCallback);
 	m_MosueStateRadioButton->AddItem("Normal");
 	m_MosueStateRadioButton->AddItem("Tile");
+	m_MosueStateRadioButton->AddItem("TileObject");
 	m_MosueStateRadioButton->AddItem("World");
 	CGlobalValue::MouseState = Mouse_State::Normal;
 

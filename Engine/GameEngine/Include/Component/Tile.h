@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameEngine.h"
+#include "../GameObject.h"
 
 class CTile
 {
@@ -20,6 +21,7 @@ private:
 	Matrix		m_matWorld;
 	Vector2		m_FrameStart;
 	Vector2		m_FrameEnd;
+	bool		m_Collision;
 	int			m_FrameX;
 	int			m_FrameY;
 	int			m_IndexX;
@@ -30,7 +32,7 @@ private:
 	float		m_NodeDistH;	// 세로 길이
 	float		m_NodeDistD;	// 대각선 길이
 	float		m_NodeDistDHalf;	// 대각선 반 길이
-	class CGameObject* m_CollisionObject;
+	CSharedPtr<CGameObject> m_CollisionObject;
 	class CColliderBox2D* m_ColliderBox2DComponent;
 public:
 	float GetDistW()	const
@@ -120,6 +122,10 @@ public:
 	}
 
 public:
+	void SetCollision(bool Collision)
+	{
+		m_Collision = Collision;
+	}
 	void SetIndex(int IndexX, int IndexY, int Index)
 	{
 		m_IndexX = IndexX;

@@ -42,26 +42,30 @@ void CNavigationManager::CreateNavigation()
 
 void CNavigationManager::SetTileInfo()
 {
-	CTileMapComponent* TileMap = ((CNavigation2D*)m_Navigation)->GetTileMap();
-
-	if (!TileMap)
-		return;
-
-	// 스레드를 생성한다.
-	for (int i = 0; i < 4; ++i)
-	{
-		std::string	Name = "NavThread";
-		Name += (i + 1);
-
-		CThreadNavigation2D* Thread = CThreadManager::GetInst()->CreateThread<CThreadNavigation2D>(Name);
-
-		Thread->SetNavigation(m_Navigation);
-		Thread->CreateNavigationInfo(TileMap);
-
-		m_vecThread.push_back(Thread);
-
-		Thread->Start();
-	}
+	//CTileMapComponent* TileMap = ((CNavigation2D*)m_Navigation)->GetTileMap();
+	//
+	//if (!TileMap)
+	//	return;
+	//
+	//// 스레드를 생성한다.
+	//for (int i = 0; i < 4; ++i)
+	//{
+	//	std::string	Name = "NavThread";
+	//	Name += (i + 1);
+	//
+	//	CThreadNavigation2D* Thread = CThreadManager::GetInst()->CreateThread<CThreadNavigation2D>(Name);
+	//	if (!Thread)
+	//	{
+	//		//중복(ObjectTile들어옴)
+	//		return;
+	//	}
+	//	Thread->SetNavigation(m_Navigation);
+	//	Thread->CreateNavigationInfo(TileMap);
+	//
+	//	m_vecThread.push_back(Thread);
+	//
+	//	Thread->Start();
+	//}
 }
 
 bool CNavigationManager::FindPath(const Vector3& Start, const Vector3& Goal,

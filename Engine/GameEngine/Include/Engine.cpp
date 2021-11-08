@@ -26,7 +26,7 @@ bool CEngine::m_Loop = true;
 CEngine::CEngine()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(73767);
+	//_CrtSetBreakAlloc(6424);
 
 	m_pTimer = nullptr;
 	m_TimeScale = 1.f;

@@ -128,7 +128,7 @@ private:
 public:
 	template <typename T>
 	void CreateTile(Tile_Shape Shape, int CountX, int CountY,
-		const Vector2& TileSize)
+		const Vector2& TileSize, bool Collision = true)
 	{
 		m_Shape = Shape;
 		m_CountX = CountX;
@@ -213,8 +213,6 @@ public:
 		}
 		break;
 		}
-
-		SetWorldInfo();
 	}
 };
 

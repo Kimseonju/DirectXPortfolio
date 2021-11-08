@@ -94,10 +94,10 @@ void CTileMapToolWindow::Update(float DeltaTime)
 	Vector2 Pos=CInput::GetInst()->GetMouse2DWorldPos();
 	m_MousePosX->SetText(std::to_string(Pos.x).c_str());
 	m_MousePosY->SetText(std::to_string(Pos.y).c_str());
-	if (m_TileMap->GetTileMap())
+	if (m_TileMap->GetTileMapComponent())
 	{
-		int x = m_TileMap->GetTileMap()->GetTileIndexX(Vector3(Pos.x, Pos.y, 0.f));
-		int y = m_TileMap->GetTileMap()->GetTileIndexY(Vector3(Pos.x, Pos.y, 0.f));
+		int x = m_TileMap->GetTileMapComponent()->GetTileIndexX(Vector3(Pos.x, Pos.y, 0.f));
+		int y = m_TileMap->GetTileMapComponent()->GetTileIndexY(Vector3(Pos.x, Pos.y, 0.f));
 		m_TileIndexX->SetText(std::to_string(x).c_str());
 		m_TileIndexY->SetText(std::to_string(y).c_str());
 	}
@@ -138,7 +138,12 @@ int CTileMapToolWindow::GetImageFrameY()
 
 CTileMapComponent* CTileMapToolWindow::GetTileMap()
 {
-	return m_TileMap->GetTileMap();
+	return m_TileMap->GetTileMapComponent();
+}
+
+CTileMapComponent* CTileMapToolWindow::GetTileObjectMap()
+{
+	return m_TileMap->GetTileMapObjectComponent();
 }
 
 CIMGUITileMapComponent* CTileMapToolWindow::GetTileMapComponent()
