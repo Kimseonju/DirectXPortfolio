@@ -13,7 +13,7 @@ protected:
 public:
 	void WidgetPush(CIMGUIWidget* Widget);
 	void WidgetPush(std::vector<CIMGUIWidget*>& Widget);
-	void SetTabBarEnd(class CIMGUITabItemEnd* BarEnd)
+	void SetTabBarEnd(CIMGUITabItemEnd* BarEnd)
 	{
 		m_BarEnd = BarEnd;
 	}

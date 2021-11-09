@@ -30,7 +30,7 @@ bool CTestTileMap::Init()
 
 	SetRootComponent(m_TileMap);
 
-	m_TileMap->Load(TEXT("TestMap.map"));
+	m_TileMap->Load(TEXT("BasicMap_BasicD.map"));
 	m_TileMap->SetCollisionTileType("Tile_pass", "Tile_Nopass");
 	//m_TileMap->SetTileTypeCollision()
 	//m_TileMap->SetMaterial(0, "MainMap");
@@ -42,6 +42,7 @@ bool CTestTileMap::Init()
 	//m_TileMap->SetMaterial(0, "MainMapRect");
 	//m_TileMap->SetFrameMax(1, 5);
 	//m_TileMap->SetTileDefaultFrame(0, 0);
+
 	return true;
 }
 

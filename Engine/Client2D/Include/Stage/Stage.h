@@ -3,6 +3,7 @@
 #include "../GlobalValue.h"
 #include "Door.h"
 
+//Enemy,Object,Tile Door 등 들고있는 클래스
 class CStage
 {
 public:
@@ -15,23 +16,35 @@ private:
 	맵
 	미니맵
 	맵UI
-
 	*/
 	Stage_State m_State;
 	std::vector<CSharedPtr<CGameObject>> m_Enemy;
+	std::vector<CSharedPtr<CGameObject>> m_Object;
 	std::vector<CDoor*> m_Doors;
-	CStage* ConnectStage[Stage_Dir::END];
-	bool m_Visit;  //방문여부체크
-	bool m_NextStage;
-	std::vector<Vector2> m_PlayerSpawn;
-
-
-	class CRoom* m_Rooms[20][20];
-	int m_RoomSize;
+	class CGameObject* m_TileMap;
+	class CGameObject* m_TileMapObject;
+	
+	bool m_Enable;
+	class CScene* m_pScene;
 public:
-	//방이 없다 true
-	// 있거나 못만든다.=false
-	bool CheckRoom(int x, int y);
+	void SetScene(class CScene* Scene)
+	{
+		m_pScene = Scene;
+	}
+	void Enable(bool Enable);
+	Stage_State GetStageState()
+	{
+		return m_State;
+	}
+	void SetTileMap(class CGameObject* TileMap)
+	{
+		m_TileMap = TileMap;
+	}void SetTileMapObject(class CGameObject* TileMapObject)
+	{
+		m_TileMapObject = TileMapObject;
+	}
+	void ObjectUpdate(StageObjectsInfo Info, StageType Type);
+public:
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -39,10 +52,4 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CStage* Clone();
-	void SetRooms(int x, int y, class CRoom* room);
-	class CRoom* GetRooms(int x, int y);
-	int GetRoomSize()
-	{
-		return m_RoomSize;
-	}
 };

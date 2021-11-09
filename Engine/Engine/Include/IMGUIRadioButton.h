@@ -32,7 +32,6 @@ public:
 	{
 		m_PageItemCount = Count;
 	}
-	
 
 	void DeleteItem(int Index)
 	{

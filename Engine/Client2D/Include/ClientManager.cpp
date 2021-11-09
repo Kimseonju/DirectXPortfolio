@@ -58,6 +58,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateChannel("Tile_pass", Collision_Interaction::Block);
     CCollisionManager::GetInst()->CreateChannel("NextStage", Collision_Interaction::Block);
     CCollisionManager::GetInst()->CreateChannel("Item", Collision_Interaction::Block);
+    CCollisionManager::GetInst()->CreateChannel("InteractionInputKey", Collision_Interaction::Block);
 
     CCollisionManager::GetInst()->CreateProfile("Static", Collision_Channel::Static);
     CCollisionManager::GetInst()->CreateProfile("Player", Collision_Channel::Player);
@@ -68,7 +69,8 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateProfile("Tile_pass", Collision_Channel::Tile_pass);
     CCollisionManager::GetInst()->CreateProfile("NextStage", Collision_Channel::NextStage);
     CCollisionManager::GetInst()->CreateProfile("Item", Collision_Channel::Item);
-
+    CCollisionManager::GetInst()->CreateProfile("InteractionInputKey", Collision_Channel::InteractionInputKey);
+    
     CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Player,
         Collision_Interaction::Ignore);
    CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Enemy,

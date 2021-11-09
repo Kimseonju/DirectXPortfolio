@@ -238,14 +238,14 @@ void CIMGUITransformComponent::InputRotX()
 
 void CIMGUITransformComponent::InputRotY()
 {
-	float y = m_InputRotX->GetValueFloat();
+	float y = m_InputRotY->GetValueFloat();
 
 	m_Component->SetRelativeRotationY(y);
 }
 
 void CIMGUITransformComponent::InputRotZ()
 {
-	float z = m_InputRotX->GetValueFloat();
+	float z = m_InputRotZ->GetValueFloat();
 
 	m_Component->SetRelativeRotationZ(z);
 }

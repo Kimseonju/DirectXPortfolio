@@ -11,7 +11,8 @@ CTile::CTile() :
 	m_Index(-1),
 	m_FrameX(0),
 	m_FrameY(0),
-	m_Collision(true)
+	m_Collision(true),
+	m_Editor(false)
 {
 }
 
@@ -45,31 +46,57 @@ bool CTile::Init()
 	{
 		if (m_Collision)
 		{
-			std::string str = std::to_string(m_Index);
-			m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject" + str);
+			if (m_Editor)
+			{
+				std::string str = std::to_string(m_Index);
+				m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject" + str);
 
-			m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
-			m_ColliderBox2DComponent->SetExtent(m_Size.x / 2.f, m_Size.y / 2.f);
-			m_ColliderBox2DComponent->SetWorldPos(Vector3(m_Center.x, m_Center.y, 0.f));
-			m_CollisionObject->SetRootComponent(m_ColliderBox2DComponent);
-			//m_Center = m_Pos + m_Size / 2.f;
-			switch (m_TileType)
-			{
-			case Tile_Type::None:
-			{
-				m_ColliderBox2DComponent->Enable(false);
-				break;
+				m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+				m_ColliderBox2DComponent->SetExtent(m_Size.x / 2.f, m_Size.y / 2.f);
+				m_ColliderBox2DComponent->SetWorldPos(Vector3(m_Center.x, m_Center.y, 0.f));
+				m_CollisionObject->SetRootComponent(m_ColliderBox2DComponent);
+				//m_Center = m_Pos + m_Size / 2.f;
+				switch (m_TileType)
+				{
+				case Tile_Type::None:
+				{
+					m_ColliderBox2DComponent->Enable(false);
+					break;
+				}
+				case Tile_Type::Wall:
+				{
+					m_ColliderBox2DComponent->Enable(true);
+					break;
+				}
+				case Tile_Type::Crossed_Wall:
+				{
+					m_ColliderBox2DComponent->Enable(true);
+					break;
+				}
+				}
 			}
-			case Tile_Type::Wall:
+			else
 			{
-				m_ColliderBox2DComponent->Enable(true);
-				break;
-			}
-			case Tile_Type::Crossed_Wall:
-			{
-				m_ColliderBox2DComponent->Enable(true);
-				break;
-			}
+				switch (m_TileType)
+				{
+				case Tile_Type::None:
+				{
+					break;
+				}
+				case Tile_Type::Wall:
+				case Tile_Type::Crossed_Wall:
+				{
+					std::string str = std::to_string(m_Index);
+					m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject" + str);
+
+					m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
+					m_ColliderBox2DComponent->SetExtent(m_Size.x / 2.f, m_Size.y / 2.f);
+					m_ColliderBox2DComponent->SetWorldPos(Vector3(m_Center.x, m_Center.y, 0.f));
+					m_CollisionObject->SetRootComponent(m_ColliderBox2DComponent);
+					m_ColliderBox2DComponent->Enable(true);
+					break;
+				}
+				}
 			}
 		}
 	}

@@ -76,18 +76,18 @@ void CStageMap::CreateStage()
 
 	m_StageUpdate = false;
 	Resolution RS = CDevice::GetInst()->GetResolution();
-	for (int i = 0; i < 20; ++i)
-	{
-		for (int j = 0; j < 20; ++j)
-		{
-			CRoom* room = m_Stage->GetRooms(i, j);
-			if (room == nullptr)
-				continue;
-
-			m_MapBase1_0 = CreateWidget<CImage>("Room");
-			m_MapBase1_0->SetPos((float)RS.Width/2.f+(26.f * ((float)i-4.f)*4.f), (float)RS.Height / 2.f+(26.f*((float)j-4.f)*4.f));
-			m_MapBase1_0->SetTexture("Room", TEXT("UI/map/Room.png"));
-			m_MapBase1_0->SetSize(24.f * 4, 24.f * 4);
-		}
-	}
+	//for (int i = 0; i < 20; ++i)
+	//{
+	//	for (int j = 0; j < 20; ++j)
+	//	{
+	//		CRoom* room = m_Stage->GetRooms(i, j);
+	//		if (room == nullptr)
+	//			continue;
+	//
+	//		m_MapBase1_0 = CreateWidget<CImage>("Room");
+	//		m_MapBase1_0->SetPos((float)RS.Width/2.f+(26.f * ((float)i-4.f)*4.f), (float)RS.Height / 2.f+(26.f*((float)j-4.f)*4.f));
+	//		m_MapBase1_0->SetTexture("Room", TEXT("UI/map/Room.png"));
+	//		m_MapBase1_0->SetSize(24.f * 4, 24.f * 4);
+	//	}
+	//}
 }

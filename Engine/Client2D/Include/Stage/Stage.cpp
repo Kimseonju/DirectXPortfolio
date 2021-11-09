@@ -2,55 +2,109 @@
 #include "Stage.h"
 #include "Scene/Scene.h"
 #include "../Room.h"
-
+#include "../MainDoor.h"
+#include <Scene/Scene.h>
+#include <Scene/SceneResource.h>
 CStage::CStage() :
-	m_RoomSize(0),
-	m_Rooms{}
+	m_Enable(true),
+	m_State(Stage_State::Idle)
 {
 }
 
 CStage::~CStage()
 {
-	for (int i = 0; i < 20; ++i)
-	{
-		for (int j = 0; j < 20; ++j)
-		{
-			if (m_Rooms[i][j])
-			{
-				delete m_Rooms[i][j];
-				m_Rooms[i][j] = nullptr;
-			}
-		}
-	}
 }
-bool CStage::CheckRoom(int x, int y)
+void CStage::Enable(bool Enable)
 {
-	if (x < 0 || x >= 20 || y < 0 || y >= 20)
-	{
-		return false;
-	}
-	if (m_Rooms[x][y])
-	{
-		return false;
-	}
-
-	return true;
+	m_Enable = Enable;
+	m_TileMap->Enable(m_Enable);
+	m_TileMapObject->Enable(m_Enable);
 }
+void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
+{
+	if (m_State != Stage_State::Idle)
+	{
+		return;
+	}
+	m_TileMap =Info.TileMap;
+	m_TileMapObject = Info.TileMapObject;
+	size_t Size=Info.StageSpawn.size();
+	for (size_t i = 0; i < Size; i++)
+	{
+		CGameObject* Obj = nullptr;
+		switch (Info.StageSpawn[i].ClassType)
+		{
+		case Client_Class_Type::Default: //
+		{
+			break;
+		}
+		case Client_Class_Type::Object: //만들어놓는다
+		{
+			switch (Info.StageSpawn[i].ObjectType)
+			{
+			case Client_Object_Type::MainDoor: //1순위 스폰위치
+				//플레이어가 문으로 열고가지않았으면 무조건 MainDoor에서 잡아준 스폰위치로 간다
+			{
+				CMainDoor* MainDoor=m_pScene->SpawnObject<CMainDoor>("MainDoor");
+				if (Type == StageType::Start)
+				{
+					MainDoor->StartDoor();
+				}
+				else if (Type == StageType::End)
+				{
+					MainDoor->EndDoor();
+				}
+				m_Object.push_back(MainDoor);
+				Obj = MainDoor;
+				break;
+			}
+			case Client_Object_Type::House:
+			{
+				break;
+			}
+			case Client_Object_Type::Door:
+			{
 
+				CDoor* Door = m_pScene->SpawnObject<CDoor>("MainDoor");
+				m_Doors.push_back(Door);
+				Door->SetDoorDir(Info.StageSpawn[i].DoorDir);
+				Obj = Door;
+
+				break;
+			}
+			}
+			break;
+		}
+		case Client_Class_Type::Enemy:
+		{
+			CGameObject* Obj = nullptr;
+			break;
+		}
+
+		case Client_Class_Type::Boss:
+		{
+			break;
+		}
+		}
+		if (Obj)
+		{
+			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
+			Obj->SetWorldRotation(Info.StageSpawn[i].Rot);
+			Obj->SetWorldScale(Info.StageSpawn[i].Scale);
+			Obj->SetPivot(Info.StageSpawn[i].Pivot);
+		}
+		
+
+	}
+
+}
 void CStage::Start()
 {
 }
 
 bool CStage::Init()
 {
-	CRoom* room = new CRoom();
-	room->SetPos(4, 4);
-	room->SetStage(this);
-	SetRooms(4, 4, room);
-	for (int i = 0; i < 4; ++i)
-	{
-		room->Start((RoomCreate_Dir)i);
-	}
+
 	return true;
 }
 
@@ -129,21 +183,4 @@ void CStage::Render(float DeltaTime)
 CStage* CStage::Clone()
 {
 	return new CStage(*this);
-}
-
-void CStage::SetRooms(int x, int y, CRoom* room)
-{
-	if (m_Rooms[x][y])
-	{
-
-	}
-	else
-	{
-		m_Rooms[x][y] = room;
-		m_RoomSize++;
-	}
-}
-CRoom* CStage::GetRooms(int x, int y)
-{
-	return m_Rooms[x][y];
 }

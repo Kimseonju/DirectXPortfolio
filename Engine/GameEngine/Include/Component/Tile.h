@@ -34,6 +34,7 @@ private:
 	float		m_NodeDistDHalf;	// 대각선 반 길이
 	CSharedPtr<CGameObject> m_CollisionObject;
 	class CColliderBox2D* m_ColliderBox2DComponent;
+	bool		m_Editor;
 public:
 	float GetDistW()	const
 	{
@@ -122,6 +123,10 @@ public:
 	}
 
 public:
+	void SetEditor(bool Editor)
+	{
+		m_Editor = Editor;
+	}
 	void SetCollision(bool Collision)
 	{
 		m_Collision = Collision;

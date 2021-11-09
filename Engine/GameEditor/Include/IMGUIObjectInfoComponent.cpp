@@ -81,7 +81,6 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ClassType->AddItem("Object");
 	m_ClassType->AddItem("Enemy");
 	m_ClassType->AddItem("Boss");
-	m_ClassType->AddItem("TileColliderBox2D");
 	m_ClassType->AddItem("End");
 	m_ClassType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ClassTypeComboCallback);
 	m_vecWidget.push_back(m_ClassType);
@@ -106,8 +105,8 @@ bool CIMGUIObjectInfoComponent::Init()
 #pragma endregion
 
 #pragma region EnemyType
-	Text = m_Owner->AddWidget<CIMGUIText>("ObjectName1");
-	Text->SetText("Name");
+	Text = m_Owner->AddWidget<CIMGUIText>("Enemy1");
+	Text->SetText("Enemy");
 	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);
@@ -124,8 +123,8 @@ bool CIMGUIObjectInfoComponent::Init()
 
 	
 #pragma region Doordir
-	Text = m_Owner->AddWidget<CIMGUIText>("ObjectName2");
-	Text->SetText("Name");
+	Text = m_Owner->AddWidget<CIMGUIText>("DoorDir1");
+	Text->SetText("DoorDir");
 	m_vecWidget.push_back(Text);
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(SameLine);

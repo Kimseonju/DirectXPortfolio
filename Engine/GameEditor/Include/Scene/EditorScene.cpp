@@ -370,19 +370,19 @@ void CEditorScene::CreateAnimationSequence2D()
 	Door
 	*/
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
-		"Door", TEXT("Effect/object/door/door.png"));
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
+		"Door", TEXT("object/door/door.png"));
 
 	for (int i = 0; i < 7; ++i)
 	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorIdle",
-		"Door", TEXT("Effect/object/door/door.png"));
+		"Door", TEXT("object/door/door.png"));
 
 	for (int i = 7; i < 17; ++i)
 	{
@@ -390,15 +390,43 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorClose",
-		"Door", TEXT("Effect/object/door/door.png"));
+	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("DoorOpen",
+		"Door", TEXT("object/door/door.png"));
 	for (int i = 17; i < 23; ++i)
 	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
 			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
 	}
 
+
+	//MainMapDoor
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorClose");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorClose",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 1; i < 9; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorClose",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorCloseIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorCloseIdle",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 9; i < 10; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorCloseIdle",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorOpenIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MainDoorOpenIdle",
+		"MainDoor", TEXT("Dungeon/Door.png"));
+	for (int i = 0; i < 1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorOpenIdle",
+			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+	}
 	//°¡·Î 23
 
 

@@ -56,14 +56,25 @@ void CCamera::CreateProjectionMatrix()
 		break;
 	case Camera_Type::Cam2D:
 	{
-		float percent = (1.f / m_CameraZoom);
-		Vector2 Size = { 640,320 };
-		Size.x = Size.x / m_CameraZoom -640.f;
-		Size.y = Size.y / m_CameraZoom -320.f;
+		Resolution RS = CDevice::GetInst()->GetResolution();
+		Vector2 ResolutionRatio = CDevice::GetInst()->GetResolutionRatio();
+		Vector2 VRS;
+		if (ResolutionRatio.x == 0.f)
+		{
+			VRS.x = (float)RS.Width;
+			VRS.y = (float)RS.Height;
+		}
+		else
+		{
+			VRS.x = (float)RS.Width * ResolutionRatio.x;
+			VRS.y = (float)RS.Height * ResolutionRatio.y;
+		}
+		Vector2 Size = { VRS.x / 2.f, VRS.y / 2.f };
+		Size.x = Size.x / m_CameraZoom - Size.x;
+		Size.y = Size.y / m_CameraZoom - Size.y;
 
-
-		m_matProj = XMMatrixOrthographicOffCenterLH(-Size.x, (float)RS.Width+ Size.x,
-			-Size.y, (float)RS.Height+ Size.y,
+		m_matProj = XMMatrixOrthographicOffCenterLH(-Size.x, (float)VRS.x+ Size.x,
+			-Size.y, VRS.y+ Size.y,
 			0.f, m_Distance);
 	}
 		break;

@@ -119,6 +119,7 @@ public:
 	void SaveFullPath(const TCHAR* FullPath);
 	void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
 	void Load(FILE* pFile);
+	void ClientLoad(FILE* pFile);
 	void LoadFullPath(const TCHAR* FullPath);
 public:
 	void SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass);

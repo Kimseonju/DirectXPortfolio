@@ -10,17 +10,23 @@ class CTestMainScene :
 protected:
     CTestMainScene();
     virtual ~CTestMainScene();
-public:
-    virtual bool Init();
+private:
+
     class CStage* m_Stage;
     int m_Minrooms;
     int m_Maxrooms;
     int m_Endrooms;
+public:
+    virtual bool Init();
+    virtual void Update(float DeltaTime);
+    virtual void PostUpdate(float DeltaTime);
+public:
+
 private:
     void CreateMaterial();
     void CreateAnimationSequence2D();
     void CreateParticle();
-
+    void LoadStage();
     void RandomRoom()
     {
 

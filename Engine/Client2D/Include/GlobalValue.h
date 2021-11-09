@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <GameEngine.h>
 class CPlayer;
 class CBasicMouse;
 class CGlobalValue
@@ -107,24 +108,7 @@ enum class Belial_Pattern
     Bullet,
     End
 };
-enum class Room
-{
-    L,
-    R,
-    U,
-    D,
-    LR,
-    LU,
-    LD,
-    LRU,
-    LRD,
-    LUD,
-    LRUD,
-    RU,
-    RD,
-    RUD,
-    UD,
-};
+
 enum Stage_Dir
 {
     LEFT,
@@ -140,7 +124,15 @@ enum class Stage_State
     Clear,
     End
 };
-
+enum class StageType
+{
+    None,
+    Base,
+    Start,
+    End,
+    Shop,
+    Restaurant
+};
 
 
 struct StageInfo
@@ -151,16 +143,34 @@ struct StageInfo
     //스테이지타입
     //우선순위별
     //-1 없음 0 일반 1 시작방 2 끝방 3 상점 4 식당
-    int StageType;
+    StageType StageType;
 
     //벽 왼쪽부터 시계방향으로 (왼,위,오,아)
     bool Wall[4];
 };
-
+struct StageObjectSpawnInfo
+{
+    Vector3 Pos;
+    Vector3 Rot;
+    Vector3 Scale;
+    Vector3 Pivot;
+    Client_Class_Type ClassType;
+    Client_Object_Type ObjectType;
+    Client_Enemy_Type EnemyType;
+    Door_Dir DoorDir;
+    //몇번 사용했는지
+};
+struct StageObjectsInfo
+{
+    std::vector<StageObjectSpawnInfo> StageSpawn;
+    class CGameObject* TileMap;
+    class CGameObject* TileMapObject;
+    int UseCount;
+};
 enum class WallDir
 {
     Left,
-    Up,
     Right,
+    Up,
     Down
 };

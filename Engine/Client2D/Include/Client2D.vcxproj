@@ -168,6 +168,7 @@
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainDoor.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
     <ClCompile Include="Object\BelialHand.cpp" />
@@ -213,7 +214,6 @@
     <ClCompile Include="Object\Weapon.cpp" />
     <ClCompile Include="Object\WeaponArm.cpp" />
     <ClCompile Include="PlayerStatus.cpp" />
-    <ClCompile Include="Room.cpp" />
     <ClCompile Include="SceneMode\LoadingScene.cpp" />
     <ClCompile Include="SceneMode\LoadingThread.cpp" />
     <ClCompile Include="SceneMode\MainScene.cpp" />
@@ -252,6 +252,7 @@
     <ClInclude Include="BasicStatus.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
+    <ClInclude Include="MainDoor.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Belial.h" />
     <ClInclude Include="Object\BelialHand.h" />
@@ -296,7 +297,6 @@
     <ClInclude Include="Object\WeaponArm.h" />
     <ClInclude Include="PlayerStatus.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Room.h" />
     <ClInclude Include="SceneMode\LoadingScene.h" />
     <ClInclude Include="SceneMode\LoadingThread.h" />
     <ClInclude Include="SceneMode\MainScene.h" />

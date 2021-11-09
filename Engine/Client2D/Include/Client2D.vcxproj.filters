@@ -154,6 +154,9 @@
     <Filter Include="02. Object\Effect_Particle\ObjectDieEffectObject">
       <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Door">
+      <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -366,12 +369,6 @@
     <ClCompile Include="Object\TestTileMap.cpp">
       <Filter>02. Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage\Door.cpp">
-      <Filter>Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
@@ -404,6 +401,12 @@
     </ClCompile>
     <ClCompile Include="Object\BossDieParticle.cpp">
       <Filter>02. Object\Effect_Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Door.cpp">
+      <Filter>02. Object\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDoor.cpp">
+      <Filter>02. Object\Door</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -617,12 +620,6 @@
     <ClInclude Include="Object\TestTileMap.h">
       <Filter>02. Object\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Door.h">
-      <Filter>Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Stage\Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>
@@ -649,6 +646,12 @@
     </ClInclude>
     <ClInclude Include="Object\BossDieParticle.h">
       <Filter>02. Object\Effect_Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Door.h">
+      <Filter>02. Object\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDoor.h">
+      <Filter>02. Object\Door</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -122,6 +122,8 @@ void CScene::Update(float DeltaTime)
     m_pCameraManager->Update(DeltaTime);
 
     m_pViewport->Update(DeltaTime);
+    if (m_pSceneMode)
+        m_pSceneMode->Update(DeltaTime);
 }
 
 void CScene::PostUpdate(float DeltaTime)

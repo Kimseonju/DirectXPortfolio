@@ -119,6 +119,7 @@ public:
 	void SaveFullPath(const TCHAR* FullPath);
 	void Load(const TCHAR* FileName, const std::string& PathName = MAP_PATH);
 	void Load(FILE* pFile);
+	void ClientLoad(FILE* pFile);
 	void LoadFullPath(const TCHAR* FullPath);
 public:
 	void SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass);
@@ -145,7 +146,7 @@ public:
 				T* Tile = new T;
 
 				Tile->m_Owner = this;
-				Tile->SetCollision(Collision);
+
 				m_vecTile[i * m_CountX + j] = Tile;
 
 				m_vecTileInfo[i * m_CountX + j].Color = Vector4(1.f, 1.f, 1.f, 1.f);
@@ -213,7 +214,6 @@ public:
 		}
 		break;
 		}
-		SetWorldInfo();
 	}
 };
 

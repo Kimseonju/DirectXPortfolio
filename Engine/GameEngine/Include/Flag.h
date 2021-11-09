@@ -170,7 +170,7 @@ enum class Collision_Channel
     NextStage,
     Item,
     Monster,
-    Custom9,
+    InteractionInputKey,
     Custom10,
     Custom11,
     Custom12,
@@ -275,7 +275,6 @@ enum class Client_Class_Type
     Object,
     Enemy,
     Boss,
-    TileColliderBox2D,
     End
 };
 

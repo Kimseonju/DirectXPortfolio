@@ -12,14 +12,11 @@
 #include "../Object/BackGround_Tree.h"
 #include <Device.h>
 
-
-#include "Scene/Scene.h"
 #include "../Object/Player2D.h"
 #include "../Object/Player.h"
 #include "../Object/Teemo.h"
 #include "../Object/PixelCollisionTest.h"
 #include "../Object/TestParticle.h"
-#include "Scene/SceneResource.h"
 #include "Render/RenderManager.h"
 #include "../UI/MainHUDWidget.h"
 #include "Scene/Viewport.h"
@@ -41,6 +38,7 @@
 #include "../Stage/Door.h"
 #include "../UI/UIManager.h"
 #include "../Object/BossDieParticle.h"
+#include "../Stage/StageManager.h"
 CTestMainScene::CTestMainScene() :
 	m_Stage(nullptr),
 	m_Minrooms(-1),
@@ -53,6 +51,7 @@ CTestMainScene::~CTestMainScene()
 {
 	delete m_Stage;
 	CUIManager::GetInst()->DestroyInst();
+	CStageManager::GetInst()->DestroyInst();
 }
 
 bool CTestMainScene::Init()
@@ -61,10 +60,7 @@ bool CTestMainScene::Init()
 	CreateAnimationSequence2D();
 	CreateParticle();
 
-	//¸Ê
-	m_Stage = new CStage();
-	m_Stage->Init();
-	CTestTileMap* TestTileMap = m_pScene->SpawnObject<CTestTileMap>("TestTileMap");
+	//CTestTileMap* TestTileMap = m_pScene->SpawnObject<CTestTileMap>("TestTileMap");
 
 	//±¸¸§
 	//CBackGround* BackGround = m_pScene->SpawnObject<CBackGround>("BackGround");
@@ -79,7 +75,10 @@ bool CTestMainScene::Init()
 	//BackGround_Tree->SetRelativePos(RS.Width, 0.f, 0.f);
 
 	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
-
+	CStageManager::GetInst()->SetScene(m_pScene);
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR.txt"));
+	CStageManager::GetInst()->Init();
+	CStageManager::GetInst()->Start();
 	CDoor* Door= m_pScene->SpawnObject<CDoor>("Door");
 	Door->SetWorldPos(200.f, 300.f, 0.f);
 
@@ -122,6 +121,15 @@ bool CTestMainScene::Init()
 	//Widget4->SetPos(500.f, 300.f);
 	//Widget1->SetStage(m_Stage);
 	return true;
+}
+
+void CTestMainScene::Update(float DeltaTime)
+{
+	CStageManager::GetInst()->Update(DeltaTime);
+}
+
+void CTestMainScene::PostUpdate(float DeltaTime)
+{
 }
 
 void CTestMainScene::CreateMaterial()

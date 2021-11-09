@@ -49,15 +49,15 @@ public:
     }
     void Dashing(float DeltaTime)
     {
-        m_Force.x += cosf(m_DashRadian) * 50.f* DeltaTime* m_Speed;
-        m_Force.y += sinf(m_DashRadian) * 100.f* DeltaTime* m_Speed;
+        m_Force.x += cosf(m_DashRadian) * 50.f * DeltaTime * m_Speed;
+        m_Force.y += sinf(m_DashRadian) * 100.f * DeltaTime * m_Speed;
     }
 
     void SetForce2D(float Angle, float Power)
     {
         float Radian = DegreeToRadian(Angle);
-
-
+        m_Force.x = cosf(m_DashRadian) * Power;
+        m_Force.y = sinf(m_DashRadian) * Power;
     }
     bool IsDash() const
     {
