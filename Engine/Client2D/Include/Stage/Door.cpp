@@ -21,6 +21,16 @@ CDoor::~CDoor()
 {
 }
 
+void CDoor::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+
+	m_DoorCollider2D->Enable(bEnable);
+	m_NextStageCollider2D->Enable(bEnable);
+	m_Sprite->Enable(bEnable);
+	m_Particle->Enable(bEnable);
+}
+
 void CDoor::Start()
 {
 	CGameObject::Start();
@@ -141,17 +151,25 @@ void CDoor::CollisionBegin_NextStage(const HitResult& result, CCollider* Collide
 		switch (m_DoorDir)
 		{
 		case Door_Dir::Door_Left:
+		{
 			CStageManager::GetInst()->NextStage(Stage_Dir::LEFT);
 			break;
+		}
 		case Door_Dir::Door_Right:
+		{
 			CStageManager::GetInst()->NextStage(Stage_Dir::RIGHT);
 			break;
+		}
 		case Door_Dir::Door_Up:
+		{
 			CStageManager::GetInst()->NextStage(Stage_Dir::UP);
 			break;
+		}
 		case Door_Dir::Door_Down:
+		{
 			CStageManager::GetInst()->NextStage(Stage_Dir::DOWN);
 			break;
+		}
 		}
 	}
 }
@@ -162,21 +180,29 @@ void CDoor::PlayerMove()
 	switch (m_DoorDir)
 	{
 	case Door_Dir::Door_Left:
+	{
 		Pos.x += 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
+	}
 	case Door_Dir::Door_Right:
+	{
 		Pos.x -= 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
+	}
 	case Door_Dir::Door_Up:
+	{
 		Pos.y -= 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
+	}
 	case Door_Dir::Door_Down:
+	{
 		Pos.y += 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
+	}
 	}
 }
 

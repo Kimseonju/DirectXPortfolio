@@ -42,6 +42,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 	{
 		return;
 	}
+	m_Name = Info.Name;
 	m_DoorDir = num;
 	m_TileMap =Info.TileMap;
 	m_TileMapObject = Info.TileMapObject;

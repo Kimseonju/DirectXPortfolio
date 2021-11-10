@@ -21,6 +21,11 @@ CStageManager::~CStageManager()
 	}
 }
 
+std::string CStageManager::GetCurName()
+{
+	return m_SelectStage->GetName();
+}
+
 void CStageManager::Init()
 {
 	CreateDungeon();
@@ -145,6 +150,7 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	{
 		//만약있는방이면 이미 방문했던방이다.
 		m_SelectStage = m_vecStage[x][y];
+		m_SelectStage->PlayerStageMove(Dir);
 		m_SelectStage->Enable(true);
 		return;
 
@@ -361,7 +367,7 @@ bool CStageManager::CreateStage_Special()
 	return true;
 }
 
-void CStageManager::LoadStage(FILE* pFile)
+void CStageManager::LoadStage(FILE* pFile, const char* Name)
 {
 	size_t Size = 0;
 	fread(&Size, sizeof(size_t), 1, pFile);
@@ -372,7 +378,7 @@ void CStageManager::LoadStage(FILE* pFile)
 	Door_Dir          DoorDir;
 	StageObjectsInfo _StageObjectsInfo;
 	std::vector< StageObjectSpawnInfo> vecSpawn;
-
+	_StageObjectsInfo.Name = Name;
 	//이 스테이지의 문의 방향을 확인한다. 문이없으면 0 있으면 1
 	bool bDoorDir[4] = { 0 };
 	//Client_Object_Type에서 MainDoor가 있는지 없는지 확인한다 따로분류요함
@@ -496,18 +502,24 @@ void CStageManager::AllLoadStage(const TCHAR* FileName)
 	const PathInfo* Info = CPathManager::GetInst()->FindPath(MAP_PATH);
 
 	TCHAR	FullPath[MAX_PATH] = {};
+	TCHAR	Name[MAX_PATH] = {};
 
 	if (Info)
 		lstrcpy(FullPath, Info->pPath);
 
 	lstrcat(FullPath, FileName);
+	lstrcat(Name, FileName);
 
 	char	FullPathMultibyte[MAX_PATH] = {};
+	char	NameMultibyte[MAX_PATH] = {};
 
 #ifdef UNICODE
 
 	int ConvertLength = WideCharToMultiByte(CP_ACP, 0, FullPath, -1, nullptr, 0, nullptr, nullptr);
 	WideCharToMultiByte(CP_ACP, 0, FullPath, -1, FullPathMultibyte, ConvertLength, nullptr, nullptr);
+
+	ConvertLength = WideCharToMultiByte(CP_ACP, 0, Name, -1, nullptr, 0, nullptr, nullptr);
+	WideCharToMultiByte(CP_ACP, 0, Name, -1, NameMultibyte, ConvertLength, nullptr, nullptr);
 
 #else
 
@@ -522,7 +534,7 @@ void CStageManager::AllLoadStage(const TCHAR* FileName)
 	if (!pFile)
 		return;
 
-	LoadStage(pFile);
+	LoadStage(pFile, NameMultibyte);
 
 	fclose(pFile);
 }

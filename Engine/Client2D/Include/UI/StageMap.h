@@ -14,6 +14,9 @@ protected:
     class CImage* m_MapBase1_1;
     class CImage* m_BackCloud;
     class CStage* m_Stage;
+    class CText* m_PosX;
+    class CText* m_PosY;
+    class CText* m_Name1;
     bool m_StageUpdate;
 protected:
     CStageMap();

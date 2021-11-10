@@ -5,6 +5,7 @@
 #include <Device.h>
 #include "../Stage/Stage.h"
 #include "../Stage/StageManager.h"
+#include <UI/Text.h>
 CStageMap::CStageMap() :
 	m_StageUpdate(true),
 	m_MapBase1_0(nullptr),
@@ -25,6 +26,7 @@ bool CStageMap::Init()
 	Resolution RS = CDevice::GetInst()->GetResolution();
 	Vector2 Pos;
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
+	CStageManager::GetInst()->GetCurPos();
 	int Size = CStageManager::GetInst()->GetMapSize();
 	
 	for (int x= 0; x < Size; ++x)
@@ -89,6 +91,14 @@ bool CStageMap::Init()
 		}
 	}
 
+	m_PosX = CreateWidget<CText>("PosX");
+	m_PosX->SetPos(100.f, 100.f);
+	m_PosY = CreateWidget<CText>("PosY");
+	m_PosY->SetPos(200.f, 100.f);
+	m_Name1 = CreateWidget<CText>("Name");
+	m_Name1->SetPos(300.f, 100.f);
+
+
 	m_MapBase1_0 = CreateWidget<CImage>("MapBase1_0");
 
 	m_MapBase1_0->SetPos(0.f, RS.Height-32.f*4);
@@ -112,7 +122,11 @@ bool CStageMap::Init()
 void CStageMap::Update(float DeltaTime)
 {
 	CWidgetWindow::Update(DeltaTime);
-	CreateStage();
+	Vector2 Pos=CStageManager::GetInst()->GetCurPos();
+	m_PosX->SetText(CA2T(std::to_string(Pos.x).c_str()));
+	m_PosY->SetText(CA2T(std::to_string(Pos.y).c_str()));
+	std::string Name = CStageManager::GetInst()->GetCurName();
+	m_Name1->SetText(CA2T(Name.c_str()));
 }
 
 void CStageMap::PostUpdate(float DeltaTime)

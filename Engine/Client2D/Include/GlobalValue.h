@@ -143,6 +143,7 @@ struct StageObjectSpawnInfo
 };
 struct StageObjectsInfo
 {
+    std::string Name;
     std::vector<StageObjectSpawnInfo> StageSpawn;
     class CGameObject* TileMap;
     class CGameObject* TileMapObject;

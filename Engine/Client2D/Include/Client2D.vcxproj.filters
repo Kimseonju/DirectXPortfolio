@@ -408,9 +408,6 @@
     <ClCompile Include="MainDoor.cpp">
       <Filter>02. Object\Door</Filter>
     </ClCompile>
-    <ClCompile Include="MapUI.cpp">
-      <Filter>UI\UI\WidgetWindow</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -655,9 +652,6 @@
     </ClInclude>
     <ClInclude Include="MainDoor.h">
       <Filter>02. Object\Door</Filter>
-    </ClInclude>
-    <ClInclude Include="MapUI.h">
-      <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

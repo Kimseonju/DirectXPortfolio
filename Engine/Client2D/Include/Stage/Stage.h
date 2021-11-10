@@ -17,6 +17,7 @@ private:
 	¹Ì´Ï¸Ê
 	¸ÊUI
 	*/
+	std::string m_Name;
 	Stage_State m_State;
 	std::vector<CSharedPtr<CGameObject>> m_Enemy;
 	std::vector<CSharedPtr<CGameObject>> m_Object;
@@ -30,6 +31,10 @@ private:
 	class CScene* m_pScene;
 	int m_DoorDir;
 public:
+	std::string GetName() const
+	{
+		return m_Name;
+	}
 	void SetScene(class CScene* Scene)
 	{
 		m_pScene = Scene;

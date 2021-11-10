@@ -169,7 +169,6 @@
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainDoor.cpp" />
-    <ClCompile Include="MapUI.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
     <ClCompile Include="Object\BelialHand.cpp" />
@@ -254,7 +253,6 @@
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="MainDoor.h" />
-    <ClInclude Include="MapUI.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Belial.h" />
     <ClInclude Include="Object\BelialHand.h" />

@@ -38,6 +38,11 @@ private:
 	class CScene* m_pScene;
 	int m_MapCount;
 public:
+	std::string GetCurName();
+	Vector2 GetCurPos() const
+	{
+		return m_CurPos;
+	}
 	std::vector<std::vector<StageInfo>>& GetvecStageInfo()
 	{
 		return m_vecStageInfo;
@@ -66,7 +71,7 @@ public:
 	
 	void ReleaseStage();
 
-	void LoadStage(FILE* pFile);
+	void LoadStage(FILE* pFile, const char* Name);
 	void AllLoadStage(const TCHAR* FileName);
 	void PushMainDoorStageSpawnInfo(int Door, StageObjectsInfo Info);
 	void PushStageSpawnInfo(int Door, StageObjectsInfo Info);
