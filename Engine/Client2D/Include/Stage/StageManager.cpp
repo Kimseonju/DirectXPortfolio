@@ -2,7 +2,7 @@
 #include "../GlobalValue.h"
 #include <PathManager.h>
 #include <Component/TileMapComponent.h>
-
+#include "../Object/Player.h"
 CStageManager::CStageManager():
 	m_pScene(nullptr),
 	m_MapSize(4),
@@ -63,7 +63,7 @@ void CStageManager::CreateDungeon()
 					m_vecStageInfo[x][y].Wall[dir] = true;
 				}
 				m_vecStageInfo[x][y].visit = false;
-				m_vecStageInfo[x][y].StageType = StageType::None;
+				m_vecStageInfo[x][y].StageType = StageType::Base;
 			}
 		}
 		int startX = GetRandom(0,m_MapSize - 1);
@@ -79,20 +79,20 @@ void CStageManager::CreateDungeon()
 
 void CStageManager::CreateStage(int x, int y)
 {
-	if (m_vecStageInfo[x][y].visit) return;
+	if (m_vecStageInfo[x][y].visit) 
+		return;
+
 	m_vecStageInfo[x][y].visit = true;
 
-	int dir_x[4] = { 1,0,0,-1 };
-	int dir_y[4] = { 0,1,-1,0 };
+	int dir_x[4] = { -1,0,1,0 };
+	int dir_y[4] = { 0,1,0,-1 };
 	//왼쪽부터 시계방향
 	bool checkDir[4] = { false, false, false, false };
-	//한번거침 Base설정
-	m_vecStageInfo[x][y].StageType = StageType::Base;
 	while (true)
 	{
 		if (checkDir[0] && checkDir[1] && checkDir[2] && checkDir[3]) break;
 
-		int Dir = GetRandom(0, 3);
+		int Dir = GetRandom(0, 4-1);
 		if (checkDir[Dir]) continue;
 		checkDir[Dir] = true;
 
@@ -187,8 +187,9 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	
 
 
+	CGlobalValue::MainPlayer->SetWorldPos(-100.f, 0.f, 0.f);
 	Stage->SetScene(m_pScene);
-	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType);
+	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType, num);
 	Stage->PlayerStageMove(Dir);
 	m_vecStage[x][y] = Stage;
 	Stage->Enable(true);
@@ -204,8 +205,7 @@ bool CStageManager::CreateStage_Special()
 	std::vector<Vector2> vecStagePos;
 
 	//시작방 체크할곳
-	//시작방은 무조건 오른쪽한칸이빈다.
-	for (int x = 0; x < m_MapSize-1; ++x)
+	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
@@ -219,14 +219,14 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	int RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
-	m_StartPos = vecStagePos[RandomCount];
+	int RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
+	m_StartPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_StartPos.x][(int)m_StartPos.y].StageType = StageType::Start;
 
 	//끝방 체크
 	vecStagePos.clear();
 	//위와동일
-	for (int x = 1; x < m_MapSize; ++x)
+	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
@@ -242,8 +242,8 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	RandomCount = GetRandom(0, (int)vecStagePos.size()-1);
-	m_EndPos = vecStagePos[RandomCount];
+	RandomNum = GetRandom(0, (int)vecStagePos.size()-1);
+	m_EndPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_EndPos.x][(int)m_EndPos.y].StageType = StageType::End;
 
 	//상점
@@ -298,6 +298,62 @@ bool CStageManager::CreateStage_Special()
 	//m_vecStageInfo[(int)m_RestaurantPos.x][(int)m_RestaurantPos.y].StageType = StageType::Restaurant;
 	//
 	//
+	for (int x = 0; x < m_MapSize; x++)
+	{
+		for (int y = 0; y < m_MapSize; y++)
+		{
+			if (m_StartPos.x == x && m_StartPos.y == y) 
+				continue;
+			if (m_EndPos.x == x && m_EndPos.y == y) 
+				continue;
+
+
+			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+
+
+
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && !m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+
+			else if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] &&m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+			else if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && !m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+
+
+	int dir_x[4] = { -1,0,1,0 };
+	int dir_y[4] = { 0,1,0,-1 };
+
+	for (int i = 0; i < vecStagePos.size(); i++)
+	{
+		m_vecStageInfo[vecStagePos[i].x][vecStagePos[i].y].StageType = StageType::None;
+		for (int dir = 0; dir < 4; dir++)
+		{
+			if (!m_vecStageInfo[vecStagePos[i].x][vecStagePos[i].y].Wall[dir])
+			{
+
+				int nextX = vecStagePos[i].x + dir_x[dir];
+				int nextY = vecStagePos[i].y + dir_y[dir];
+				m_vecStageInfo[nextX][nextY].Wall[(dir + 2) % 4] = true; 
+			}
+		}
+	}
+
 	////방설정완료
 
 

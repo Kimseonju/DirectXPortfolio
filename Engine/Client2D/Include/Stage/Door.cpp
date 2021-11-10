@@ -162,19 +162,19 @@ void CDoor::PlayerMove()
 	switch (m_DoorDir)
 	{
 	case Door_Dir::Door_Left:
-		Pos.x += 50.f;
+		Pos.x += 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	case Door_Dir::Door_Right:
-		Pos.x -= 50.f;
+		Pos.x -= 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	case Door_Dir::Door_Up:
-		Pos.y -= 50.f;
+		Pos.y -= 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	case Door_Dir::Door_Down:
-		Pos.y += 50.f;
+		Pos.y += 100.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	}

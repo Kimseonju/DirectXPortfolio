@@ -8,6 +8,8 @@ class CStageMap :
     friend class CViewport;
 
 protected:
+    std::vector<class CImage*> m_MapBase;
+    std::vector<class CImage*> m_MapArrow;
     class CImage* m_MapBase1_0;
     class CImage* m_MapBase1_1;
     class CImage* m_BackCloud;

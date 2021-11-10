@@ -101,13 +101,7 @@ bool CTestMainScene::Init()
 
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
-	CDoor* Door= m_pScene->SpawnObject<CDoor>("Door");
-	Door->SetWorldPos(200.f, 300.f, 0.f);
 
-
-	Door = m_pScene->SpawnObject<CDoor>("Door");
-	Door->SetWorldPos(200.f, 300.f, 0.f);
-	Door->SetDir(Door_Dir::Door_Left);
 	CUIManager::GetInst()->Init(m_pScene);
 
 

@@ -295,8 +295,8 @@ enum class Client_Enemy_Type
 enum class Door_Dir
 {
     Door_Left,
-    Door_Right,
     Door_Up,
+    Door_Right,
     Door_Down,
     End
 };

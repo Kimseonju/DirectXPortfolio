@@ -741,10 +741,6 @@ void CGameObject::Load(FILE* pFile)
 	fread(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fread(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
-	if (m_DoorDir == Door_Dir::Door_Right)
-		m_DoorDir = Door_Dir::Door_Up;
-	else if (m_DoorDir == Door_Dir::Door_Up)
-		m_DoorDir = Door_Dir::Door_Right;
 	Component_Class_Type  Type;
 	fread(&Type, sizeof(Component_Class_Type), 1, pFile);
 	CSceneComponent* Component = nullptr;

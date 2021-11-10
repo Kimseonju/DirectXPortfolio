@@ -106,6 +106,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Attack", KT_Down, this, &CPlayer::Attack);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InventoryOnOff", KT_Down, this, &CPlayer::InventoryOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Dash", KT_Down, this, &CPlayer::Dash);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("MapOnOff", KT_Down, this, &CPlayer::MapOnOff);
 	//마우스회전용
 
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -318,7 +319,19 @@ void CPlayer::InventoryOnOff(float DeltaTime)
 		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
 	}
 }
-
+void CPlayer::MapOnOff(float DeltaTime)
+{
+	if (CUIManager::GetInst()->GetStageMap()->IsEnable())
+	{
+		CUIManager::GetInst()->GetStageMap()->Enable(false);
+		CGlobalValue::MainMouse->SetState(Mouse_State::World);
+	}
+	else
+	{
+		CUIManager::GetInst()->GetStageMap()->Enable(true);
+		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
+	}
+}
 void CPlayer::AnimationFrameEnd(const std::string& Name)
 {
 }

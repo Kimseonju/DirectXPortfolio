@@ -4,6 +4,7 @@
 #include "UI/Button.h"
 #include <Device.h>
 #include "../Stage/Stage.h"
+#include "../Stage/StageManager.h"
 CStageMap::CStageMap() :
 	m_StageUpdate(true),
 	m_MapBase1_0(nullptr),
@@ -23,7 +24,70 @@ bool CStageMap::Init()
 	CWidgetWindow::Init();
 	Resolution RS = CDevice::GetInst()->GetResolution();
 	Vector2 Pos;
+	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
+	int Size = CStageManager::GetInst()->GetMapSize();
+	
+	for (int x= 0; x < Size; ++x)
+	{
+		for (int y = 0; y < Size; ++y)
+		{
+			if (Info[x][y].StageType == StageType::None)
+				continue;
+			std::string str1 = std::to_string(x);
+			std::string str2 = std::to_string(y);
+			CImage* Base=CreateWidget<CImage>("Base"+str1+str2);
+			Base->SetPos(30.f * 4.f *x+300.f, 30.f * 4.f *y+100.f);
+			Base->SetTexture("Room", TEXT("UI/map/Room.png"));
+			Base->SetSize(24.f*4.f, 24.f * 4.f);
+			if (!Info[x][y].Wall[(int)WallDir::Left])
+			{
+				std::string str3 = std::to_string((int)WallDir::Left);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2+ str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.x -= 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f * 4.f, 10.f);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Up])
+			{
+				std::string str3 = std::to_string((int)WallDir::Up);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.y += 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f, 10.f * 4.f);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Right])
+			{
 
+				std::string str3 = std::to_string((int)WallDir::Right);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.x += 40.f;
+				Arrow->SetPos(Pos);
+				
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f * 4.f, 10.f);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Down])
+			{
+
+				std::string str3 = std::to_string((int)WallDir::Down);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.y -= 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f, 10.f * 4.f);
+			}
+		}
+	}
 
 	m_MapBase1_0 = CreateWidget<CImage>("MapBase1_0");
 

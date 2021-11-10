@@ -46,6 +46,7 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("Attack", VK_LBUTTON);
     CInput::GetInst()->CreateKey("Dash", VK_RBUTTON);
     CInput::GetInst()->CreateKey("InventoryOnOff", 'I');
+    CInput::GetInst()->CreateKey("MapOnOff", VK_TAB);
 
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');

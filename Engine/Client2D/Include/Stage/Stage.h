@@ -28,6 +28,7 @@ private:
 	
 	bool m_Enable;
 	class CScene* m_pScene;
+	int m_DoorDir;
 public:
 	void SetScene(class CScene* Scene)
 	{
@@ -45,7 +46,7 @@ public:
 	{
 		m_TileMapObject = TileMapObject;
 	}
-	void ObjectUpdate(StageObjectsInfo Info, StageType Type);
+	void ObjectUpdate(StageObjectsInfo Info, StageType Type, int num);
 public:
 	virtual void Start();
 	virtual bool Init();

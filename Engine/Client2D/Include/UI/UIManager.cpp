@@ -20,5 +20,6 @@ bool CUIManager::Init(CScene* Scene)
 	m_pScene = Scene;
 	m_PlayerUI = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
 	m_InventoryUI = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
+	m_StageMapUI = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMapUI");
 	return true;
 }

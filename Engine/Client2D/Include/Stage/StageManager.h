@@ -38,6 +38,14 @@ private:
 	class CScene* m_pScene;
 	int m_MapCount;
 public:
+	std::vector<std::vector<StageInfo>>& GetvecStageInfo()
+	{
+		return m_vecStageInfo;
+	}
+	int GetMapSize() const
+	{
+		return m_MapSize;
+	}
 	void SetScene(class CScene* Scene)
 	{
 		m_pScene = Scene;

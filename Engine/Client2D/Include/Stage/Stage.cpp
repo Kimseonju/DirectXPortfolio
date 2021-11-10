@@ -9,7 +9,8 @@
 #include "../Object/Player.h"
 CStage::CStage() :
 	m_Enable(true),
-	m_State(Stage_State::Idle)
+	m_State(Stage_State::Idle),
+	m_DoorDir(-1)
 {
 }
 
@@ -19,8 +20,6 @@ CStage::~CStage()
 void CStage::Enable(bool Enable)
 {
 	m_Enable = Enable;
-	m_TileMap->Enable(m_Enable);
-	m_TileMapObject->Enable(m_Enable);
 	m_TileMapComponent->Enable(m_Enable);
 	m_TileObjectMapComponent->Enable(m_Enable);
 
@@ -37,12 +36,13 @@ void CStage::Enable(bool Enable)
 		m_Doors[i]->Enable(m_Enable);
 	}
 }
-void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
+void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 {
 	if (m_State != Stage_State::Idle)
 	{
 		return;
 	}
+	m_DoorDir = num;
 	m_TileMap =Info.TileMap;
 	m_TileMapObject = Info.TileMapObject;
 	m_TileMapComponent = Info.TileMapComponent;
