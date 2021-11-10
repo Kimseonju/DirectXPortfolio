@@ -16,6 +16,9 @@
 *.ilk
 *.pdb
 *.res
+*.mp3
+*.wav
+*.png
 !fmod.dll
 !fmod64.dll
 Engine/.vs
