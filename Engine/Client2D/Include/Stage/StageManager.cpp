@@ -5,7 +5,8 @@
 
 CStageManager::CStageManager():
 	m_pScene(nullptr),
-	m_MapSize(4)
+	m_MapSize(4),
+	m_MapCount(0)
 {
 
 }
@@ -29,7 +30,7 @@ void CStageManager::Init()
 
 void CStageManager::Start()
 {
-	PlayStage();
+	PlayStage(Stage_Dir::END);
 }
 
 void CStageManager::Update(float DeltaTime)
@@ -83,7 +84,10 @@ void CStageManager::CreateStage(int x, int y)
 
 	int dir_x[4] = { 1,0,0,-1 };
 	int dir_y[4] = { 0,1,-1,0 };
+	//왼쪽부터 시계방향
 	bool checkDir[4] = { false, false, false, false };
+	//한번거침 Base설정
+	m_vecStageInfo[x][y].StageType = StageType::Base;
 	while (true)
 	{
 		if (checkDir[0] && checkDir[1] && checkDir[2] && checkDir[3]) break;
@@ -125,17 +129,23 @@ void CStageManager::NextStage(Stage_Dir Dir)
 		m_CurPos.y -= 1.f;
 		break;
 	}
-	PlayStage();
+
+	PlayStage(Dir);
 }
 
-void CStageManager::PlayStage()
+void CStageManager::PlayStage(Stage_Dir Dir)
 {
+	if (m_SelectStage)
+	{
+		m_SelectStage->Enable(false);
+	}
 	int x=(int)m_CurPos.x ;
 	int y=(int)m_CurPos.y ;
 	if (m_vecStage[x][y])
 	{
-		m_SelectStage->Enable(false);
+		//만약있는방이면 이미 방문했던방이다.
 		m_SelectStage = m_vecStage[x][y];
+		m_SelectStage->Enable(true);
 		return;
 
 	}
@@ -145,9 +155,9 @@ void CStageManager::PlayStage()
 	int num = 0;
 	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Left])
 		num = num | 1;
-	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Right])
-		num = num | 2;
 	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Up])
+		num = num | 2;
+	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Right])
 		num = num | 4;
 	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Down])
 		num = num | 8;
@@ -174,10 +184,15 @@ void CStageManager::PlayStage()
 		Info = GetStageSpawnInfo(num);
 		break;
 	}
+	
+
+
 	Stage->SetScene(m_pScene);
 	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType);
+	Stage->PlayerStageMove(Dir);
 	m_vecStage[x][y] = Stage;
 	Stage->Enable(true);
+	m_SelectStage = Stage;
 }
 
 bool CStageManager::CreateStage_Special()
@@ -189,7 +204,8 @@ bool CStageManager::CreateStage_Special()
 	std::vector<Vector2> vecStagePos;
 
 	//시작방 체크할곳
-	for (int x = 0; x < m_MapSize; ++x)
+	//시작방은 무조건 오른쪽한칸이빈다.
+	for (int x = 0; x < m_MapSize-1; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
@@ -209,15 +225,16 @@ bool CStageManager::CreateStage_Special()
 
 	//끝방 체크
 	vecStagePos.clear();
-	for (int x = 0; x < m_MapSize; ++x)
+	//위와동일
+	for (int x = 1; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
 			if (m_StartPos.x == x && m_StartPos.y == y)
 				continue;
 			//벽체크 
-			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
 				vecStagePos.push_back(Vector2{ (float)x,(float)y });
 			}
@@ -231,57 +248,57 @@ bool CStageManager::CreateStage_Special()
 
 	//상점
 
-	vecStagePos.clear();
-	for (int x = 0; x < m_MapSize; ++x)
-	{
-		for (int y = 0; y < m_MapSize; ++y)
-		{
-			//벽체크 
-			if (m_StartPos.x == x && m_StartPos.y == y)
-				continue;
-			if (m_EndPos.x == x && m_EndPos.y == y)
-				continue;
-			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-			{
-				vecStagePos.push_back(Vector2{ (float)x,(float)y });
-			}
-		}
-	}
-	if (vecStagePos.size() == 0)
-		return false;
-	RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
-	m_ShopPos = vecStagePos[RandomCount];
-	m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Shop;
-	//레스토랑
-
-	vecStagePos.clear();
-	for (int x = 0; x < m_MapSize; ++x)
-	{
-		for (int y = 0; y < m_MapSize; ++y)
-		{
-			//벽체크 
-			if (m_StartPos.x == x && m_StartPos.y == y)
-				continue;
-			if (m_EndPos.x == x && m_EndPos.y == y)
-				continue;
-			if (m_ShopPos.x == x && m_ShopPos.y == y)
-				continue;
-			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-			{
-				vecStagePos.push_back(Vector2{ (float)x,(float)y });
-			}
-		}
-	}
-	if (vecStagePos.size() == 0)
-		return false;
-	RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
-	m_RestaurantPos = vecStagePos[RandomCount];
-	m_vecStageInfo[(int)m_RestaurantPos.x][(int)m_RestaurantPos.y].StageType = StageType::Restaurant;
-
-
-	//방설정완료
+	//vecStagePos.clear();
+	//for (int x = 0; x < m_MapSize; ++x)
+	//{
+	//	for (int y = 0; y < m_MapSize; ++y)
+	//	{
+	//		//벽체크 
+	//		if (m_StartPos.x == x && m_StartPos.y == y)
+	//			continue;
+	//		if (m_EndPos.x == x && m_EndPos.y == y)
+	//			continue;
+	//		if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+	//			!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+	//		{
+	//			vecStagePos.push_back(Vector2{ (float)x,(float)y });
+	//		}
+	//	}
+	//}
+	//if (vecStagePos.size() == 0)
+	//	return false;
+	//RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
+	//m_ShopPos = vecStagePos[RandomCount];
+	//m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Shop;
+	////레스토랑
+	//
+	//vecStagePos.clear();
+	//for (int x = 0; x < m_MapSize; ++x)
+	//{
+	//	for (int y = 0; y < m_MapSize; ++y)
+	//	{
+	//		//벽체크 
+	//		if (m_StartPos.x == x && m_StartPos.y == y)
+	//			continue;
+	//		if (m_EndPos.x == x && m_EndPos.y == y)
+	//			continue;
+	//		if (m_ShopPos.x == x && m_ShopPos.y == y)
+	//			continue;
+	//		if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+	//			!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+	//		{
+	//			vecStagePos.push_back(Vector2{ (float)x,(float)y });
+	//		}
+	//	}
+	//}
+	//if (vecStagePos.size() == 0)
+	//	return false;
+	//RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
+	//m_RestaurantPos = vecStagePos[RandomCount];
+	//m_vecStageInfo[(int)m_RestaurantPos.x][(int)m_RestaurantPos.y].StageType = StageType::Restaurant;
+	//
+	//
+	////방설정완료
 
 
 
@@ -372,9 +389,9 @@ void CStageManager::LoadStage(FILE* pFile)
 	int num = 0;
 	if (bDoorDir[(int)Door_Dir::Door_Left])
 		num = num | 1;
-	if (bDoorDir[(int)Door_Dir::Door_Right])
-		num = num | 2;
 	if (bDoorDir[(int)Door_Dir::Door_Up])
+		num = num | 2;
+	if (bDoorDir[(int)Door_Dir::Door_Right])
 		num = num | 4;
 	if (bDoorDir[(int)Door_Dir::Door_Down])
 		num = num | 8;
@@ -382,20 +399,26 @@ void CStageManager::LoadStage(FILE* pFile)
 
 	//맵 로딩
 
-
-	CGameObject* TileMap = m_pScene->SpawnObject<CGameObject>("TileMap1");
+	m_MapCount++;
+	std::string str = std::to_string(m_MapCount);
+	CGameObject* TileMap = m_pScene->SpawnObject<CGameObject>("TileMap"+str);
 	CTileMapComponent* TileMapComponent = TileMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 	TileMap->SetRootComponent(TileMapComponent);
-	CGameObject* TileMapObject = m_pScene->SpawnObject<CGameObject>("TileMapObject");
+	CGameObject* TileMapObject = m_pScene->SpawnObject<CGameObject>("TileMapObject" + str);
 	CTileMapComponent* TileObjectMapComponent = TileMap->CreateSceneComponent<CTileMapComponent>("TileMap");
 	TileMapObject->SetRootComponent(TileObjectMapComponent);
 	TileMapComponent->ClientLoad(pFile);
 	TileObjectMapComponent->ClientLoad(pFile);
-	TileMap->Enable(false);
-	TileMapObject->Enable(false);
+	//TileMap->Enable(false);
+	//TileMapObject->Enable(false);
+	TileMapComponent->Enable(false);
+	TileObjectMapComponent->Enable(false);
 	_StageObjectsInfo.TileMap=TileMap;
 	_StageObjectsInfo.TileMapObject = TileMapObject;
-
+	_StageObjectsInfo.TileMapComponent = TileMapComponent;
+	_StageObjectsInfo.TileObjectMapComponent = TileObjectMapComponent;
+	TileMapComponent->SetCollisionTileProfile("Tile_pass", "Tile_Nopass");
+	TileObjectMapComponent->SetCollisionTileProfile("Tile_pass", "Tile_Nopass");
 	if (bMainDoor)
 	{
 

@@ -23,7 +23,7 @@ CSceneComponent::CSceneComponent(const CSceneComponent& com)    :
 {
     *this = com;
     //수정한부분
-    m_RefCount = 0;
+    m_RefCount = 1;
     m_pTransform = com.m_pTransform->Clone();
 
     m_pTransform->m_pParent = nullptr;
@@ -152,7 +152,26 @@ void CSceneComponent::GetAllComponent(std::vector<CSceneComponent*>& vecComponen
         m_vecChild[i]->GetAllComponent(vecComponent);
     }
 }
+void CSceneComponent::GetAllCloneComponent(CGameObject* Owner,std::vector<CSceneComponent*>& vecComponent)
+{
+    if (Owner->GetRootComponent())
+    {
+        vecComponent.push_back(this);
+    }
+    else
+    {
+        CSceneComponent* Component = this->Clone();
+        Owner->GetRootComponent()->AddChild(Component);
+        Component->SetOwner(Owner);
+        vecComponent.push_back(Component);
+    }
+    size_t  Size = m_vecChild.size();
 
+    for (size_t i = 0; i < Size; ++i)
+    {
+        m_vecChild[i]->GetAllCloneComponent(Owner ,vecComponent);
+    }
+}
 void CSceneComponent::DetatchChild(CSceneComponent* Child)
 {
     Child->m_pParent = nullptr;

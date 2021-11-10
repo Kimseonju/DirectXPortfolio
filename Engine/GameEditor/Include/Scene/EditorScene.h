@@ -27,7 +27,10 @@ private:
     void MoveRight(float DeltaTime);
     void MouseLButton(float DeltaTime);
     void MouseRButton(float DeltaTime);
-
+    void Button1(float DeltaTime);
+    void Button2(float DeltaTime);
+    void Button3(float DeltaTime);
+    void Button4(float DeltaTime);
 private:
     void EditTileType();
     void EditTileImage();

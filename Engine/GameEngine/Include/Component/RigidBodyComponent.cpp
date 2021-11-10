@@ -7,9 +7,9 @@
 
 CRigidBodyComponent::CRigidBodyComponent() :
 	m_Gravity(false),
-	m_GravityPower(2000),
-	m_JumpPower(800),
-	m_Speed(400.f)
+	m_GravityPower(600),
+	m_JumpPower(200),
+	m_Speed(100.f)
 {
 }
 
@@ -55,11 +55,11 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Force.x = 0.f;
 				m_Dir = Vector3::Zero;
 			}
-			if (m_Force.y > 600.f)
-				m_Force.y = 600.f;
+			if (m_Force.y > 200.f)
+				m_Force.y = 200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
-			if (m_Force.y < -2000.f)
-				m_Force.y = -2000.f;
+			if (m_Force.y < -300.f)
+				m_Force.y = -300.f;
 			moveDir += m_Force * DeltaTime;
 			moveDir += m_Dir * m_Speed * DeltaTime;
 		}
@@ -89,7 +89,7 @@ void CRigidBodyComponent::Update(float DeltaTime)
 		}
 	}
 	m_PrevMoveDir = moveDir;
-	m_pParent->AddRelativePos(moveDir);
+	m_MoveDir = moveDir;
 }
 
 void CRigidBodyComponent::PostUpdate(float DeltaTime)
@@ -105,6 +105,7 @@ void CRigidBodyComponent::Collision(float DeltaTime)
 void CRigidBodyComponent::PrevRender(float DeltaTime)
 {
     CSceneComponent::PrevRender(DeltaTime);
+	m_pParent->AddRelativePos(m_MoveDir);
 }
 
 void CRigidBodyComponent::Render(float DeltaTime)

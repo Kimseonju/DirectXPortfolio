@@ -1,6 +1,9 @@
 
 #include "Door.h"
 #include <Input.h>
+#include "StageManager.h"
+#include "../GlobalValue.h"
+#include "../Object/Player.h"
 CDoor::CDoor() 
 {
 }
@@ -133,37 +136,79 @@ void CDoor::CollisionBegin(const HitResult& result, CCollider* Collider)
 
 void CDoor::CollisionBegin_NextStage(const HitResult& result, CCollider* Collider)
 {
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		switch (m_DoorDir)
+		{
+		case Door_Dir::Door_Left:
+			CStageManager::GetInst()->NextStage(Stage_Dir::LEFT);
+			break;
+		case Door_Dir::Door_Right:
+			CStageManager::GetInst()->NextStage(Stage_Dir::RIGHT);
+			break;
+		case Door_Dir::Door_Up:
+			CStageManager::GetInst()->NextStage(Stage_Dir::UP);
+			break;
+		case Door_Dir::Door_Down:
+			CStageManager::GetInst()->NextStage(Stage_Dir::DOWN);
+			break;
+		}
+	}
 }
 
-void CDoor::SetDir(Object_Dir Dir)
+void CDoor::PlayerMove()
+{
+	Vector3 Pos = GetWorldPos();
+	switch (m_DoorDir)
+	{
+	case Door_Dir::Door_Left:
+		Pos.x += 50.f;
+		CGlobalValue::MainPlayer->SetWorldPos(Pos);
+		break;
+	case Door_Dir::Door_Right:
+		Pos.x -= 50.f;
+		CGlobalValue::MainPlayer->SetWorldPos(Pos);
+		break;
+	case Door_Dir::Door_Up:
+		Pos.y -= 50.f;
+		CGlobalValue::MainPlayer->SetWorldPos(Pos);
+		break;
+	case Door_Dir::Door_Down:
+		Pos.y += 50.f;
+		CGlobalValue::MainPlayer->SetWorldPos(Pos);
+		break;
+	}
+}
+
+void CDoor::SetDir(Door_Dir Dir)
 {
 	switch (Dir)
 	{
-	case Object_Dir::Left:
+	case Door_Dir::Door_Left:
 	{
 		m_Particle->SetMoveDir({ -1,0,0 });
 		SetWorldRotation(0.f, 0.f, 90.f);
 		break;
 	}
-	case Object_Dir::Right:
+	case Door_Dir::Door_Right:
 	{
 		m_Particle->SetMoveDir({ 1,0,0 });
 		SetWorldRotation(0.f, 0.f, 270.f);
 		break;
 	}
-	case Object_Dir::Up:
+	case Door_Dir::Door_Up:
 	{
 
 		m_Particle->SetMoveDir({ 0,1,0 });
 		break;
 	}
-	case Object_Dir::Down:
+	case Door_Dir::Door_Down:
 	{
 
 		m_Particle->SetMoveDir({ 0,-1,0 });
 		SetWorldRotation(0.f, 0.f, 180.f);
 		break;
 	}
-	m_Dir = Dir;
 	}
+	m_DoorDir = Dir;
 }

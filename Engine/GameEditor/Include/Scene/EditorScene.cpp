@@ -41,12 +41,21 @@ bool CEditorScene::Init()
     CInput::GetInst()->CreateKey("MouseLButton", VK_LBUTTON);
 	CInput::GetInst()->CreateKey("MouseRButton", VK_RBUTTON);
 
+	CInput::GetInst()->CreateKey("Button1", '1');
+	CInput::GetInst()->CreateKey("Button2", '2');
+	CInput::GetInst()->CreateKey("Button3", '3');
+	CInput::GetInst()->CreateKey("Button4", '4');
+
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveUp", KT_Push, this, &CEditorScene::MoveUp);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveDown", KT_Push, this, &CEditorScene::MoveDown);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveLeft", KT_Push, this, &CEditorScene::MoveLeft);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MoveRight", KT_Push, this, &CEditorScene::MoveRight);
     CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseLButton", KT_Push, this, &CEditorScene::MouseLButton);
 	CInput::GetInst()->AddKeyCallback<CEditorScene>("MouseRButton", KT_Push, this, &CEditorScene::MouseRButton);
+	CInput::GetInst()->AddKeyCallback<CEditorScene>("Button1", KT_Push, this, &CEditorScene::Button1);
+	CInput::GetInst()->AddKeyCallback<CEditorScene>("Button2", KT_Push, this, &CEditorScene::Button2);
+	CInput::GetInst()->AddKeyCallback<CEditorScene>("Button3", KT_Push, this, &CEditorScene::Button3);
+	CInput::GetInst()->AddKeyCallback<CEditorScene>("Button4", KT_Push, this, &CEditorScene::Button4);
 
     m_TileMapToolWindow = (CTileMapToolWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("TileMapToolWindow");
 	m_ObjectWindow = (CObjectWindow*)CIMGUIManager::GetInst()->FindIMGUIWindow("ObjectWindow");
@@ -164,6 +173,26 @@ void CEditorScene::MouseRButton(float DeltaTime)
 	}
 }
 
+void CEditorScene::Button1(float DeltaTime)
+{
+	CGlobalValue::MouseState = Mouse_State::Normal;
+}
+
+void CEditorScene::Button2(float DeltaTime)
+{
+	CGlobalValue::MouseState = Mouse_State::Tile;
+}
+
+void CEditorScene::Button3(float DeltaTime)
+{
+	CGlobalValue::MouseState = Mouse_State::TileObject;
+}
+
+void CEditorScene::Button4(float DeltaTime)
+{
+	CGlobalValue::MouseState = Mouse_State::World;
+}
+
 void CEditorScene::EditTileType()
 {
     Tile_Type   Type = m_TileMapToolWindow->GetTileType();
@@ -249,13 +278,16 @@ void CEditorScene::AddObjectMap()
 	std::string str = Obj->GetName();
 	str += std::to_string(m_CloneObjectCount);
 	CGameObject* Obj2 = Scene->SpawnObject<CGameObject>(str);
+	Obj2->SetClassType(Obj->GetClassType());
+	Obj2->SetObjectType(Obj->GetObjectType());
+	Obj2->SetEnemyType(Obj->GetEnemyType());
+	Obj2->SetDoorDir(Obj->GetDoorDir());
 	CSceneComponent* Component = Obj->GetRootComponent()->Clone();
-	Obj2->SetRootCloneComponent(Component);
+	Obj2->SetRootCloneComponent(Component, true);
 	
 
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Obj2->SetWorldPos(MousePos.x, MousePos.y, 0.f);
-	Obj2->SetWorldScale(100.f, 100.f, 0.f);
 	m_CloneObjectCount++;
 	m_ObjectWindow->AddObject(Obj2);
 

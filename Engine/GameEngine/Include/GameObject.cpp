@@ -87,7 +87,7 @@ void CGameObject::SetRootComponent(CSceneComponent* Root)
 	m_RootComponent = Root;
 }
 
-void CGameObject::SetRootCloneComponent(CSceneComponent* Root)
+void CGameObject::SetRootCloneComponent(CSceneComponent* Root, bool Enable)
 {
 	{
 		auto	iter = m_SceneComponentList.begin();
@@ -103,16 +103,16 @@ void CGameObject::SetRootCloneComponent(CSceneComponent* Root)
 
 	std::vector<CSceneComponent*>VecComponent;
 	Root->GetAllComponent(VecComponent);
-	Root->Start();
 	for (size_t i = 0; i < VecComponent.size(); i++)
 	{
 		m_SceneComponentList.push_back(VecComponent[i]);
+		VecComponent[i]->Enable(Enable);
+		this->Enable(Enable);
 		VecComponent[i]->SetOwner(this);
-		VecComponent[i]->Start();
 	}
 
 	m_RootComponent = Root;
-
+	Root->SetOwner(this);
 }
 CSceneComponent* CGameObject::FindSceneComponent(const std::string& Name)
 {
@@ -691,7 +691,7 @@ void CGameObject::Save(FILE* pFile)
 	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fwrite(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
-
+	
 
 	Component_Class_Type  Type = m_RootComponent->GetComponentClassType();
 	fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
@@ -732,7 +732,7 @@ void CGameObject::Load(FILE* pFile)
 	int Length = -1;
 	char	Name[256] = {};
 	fread(&Length, sizeof(int), 1, pFile);
-	fread(Name, 1, Length, pFile);
+	fread(Name, sizeof(char), Length, pFile);
 	SetName(Name);
 
 
@@ -741,7 +741,10 @@ void CGameObject::Load(FILE* pFile)
 	fread(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fread(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
-
+	if (m_DoorDir == Door_Dir::Door_Right)
+		m_DoorDir = Door_Dir::Door_Up;
+	else if (m_DoorDir == Door_Dir::Door_Up)
+		m_DoorDir = Door_Dir::Door_Right;
 	Component_Class_Type  Type;
 	fread(&Type, sizeof(Component_Class_Type), 1, pFile);
 	CSceneComponent* Component = nullptr;

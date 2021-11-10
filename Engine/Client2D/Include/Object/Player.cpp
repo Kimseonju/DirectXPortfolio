@@ -66,7 +66,7 @@ bool CPlayer::Init()
 	m_Arm = CreateSceneComponent<CSpringArm2D>("Arm");
 	m_Camera = CreateSceneComponent<CCamera>("Camera");
 	m_PlayerInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("PlayerInfoWidget");
-	m_Camera->SetCameraZoom(1.f);
+	m_Camera->SetCameraZoom(2.f);
 	SetRootComponent(m_Sprite);
 
 	m_Sprite->SetRelativeScale(15.f, 20.f, 1.f);
@@ -78,7 +78,7 @@ bool CPlayer::Init()
 		&CPlayer::CollisionBegin);
 	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
 		&CPlayer::CollisionEnd);
-	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Collider2D->SetExtent(15.f, 10.f);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_Body);
 
@@ -329,6 +329,10 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
 		m_Body->SetJump(false);
+		Vector3 Pos=GetWorldPos();
+		result.DestCollider->GetWorldPos();
+
+
 	}
 
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)

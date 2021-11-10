@@ -72,6 +72,7 @@ struct Vector3
     void Normalize();
     float Dot(const Vector3& v) const;
     float Angle(const Vector3& v)   const;
+    float Angle2D(const Vector3& v)   const;
     Vector3 Cross(const Vector3& v) const;
 
     // w = 0

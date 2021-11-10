@@ -57,7 +57,9 @@ public:
 	virtual void SetMaterial(int SlotIndex, const std::string& Name);
 	virtual void AddMaterial(CMaterial* pMaterial);
 	virtual void AddMaterial(const std::string& Name);
-
+public:
+	virtual void Enable(bool bEnable);
+	void SetTileEnable(bool bEnable);
 public:
 	Tile_Shape GetTileShape()	const
 	{
@@ -122,7 +124,7 @@ public:
 	void ClientLoad(FILE* pFile);
 	void LoadFullPath(const TCHAR* FullPath);
 public:
-	void SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass);
+	void SetCollisionTileProfile(const std::string& TilePass, const std::string& TileNoPass);
 	void MapClear();
 private:
 	void SetWorldInfo();

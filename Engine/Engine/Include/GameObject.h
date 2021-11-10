@@ -124,7 +124,7 @@ public:
 
     virtual void Active(bool bActive);
     void SetRootComponent(CSceneComponent* Root);
-    void SetRootCloneComponent(CSceneComponent* Root);
+    void SetRootCloneComponent(CSceneComponent* Root, bool Enable);
     CSceneComponent* FindSceneComponent(const std::string& Name);
     void GetAllSceneComponentName(std::vector<HierarchyName>& vecName);
     void GetAllSceneComponent(std::vector<CSceneComponent*>& vecComponent);

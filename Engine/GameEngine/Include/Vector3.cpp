@@ -342,6 +342,11 @@ float Vector3::Angle(const Vector3& v) const
     return Angle;
 }
 
+float Vector3::Angle2D(const Vector3& v) const
+{
+    return 0.0f;
+}
+
 Vector3 Vector3::Cross(const Vector3& v) const
 {
     return Vector3(XMVector3Cross(Convert(), v.Convert()));

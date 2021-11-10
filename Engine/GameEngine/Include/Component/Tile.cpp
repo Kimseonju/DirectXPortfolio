@@ -3,6 +3,10 @@
 #include "TileMapComponent.h"
 #include "../Scene/Scene.h"
 #include "ColliderBox2D.h"
+
+
+int CTile::s_TileCount = 0;
+
 CTile::CTile() :
 	m_Shape(Tile_Shape::Rect),
 	m_TileType(Tile_Type::None),
@@ -12,7 +16,8 @@ CTile::CTile() :
 	m_FrameX(0),
 	m_FrameY(0),
 	m_Collision(true),
-	m_Editor(false)
+	m_Editor(false),
+	m_EnableChange(false)
 {
 }
 
@@ -48,7 +53,8 @@ bool CTile::Init()
 		{
 			if (m_Editor)
 			{
-				std::string str = std::to_string(m_Index);
+				s_TileCount++;
+				std::string str = std::to_string(s_TileCount);
 				m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject" + str);
 
 				m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
@@ -86,7 +92,8 @@ bool CTile::Init()
 				case Tile_Type::Wall:
 				case Tile_Type::Crossed_Wall:
 				{
-					std::string str = std::to_string(m_Index);
+					s_TileCount++;
+					std::string str = std::to_string(s_TileCount);
 					m_CollisionObject = m_Owner->GetScene()->SpawnObject<CGameObject>("TileCollisionObject" + str);
 
 					m_ColliderBox2DComponent = (CColliderBox2D*)m_CollisionObject->CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
@@ -119,6 +126,15 @@ void CTile::Start()
 
 void CTile::Update(float DeltaTime)
 {
+	if (m_EnableChange)
+	{
+		m_EnableChange = false;
+		if (m_CollisionObject)
+		{
+			m_CollisionObject->Enable(m_Enable);
+			m_ColliderBox2DComponent->Enable(m_Enable);
+		}
+	}
 }
 
 void CTile::PostUpdate(float DeltaTime)
@@ -190,13 +206,11 @@ void CTile::SetCollisionProfile(const std::string& TilePass, const std::string& 
 	}
 	case Tile_Type::Wall:
 	{
-		m_ColliderBox2DComponent->Enable(true);
 		m_ColliderBox2DComponent->SetCollisionProfile(TileNoPass);
 		break;
 	}
 	case Tile_Type::Crossed_Wall:
 	{
-		m_ColliderBox2DComponent->Enable(true);
 		m_ColliderBox2DComponent->SetCollisionProfile(TilePass);
 		break;
 	}

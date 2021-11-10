@@ -115,18 +115,18 @@ void CSceneCollision::CreateSection2D()
 {
 	m_Section2D = new CollisionSectionInfo;
 
-	m_Section2D->CountX = 10;
-	m_Section2D->CountY = 10;
+	m_Section2D->CountX = 100;
+	m_Section2D->CountY = 100;
 	m_Section2D->CountZ = 1;
 	//10개*10개 = 100개의 세션
-	m_Section2D->SectionSize = Vector3(1000.f, 1000.f, 1.f);
+	m_Section2D->SectionSize = Vector3(100.f, 100.f, 1.f);
 	m_Section2D->SectionTotalSize = Vector3(10000.f, 10000.f, 1.f);
 
 	m_SectionTotalSize = m_Section2D->SectionTotalSize;
 
 	//0을 센터라고 치면 이렇게된다.
 	m_Section2D->Min = Vector3(-5000.f, -5000.f, 0.f);
-	m_Section2D->Max = Vector3(5000.f, 5000.f, 0.f);
+	m_Section2D->Max = Vector3(5000.f, 5000.f, 0.f);	
 
 	//충돌세션 초기화
 	for (int i = 0; i < m_Section2D->CountY; ++i)

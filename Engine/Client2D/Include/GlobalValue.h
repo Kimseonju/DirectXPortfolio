@@ -9,31 +9,12 @@ public:
 	static CPlayer* MainPlayer;
     static CBasicMouse* MainMouse;
 
-
     static float Lerp2DMax(float _Start, float _End, float _Ratio);
 
     static float Lerp2D(float _Start, float _End, float _Ratio);
 };
 
 enum class Object_Dir
-{
-    Left,
-    Right,
-    Up,
-    Down,
-    End
-};
-
-enum class RoomCreate_Dir
-{
-    Left,
-    Right,
-    Up,
-    Down,
-    End
-};
-
-enum class Room_Dir
 {
     Left,
     Right,
@@ -165,12 +146,14 @@ struct StageObjectsInfo
     std::vector<StageObjectSpawnInfo> StageSpawn;
     class CGameObject* TileMap;
     class CGameObject* TileMapObject;
+    class CTileMapComponent* TileMapComponent;
+    class CTileMapComponent* TileObjectMapComponent;
     int UseCount;
 };
 enum class WallDir
 {
     Left,
-    Right,
     Up,
+    Right,
     Down
 };

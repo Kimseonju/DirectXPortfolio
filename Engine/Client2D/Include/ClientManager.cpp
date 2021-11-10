@@ -25,12 +25,14 @@ CClientManager::~CClientManager()
 
 bool CClientManager::Init()
 {
-    CTestWindow* Window = CIMGUIManager::GetInst()->AddWindow<CTestWindow>("TestWindow");
+    //CTestWindow* Window = CIMGUIManager::GetInst()->AddWindow<CTestWindow>("TestWindow");
     //CEngine::GetInst()->OnDebugLog();
     //CEngine::GetInst()->OnLogFPS(true);
     //Window->AddWindowFlag(ImGuiWindowFlags_NoTitleBar);
-    Window->AddWindowFlag(ImGuiWindowFlags_NoMove);
-    Window->AddWindowFlag(ImGuiWindowFlags_NoResize);
+    //Window->AddWindowFlag(ImGuiWindowFlags_NoMove);
+    //Window->AddWindowFlag(ImGuiWindowFlags_NoResize);
+    // 
+    // 
     // Å° µî·Ï
 	void LeftMove(float DeltaTime);
 	void RightMove(float DeltaTime);

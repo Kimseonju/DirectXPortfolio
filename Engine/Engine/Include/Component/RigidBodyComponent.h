@@ -35,6 +35,7 @@ protected:
     float   m_MaxSpeed;    // 최대속력 
     Vector3 m_PrevMoveDir;
     float   m_DashRadian;
+    Vector3 m_MoveDir;
 public:
 
     void Dash(float Angle)
@@ -85,17 +86,24 @@ public:
         else
         {
             //바닥으로 떨어지고있을때
+
             if (m_Force.y < 0.f)
             {
                 m_Gravity = false;
-                m_Force.y = 0.f;
-                m_Force.x = 0.f;
             }
+            m_Force.y = 0.f;
+            m_Force.x = 0.f;
+            m_MoveDir = Vector3(0.f,0.f, 0.f);
+            
         }
     }
     void SetDir(Vector3& Dir)
     {
         m_Dir = Dir;
+    }
+    void AddDir(Vector3& Dir)
+    {
+        m_Dir += Dir;
     }
     void SetForce(Vector3& Force)
     {

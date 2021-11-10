@@ -8,6 +8,9 @@ class CTile
 	friend class CTileMapComponent;
 
 private:
+	static int s_TileCount;
+
+private:
 	CTile();
 	CTile(const CTile& tile);
 	virtual ~CTile();
@@ -35,6 +38,8 @@ private:
 	CSharedPtr<CGameObject> m_CollisionObject;
 	class CColliderBox2D* m_ColliderBox2DComponent;
 	bool		m_Editor;
+	bool		m_Enable;
+	bool		m_EnableChange;
 public:
 	float GetDistW()	const
 	{
@@ -192,6 +197,12 @@ public:
 	{
 		m_FrameX = x;
 		m_FrameY = y;
+	}
+
+	void SetEnable(bool Enable)
+	{
+		m_Enable = Enable;
+		m_EnableChange = true;
 	}
 public:
 	virtual bool Init();

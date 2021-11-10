@@ -1,10 +1,12 @@
 
 #include "Stage.h"
 #include "Scene/Scene.h"
-#include "../Room.h"
 #include "../MainDoor.h"
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
+#include <Component/TileMapComponent.h>
+#include "../GlobalValue.h"
+#include "../Object/Player.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle)
@@ -19,6 +21,21 @@ void CStage::Enable(bool Enable)
 	m_Enable = Enable;
 	m_TileMap->Enable(m_Enable);
 	m_TileMapObject->Enable(m_Enable);
+	m_TileMapComponent->Enable(m_Enable);
+	m_TileObjectMapComponent->Enable(m_Enable);
+
+	for (size_t i = 0; i < m_Enemy.size(); ++i)
+	{
+		m_Enemy[i]->Enable(m_Enable);
+	}
+	for (size_t i = 0; i < m_Object.size(); ++i)
+	{
+		m_Object[i]->Enable(m_Enable);
+	}
+	for (size_t i = 0; i < m_Doors.size(); ++i)
+	{
+		m_Doors[i]->Enable(m_Enable);
+	}
 }
 void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
 {
@@ -28,6 +45,8 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
 	}
 	m_TileMap =Info.TileMap;
 	m_TileMapObject = Info.TileMapObject;
+	m_TileMapComponent = Info.TileMapComponent;
+	m_TileObjectMapComponent = Info.TileObjectMapComponent;
 	size_t Size=Info.StageSpawn.size();
 	for (size_t i = 0; i < Size; i++)
 	{
@@ -49,6 +68,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
 				if (Type == StageType::Start)
 				{
 					MainDoor->StartDoor();
+					CGlobalValue::MainPlayer->SetWorldPos(Info.StageSpawn[i].Pos);
 				}
 				else if (Type == StageType::End)
 				{
@@ -65,7 +85,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type)
 			case Client_Object_Type::Door:
 			{
 
-				CDoor* Door = m_pScene->SpawnObject<CDoor>("MainDoor");
+				CDoor* Door = m_pScene->SpawnObject<CDoor>("MainDoor2");
 				m_Doors.push_back(Door);
 				Door->SetDoorDir(Info.StageSpawn[i].DoorDir);
 				Obj = Door;
@@ -155,7 +175,7 @@ void CStage::Update(float DeltaTime)
 	case Stage_State::Clear:
 	{
 		//문열기
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < m_Doors.size(); i++)
 		{
 			if (m_Doors[i] != nullptr)
 			{
@@ -183,4 +203,21 @@ void CStage::Render(float DeltaTime)
 CStage* CStage::Clone()
 {
 	return new CStage(*this);
+}
+
+void CStage::PlayerStageMove(Stage_Dir Dir)
+{
+	//같은방향으로
+	if (Dir == Stage_Dir::END)
+		return;
+	int iDir=((int)Dir + 2) % 4;
+	for (int i = 0; i < m_Doors.size(); ++i)
+	{
+		Door_Dir DoorDir=m_Doors[i]->GetDoorDir();
+		if (iDir == (int)DoorDir)
+		{
+			m_Doors[i]->PlayerMove();
+		}
+	}
+
 }

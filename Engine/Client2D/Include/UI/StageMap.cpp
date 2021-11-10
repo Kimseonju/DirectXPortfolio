@@ -4,7 +4,6 @@
 #include "UI/Button.h"
 #include <Device.h>
 #include "../Stage/Stage.h"
-#include "../Room.h"
 CStageMap::CStageMap() :
 	m_StageUpdate(true),
 	m_MapBase1_0(nullptr),

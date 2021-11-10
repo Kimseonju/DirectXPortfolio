@@ -42,7 +42,7 @@ bool CPlayerDash::Init()
 	SetRootComponent(m_Sprite);
 
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	m_Sprite->SetWorldScale(50.f, 50.f, 0.f);
+	m_Sprite->SetWorldScale(19.f, 22.f, 0.f);
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->AddTexture("DashTexture", TEXT("Effect/Dash/Shadow/base_player_jump_shadow.png"));
 	return true;

@@ -72,6 +72,7 @@ public:
     void DeleteChild(CSceneComponent* Child);
     void GetAllComponentName(std::vector<HierarchyName>& vecName);
     void GetAllComponent(std::vector<CSceneComponent*>& vecComponent);
+    void GetAllCloneComponent(CGameObject* Owner, std::vector<CSceneComponent*>& vecComponent);
     void DetatchChild(CSceneComponent* Child);
     CSceneComponent* FindComponent(const std::string& Name);
 

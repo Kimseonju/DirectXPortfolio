@@ -36,6 +36,7 @@ private:
 
 	int m_MapSize; // 전체 맵 사이즈(카운트)
 	class CScene* m_pScene;
+	int m_MapCount;
 public:
 	void SetScene(class CScene* Scene)
 	{
@@ -51,7 +52,7 @@ public:
 	void CreateDungeon();
 	void CreateStage(int x, int y);
 	void NextStage(Stage_Dir Dir);
-	void PlayStage();
+	void PlayStage(Stage_Dir Dir);
 	//시작, 끝, 상점, 레스토랑
 	bool CreateStage_Special(); 
 	

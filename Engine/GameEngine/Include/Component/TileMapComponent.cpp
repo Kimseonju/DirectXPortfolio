@@ -266,6 +266,24 @@ void CTileMapComponent::AddMaterial(const std::string& Name)
 	}
 }
 
+void CTileMapComponent::Enable(bool bEnable)
+{
+	CPrimitiveComponent::Enable(bEnable);
+	SetTileEnable(bEnable);
+}
+
+void CTileMapComponent::SetTileEnable(bool bEnable)
+{
+	auto	iter = m_vecTile.begin();
+	auto	iterEnd = m_vecTile.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->SetEnable(bEnable);
+	}
+
+}
+
 int CTileMapComponent::GetTileIndexX(const Vector3& Pos)
 {
 	if (m_Shape == Tile_Shape::Rect)
@@ -716,17 +734,18 @@ void CTileMapComponent::Update(float DeltaTime)
 {
 	CPrimitiveComponent::Update(DeltaTime);
 
-	/*size_t Size = m_vecTile.size();
+	size_t Size = m_vecTile.size();
 	for (size_t i = 0; i < Size; ++i)
 	{
 		m_vecTile[i]->Update(DeltaTime);
-	}*/
+	}
 }
 
 void CTileMapComponent::PostUpdate(float DeltaTime)
 {
 	CPrimitiveComponent::PostUpdate(DeltaTime);
-
+	if (!IsEnable())
+		return;
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 	Resolution	RS = Camera->GetResolution();
@@ -783,6 +802,9 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 					case Tile_Type::Wall:
 						m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
 						break;
+					case Tile_Type::Crossed_Wall:
+						m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
+						break;
 					}
 				}
 
@@ -808,6 +830,8 @@ void CTileMapComponent::Render(float DeltaTime)
 {
 	CPrimitiveComponent::Render(DeltaTime);
 
+	if (!IsEnable())
+		return;
 	m_WorldBuffer->SetShader(30, CBT_VERTEX);
 
 	m_CBuffer->UpdateCBuffer();
@@ -1183,7 +1207,7 @@ void CTileMapComponent::SetWorldInfo()
 	}
 }
 
-void CTileMapComponent::SetCollisionTileType(const std::string& TilePass, const std::string& TileNoPass)
+void CTileMapComponent::SetCollisionTileProfile(const std::string& TilePass, const std::string& TileNoPass)
 {
 	for (size_t i = 0; i < m_vecTile.size(); ++i)
 	{

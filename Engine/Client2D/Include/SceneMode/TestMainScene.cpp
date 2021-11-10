@@ -74,9 +74,31 @@ bool CTestMainScene::Init()
 	//BackGround_Tree->AddTexture("TownBG_Day", TEXT("Map/TownBG_Day.png"));
 	//BackGround_Tree->SetRelativePos(RS.Width, 0.f, 0.f);
 
+	CPlayer* pPlayer = m_pScene->SpawnObject<CPlayer>("Player");
+	CGlobalValue::MainPlayer = pPlayer;
 	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
 	CStageManager::GetInst()->SetScene(m_pScene);
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR.txt"));
+
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRU.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRUD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLU.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRU.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRUD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
+
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
 	CDoor* Door= m_pScene->SpawnObject<CDoor>("Door");
@@ -85,10 +107,7 @@ bool CTestMainScene::Init()
 
 	Door = m_pScene->SpawnObject<CDoor>("Door");
 	Door->SetWorldPos(200.f, 300.f, 0.f);
-	Door->SetDir(Object_Dir::Left);
-	CPlayer* pPlayer = m_pScene->SpawnObject<CPlayer>("Player");
-	pPlayer->SetWorldPos(0.f, 300.f, 0.f);
-	CGlobalValue::MainPlayer = pPlayer;
+	Door->SetDir(Door_Dir::Door_Left);
 	CUIManager::GetInst()->Init(m_pScene);
 
 

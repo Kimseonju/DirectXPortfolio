@@ -20,7 +20,8 @@ public:
 		m_VecPrefab.push_back(Clone);
 		Clone->Release();
 		CSceneComponent* Component = Prefab->GetRootComponent()->Clone();
-		Prefab->SetRootCloneComponent(Component);
+		Clone->SetRootCloneComponent(Component, false);
+		Clone->SetWorldPos(0.f, 0.f, 0.f);
 	}
 
 	CGameObject* GetSelectObject()

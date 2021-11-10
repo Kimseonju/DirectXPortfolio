@@ -36,7 +36,18 @@ void CIMGUIObjectInfoComponent::UpdateInfo(CGameObject* Object)
 	}
 	m_ObjectName->SetText(m_Object->GetName().c_str());
 	m_EnableCheckBox->SetCheck(m_Object->IsEnable());
+
+	Client_Class_Type ClassType = m_Object->GetClassType();
+	Client_Object_Type ObjectType = m_Object->GetObjectType();
+	Client_Enemy_Type EnemyType = m_Object->GetEnemyType();
+	Door_Dir DoorDir = m_Object->GetDoorDir();
+	m_ClassType->SetPrevName((int)ClassType);
+	m_ObjectType->SetPrevName((int)ObjectType);
+	m_EnemyType->SetPrevName((int)EnemyType);
+	m_DoorDir->SetPrevName((int)DoorDir);
+
 	Enable(true);
+
 }
 
 bool CIMGUIObjectInfoComponent::Init()
@@ -131,8 +142,8 @@ bool CIMGUIObjectInfoComponent::Init()
 
 	m_DoorDir = m_Owner->AddWidget<CIMGUIComboBox>("##DoorDirCombo", 100.f, 20.f);
 	m_DoorDir->AddItem("Door_Left");
-	m_DoorDir->AddItem("Door_Right");
 	m_DoorDir->AddItem("Door_Up");
+	m_DoorDir->AddItem("Door_Right");
 	m_DoorDir->AddItem("Door_Down");
 	m_DoorDir->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::DoorDirComboCallback);
 

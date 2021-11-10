@@ -28,7 +28,6 @@ protected:
 	CSharedPtr<CAnimation2D> m_Animation2D;
 	
 protected:
-	Object_Dir m_Dir;
 	Vector2    m_MapPos;
 	bool m_Open;
 public:
@@ -45,7 +44,7 @@ public:
 	void testDoorOnOff(float DeltaTime);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
 	void CollisionBegin_NextStage(const HitResult& result, CCollider* Collider);
-
+	void PlayerMove();
 public:
-	void SetDir(Object_Dir Dir);
+	void SetDir(Door_Dir Dir);
 };

@@ -36,6 +36,17 @@ CCollider::CCollider(const CCollider& com) :
 	m_DebugShader = com.m_DebugShader;
 	m_CBuffer = com.m_CBuffer->Clone();
 	m_DebugRender = com.m_DebugRender;
+
+	auto	iter = m_PrevCollisionList.begin();
+	auto	iterEnd = m_PrevCollisionList.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->DeletePrevCollider(this);
+		(*iter)->CallCollisionCallback(Collision_State::End);
+		CallCollisionCallback(Collision_State::End);
+	}
+
 }
 
 CCollider::~CCollider()
@@ -242,6 +253,7 @@ void CCollider::PrevRender(float DeltaTime)
 
 void CCollider::Render(float DeltaTime)
 {
+	CPrimitiveComponent::Render(DeltaTime);
 	if (!IsEnable())
 		return;
 	if (m_DebugRender)

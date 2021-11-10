@@ -799,7 +799,7 @@ void CIMGUITileMapComponent::LoadTile(FILE* pFile)
 	m_InputTileSizeY->SetFloat(m_TileMapComponent->GetTileSize().y);
 
 	m_CreateTile = true;
-	m_TileMapComponent->SetCollisionTileType("Tile_pass", "Tile_Nopass");
+	m_TileMapComponent->SetCollisionTileProfile("Tile_pass", "Tile_Nopass");
 }
 
 void CIMGUITileMapComponent::LoadTileImage()

@@ -23,6 +23,8 @@ private:
 	std::vector<CDoor*> m_Doors;
 	class CGameObject* m_TileMap;
 	class CGameObject* m_TileMapObject;
+	class CTileMapComponent* m_TileMapComponent;
+	class CTileMapComponent* m_TileObjectMapComponent;
 	
 	bool m_Enable;
 	class CScene* m_pScene;
@@ -52,4 +54,6 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CStage* Clone();
+public:
+	void PlayerStageMove(Stage_Dir Dir);
 };
