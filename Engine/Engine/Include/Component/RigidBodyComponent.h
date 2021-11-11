@@ -36,9 +36,12 @@ protected:
     Vector3 m_PrevMoveDir;
     float   m_DashRadian;
     Vector3 m_MoveDir;
-    bool    m_Jump;
+    bool m_Jump;
 public:
-
+    bool IsJump()
+    {
+        return m_Jump;
+    }
     void Dash(float Angle)
     {
         m_DashRadian = DegreeToRadian(Angle);
@@ -48,6 +51,11 @@ public:
         m_Force.x = 0.f;
         m_Force.y = 0.f;
         m_Dash = true;
+        m_Jump = true;
+    }
+    void StopDash()
+    {
+        m_DashTimer = 0.f;
     }
     void Dashing(float DeltaTime)
     {
@@ -64,10 +72,6 @@ public:
     bool IsDash() const
     {
         return m_Dash;
-    }
-    bool IsJump() const
-    {
-        return m_Jump;
     }
     bool IsDashEffect() const
     {
@@ -91,36 +95,14 @@ public:
     }
     void SetJump(bool Jump)
     {
-        if (Jump)
-        {
-            m_Gravity = true;
-            m_Force.y = m_JumpPower;
-        }
-        else
-        {
-            //바닥으로 떨어지고있을때
-
-            if (m_Force.y < 0.f)
-            {
-                m_Gravity = false;
-            }
-            m_Force.y = 0.f;
-            m_Force.x = 0.f;
-            m_MoveDir = Vector3(0.f,0.f, 0.f);
-            
-        }
+        m_Jump = Jump;
     }
 
-    bool IsDown()
+    void Jump()
     {
-        if (m_Force.y < 0.f)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        m_Jump = true;
+        m_Gravity = true;
+        m_Force.y = m_JumpPower;
     }
     void SetDir(Vector3& Dir)
     {

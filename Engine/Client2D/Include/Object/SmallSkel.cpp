@@ -32,7 +32,8 @@ bool CSmallSkel::Init()
 {
 	CEnemy::Init();
 
-	m_AttackRangeCollider2D->SetExtent(55.f, 50.f);
+	m_Collider2D->SetExtent(5.f, 9.f);
+	m_AttackRangeCollider2D->SetExtent(7.f, 9.f);
 	m_AttackRangeCollider2D->SetCollisionProfile("Enemy");
 	m_AttackRangeCollider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionAttackRangeBegin);
@@ -45,7 +46,7 @@ bool CSmallSkel::Init()
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
 
-	m_Status.SetMoveSpeed(200.f);
+	m_Status.SetMoveSpeed(50.f);
 	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
 
 	return true;
@@ -54,75 +55,79 @@ bool CSmallSkel::Init()
 void CSmallSkel::Update(float DeltaTime)
 {
 	CEnemy::Update(DeltaTime);
-
+	if (m_StartTimer > 0.f)
+		return;
+	m_Body->SetGravity(true);
 	if (m_Weapon->IsAttack())
 	{
 		return;
 	}
 
-	//if (CGlobalValue::MainPlayer)
-	//{
-	//	CPlayer* player = CGlobalValue::MainPlayer;
-	//	Vector3 Pos = player->GetWorldPos() - GetWorldPos();
-	//	Pos.Normalize();
-	//	float Angle = GetWorldPos().Angle(player->GetWorldPos());
-	//
-	//	//위
-	//	if (Angle > 330.f && Angle < 30.f)
-	//	{
-	//
-	//	}
-	//
-	//	//아래
-	//
-	//	else if (Angle > 150.f && Angle < 210.f)
-	//	{
-	//
-	//	}
-	//	else
-	//	{
-	//		Pos.y = 0.f;
-	//		Pos.z = 0.f;
-	//		Pos.Normalize();
-	//		m_Body->SetDir(Pos);
-	//
-	//		if (Pos.x < 0.f)
-	//		{
-	//			m_Dir = Object_Dir::Left;
-	//			m_Sprite->SetHorizontalReverse2DEnable(true);
-	//		}
-	//		else
-	//		{
-	//			m_Dir = Object_Dir::Right;
-	//			m_Sprite->SetHorizontalReverse2DEnable(false);
-	//		}
-	//		m_WeaponArm->SetDir(m_Dir);
-	//
-	//		if (m_Weapon)
-	//		{
-	//			m_Weapon->SetDir(m_Dir);
-	//			if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
-	//			{
-	//				if (m_Dir == Object_Dir::Left)
-	//				{
-	//					m_WeaponArm->SetRelativeRotationZ(-180.f);
-	//					m_Weapon->SetRelativeRotationZ(-180.f);
-	//				}
-	//				else if (m_Dir == Object_Dir::Right)
-	//				{
-	//					m_WeaponArm->SetRelativeRotationZ(0);
-	//					m_Weapon->SetRelativeRotationZ(0);
-	//
-	//				}
-	//			}
-	//			else if (m_Weapon->GetWeaponType() == Weapon_Type::Range)
-	//			{
-	//				m_Weapon->SetRelativeRotationZ(Angle + m_Weapon->GetRebound());
-	//			}
-	//		}
-	//
-	//	}
-	//}
+	if (CGlobalValue::MainPlayer)
+	{
+		CPlayer* player = CGlobalValue::MainPlayer;
+		Vector2 PlayerPos=Vector2(player->GetWorldPos().x, player->GetWorldPos().y);
+		float Distance = abs(PlayerPos.Distance(Vector2(GetWorldPos().x, GetWorldPos().y)));
+		if (Distance >30.f)
+		{
+			return;
+		}
+		Vector3 Pos = player->GetWorldPos() - GetWorldPos();
+		Pos.Normalize();
+		float Angle = GetWorldPos().Angle(player->GetWorldPos());
+	
+		//위
+		if (Angle > 330.f && Angle < 30.f)
+		{
+	
+		}
+	
+		//아래
+	
+		else if (Angle > 150.f && Angle < 210.f)
+		{
+	
+		}
+		else
+		{
+			Pos.y = 0.f;
+			Pos.z = 0.f;
+			Pos.Normalize();
+			m_Body->SetDir(Pos);
+	
+			if (Pos.x < 0.f)
+			{
+				m_Dir = Object_Dir::Left;
+				m_Sprite->SetHorizontalReverse2DEnable(true);
+			}
+			else
+			{
+				m_Dir = Object_Dir::Right;
+				m_Sprite->SetHorizontalReverse2DEnable(false);
+			}
+			m_WeaponArm->SetDir(m_Dir);
+	
+			if (m_Weapon)
+			{
+				m_Weapon->SetDir(m_Dir);
+				if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
+				{
+					if (m_Dir == Object_Dir::Left)
+					{
+						m_Weapon->SetHorizontalReverse2DEnable(true);
+					}
+					else if (m_Dir == Object_Dir::Right)
+					{
+						m_Weapon->SetHorizontalReverse2DEnable(false);
+					}
+				}
+				else if (m_Weapon->GetWeaponType() == Weapon_Type::Range)
+				{
+				}
+			}
+	
+		}
+	}
 }
 
 void CSmallSkel::PostUpdate(float DeltaTime)

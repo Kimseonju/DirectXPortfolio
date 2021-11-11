@@ -30,7 +30,8 @@ CGameObject::CGameObject() :
 	m_LifeTimeEnable(false),
 	m_Owner(nullptr),
 	m_CreateEnemyEffect(false),
-	m_CreateEnemyOrder(0)
+	m_CreateEnemyOrder(0),
+	m_StartTimer(0.f)
 {
 	m_SceneComponentList.resize(0);
 	m_RootComponent = CreateSceneComponent<CSceneComponent>("DefaultRoot");
@@ -203,17 +204,21 @@ bool CGameObject::Init()
 
 void CGameObject::Update(float DeltaTime)
 {
-	if (m_LifeTimeEnable)
+	if (m_StartTimer > 0.f)
 	{
-		m_LifeTime -= DeltaTime;
-
-		if (m_LifeTime <= 0.f)
-		{
-			Active(false);
-		}
-			
+		m_StartTimer -= DeltaTime;
 	}
-
+	//if (m_LifeTimeEnable)
+	//{
+	//	m_LifeTime -= DeltaTime;
+	//
+	//	if (m_LifeTime <= 0.f)
+	//	{
+	//		Active(false);
+	//	}
+	//		
+	//}
+	//
 	size_t	Size = m_vecObjectComponent.size();
 
 	for (size_t i = 0; i < Size; ++i)

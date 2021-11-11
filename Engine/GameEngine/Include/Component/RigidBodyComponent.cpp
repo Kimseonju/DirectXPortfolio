@@ -43,6 +43,17 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	//가속도 
 	//아이작 가속도 다 가속도...
 	Vector3 moveDir= Vector3::Zero;
+	if (m_Force.x > 100.f)
+		m_Force.x = 100.f;
+	if (m_Force.x < -100.f)
+		m_Force.x = -100.f;
+
+	if (m_Force.y > 200.f)
+		m_Force.y = 200.f;
+	if (m_Force.y < -200.f)
+		m_Force.y = -200.f;
+
+
 	if (m_Gravity)
 	{
 		//공중상태
@@ -53,26 +64,17 @@ void CRigidBodyComponent::Update(float DeltaTime)
 			if (m_Dash)
 			{
 				m_Dash = false;
-				m_Force.x = 0.f;
 				m_Dir = Vector3::Zero;
 			}
-			if (m_Force.y > 200.f)
-				m_Force.y = 200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
-			if (m_Force.y < -200.f)
-				m_Force.y = -200.f;
 			moveDir += m_Force * DeltaTime;
-			moveDir += m_Dir * m_Speed * DeltaTime;
+			moveDir += m_Dir * m_Speed * DeltaTime/3.f;
 		}
 		//대쉬중일때
 		else
 		{
 			Dashing(DeltaTime);
 			m_DashTimer -= DeltaTime;
-			if (m_Force.y > 200.f)
-				m_Force.y = 200.f;
-			if (m_Force.y < -200.f)
-				m_Force.y = -200.f;
 
 			if (m_DashEffectTime <= 0.f)
 			{
@@ -87,6 +89,23 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	{
 		//좌우로 움직이는중
 		//애니메이션은 플레이어에서 조절
+		if (m_DashTimer <= 0.f)
+		{
+			m_Dash = false;
+		}
+		else
+		{
+			m_DashTimer -= DeltaTime;
+
+			if (m_DashEffectTime <= 0.f)
+			{
+				m_DashEffectTime += 0.015f;
+				m_DashEffect = true;
+			}
+			m_DashEffectTime -= DeltaTime;
+		}
+		
+
 		if (m_Dir != Vector3::Zero)
 		{
 			moveDir += m_Dir * m_Speed * DeltaTime;

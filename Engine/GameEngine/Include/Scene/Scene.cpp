@@ -11,7 +11,8 @@ CScene::CScene()    :
     m_pCameraManager(nullptr),
     m_pCollision(nullptr),
     m_pViewport(nullptr),
-    m_StartScene(false)
+    m_StartScene(false),
+    m_StartTime(0.f)
 {
 }
 
@@ -57,6 +58,7 @@ void CScene::Start()
     m_pViewport->Start();
 
     m_pCollision->Start();
+    m_StartTime = 3.f;
 }
 
 bool CScene::Init()

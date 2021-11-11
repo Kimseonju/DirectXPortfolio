@@ -117,6 +117,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 				{
 				case Client_Enemy_Type::SmallSkel_Sword:
 					Obj = m_pScene->SpawnObject<CSmallSkel>("CreateObject"+ str);
+					Obj->SetStartTimer(1.f);
 					m_vecEnemy.push_back(Obj);
 					break;
 				case Client_Enemy_Type::SmallSkel_Bow:

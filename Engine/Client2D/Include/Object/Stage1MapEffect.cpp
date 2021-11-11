@@ -35,8 +35,6 @@ bool CStage1MapEffect::Init()
 	//m_Particle->SetRelativePos(Vector3(150.f, 75.f, 0.f));
 	m_Particle->SetPivot(0.5f, 0.5f, 0.f);
 	m_Particle->SetSpawnTime(0.05f);
-	//SetLifeTime(3.9f);
-	SetLifeTimeCheck(false);
 	m_Particle->SetTwinkleEnable(true);
 	//m_Particle->SetGravityEnable(true);
 	SetRootComponent(m_Particle);

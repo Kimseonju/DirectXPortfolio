@@ -37,8 +37,7 @@ protected:
 	class CWeaponArm* m_WeaponArm;
 	bool m_OneAttack;
 	Object_Dir m_Dir;
-
-	bool m_StartGravity;
+	bool m_WallCol;
 protected:
 	bool    m_ChildFire;
 	float   m_ChildFireTime;

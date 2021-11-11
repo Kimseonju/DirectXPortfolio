@@ -110,14 +110,14 @@ bool CTestMainScene::Init()
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
 	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
 
-	CCollisionObject* pCollisionObject = m_pScene->SpawnObject<CCollisionObject>("Collision1");
+	//CCollisionObject* pCollisionObject = m_pScene->SpawnObject<CCollisionObject>("Collision1");
 	
-	CTeemo* pTeemo = m_pScene->SpawnObject<CTeemo>("Teemo");
-
-	pTeemo->SetRelativePos(500.f, 500.f, 0.f);
+	//CTeemo* pTeemo = m_pScene->SpawnObject<CTeemo>("Teemo");
+	//
+	//pTeemo->SetRelativePos(500.f, 500.f, 0.f);
 	
 	//CPixelCollisionTest* pPixelCollisionTest = m_pScene->SpawnObject<CPixelCollisionTest>("PixelCollisionTest");
-	CStage1MapEffect* pPixelCollisionTest = m_pScene->SpawnObject<CStage1MapEffect>("PixelCollisionTest1");
+	//CStage1MapEffect* pPixelCollisionTest = m_pScene->SpawnObject<CStage1MapEffect>("PixelCollisionTest1");
 	//
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 

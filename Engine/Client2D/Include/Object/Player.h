@@ -52,6 +52,7 @@ private:
 
 	ePlayerState m_State;
 	ePlayerState m_PrevState;
+	bool m_WallCol;
 protected:
 public:
 	CPlayerStatus& GetStatus()

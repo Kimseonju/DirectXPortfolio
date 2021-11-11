@@ -47,9 +47,8 @@ bool CSkelSmallDagger::Init()
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 	m_Animation2D->SetIdleAnimation2D("SmallEnemyDaggerIdle");
 	m_Animation2D->SetAttackAnimation2D("SmallEnemyDaggerAttack", false);
-
 	m_Animation2D->SetFrameEndFunction<CSkelSmallDagger>(this, &CSkelSmallDagger::AnimationFrameEnd);
-	m_Sprite->SetWorldScale(78.f, 90.f, 0.f);
+	m_Sprite->SetWorldScale(26.f, 30.f, 0.f);
 	m_Sprite->SetPivot(0.5f, 0.5f,0.f);
 	return true;
 }

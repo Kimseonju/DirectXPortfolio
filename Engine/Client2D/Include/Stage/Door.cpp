@@ -50,8 +50,6 @@ bool CDoor::Init()
 	m_Particle->SetRelativePos(Vector3(0.f, -30.f, 0.f));
 	m_Particle->SetPivot(0.5f, 0.5f, 0.f);
 	m_Particle->SetSpawnTime(0.1f);
-	//SetLifeTime(3.9f);
-	SetLifeTimeCheck(false);
 	m_Particle->SetTwinkleEnable(false);
 	//m_Particle->SetGravityEnable(true);
 

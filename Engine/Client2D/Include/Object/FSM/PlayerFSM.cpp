@@ -27,7 +27,7 @@ void CPlayer::BodyIdleStart()
 
 void CPlayer::BodyIdleStay()
 {
-	if (m_RootComponent->GetVelocity().y < -2.f || m_RootComponent->GetVelocity().y > 1.f)
+	if (m_Body->IsJump())
 	{
 		m_BodyFSM.ChangeState("Jump");
 	}
@@ -70,10 +70,8 @@ void CPlayer::BodyJumpStart()
 
 void CPlayer::BodyJumpStay()
 {
-	if (m_RootComponent->GetVelocity().y > -2.f && m_RootComponent->GetVelocity().y <1.f )
+	if (!m_Body->IsJump())
 	{
-		if (m_Body->IsJump())
-			return;
 		if (m_RootComponent->GetVelocity().x != 0.f)
 		{
 			m_BodyFSM.ChangeState("Move");

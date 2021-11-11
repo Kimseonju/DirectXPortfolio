@@ -27,7 +27,6 @@ bool CMainDoor::Init()
 	CGameObject::Init();
 	m_DoorCollider2D = CreateSceneComponent<CColliderBox2D>("DoorCollider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-	SetLifeTimeCheck(false);
 	SetRootComponent(m_Sprite);
 
 	m_Sprite->CreateAnimation2D<CAnimation2D>();

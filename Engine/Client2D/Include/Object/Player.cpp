@@ -20,7 +20,8 @@ CPlayer::CPlayer() :
 	m_Weapon(nullptr),
 	m_WeaponArm(nullptr),
 	m_Angle(0.f),
-	m_Dir(Object_Dir::Left)
+	m_Dir(Object_Dir::Left),
+	m_WallCol(false)
 {
 }
 
@@ -141,7 +142,7 @@ void CPlayer::Update(float DeltaTime)
 	CGameObject::Update(DeltaTime);
 	m_Status.Update(DeltaTime);
 	m_BodyFSM.Update();
-
+	m_WallCol = false;
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Vector3 Pos = m_WeaponArm->GetWorldPos();
 	Vector2 Pos2 = Vector2(Pos.x, Pos.y);
@@ -269,7 +270,7 @@ void CPlayer::DownMove(float DeltaTime)
 
 void CPlayer::JumpMove(float DeltaTime)
 {
-	m_Body->SetJump(true);
+	m_Body->Jump();
 }
 
 void CPlayer::Attack(float DeltaTime)
@@ -340,31 +341,47 @@ void CPlayer::AnimationFrameEnd(const std::string& Name)
 
 void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
-		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass )
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirStart(Angle, result.DestCollider);
 	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirStart(Angle, result.DestCollider);
+	}
 
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
 	{
-		m_Body->SetJump(true);
+
 		CUIManager::GetInst()->GetPlayerUI()->Hit();
 	}
 }
 
 void CPlayer::CollisionMiddle(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
-		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirMiddle(Angle, result.DestCollider);
+		m_WallCol = true; 
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirStart(Angle, result.DestCollider);
+		m_WallCol = true;
 	}
 }
 
@@ -373,6 +390,11 @@ void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		if (!m_WallCol)
+		{
+			m_Body->SetGravity(true);
+			m_Body->SetJump(true);
+		}
 	}
 }
 
@@ -390,7 +412,7 @@ void CPlayer::ColDirStart(float Angle,CCollider* Col)
 	//왼쪽
 	
 
-	if (131.f < Angle && Angle < 229.f)
+	if (120.f < Angle && Angle < 230.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
@@ -400,7 +422,7 @@ void CPlayer::ColDirStart(float Angle,CCollider* Col)
 		SetWorldPos(PlayerPos);
 	}
 	//아래
-	else if (230.f < Angle && Angle < 309.f)
+	else if (230.f < Angle && Angle < 310.f)
 	{
 		m_Body->StopForceY();
 		m_Body->StopForceX();
@@ -410,11 +432,11 @@ void CPlayer::ColDirStart(float Angle,CCollider* Col)
 		XMove.y += y;
 		PlayerPos.y = XMove.y;
 		SetWorldPos(PlayerPos);
-		m_Body->SetGravity(false);
+ 		m_Body->SetGravity(false);
 		m_Body->SetJump(false);
 	}
 	//오른쪽방향
-	else if (310.f < Angle || Angle < 49.f)
+	else if (310.f < Angle || Angle < 30.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
@@ -425,10 +447,9 @@ void CPlayer::ColDirStart(float Angle,CCollider* Col)
 
 	}
 	//위
-	else if (50.f< Angle && Angle < 130.f)
+	else if (30.f < Angle && Angle < 120.f)
 	{
 		m_Body->StopForceY();
-		m_Body->StopForceX();
 		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y -= y;
@@ -479,7 +500,7 @@ void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
 	//왼쪽
 
 
-	if (131.f < Angle && Angle < 229.f)
+	if (120.f < Angle && Angle < 230.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
@@ -489,7 +510,7 @@ void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
 		SetWorldPos(PlayerPos);
 	}
 	//아래
-	else if (230.f < Angle && Angle < 309.f)
+	else if (230.f < Angle && Angle < 310.f)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);
@@ -497,9 +518,10 @@ void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
 		XMove.y += y;
 		PlayerPos.y = XMove.y;
 		SetWorldPos(PlayerPos);
+ 		m_Body->SetGravity(false);
 	}
 	//오른쪽방향
-	else if (310.f < Angle || Angle < 49.f)
+	else if (310.f < Angle || Angle < 30.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
@@ -510,7 +532,7 @@ void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
 
 	}
 	//위
-	else if (50.f < Angle && Angle < 130.f)
+	else if (30.f < Angle && Angle < 120.f)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);

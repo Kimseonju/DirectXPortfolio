@@ -51,6 +51,11 @@ public:
         m_Force.x = 0.f;
         m_Force.y = 0.f;
         m_Dash = true;
+        m_Jump = true;
+    }
+    void StopDash()
+    {
+        m_DashTimer = 0.f;
     }
     void Dashing(float DeltaTime)
     {
@@ -80,19 +85,24 @@ public:
     {
         m_Gravity = bGravity;
     }
+    void StopForceX()
+    {
+        m_Force.x = 0.f;
+    }
+    void StopForceY()
+    {
+        m_Force.y = 0.f;
+    }
     void SetJump(bool Jump)
     {
         m_Jump = Jump;
-        if (Jump)
-        {
-            m_Gravity = true;
-            m_Force.y = m_JumpPower;
-        }
     }
 
-    bool IsJump() const
+    void Jump()
     {
-        return m_Jump;
+        m_Jump = true;
+        m_Gravity = true;
+        m_Force.y = m_JumpPower;
     }
     void SetDir(Vector3& Dir)
     {

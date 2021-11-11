@@ -55,7 +55,13 @@ protected:
     //Enemy일때만 사용
     bool             m_CreateEnemyEffect;
     int             m_CreateEnemyOrder;
+    float m_StartTimer;
+    bool m_StartGravity;
 public:
+    void SetStartTimer(float Timer)
+    {
+        m_StartTimer = Timer;
+    }
     void SetCreateEnemyEffect(bool Effect)
     {
         m_CreateEnemyEffect = Effect;
@@ -81,11 +87,11 @@ public:
     {
         m_DoorDir = Dir;
     } 
-    bool GetEnemyEffect()
+    bool GetCreateEnemyEffect()
     {
         return m_CreateEnemyEffect;
     }
-    int GetEnemyOrder()
+    int GetCreateEnemyOrder()
     {
         return m_CreateEnemyOrder;
     }

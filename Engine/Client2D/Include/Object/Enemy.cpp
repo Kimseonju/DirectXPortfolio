@@ -15,9 +15,9 @@ CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
 	m_ChildFireTimeMax(0.2f),
-	m_StartGravity(false),
 	m_State(Enemy_State::Idle),
-	m_EnemyInfoWidget(nullptr)
+	m_EnemyInfoWidget(nullptr),
+	 m_WallCol(false)
 {
 }
 
@@ -111,8 +111,18 @@ bool CEnemy::Init()
 void CEnemy::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	if (m_StartTimer > 0.f)
+		return;
+	else
+	{
+		if (!m_Start)
+		{
+			m_Start = true;
+			m_Body->SetGravity(true);
+		}
+	}
+	m_WallCol= false;
 	m_EnemyFSM.Update();
-	m_Body->SetGravity(false);
 	m_EnemyInfoWidget->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
 
 
@@ -133,16 +143,22 @@ void CEnemy::Update(float DeltaTime)
 void CEnemy::PostUpdate(float DeltaTime)
 {
 	CGameObject::PostUpdate(DeltaTime);
+	if (m_StartTimer > 0.f)
+		return;
 }
 
 void CEnemy::Collision(float DeltaTime)
 {
 	CGameObject::Collision(DeltaTime);
+	if (m_StartTimer > 0.f)
+		return;
 }
 
 void CEnemy::Render(float DeltaTime)
 {
 	CGameObject::Render(DeltaTime);
+	if (m_StartTimer > 0.f)
+		return;
 }
 
 CEnemy* CEnemy::Clone()
@@ -179,7 +195,6 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = EnemyPos.GetAngle(ColPos);
 		ColDirStart(Angle, result.DestCollider);
-		m_Body->SetJump(false);
 	}
 
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
@@ -199,7 +214,7 @@ void CEnemy::CollisionMiddle(const HitResult& result, CCollider* Collider)
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = EnemyPos.GetAngle(ColPos);
 		ColDirMiddle(Angle, result.DestCollider);
-		m_Body->SetJump(false);
+		m_WallCol = true;
 	}
 }
 
@@ -210,7 +225,8 @@ void CEnemy::CollisionEnd(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		m_Body->SetGravity(true);
+		if(!m_WallCol)
+			m_Body->SetGravity(true);
 	}
 }
 
@@ -245,15 +261,75 @@ void CEnemy::CollisionAttackRangeBegin(const HitResult& result, CCollider* Colli
 	}
 
 }
-
 void CEnemy::ColDirStart(float Angle, CCollider* Col)
 {
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 EnemyPos = m_Collider2D->GetWorldPos();
-	Vector3 EnemyScale = m_Collider2D->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
+	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
 
-	Vector3 ColCheckPos = EnemyPos - ColPos;
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
+	// 
+	//왼쪽
+
+
+	if (121.f < Angle && Angle < 239.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x += x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+	}
+	//아래
+	else if (240.f < Angle && Angle < 300.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+	}
+	//오른쪽방향
+	else if (301.f < Angle || Angle < 29.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x -= x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+
+	}
+	//위
+	else if (30.f < Angle && Angle < 120.f)
+	{
+		m_Body->StopForceY();
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y -= y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+	}
+
+}
+
+void CEnemy::ColDirMiddle(float Angle, CCollider* Col)
+{
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
+	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
+
+	Vector3 ColCheckPos = PlayerPos - ColPos;
 
 	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
 	// 
@@ -263,98 +339,43 @@ void CEnemy::ColDirStart(float Angle, CCollider* Col)
 	if (131.f < Angle && Angle < 229.f)
 	{
 		m_Body->StopForceX();
-		float x = (EnemyScale.x + ColScale.x);
+		float x = (PlayerScale.x + ColScale.x);
 		Vector3 XMove = ColPos;
 		XMove.x += x;
-		EnemyPos.x = XMove.x;
-		SetWorldPos(EnemyPos);
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
 	}
-	//위
-	else if (230.f < Angle && Angle < 309.f)
+	//아래
+	else if (240.f < Angle && Angle < 300.f)
 	{
 		m_Body->StopForceY();
-		m_Body->StopForceX();
-		float y = (EnemyScale.y + ColScale.y);
+		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y += y;
-		EnemyPos.y = XMove.y;
-		SetWorldPos(EnemyPos);
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+		m_Body->SetGravity(false);
 	}
 	//오른쪽방향
 	else if (310.f < Angle || Angle < 49.f)
 	{
 		m_Body->StopForceX();
-		float x = (EnemyScale.x + ColScale.x);
+		float x = (PlayerScale.x + ColScale.x);
 		Vector3 XMove = ColPos;
 		XMove.x -= x;
-		EnemyPos.x = XMove.x;
-		SetWorldPos(EnemyPos);
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
 
-	}
-	//아래
-	else if (50.f < Angle && Angle < 130.f)
-	{
-		m_Body->StopForceY();
-		m_Body->StopForceX();
-		m_Body->SetGravity(false);
-		float y = (EnemyScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y -= y;
-		EnemyPos.y = XMove.y;
-		SetWorldPos(EnemyPos);
-	}
-}
-
-void CEnemy::ColDirMiddle(float Angle, CCollider* Col)
-{
-	Vector3 ColPos = Col->GetWorldPos();
-	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 EnemyPos = m_Collider2D->GetWorldPos();
-	Vector3 EnemyScale = m_Collider2D->GetRelativeScale() / 2.f;
-
-	Vector3 ColCheckPos = EnemyPos - ColPos;
-
-	//왼
-	if (131.f < Angle && Angle < 229.f)
-	{
-		m_Body->StopForceX();
-		float x = (EnemyScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x += x;
-		EnemyPos.x = XMove.x;
-		SetWorldPos(EnemyPos);
 	}
 	//위
-	else if (230.f < Angle && Angle < 309.f)
+	else if (30.f < Angle && Angle < 120.f)
 	{
 		m_Body->StopForceY();
-		float y = (EnemyScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y += y;
-		EnemyPos.y = XMove.y;
-		SetWorldPos(EnemyPos);
-	}
-	//오른
-	else if (310.f < Angle || Angle < 49.f)
-	{
-		m_Body->StopForceX();
-		float x = (EnemyScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x -= x;
-		EnemyPos.x = XMove.x;
-		SetWorldPos(EnemyPos);
-
-	}
-	//아래
-	else if (50.f < Angle && Angle < 130.f)
-	{
-		m_Body->StopForceY();
-		float y = (EnemyScale.y + ColScale.y);
+		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y -= y;
-		EnemyPos.y = XMove.y;
-		SetWorldPos(EnemyPos);
-		m_Body->SetGravity(false);
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
 	}
 }
 

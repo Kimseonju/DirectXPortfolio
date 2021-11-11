@@ -17,13 +17,12 @@ private:
     class CViewport* m_pViewport;
 private:
     bool m_StartScene;
-
+    float m_StartTime;
 public:
     bool IsStart()  const
     {
         return m_StartScene;
     }
-
 public:
     template <typename T>
     T* GetSceneMode()
