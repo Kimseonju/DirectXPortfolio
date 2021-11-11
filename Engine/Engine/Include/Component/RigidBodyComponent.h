@@ -36,6 +36,7 @@ protected:
     Vector3 m_PrevMoveDir;
     float   m_DashRadian;
     Vector3 m_MoveDir;
+    bool    m_Jump;
 public:
 
     void Dash(float Angle)
@@ -64,6 +65,10 @@ public:
     {
         return m_Dash;
     }
+    bool IsJump() const
+    {
+        return m_Jump;
+    }
     bool IsDashEffect() const
     {
         return m_DashEffect;
@@ -75,6 +80,14 @@ public:
     void SetGravity(bool bGravity)
     {
         m_Gravity = bGravity;
+    }
+    void StopForceX()
+    {
+        m_Force.x = 0.f;
+    }
+    void StopForceY()
+    {
+        m_Force.y = 0.f;
     }
     void SetJump(bool Jump)
     {
@@ -95,6 +108,18 @@ public:
             m_Force.x = 0.f;
             m_MoveDir = Vector3(0.f,0.f, 0.f);
             
+        }
+    }
+
+    bool IsDown()
+    {
+        if (m_Force.y < 0.f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     void SetDir(Vector3& Dir)

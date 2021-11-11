@@ -1354,7 +1354,11 @@ void CTransform::Update(float DeltaTime)
 
 void CTransform::PostUpdate(float DeltaTime)
 {
-    // 중력을 적용한다.
+    
+}
+
+void CTransform::PrevRender(float DeltaTime)
+{// 중력을 적용한다.
     if (m_PhysicsSimulate)
     {
     }

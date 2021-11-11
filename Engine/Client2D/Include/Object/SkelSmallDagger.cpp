@@ -37,6 +37,10 @@ bool CSkelSmallDagger::Init()
 
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 
+	//µå¶øÅÛ¾Æ´Ô
+	m_Body->SetGravity(false);
+	m_Collider2D->Enable(false);
+		
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 	//SpriteMtrl->AddTexture("ShortSword", TEXT("MeleeWeapon/ShortSword.png"));
 	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();

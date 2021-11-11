@@ -16,11 +16,16 @@ bool CCollision::CollisionBox2DToBox2D(HitResult& SrcResult, HitResult& DestResu
 		return true;
 	}
 
-	SrcResult.DestCollider = nullptr;
-	SrcResult.DestObject = nullptr;
+	SrcResult.DestCollider = Dest;
+	SrcResult.DestObject = Dest->GetOwner();
 
-	DestResult.DestCollider = nullptr;
-	DestResult.DestObject = nullptr;
+	DestResult.DestCollider = Src;
+	DestResult.DestObject = Src->GetOwner();
+	//SrcResult.DestCollider = nullptr;
+	//SrcResult.DestObject = nullptr;
+	//
+	//DestResult.DestCollider = nullptr;
+	//DestResult.DestObject = nullptr;
 
 	return false;
 }
@@ -38,11 +43,11 @@ bool CCollision::CollisionCircleToCircle(HitResult& SrcResult, HitResult& DestRe
 		return true;
 	}
 
-	SrcResult.DestCollider = nullptr;
-	SrcResult.DestObject = nullptr;
+	SrcResult.DestCollider = Dest;
+	SrcResult.DestObject = Dest->GetOwner();
 
-	DestResult.DestCollider = nullptr;
-	DestResult.DestObject = nullptr;
+	DestResult.DestCollider = Src;
+	DestResult.DestObject = Src->GetOwner();
 
 	return false;
 }
@@ -60,11 +65,11 @@ bool CCollision::CollisionBox2DToCircle(HitResult& SrcResult, HitResult& DestRes
 		return true;
 	}
 
-	SrcResult.DestCollider = nullptr;
-	SrcResult.DestObject = nullptr;
+	SrcResult.DestCollider = Dest;
+	SrcResult.DestObject = Dest->GetOwner();
 
-	DestResult.DestCollider = nullptr;
-	DestResult.DestObject = nullptr;
+	DestResult.DestCollider = Src;
+	DestResult.DestObject = Src->GetOwner();
 
 	return false;
 }
@@ -82,11 +87,11 @@ bool CCollision::CollisionBox2DToPixel(HitResult& SrcResult, HitResult& DestResu
 		return true;
 	}
 
-	SrcResult.DestCollider = nullptr;
-	SrcResult.DestObject = nullptr;
+	SrcResult.DestCollider = Dest;
+	SrcResult.DestObject = Dest->GetOwner();
 
-	DestResult.DestCollider = nullptr;
-	DestResult.DestObject = nullptr;
+	DestResult.DestCollider = Src;
+	DestResult.DestObject = Src->GetOwner();
 
 	return false;
 }
@@ -104,11 +109,11 @@ bool CCollision::CollisionCircleToPixel(HitResult& SrcResult, HitResult& DestRes
 		return true;
 	}
 
-	SrcResult.DestCollider = nullptr;
-	SrcResult.DestObject = nullptr;
+	SrcResult.DestCollider = Dest;
+	SrcResult.DestObject = Dest->GetOwner();
 
-	DestResult.DestCollider = nullptr;
-	DestResult.DestObject = nullptr;
+	DestResult.DestCollider = Src;
+	DestResult.DestObject = Src->GetOwner();
 
 	return false;
 }

@@ -19,7 +19,9 @@ private:
 	*/
 	std::string m_Name;
 	Stage_State m_State;
-	std::vector<CSharedPtr<CGameObject>> m_Enemy;
+	int m_EnemyOrder;
+	std::unordered_map<int, std::vector<CSharedPtr<CGameObject>>> m_SpawnEnemy;
+	std::vector<CSharedPtr<CGameObject>> m_vecEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_Object;
 	std::vector<CDoor*> m_Doors;
 	class CGameObject* m_TileMap;
@@ -62,4 +64,5 @@ public:
 	virtual CStage* Clone();
 public:
 	void PlayerStageMove(Stage_Dir Dir);
+	void PushSpawnEnemy(CGameObject* Obj);
 };

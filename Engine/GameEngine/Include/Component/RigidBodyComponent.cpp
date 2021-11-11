@@ -9,7 +9,8 @@ CRigidBodyComponent::CRigidBodyComponent() :
 	m_Gravity(false),
 	m_GravityPower(600),
 	m_JumpPower(200),
-	m_Speed(100.f)
+	m_Speed(100.f),
+	m_Jump(false)
 {
 }
 
@@ -58,8 +59,8 @@ void CRigidBodyComponent::Update(float DeltaTime)
 			if (m_Force.y > 200.f)
 				m_Force.y = 200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
-			if (m_Force.y < -300.f)
-				m_Force.y = -300.f;
+			if (m_Force.y < -200.f)
+				m_Force.y = -200.f;
 			moveDir += m_Force * DeltaTime;
 			moveDir += m_Dir * m_Speed * DeltaTime;
 		}
@@ -68,6 +69,11 @@ void CRigidBodyComponent::Update(float DeltaTime)
 		{
 			Dashing(DeltaTime);
 			m_DashTimer -= DeltaTime;
+			if (m_Force.y > 200.f)
+				m_Force.y = 200.f;
+			if (m_Force.y < -200.f)
+				m_Force.y = -200.f;
+
 			if (m_DashEffectTime <= 0.f)
 			{
 				m_DashEffectTime += 0.015f;
@@ -90,6 +96,7 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	}
 	m_PrevMoveDir = moveDir;
 	m_MoveDir = moveDir;
+	m_pParent->AddRelativePos(m_MoveDir);
 }
 
 void CRigidBodyComponent::PostUpdate(float DeltaTime)
@@ -105,7 +112,6 @@ void CRigidBodyComponent::Collision(float DeltaTime)
 void CRigidBodyComponent::PrevRender(float DeltaTime)
 {
     CSceneComponent::PrevRender(DeltaTime);
-	m_pParent->AddRelativePos(m_MoveDir);
 }
 
 void CRigidBodyComponent::Render(float DeltaTime)

@@ -21,7 +21,7 @@ protected:
 	virtual ~CWeapon();
 
 protected:
-	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
+	CAnimation2D_FSM* m_Animation2D;
 	
 protected:
 	float m_CurrentAttackDelay; 

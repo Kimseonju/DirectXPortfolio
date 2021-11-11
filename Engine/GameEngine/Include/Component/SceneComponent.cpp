@@ -320,6 +320,7 @@ void CSceneComponent::Collision(float DeltaTime)
 void CSceneComponent::PrevRender(float DeltaTime)
 {
     CComponent::PrevRender(DeltaTime);
+    m_pTransform->PrevRender(DeltaTime);
 
     auto    iter = m_vecChild.begin();
     auto    iterEnd = m_vecChild.end();

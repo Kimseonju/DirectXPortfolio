@@ -1,18 +1,16 @@
 #pragma once
 
 //Primitive 출력을 하기위한용도
-#include "SceneComponent.h"
-#include "../Resource/Material.h"
+#include <GameEngine.h>
 
-class CRigidBodyComponent :
-    public CSceneComponent
+class CMoveComponent
 {
     friend class CGameObject;
 
-protected:
-    CRigidBodyComponent();
-    CRigidBodyComponent(const CRigidBodyComponent& com);
-    virtual ~CRigidBodyComponent();
+public:
+    CMoveComponent();
+    CMoveComponent(const CMoveComponent& com);
+    virtual ~CMoveComponent();
 
 protected:
     bool        m_Gravity;
@@ -36,11 +34,11 @@ protected:
     Vector3 m_PrevMoveDir;
     float   m_DashRadian;
     Vector3 m_MoveDir;
-    bool m_Jump;
+    class CGameObject* m_Owner;
 public:
-    bool IsJump()
+    void SetOwner(class CGameObject* Owner)
     {
-        return m_Jump;
+        m_Owner = Owner;
     }
     void Dash(float Angle)
     {
@@ -82,17 +80,24 @@ public:
     }
     void SetJump(bool Jump)
     {
-        m_Jump = Jump;
         if (Jump)
         {
             m_Gravity = true;
             m_Force.y = m_JumpPower;
         }
-    }
+        else
+        {
+            //바닥으로 떨어지고있을때
 
-    bool IsJump() const
-    {
-        return m_Jump;
+            if (m_Force.y < 0.f)
+            {
+                m_Gravity = false;
+            }
+            m_Force.y = 0.f;
+            m_Force.x = 0.f;
+            m_MoveDir = Vector3(0.f, 0.f, 0.f);
+
+        }
     }
     void SetDir(Vector3& Dir)
     {
@@ -128,6 +133,6 @@ public:
     virtual void Collision(float DeltaTime);
     virtual void PrevRender(float DeltaTime);
     virtual void Render(float DeltaTime);
-    virtual CRigidBodyComponent* Clone();
+    virtual CMoveComponent* Clone();
 };
 

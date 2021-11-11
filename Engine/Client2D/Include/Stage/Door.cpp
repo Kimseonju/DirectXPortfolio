@@ -79,7 +79,6 @@ bool CDoor::Init()
 	m_Sprite->AddChild(m_DoorCollider2D);
 	m_Sprite->AddChild(m_Particle);
 	m_Sprite->AddChild(m_NextStageCollider2D);
-	CInput::GetInst()->AddKeyCallback<CDoor>("Attack", KT_Down, this, &CDoor::testDoorOnOff);
 	return true;
 }
 
@@ -123,9 +122,9 @@ void CDoor::Animation2DNotify(const std::string& Name)
 {
 }
 
-void CDoor::testDoorOnOff(float DeltaTime)
+void CDoor::DoorOpenClose(bool Open)
 {
-	m_Open = !m_Open;
+	m_Open = Open;
 	if (m_Open)
 	{
 		m_Animation2D->ChangeAnimation("DoorOpen");

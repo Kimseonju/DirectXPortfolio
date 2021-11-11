@@ -318,7 +318,10 @@ float Vector2::GetAngle(const Vector2& v1) const
     float _x = v1.x - x;
     float _y = v1.y - y;
     float radian = (float)atan2(_y, _x);
-    return RadianToDegree(radian);
+    float Angle = RadianToDegree(radian);
+    if (Angle < 0.f)
+        Angle += 360.f;
+    return Angle;
 }
 
 Vector2 Vector2::Lerp2DMax(Vector2 _Start, Vector2 _End, float _Ratio)

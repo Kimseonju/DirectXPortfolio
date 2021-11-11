@@ -12,7 +12,6 @@ protected:
     virtual ~CTestMainScene();
 private:
 
-    class CStage* m_Stage;
     int m_Minrooms;
     int m_Maxrooms;
     int m_Endrooms;

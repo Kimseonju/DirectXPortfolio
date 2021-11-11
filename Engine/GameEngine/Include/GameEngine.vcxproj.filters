@@ -612,9 +612,6 @@
     <ClInclude Include="UI\Text.h">
       <Filter>07. UI\01. Widget</Filter>
     </ClInclude>
-    <ClInclude Include="Component\RigidBodyComponent.h">
-      <Filter>05. Component\01. SceneComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Resource\ProgressBarCBuffer.h">
       <Filter>02. Resource\02. Shader\02. ConstantBuffer\10. UI</Filter>
     </ClInclude>
@@ -728,6 +725,9 @@
     </ClInclude>
     <ClInclude Include="Resource\ParticleAnimation2DShader.h">
       <Filter>02. Resource\02. Shader\03. Shader\03. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RigidBodyComponent.h">
+      <Filter>05. Component\01. SceneComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1055,9 +1055,6 @@
     <ClCompile Include="UI\Text.cpp">
       <Filter>07. UI\01. Widget</Filter>
     </ClCompile>
-    <ClCompile Include="Component\RigidBodyComponent.cpp">
-      <Filter>05. Component\01. SceneComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Resource\ProgressBarCBuffer.cpp">
       <Filter>02. Resource\02. Shader\02. ConstantBuffer\10. UI</Filter>
     </ClCompile>
@@ -1162,6 +1159,9 @@
     </ClCompile>
     <ClCompile Include="Resource\ParticleAnimation2DShader.cpp">
       <Filter>02. Resource\02. Shader\03. Shader\03. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RigidBodyComponent.cpp">
+      <Filter>05. Component\01. SceneComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

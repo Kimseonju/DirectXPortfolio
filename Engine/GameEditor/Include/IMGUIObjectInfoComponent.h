@@ -15,7 +15,8 @@ private:
 	class CIMGUIComboBox* m_EnemyType;
 	class CIMGUIComboBox* m_DoorDir;
 	class CIMGUICheckBox* m_EnableCheckBox;
-
+	class CIMGUICheckBox* m_CreateEnemyEffect;
+	class CIMGUITextInput* m_CreateEnemyOrder;
 	CSharedPtr<CGameObject> m_Object;
 
 public:
@@ -38,4 +39,6 @@ public:
 	void EnemyTypeComboCallback(int SelectIndex, const char* Item);
 	void DoorDirComboCallback(int SelectIndex, const char* Item);
 
+	void CreateEnemyEffectCheckBoxClick(bool Enable);
+	void InputCreateEnemyOrder();
 };

@@ -55,12 +55,19 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 
 public:
-	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
-
+	virtual void Enable(bool bEnable);
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionMiddle(const HitResult& result, CCollider* Collider);
+	virtual void CollisionEnd(const HitResult& result, CCollider* Collider);
+	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 
+	//충돌
+	void ColDirStart(float Angle, CCollider* Col);
+	void ColDirMiddle(float Angle, CCollider* Col);
+	//충돌End
+	void ColDirEnd(CCollider* Col);
 public:
 	virtual void FindStart() {}
 	virtual void FindStay() {}

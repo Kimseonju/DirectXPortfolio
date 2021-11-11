@@ -76,9 +76,11 @@ bool CPlayer::Init()
 	m_Collider2D->SetCollisionProfile("Player");
 	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::Begin, this,
 		&CPlayer::CollisionBegin);
+	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::Middle, this,
+		&CPlayer::CollisionMiddle);
 	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
 		&CPlayer::CollisionEnd);
-	m_Collider2D->SetExtent(15.f, 10.f);
+	m_Collider2D->SetExtent(5.f, 5.f);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_Body);
 
@@ -341,11 +343,10 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		m_Body->SetJump(false);
-		Vector3 Pos=GetWorldPos();
-		result.DestCollider->GetWorldPos();
-
-
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirStart(Angle, result.DestCollider);
 	}
 
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
@@ -355,13 +356,171 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 }
 
-void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
+void CPlayer::CollisionMiddle(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider == nullptr || result.DestCollider == nullptr)
-		return;
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		m_Body->SetGravity(true);
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirMiddle(Angle, result.DestCollider);
 	}
+}
+
+void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
+		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+	}
+}
+
+void CPlayer::ColDirStart(float Angle,CCollider* Col)
+{
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale()/2.f;
+	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
+	Vector3 PlayerScale = m_Collider2D->GetRelativeScale()/2.f;
+
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
+	// 
+	//왼쪽
+	
+
+	if (131.f < Angle && Angle < 229.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x += x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+	}
+	//아래
+	else if (230.f < Angle && Angle < 309.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+	}
+	//오른쪽방향
+	else if (310.f < Angle || Angle < 49.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x -= x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+
+	}
+	//위
+	else if (50.f< Angle && Angle < 130.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y -= y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+	}
+
+	//if (ColCheckPos.y < 0.f)
+	//{
+	//	m_Body->StopForceY();
+	//
+	//}
+	//else //아니라면 아래쪽에 있다는 뜻
+	//{
+	//	m_Body->StopForceY();
+	//	m_Body->SetGravity(false);
+	//}
+	////ColCheckPos가 짝수라면 ColPos는 왼쪽에 있음
+	//if (ColCheckPos.x > 0.f)
+	//{
+	//	m_Body->StopForceX();
+	//	float x = (PlayerScale.x + ColScale.x);
+	//	Vector3 XMove = ColPos;
+	//	XMove.x += x;
+	//	SetWorldPos(XMove);
+	//}
+	//else //아니라면 오른쪽에 있다는 뜻
+	//{
+	//	m_Body->StopForceX();
+	//	float x = (PlayerScale.x + ColScale.x);
+	//	Vector3 XMove = ColPos;
+	//	XMove.x -= x;
+	//	SetWorldPos(XMove);
+	//}
+}
+
+void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
+{
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
+	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
+
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
+	// 
+	//왼쪽
+
+
+	if (131.f < Angle && Angle < 229.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x += x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+	}
+	//아래
+	else if (230.f < Angle && Angle < 309.f)
+	{
+		m_Body->StopForceY();
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+	}
+	//오른쪽방향
+	else if (310.f < Angle || Angle < 49.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x -= x;
+		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
+
+	}
+	//위
+	else if (50.f < Angle && Angle < 130.f)
+	{
+		m_Body->StopForceY();
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y -= y;
+		PlayerPos.y = XMove.y;
+		SetWorldPos(PlayerPos);
+	}
+}
+
+void CPlayer::ColDirEnd(CCollider* Col)
+{
 }

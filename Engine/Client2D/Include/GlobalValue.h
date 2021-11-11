@@ -139,6 +139,8 @@ struct StageObjectSpawnInfo
     Client_Object_Type ObjectType;
     Client_Enemy_Type EnemyType;
     Door_Dir DoorDir;
+    bool			  CreateEnemyEffect;
+    int				  CreateEnemyOrder ;
     //몇번 사용했는지
 };
 struct StageObjectsInfo

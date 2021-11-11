@@ -7,15 +7,27 @@
 #include <Component/TileMapComponent.h>
 #include "../GlobalValue.h"
 #include "../Object/Player.h"
+#include "../Object/CreateObject.h"
+#include "../Object/SmallSkel.h""
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
-	m_DoorDir(-1)
+	m_DoorDir(-1),
+	m_EnemyOrder(1)
 {
 }
 
 CStage::~CStage()
 {
+
+	m_vecEnemy.clear();
+	auto iter = m_SpawnEnemy.begin();
+	auto iterEnd = m_SpawnEnemy.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter).second.clear();
+	}
 }
 void CStage::Enable(bool Enable)
 {
@@ -23,9 +35,9 @@ void CStage::Enable(bool Enable)
 	m_TileMapComponent->Enable(m_Enable);
 	m_TileObjectMapComponent->Enable(m_Enable);
 
-	for (size_t i = 0; i < m_Enemy.size(); ++i)
+	for (size_t i = 0; i < m_vecEnemy.size(); ++i)
 	{
-		m_Enemy[i]->Enable(m_Enable);
+		m_vecEnemy[i]->Enable(m_Enable);
 	}
 	for (size_t i = 0; i < m_Object.size(); ++i)
 	{
@@ -98,7 +110,32 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 		}
 		case Client_Class_Type::Enemy:
 		{
-			CGameObject* Obj = nullptr;
+			std::string str = std::to_string(i);
+			if (Info.StageSpawn[i].CreateEnemyOrder == 0)
+			{
+				switch (Info.StageSpawn[i].EnemyType)
+				{
+				case Client_Enemy_Type::SmallSkel_Sword:
+					Obj = m_pScene->SpawnObject<CSmallSkel>("CreateObject"+ str);
+					m_vecEnemy.push_back(Obj);
+					break;
+				case Client_Enemy_Type::SmallSkel_Bow:
+					break;
+				case Client_Enemy_Type::End:
+					break;
+				default:
+					break;
+				}
+			}
+			else
+			{
+				Obj = m_pScene->SpawnObject<CCreateObject>("CreateObject"+ str);
+				Obj->SetCreateEnemyEffect(Info.StageSpawn[i].CreateEnemyEffect);
+				Obj->SetCreateEnemyOrder(Info.StageSpawn[i].CreateEnemyOrder);
+				Obj->SetEnemyType(Info.StageSpawn[i].EnemyType);
+				PushSpawnEnemy(Obj);
+			}
+			Obj->Enable(false);
 			break;
 		}
 
@@ -135,8 +172,14 @@ void CStage::Update(float DeltaTime)
 	{
 	case Stage_State::Idle:
 	{
-		if (m_Enemy.size() > 0)
+		if (m_vecEnemy.size() > 0)
 		{
+			//스폰시작
+			size_t Size = m_vecEnemy.size();
+			for (size_t i = 0; i < Size; i++)
+			{
+				m_vecEnemy[i]->Enable(true);
+			}
 			m_State = Stage_State::Spawn;
 			//적스폰
 		}
@@ -149,22 +192,28 @@ void CStage::Update(float DeltaTime)
 	case Stage_State::Spawn:
 	{
 		//문닫기
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_Doors[i] != nullptr)
-			{
-
-			}
-		}
-
-		//스폰시작
-		size_t Size = m_Enemy.size();
+		size_t Size=m_Doors.size();
 		for (size_t i = 0; i < Size; i++)
 		{
-
+			m_Doors[i]->DoorOpenClose(false);
 		}
 
-		if (m_Enemy.size() <= 0)
+		auto iter = m_vecEnemy.begin();
+		auto iterEnd = m_vecEnemy.end();
+
+		for (; iter != iterEnd;)
+		{
+			if (!(*iter)->IsActive())
+			{
+				iter=m_vecEnemy.erase(iter);
+				iterEnd = m_vecEnemy.end();
+				continue;
+			}
+			++iter;
+		}
+		
+
+		if (m_vecEnemy.size() <= 0)
 		{
 			m_State = Stage_State::Clear;
 			//보물상자 스폰시키기
@@ -176,12 +225,10 @@ void CStage::Update(float DeltaTime)
 	case Stage_State::Clear:
 	{
 		//문열기
-		for (int i = 0; i < m_Doors.size(); i++)
+		size_t Size = m_Doors.size();
+		for (size_t i = 0; i < Size; i++)
 		{
-			if (m_Doors[i] != nullptr)
-			{
-
-			}
+			m_Doors[i]->DoorOpenClose(false);
 		}
 		break;
 	}
@@ -221,4 +268,17 @@ void CStage::PlayerStageMove(Stage_Dir Dir)
 		}
 	}
 
+}
+
+void CStage::PushSpawnEnemy(CGameObject* Obj)
+{
+	auto iter= m_SpawnEnemy.find(Obj->GetCreateEnemyOrder());
+
+	if (iter == m_SpawnEnemy.end())
+	{
+		std::vector<CSharedPtr<CGameObject>> vecCreateEnemy;
+		m_SpawnEnemy.insert(std::make_pair(Obj->GetCreateEnemyOrder(), vecCreateEnemy));
+		iter = m_SpawnEnemy.find(Obj->GetCreateEnemyOrder());
+	}
+	iter->second.push_back(Obj);
 }

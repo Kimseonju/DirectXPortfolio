@@ -40,7 +40,6 @@
 #include "../Object/BossDieParticle.h"
 #include "../Stage/StageManager.h"
 CTestMainScene::CTestMainScene() :
-	m_Stage(nullptr),
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
 	m_Endrooms(-1)
@@ -49,7 +48,6 @@ CTestMainScene::CTestMainScene() :
 
 CTestMainScene::~CTestMainScene()
 {
-	delete m_Stage;
 	CUIManager::GetInst()->DestroyInst();
 	CStageManager::GetInst()->DestroyInst();
 }
@@ -97,7 +95,8 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
@@ -190,6 +189,25 @@ void CTestMainScene::CreateMaterial()
 
 void CTestMainScene::CreateAnimationSequence2D()
 {
+
+
+	/*
+	Create Object
+	*/
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("CreateObjectEffect",
+		"CreateObjectEffect", TEXT("Enemy/create.png"));
+
+	for (int y = 0; y < 3; ++y)
+	{
+		for (int x = 0; x < 5; ++x)
+		{
+			m_pScene->GetResource()->AddAnimationSequence2DFrame("CreateObjectEffect",
+				Vector2(x * 31.f, y * 31.f), Vector2((x + 1) * 31.f, (y + 1) * 31.f));
+		}
+	}
+
 	/*
 	Player
 	*/
@@ -363,6 +381,8 @@ void CTestMainScene::CreateAnimationSequence2D()
 	/*
 	Enemy
 	*/
+
+
 	/*
 	Skel Small 
 	*/

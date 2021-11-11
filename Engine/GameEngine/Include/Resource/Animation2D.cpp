@@ -198,7 +198,11 @@ void CAnimation2D::ResetShader()
 Sequence2DInfo* CAnimation2D::AddAnimationSequence2D(const std::string& Name, bool Loop)
 {
 	CAnimationSequence2D* pSequence = nullptr;
-
+	Sequence2DInfo* pInfo = FindSequence(Name);
+	if (pInfo)
+	{
+		return pInfo;
+	}
 	if (m_pScene)
 	{
 		 pSequence = m_pScene->GetResource()->FindAnimationSequence2D(Name);
@@ -209,7 +213,7 @@ Sequence2DInfo* CAnimation2D::AddAnimationSequence2D(const std::string& Name, bo
 		pSequence = CResourceManager::GetInst()->FindAnimationSequence2D(Name);
 	}
 
-	Sequence2DInfo* pInfo = new Sequence2DInfo;
+	pInfo = new Sequence2DInfo;
 
 	pInfo->Sequence = pSequence;
 	pInfo->Loop = Loop;

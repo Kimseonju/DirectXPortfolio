@@ -52,7 +52,18 @@ protected:
     Client_Object_Type m_ObjectType;
     Client_Enemy_Type m_EnemyType;
     Door_Dir         m_DoorDir;
+    //Enemy일때만 사용
+    bool             m_CreateEnemyEffect;
+    int             m_CreateEnemyOrder;
 public:
+    void SetCreateEnemyEffect(bool Effect)
+    {
+        m_CreateEnemyEffect = Effect;
+    }
+    void SetCreateEnemyOrder(int Order)
+    {
+        m_CreateEnemyOrder = Order;
+    }
     void SetClassType(Client_Class_Type Type)
     {
         m_ClassType = Type;
@@ -69,6 +80,14 @@ public:
     void SetDoorDir(Door_Dir Dir)
     {
         m_DoorDir = Dir;
+    } 
+    bool GetEnemyEffect()
+    {
+        return m_CreateEnemyEffect;
+    }
+    int GetEnemyOrder()
+    {
+        return m_CreateEnemyOrder;
     }
     Client_Class_Type GetClassType()
     {

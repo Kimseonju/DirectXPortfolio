@@ -42,7 +42,7 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CDoor* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
-	void testDoorOnOff(float DeltaTime);
+	void DoorOpenClose(bool Open);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
 	void CollisionBegin_NextStage(const HitResult& result, CCollider* Collider);
 	void PlayerMove();

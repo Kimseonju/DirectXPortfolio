@@ -192,6 +192,7 @@ enum class Collision_Interaction
 enum class Collision_State
 {
     Begin,
+    Middle,
     End,
     Max
 };

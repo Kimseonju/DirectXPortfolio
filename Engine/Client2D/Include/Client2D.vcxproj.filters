@@ -157,6 +157,12 @@
     <Filter Include="02. Object\Door">
       <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CreateObject">
+      <UniqueIdentifier>{232b87e9-b9a0-400d-9f7c-72f74dc8da0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -408,6 +414,12 @@
     <ClCompile Include="MainDoor.cpp">
       <Filter>02. Object\Door</Filter>
     </ClCompile>
+    <ClCompile Include="MoveComponent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CreateObject.cpp">
+      <Filter>02. Object\CreateObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -652,6 +664,12 @@
     </ClInclude>
     <ClInclude Include="MainDoor.h">
       <Filter>02. Object\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveComponent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CreateObject.h">
+      <Filter>02. Object\CreateObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

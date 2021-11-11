@@ -169,6 +169,7 @@
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainDoor.cpp" />
+    <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
     <ClCompile Include="Object\BelialHand.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
     <ClCompile Include="Object\CollisionObject.cpp" />
+    <ClCompile Include="Object\CreateObject.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
     <ClCompile Include="Object\Enemy.cpp" />
@@ -253,6 +255,7 @@
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="MainDoor.h" />
+    <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Belial.h" />
     <ClInclude Include="Object\BelialHand.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Cloud.h" />
     <ClInclude Include="Object\CollisionObject.h" />
+    <ClInclude Include="Object\CreateObject.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
     <ClInclude Include="Object\Enemy.h" />

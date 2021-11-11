@@ -129,8 +129,9 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_EnemyType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::EnemyTypeComboCallback);
 
 	m_vecWidget.push_back(m_EnemyType);
-
 #pragma endregion
+
+
 
 	
 #pragma region Doordir
@@ -156,8 +157,28 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_vecWidget.push_back(m_EnableCheckBox);
 
 
+
+
+	m_CreateEnemyEffect = m_Owner->AddWidget<CIMGUICheckBox>("CreateEnemyEffect", 300.f, 20.f);
+	m_CreateEnemyEffect->SetCheckCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::CreateEnemyEffectCheckBoxClick);
+	m_vecWidget.push_back(m_CreateEnemyEffect);
+	Text = m_Owner->AddWidget<CIMGUIText>("Scale");
+	Text->SetFont("DefaultFont");
+	Text->SetText("Scale");
+
+	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
+	m_vecWidget.push_back(Text);
+	m_vecWidget.push_back(SameLine);
+
+	m_CreateEnemyOrder = m_Owner->AddWidget<CIMGUITextInput>("##CreateEnemyOrder", 100.f, 20.f);
+	m_CreateEnemyOrder->SetNumberInt(true);
+	m_CreateEnemyOrder->SetInt(0);
+	m_CreateEnemyOrder->SetInputCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::InputCreateEnemyOrder);
+	m_vecWidget.push_back(m_CreateEnemyOrder);
+
+
 	m_Header->WidgetPush(m_vecWidget);
-	m_vecWidget.push_back(m_Header);
+
 	return true;
 }
 
@@ -201,4 +222,14 @@ void CIMGUIObjectInfoComponent::EnemyTypeComboCallback(int SelectIndex, const ch
 void CIMGUIObjectInfoComponent::DoorDirComboCallback(int SelectIndex, const char* Item)
 {
 	m_Object->SetDoorDir((Door_Dir)SelectIndex);
+}
+
+void CIMGUIObjectInfoComponent::CreateEnemyEffectCheckBoxClick(bool Enable)
+{
+	m_Object->SetCreateEnemyEffect(Enable);
+}
+
+void CIMGUIObjectInfoComponent::InputCreateEnemyOrder()
+{
+	m_Object->SetCreateEnemyOrder(m_CreateEnemyOrder->GetValueInt());
 }

@@ -93,6 +93,7 @@ public:
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
+	void CollisionMiddle(const HitResult& result, CCollider* Collider);
 	void CollisionEnd(const HitResult& result, CCollider* Collider);
 public:
 	//FSM
@@ -102,4 +103,10 @@ public:
 	void BodyMoveStay();
 	void BodyJumpStart();
 	void BodyJumpStay();
+
+	//충돌
+	void ColDirStart(float Angle, CCollider* Col);
+	void ColDirMiddle(float Angle, CCollider* Col);
+	//충돌End
+	void ColDirEnd(CCollider* Col);
 };

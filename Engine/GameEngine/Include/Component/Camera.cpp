@@ -150,6 +150,111 @@ void CCamera::PostUpdate(float DeltaTime)
 {
 	CSceneComponent::PostUpdate(DeltaTime);
 
+	//m_matView.Identity();
+	//
+	//for (int i = 0; i < AXIS_END; ++i)
+	//{
+	//	Vector3	Axis = GetAxis((AXIS)i);
+	//	memcpy(&m_matView[i][0], &Axis, sizeof(Vector3));
+	//}
+	//
+	//// 회전부분을 전치해서 최종 View의 회전으로 만들어준다.
+	//m_matView.Transpose();
+	//
+	//for (int i = 0; i < AXIS_END; ++i)
+	//{
+	//	Vector3	Axis = GetAxis((AXIS)i);
+	//	Vector3	Pos = GetWorldPos();
+	//	if (Pos.x < m_MinX)
+	//	{
+	//		Pos.x = m_MinX;
+	//	}
+	//	if (Pos.x > m_MaxX)
+	//	{
+	//		Pos.x = m_MaxX;
+	//	}
+	//	if (Pos.y < m_MinY)
+	//	{
+	//		Pos.x = m_MinY;
+	//	}
+	//	if (Pos.y > m_MaxY)
+	//	{
+	//		Pos.y = m_MaxY;
+	//	}
+	//
+	//	while (true)
+	//	{
+	//		if (m_qCameraShake.size() != 0)
+	//		{
+	//			//있을때
+	//			if (m_ShakeTime < m_qCameraShake.front().Time)
+	//			{
+	//				int x= GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
+	//				int y = GetRandom(-(int)m_qCameraShake.front().Pos.y, (int)m_qCameraShake.front().Pos.y);
+	//				Pos.x += (float)x;
+	//				Pos.y += (float)y;
+	//				m_ShakeTime += DeltaTime;
+	//				break;
+	//			}
+	//			else
+	//			{
+	//				m_ShakeTime = 0.f;
+	//				m_qCameraShake.pop();
+	//			}
+	//		}
+	//		else
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	
+	//
+	//	Pos = Pos * -1.f;
+	//	//임시값 (Object에붙으면 Z알아서계산되기때문
+	//	Pos.z = 0.f;
+	//	m_matView[3][i] = Axis.Dot(Pos);
+	//}
+	//
+	/* 이동
+	1 0 0 0
+	0 1 0 0
+	0 0 1 0
+	-x -y -z 1
+	  뷰행렬(회전)
+	Xx Yx Zx 0
+	Xy Yy Zy 0
+	Xz Yz Zz 0
+	0  0  0  1
+	  이동*회전
+	Xx Yx Zx 0
+	Xy Yy Zy 0
+	Xz Yz Zz 0
+	-P.X -P.Y -P.Z 1
+
+
+	WorldCameraAxisX * ViewMatrix = 1, 0, 0
+	WorldCameraAxisY * ViewMatrix = 0, 1, 0
+	WorldCAmeraAxisZ * ViewMatrix = 0, 0, 1
+
+	Xx Xy Xz   Xx Yx Zx    1 0 0
+	Yx Yy Yz * Xy Yy Zy = 0 1 0
+	Zx Zy Zz   Xz Yz Zz    0 0 1
+
+	서로 정직교 하는 행렬을 직교행렬이라고 한다.
+	직교행렬은 전치행렬과 역행렬이 같다.
+	*/
+}
+
+void CCamera::Collision(float DeltaTime)
+{
+	CSceneComponent::Collision(DeltaTime);
+}
+
+void CCamera::PrevRender(float DeltaTime)
+{
+	CSceneComponent::PrevRender(DeltaTime);
+	CSceneComponent::PostUpdate(DeltaTime);
+
 	m_matView.Identity();
 
 	for (int i = 0; i < AXIS_END; ++i)
@@ -189,7 +294,7 @@ void CCamera::PostUpdate(float DeltaTime)
 				//있을때
 				if (m_ShakeTime < m_qCameraShake.front().Time)
 				{
-					int x= GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
+					int x = GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
 					int y = GetRandom(-(int)m_qCameraShake.front().Pos.y, (int)m_qCameraShake.front().Pos.y);
 					Pos.x += (float)x;
 					Pos.y += (float)y;
@@ -207,14 +312,14 @@ void CCamera::PostUpdate(float DeltaTime)
 				break;
 			}
 		}
-		
+
 
 		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문
 		Pos.z = 0.f;
 		m_matView[3][i] = Axis.Dot(Pos);
 	}
-	
+
 	/* 이동
 	1 0 0 0
 	0 1 0 0
@@ -243,16 +348,6 @@ void CCamera::PostUpdate(float DeltaTime)
 	서로 정직교 하는 행렬을 직교행렬이라고 한다.
 	직교행렬은 전치행렬과 역행렬이 같다.
 	*/
-}
-
-void CCamera::Collision(float DeltaTime)
-{
-	CSceneComponent::Collision(DeltaTime);
-}
-
-void CCamera::PrevRender(float DeltaTime)
-{
-	CSceneComponent::PrevRender(DeltaTime);
 }
 
 void CCamera::Render(float DeltaTime)

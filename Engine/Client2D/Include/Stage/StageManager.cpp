@@ -375,6 +375,8 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	Client_Class_Type  ClassType;
 	Client_Object_Type ObjectType;
 	Client_Enemy_Type EnemyType;
+	bool			  CreateEnemyEffect = false;
+	int				  CreateEnemyOrder=0;
 	Door_Dir          DoorDir;
 	StageObjectsInfo _StageObjectsInfo;
 	std::vector< StageObjectSpawnInfo> vecSpawn;
@@ -392,6 +394,15 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 		fread(&ObjectType, sizeof(Client_Object_Type), 1, pFile);
 		fread(&EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 		fread(&DoorDir, sizeof(Door_Dir), 1, pFile);
+
+		if (ClassType == Client_Class_Type::Enemy)
+		{
+			int EnemyEffect = 0;
+			fread(&EnemyEffect, sizeof(int), 1, pFile);
+			fread(&CreateEnemyOrder, sizeof(int), 1, pFile);
+			if (EnemyEffect == 1)
+				CreateEnemyEffect = true;
+		}
 		Vector3	Pos, Rot, Scale, Pivot;
 
 		fread(&Pos, sizeof(Vector3), 1, pFile);
@@ -406,6 +417,8 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 		Spawn.Rot = Rot;
 		Spawn.Scale = Scale;
 		Spawn.Pivot = Pivot;
+		Spawn.CreateEnemyEffect = CreateEnemyEffect;
+		Spawn.CreateEnemyOrder = CreateEnemyOrder;
 		switch (ClassType)
 		{
 		case Client_Class_Type::Default: //

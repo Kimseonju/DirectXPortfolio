@@ -28,7 +28,9 @@ CGameObject::CGameObject() :
 	m_pScene(nullptr),
 	m_LifeTime(0.f),
 	m_LifeTimeEnable(false),
-	m_Owner(nullptr)
+	m_Owner(nullptr),
+	m_CreateEnemyEffect(false),
+	m_CreateEnemyOrder(0)
 {
 	m_SceneComponentList.resize(0);
 	m_RootComponent = CreateSceneComponent<CSceneComponent>("DefaultRoot");
@@ -206,7 +208,10 @@ void CGameObject::Update(float DeltaTime)
 		m_LifeTime -= DeltaTime;
 
 		if (m_LifeTime <= 0.f)
+		{
 			Active(false);
+		}
+			
 	}
 
 	size_t	Size = m_vecObjectComponent.size();
@@ -691,8 +696,12 @@ void CGameObject::Save(FILE* pFile)
 	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fwrite(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
-	
-
+	if (m_ClassType == Client_Class_Type::Enemy)
+	{
+		int CreateEnemyEffect = m_CreateEnemyEffect ? 1 : 0;
+		fwrite(&CreateEnemyEffect, sizeof(int), 1, pFile);
+		fwrite(&m_CreateEnemyOrder, sizeof(int), 1, pFile);
+	}
 	Component_Class_Type  Type = m_RootComponent->GetComponentClassType();
 	fwrite(&Type, sizeof(Component_Class_Type), 1, pFile);
 
@@ -741,6 +750,16 @@ void CGameObject::Load(FILE* pFile)
 	fread(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fread(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
 
+	if (m_ClassType == Client_Class_Type::Enemy)
+	{
+		int CreateEnemyEffect = m_CreateEnemyEffect ? 1 : 0;
+		fread(&CreateEnemyEffect, sizeof(int), 1, pFile);
+		fread(&m_CreateEnemyOrder, sizeof(int), 1, pFile);
+		if (CreateEnemyEffect == 1)
+			m_CreateEnemyEffect = true;
+		else
+			m_CreateEnemyEffect = false;
+	}
 	Component_Class_Type  Type;
 	fread(&Type, sizeof(Component_Class_Type), 1, pFile);
 	CSceneComponent* Component = nullptr;
@@ -856,7 +875,12 @@ void CGameObject::ClientSave(FILE* pFile)
 	fwrite(&m_ObjectType, sizeof(Client_Object_Type), 1, pFile);
 	fwrite(&m_EnemyType, sizeof(Client_Enemy_Type), 1, pFile);
 	fwrite(&m_DoorDir, sizeof(Door_Dir), 1, pFile);
-
+	if (m_ClassType == Client_Class_Type::Enemy)
+	{
+		int CreateEnemyEffect = m_CreateEnemyEffect ? 1 : 0;
+		fwrite(&CreateEnemyEffect, sizeof(int), 1, pFile);
+		fwrite(&m_CreateEnemyOrder, sizeof(int), 1, pFile);
+	}
 	Vector3	Pos, Rot, Scale, Pivot;
 	Pos = GetWorldPos();
 	Rot = GetWorldRotation();

@@ -97,12 +97,19 @@ void CCollisionSection::Collision(float DeltaTime)
 					Src->CallCollisionCallback(Collision_State::Begin);
 					Dest->CallCollisionCallback(Collision_State::Begin);
 				}
+				//현재 충돌중이라는 뜻 
+				else
+				{
+					Src->CallCollisionCallback(Collision_State::Middle);
+					Dest->CallCollisionCallback(Collision_State::Middle);
+				}
 			}
 
 			// 충돌이 아니라면 이전에 충돌되었던 물체인지를 판단한다.
 			// 이전에 충돌되었던 물체라면 부딪힌 물체가 지금 떨어진다는 의미이다.
 			else if (Src->CheckPrevCollision(Dest))
 			{
+
 				Src->DeletePrevCollider(Dest);
 				Dest->DeletePrevCollider(Src);
 

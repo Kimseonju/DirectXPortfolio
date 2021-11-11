@@ -746,6 +746,92 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 	CPrimitiveComponent::PostUpdate(DeltaTime);
 	if (!IsEnable())
 		return;
+	//CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
+	//
+	//Resolution	RS = Camera->GetResolution();
+	//
+	//Vector3	LB = Camera->GetWorldPos();
+	//Vector3	RT = LB + Vector3((float)RS.Width, (float)RS.Height, 0.f);
+	//
+	//int	StartX, StartY, EndX, EndY;
+	//
+	//StartX = GetTileUpdateIndexX(LB);
+	//StartY = GetTileUpdateIndexY(LB);
+	//
+	//EndX = GetTileUpdateIndexX(RT);
+	//EndY = GetTileUpdateIndexY(RT);
+	//
+	//if (m_Shape == Tile_Shape::Rhombus)
+	//{
+	//	--StartX;
+	//	--StartY;
+	//
+	//	++EndX;
+	//	++EndY;
+	//}
+	//
+	//StartX = StartX < 0 ? 0 : StartX;
+	//StartY = StartY < 0 ? 0 : StartY;
+	//
+	//EndX = EndX >= m_CountX ? m_CountX - 1 : EndX;
+	//EndY = EndY >= m_CountY ? m_CountY - 1 : EndY;
+	//
+	//Matrix	matView, matProj;
+	//matView = Camera->GetViewMatrix();
+	//matProj = Camera->GetProjMatrix();
+	//
+	//m_RenderCount = 0;
+	//
+	//for (int i = StartY; i <= EndY; ++i)
+	//{
+	//	for (int j = StartX; j <= EndX; ++j)
+	//	{
+	//		int	Index = i * m_CountX + j;
+	//
+	//		m_vecTile[Index]->PostUpdate(DeltaTime);
+	//
+	//		if (m_vecTile[Index]->GetRender())
+	//		{
+	//			if (m_EditorMode)
+	//			{
+	//				switch (m_vecTile[Index]->GetTileType())
+	//				{
+	//				case Tile_Type::None:
+	//					m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 1.f, 0.f, 1.f);
+	//					break;
+	//				case Tile_Type::Wall:
+	//					m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
+	//					break;
+	//				case Tile_Type::Crossed_Wall:
+	//					m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
+	//					break;
+	//				}
+	//			}
+	//
+	//
+	//			m_vecTileInfo[m_RenderCount].FrameStart = m_vecTile[Index]->GetFrameStart();
+	//			m_vecTileInfo[m_RenderCount].FrameEnd = m_vecTile[Index]->GetFrameEnd();
+	//			m_vecTileInfo[m_RenderCount].matWVP = m_vecTile[Index]->GetWorldMatrix() * matView * matProj;
+	//			m_vecTileInfo[m_RenderCount].matWVP.Transpose();
+	//			++m_RenderCount;
+	//		}
+	//	}
+	//}
+	//
+	//m_WorldBuffer->UpdateBuffer(&m_vecTileInfo[0], sizeof(TileInfo) * m_RenderCount);
+}
+
+
+
+void CTileMapComponent::Collision(float DeltaTime)
+{
+	CPrimitiveComponent::Collision(DeltaTime);
+}
+void CTileMapComponent::PrevRender(float DeltaTime)
+{
+	CPrimitiveComponent::PrevRender(DeltaTime);
+	if (!IsEnable())
+		return;
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 	Resolution	RS = Camera->GetResolution();
@@ -819,11 +905,6 @@ void CTileMapComponent::PostUpdate(float DeltaTime)
 	}
 
 	m_WorldBuffer->UpdateBuffer(&m_vecTileInfo[0], sizeof(TileInfo) * m_RenderCount);
-}
-
-void CTileMapComponent::Collision(float DeltaTime)
-{
-	CPrimitiveComponent::Collision(DeltaTime);
 }
 
 void CTileMapComponent::Render(float DeltaTime)

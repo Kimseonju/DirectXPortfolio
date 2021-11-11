@@ -27,13 +27,13 @@ void CPlayer::BodyIdleStart()
 
 void CPlayer::BodyIdleStay()
 {
-	if (m_RootComponent->GetVelocity().y != 0.f)
+	if (m_RootComponent->GetVelocity().y < -2.f || m_RootComponent->GetVelocity().y > 1.f)
 	{
 		m_BodyFSM.ChangeState("Jump");
 	}
 	else if (m_RootComponent->GetVelocity().x != 0.f)
 	{
-		m_BodyFSM.ChangeState("Move");
+ 		m_BodyFSM.ChangeState("Move");
 	}
 }
 
@@ -70,16 +70,19 @@ void CPlayer::BodyJumpStart()
 
 void CPlayer::BodyJumpStay()
 {
-	if (m_RootComponent->GetVelocity().y == 0.f)
+	if (m_RootComponent->GetVelocity().y > -2.f && m_RootComponent->GetVelocity().y <1.f )
 	{
+		if (m_Body->IsJump())
+			return;
 		if (m_RootComponent->GetVelocity().x != 0.f)
 		{
-			m_BodyFSM.ChangeState("MOVE");
+			m_BodyFSM.ChangeState("Move");
 		}
 		else
 		{
-			m_BodyFSM.ChangeState("IDLE");
+			m_BodyFSM.ChangeState("Idle");
 		}
 	}
 }
+
 
