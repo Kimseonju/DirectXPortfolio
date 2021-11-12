@@ -199,6 +199,7 @@
     <ClCompile Include="Object\Player2D.cpp" />
     <ClCompile Include="Object\PlayerAttack.cpp" />
     <ClCompile Include="Object\PlayerDash.cpp" />
+    <ClCompile Include="Object\ProgressBarObject.cpp" />
     <ClCompile Include="Object\Revolver.cpp" />
     <ClCompile Include="Object\RevolverEffectObject.cpp" />
     <ClCompile Include="Object\ShortSword.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Object\Player2D.h" />
     <ClInclude Include="Object\PlayerAttack.h" />
     <ClInclude Include="Object\PlayerDash.h" />
+    <ClInclude Include="Object\ProgressBarObject.h" />
     <ClInclude Include="Object\Revolver.h" />
     <ClInclude Include="Object\RevolverEffectObject.h" />
     <ClInclude Include="Object\ShortSword.h" />

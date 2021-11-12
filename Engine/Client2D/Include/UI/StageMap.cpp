@@ -39,7 +39,7 @@ bool CStageMap::Init()
 			std::string str2 = std::to_string(y);
 			CImage* Base=CreateWidget<CImage>("Base"+str1+str2);
 			Base->SetPos(30.f * 4.f *x+300.f, 30.f * 4.f *y+100.f);
-			Base->SetTexture("Room", TEXT("UI/map/Room.png"));
+			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{

@@ -3,6 +3,7 @@
 #include "../Scene/CameraManager.h"
 #include "../Render/RenderStateManager.h"
 #include "../Render/RenderState.h"
+#include "../Device.h"
 CWidgetComponent::CWidgetComponent()
 {
 	m_PrimitiveType = PrimitiveComponent_Type::PrimitiveWidget;
@@ -63,15 +64,22 @@ void CWidgetComponent::PostUpdate(float DeltaTime)
 	{
 		if (m_Space == WidgetComponent_Space::Space2D)
 		{
-			Vector2 WidgetPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+			Vector2	WidgetPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 
+			// 2D 에서는 카메라의 위치를 빼서 윈도우 상에서의 위치를 구해준다.
 			CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
-			Vector2 CameraPos = Vector2(Camera->GetWorldPos().x, Camera->GetWorldPos().y);
+			Vector2	CameraPos = Vector2(Camera->GetWorldPos().x, Camera->GetWorldPos().y);
 
 			WidgetPos -= CameraPos;
+
 			m_WidgetWindow->SetPos(WidgetPos);
 		}
+
+		else
+		{
+		}
+
 		m_WidgetWindow->PostUpdate(DeltaTime);
 	}
 }

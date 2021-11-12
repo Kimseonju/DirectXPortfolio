@@ -83,7 +83,7 @@ bool CEnemy::Init()
 
 	m_EnemyInfoWidget =m_EnemyInfoWidgetComponent->CreateWidget<CEnemyWorldInfoWidget>("EnemyWorldInfoWidget");
 	m_EnemyInfoWidget->Enable(false);
-	m_EnemyInfoWidgetComponent->SetRelativePos(-100.f, -100.f, 0.f);
+	m_EnemyInfoWidgetComponent->SetRelativePos(0.f, -10.f, 0.f);
 	m_EnemyInfoWidgetComponent->SetRelativeScale(200.f, 70.f, 1.f);
 	//
 	m_Sprite->AddChild(m_EnemyInfoWidgetComponent);
@@ -105,6 +105,7 @@ bool CEnemy::Init()
 	m_EnemyFSM.CreateState("Die", this, &CEnemy::DieStay, &CEnemy::DieStart, &CEnemy::DieEnd);
 	m_EnemyFSM.ChangeState("Find");
 
+	m_EnemyInfoWidget->Enable(true);
 	return true;
 }
 

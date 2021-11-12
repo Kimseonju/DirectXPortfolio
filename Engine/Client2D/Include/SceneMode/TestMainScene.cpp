@@ -39,6 +39,7 @@
 #include "../UI/UIManager.h"
 #include "../Object/BossDieParticle.h"
 #include "../Stage/StageManager.h"
+#include "../Object/ProgressBarObject.h"
 CTestMainScene::CTestMainScene() :
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
@@ -104,8 +105,8 @@ bool CTestMainScene::Init()
 	CUIManager::GetInst()->Init(m_pScene);
 
 
-	//CSmallSkel* pEnemy = m_pScene->SpawnObject<CSmallSkel>("TestEnemy");
-
+	CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
+	pEnemy->SetWorldPos(0.f, 100.f, 0.f);
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
 	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
