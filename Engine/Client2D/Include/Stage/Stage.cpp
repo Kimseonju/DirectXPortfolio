@@ -1,14 +1,14 @@
 
 #include "Stage.h"
 #include "Scene/Scene.h"
-#include "../MainDoor.h"
+#include "../Object/MainDoor.h"
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
 #include <Component/TileMapComponent.h>
 #include "../GlobalValue.h"
 #include "../Object/Player.h"
 #include "../Object/CreateObject.h"
-#include "../Object/SmallSkel.h""
+#include "../Object/SmallSkel.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -101,6 +101,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 				CDoor* Door = m_pScene->SpawnObject<CDoor>("MainDoor2");
 				m_Doors.push_back(Door);
 				Door->SetDoorDir(Info.StageSpawn[i].DoorDir);
+				Door->SetDir(Info.StageSpawn[i].DoorDir);
 				Obj = Door;
 
 				break;

@@ -9,6 +9,7 @@
 #include "../UI/EnemyWorldInfoWidget.h"
 #include "Player.h"
 #include "SkelSmallDagger.h"
+#include "ProgressBarObject.h"
 
 CBelialHand::CBelialHand() :
 	m_Belial(nullptr),
@@ -104,7 +105,5 @@ void CBelialHand::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		m_EnemyInfoWidget->Enable(true);
 	}
 }

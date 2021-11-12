@@ -378,6 +378,37 @@ void CInput::UpdateDirectInputKeyState(float DeltaTime)
 			}
 			break;
 		case DIK_MOUSEWHEEL:
+
+			if (m_MouseState.lZ!=(LONG)0)
+			{
+				m_vecKeyState[Index].PushTime += DeltaTime;
+				if (!m_vecKeyState[Index].State[KT_Down] && !m_vecKeyState[Index].State[KT_Push])
+				{
+					m_vecKeyState[Index].State[KT_Down] = true;
+					m_vecKeyState[Index].State[KT_Push] = true;
+				}
+
+				else
+				{
+					m_vecKeyState[Index].State[KT_Down] = false;
+				}
+			}
+
+			else if (m_vecKeyState[Index].State[KT_Push])
+			{
+				m_vecKeyState[Index].PushTime = 0.f;
+				m_vecKeyState[Index].State[KT_Up] = true;
+				m_vecKeyState[Index].State[KT_Down] = false;
+				m_vecKeyState[Index].State[KT_Push] = false;
+			}
+
+			else if (m_vecKeyState[Index].State[KT_Up])
+			{
+				m_vecKeyState[Index].PushTime = 0.f;
+				m_vecKeyState[Index].State[KT_Up] = false;
+			}
+			break;
+
 			break;
 		default:
 			if (m_DirectInputKeyResult[Index] & 0x80)
@@ -666,6 +697,8 @@ unsigned char CInput::ConvertKey(unsigned char Key)
 			return DIK_J;
 		case 'K':
 			return DIK_K;
+		case DIK_MOUSEWHEEL:
+			return DIK_MOUSEWHEEL;
 		/*case DIK_L:
 			return 'L';
 		case DIK_SEMICOLON:

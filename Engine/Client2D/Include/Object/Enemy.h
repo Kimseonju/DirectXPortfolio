@@ -26,9 +26,7 @@ protected:
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CSharedPtr<CColliderBox2D> m_AttackRangeCollider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
-	CSharedPtr<CWidgetComponent> m_EnemyInfoWidgetComponent;
 	CEngineFSM<CEnemy> m_EnemyFSM;
-	class CEnemyWorldInfoWidget* m_EnemyInfoWidget;
 
 	Enemy_State m_State;
 	class CAnimation2D_FSM* m_Animation2D;
@@ -38,6 +36,7 @@ protected:
 	bool m_OneAttack;
 	Object_Dir m_Dir;
 	bool m_WallCol;
+	class CProgressBarObject* m_ProgressBar;
 protected:
 	bool    m_ChildFire;
 	float   m_ChildFireTime;

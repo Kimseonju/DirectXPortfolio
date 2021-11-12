@@ -33,8 +33,16 @@ protected:
 	float	m_MaxY;
 
 	std::queue<CameraShake> m_qCameraShake;
+
+	std::queue<CameraMove> m_qCameraMove;
 	float	m_ShakeTime;
+	float	m_MoveTime;
+	bool	m_CameraMove;
 public:
+	bool IsCameraMove() const
+	{
+		return m_CameraMove;
+	}
 	Vector2 CameraZoomSize()
 	{
 		Vector2 Size;
@@ -137,6 +145,8 @@ public:
 
 	void AddCameraShake(float x, float y, float Time);
 	void AddCameraShake(const Vector2& Pos, float Time);
+	void AddCameraMove2D(float x, float y, float Time);
+	void AddCameraMove2D(const Vector2& Pos, float Time);
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
 public:

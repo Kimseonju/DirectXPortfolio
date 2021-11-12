@@ -33,20 +33,22 @@ bool CItemInfoWidget::Init()
 	SetSize(400.f, 270.f);
 	m_Base = CreateWidget<CImage>("Base");
 	m_Base->SetSize(400.f, 270.f);
-	m_Base->SetColorTint(0.f, 0.f, 1.f, 1.f);
+	m_Base->SetColorTint(34.f/255.f, 32.f / 255.f, 52.f / 255.f, 0.9f);
 	m_Base->SetPos(0.f, 0.f);
 
 	m_ItemImageBase = CreateWidget<CImage>("ItemImageBase");
 	m_ItemImageBase->SetSize(76.f, 76.f);
-	m_ItemImageBase->SetColorTint(0.f, 1.f, 0.f, 1.f);
+	m_ItemImageBase->SetTexture("ItemInfoBase", TEXT("UI/Inventory/info.png"));
 	m_ItemImageBase->SetPos(10.f,130.f);
 
+	Vector2 ItemImageBaseSize = m_ItemImageBase->GetSize();
+	ItemImageBaseSize /= 2.f;
 	m_ItemImage = CreateWidget<CImage>("ItemImage");
 	m_ItemImage->SetSize(57.f, 57.f);
 	m_ItemImage->SetColorTint(1.f, 1.f, 1.f, 1.f);
-	m_ItemImage->SetPos(10.f, 130.f);
+	m_ItemImage->SetPos(10.f+ ItemImageBaseSize.x, 130.f+ ItemImageBaseSize.y);
 	m_ItemImage->SetZOrder(1);
-	
+	m_ItemImage->SetPivot(0.5f, 0.5f);
 
 	m_ItemName = CreateWidget<CText>("ItemName");
 	m_ItemName->SetSize(400.f, 265.f);

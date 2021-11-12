@@ -5,6 +5,8 @@
 #include "BelialHand.h"
 #include "BelialWeapon.h"
 #include "BelialWeaponCharge.h"
+#include <Scene/CameraManager.h>
+#include <Component/Camera.h>
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(10.f),
@@ -16,7 +18,8 @@ CBelial::CBelial() :
 	m_PatternTimerMax(2.f),
 	m_SwordSpawnTimerMax(0.2f),
 	m_SwordSpawnTimer(0.f),
-	m_SwordSpawn(false)
+	m_SwordSpawn(false),
+	m_Spawn(false)
 	
 {
 	m_StartGravity = true;
@@ -59,8 +62,13 @@ void CBelial::Start()
 bool CBelial::Init()
 {
 	CEnemy::Init();
-	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->SetRelativeScale(280.f, 512.f, 1.f);
+	m_SpawnColliderBox2D = CreateSceneComponent<CColliderBox2D>("SpawnColliderBox2D");
+	m_RootComponent->AddChild(m_SpawnColliderBox2D);
+
+	m_SpawnColliderBox2D->SetExtent(2.f, 50.f);
+	m_SpawnColliderBox2D->SetCollisionProfile("BossSpawn");
+	m_SpawnColliderBox2D->AddCollisionCallbackFunction<CBelial>(Collision_State::Begin, this, &CBelial::CollisionBossSpawnBegin);
+	m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
 	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack");
 	return true;
@@ -69,6 +77,8 @@ bool CBelial::Init()
 void CBelial::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	if (!m_Spawn)
+		return;
 	if (m_Attacking)
 	{
 		switch (m_Pattern)
@@ -168,9 +178,21 @@ void CBelial::CollisionAttackRangeBegin(const HitResult& result, CCollider* Coll
 {
 }
 
+void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		m_SpawnColliderBox2D->Enable(false);
+		m_Collider2D->Enable(true);
+		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
+		Camera->AddCameraMove2D(Vector2(GetWorldPos().x, GetWorldPos().y), 5.f);
+	}
+
+}
+
 void CBelial::AnimationFrameEnd(const std::string& Name)
 {
-}
+}	
 
 void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 {

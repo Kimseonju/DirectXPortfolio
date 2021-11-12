@@ -45,14 +45,6 @@ bool CWeaponArm::Init()
 void CWeaponArm::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	if (m_Dir == Object_Dir::Left)
-	{
-		m_Sprite->SetRelativePos(-20.f, 0.f, 0.f);
-	}
-	else if (m_Dir == Object_Dir::Right)
-	{
-		m_Sprite->SetRelativePos(20.f, 0.f, 0.f);
-	}
 }
 
 void CWeaponArm::PostUpdate(float DeltaTime)

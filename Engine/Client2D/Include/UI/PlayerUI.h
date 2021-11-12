@@ -17,19 +17,21 @@ private:
 
     CSharedPtr<CImage>    m_WarningOnHit0;
     CSharedPtr<CImage>    m_WarningOnHit1;
+
     class CBossUI* m_BossUI;
+    class CWeaponUI* m_PlayerWeaponUI;
     float m_HitTime;
 protected:
     CPlayerUI();
     virtual ~CPlayerUI();
-public:
-    void Hit();
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);
     virtual void Render();
     virtual CPlayerUI* Clone();
-
+public:
+    void Hit();
+    void WeaponChange();
 };
 

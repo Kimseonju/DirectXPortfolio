@@ -11,12 +11,12 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 #include "ObjectDieEffectObject.h"
+#include "ProgressBarObject.h"
 CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
 	m_ChildFireTimeMax(0.2f),
 	m_State(Enemy_State::Idle),
-	m_EnemyInfoWidget(nullptr),
 	 m_WallCol(false)
 {
 }
@@ -30,7 +30,6 @@ CEnemy::CEnemy(const CEnemy& obj) :
 	m_Collider2D = (CColliderBox2D*)FindSceneComponent("Collider2D");
 	m_AttackRangeCollider2D = (CColliderBox2D*)FindSceneComponent("AttackRangeCollider2D");
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
-	m_EnemyInfoWidgetComponent = (CWidgetComponent*)FindSceneComponent("InfoWidget");
 
 	m_Status = obj.m_Status;
 	
@@ -53,7 +52,6 @@ bool CEnemy::Init()
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_AttackRangeCollider2D = CreateSceneComponent<CColliderBox2D>("AttackRangeCollider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-	m_EnemyInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("InfoWidget");
 
 	//테스트용 
 	m_Status.SetHP(1);
@@ -81,13 +79,6 @@ bool CEnemy::Init()
 	m_Sprite->AddChild(m_Collider2D);
 
 
-	m_EnemyInfoWidget =m_EnemyInfoWidgetComponent->CreateWidget<CEnemyWorldInfoWidget>("EnemyWorldInfoWidget");
-	m_EnemyInfoWidget->Enable(false);
-	m_EnemyInfoWidgetComponent->SetRelativePos(0.f, -10.f, 0.f);
-	m_EnemyInfoWidgetComponent->SetRelativeScale(200.f, 70.f, 1.f);
-	//
-	m_Sprite->AddChild(m_EnemyInfoWidgetComponent);
-
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
 	m_WeaponArm->SetRelativePos(0.f, 0.f, 0.f);
 	PushObjectChild(m_WeaponArm);
@@ -105,7 +96,11 @@ bool CEnemy::Init()
 	m_EnemyFSM.CreateState("Die", this, &CEnemy::DieStay, &CEnemy::DieStart, &CEnemy::DieEnd);
 	m_EnemyFSM.ChangeState("Find");
 
-	m_EnemyInfoWidget->Enable(true);
+
+	//프로그래스바
+	m_ProgressBar =m_pScene->SpawnObject<CProgressBarObject>("EnemyProgressBar");
+	m_ProgressBar->SetOwner(this);
+	m_ProgressBar->AddRelativePos(0.f, -10.f, 0.f);
 	return true;
 }
 
@@ -122,9 +117,12 @@ void CEnemy::Update(float DeltaTime)
 			m_Body->SetGravity(true);
 		}
 	}
+	Vector3 Pos = GetWorldPos();
+	Pos.y -= 10.f;
+	m_ProgressBar->SetWorldPos(Pos);
 	m_WallCol= false;
 	m_EnemyFSM.Update();
-	m_EnemyInfoWidget->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
+	m_ProgressBar->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
 
 
 	if (m_Status.GetHP() <= 0)
@@ -132,6 +130,7 @@ void CEnemy::Update(float DeltaTime)
 		CObjectDieEffectObject* Effect=m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 		Effect->SetWorldPos(GetWorldPos());
 		Active(false);
+		m_ProgressBar->Active(false);
 	}
 
 
@@ -179,7 +178,7 @@ void CEnemy::Enable(bool bEnable)
 	m_Collider2D->Enable(bEnable);
 	m_AttackRangeCollider2D->Enable(bEnable);
 	m_Body->Enable(bEnable);
-	m_EnemyInfoWidgetComponent->Enable(bEnable);
+	m_ProgressBar->Enable(bEnable);
 	m_Sprite->Enable(bEnable);
 }
 
@@ -201,7 +200,7 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
 		m_Status.SetHP(m_Status.GetHP()- CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		m_EnemyInfoWidget->Enable(true);
+		m_ProgressBar->Enable(true);
 	}
 
 }

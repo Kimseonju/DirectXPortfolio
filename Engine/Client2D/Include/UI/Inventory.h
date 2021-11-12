@@ -31,6 +31,13 @@ public:
     virtual CInventory* Clone();
 public:
     class CItem* GetWeapon() const;
+    Select_Weapon GetCurrentNumber()
+    {
+        return m_Current;
+    }
+
+    CItem* GetInventoryWeapon(int Index)const;
+    void WeaponChange();
 private:
     void StartButtonClick();
     void ExitButtonClick();

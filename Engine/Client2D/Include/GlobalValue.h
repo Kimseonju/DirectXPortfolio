@@ -160,3 +160,11 @@ enum class WallDir
     Right,
     Down
 };
+
+enum UI_ZOrder
+{
+    BossUI,
+    PlayerUI,
+    InventoryUI,
+    MapUI
+};

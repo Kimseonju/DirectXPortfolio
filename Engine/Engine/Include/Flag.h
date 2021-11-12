@@ -171,7 +171,7 @@ enum class Collision_Channel
     Item,
     Monster,
     InteractionInputKey,
-    Custom10,
+    BossSpawn,
     Custom11,
     Custom12,
     Custom13,

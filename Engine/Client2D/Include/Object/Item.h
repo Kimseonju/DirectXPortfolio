@@ -107,6 +107,7 @@ public:
 	
 	void DropCollisionBegin(const HitResult& result, CCollider* Collider);
 	void SetHorizontalReverse2DEnable(bool Enable);
+	void SetVerticalReverse2DEnable(bool Enable);
 public:
 	//동전이 드랍됬을때
 	void Drop(float Angle, float Power);

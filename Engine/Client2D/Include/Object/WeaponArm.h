@@ -22,6 +22,14 @@ public:
 	void SetDir(Object_Dir Dir)
 	{
 		m_Dir = Dir;
+		if (m_Dir == Object_Dir::Left)
+		{
+			m_Sprite->SetRelativePos(-20.f, 0.f, 0.f);
+		}
+		else if (m_Dir == Object_Dir::Right)
+		{
+			m_Sprite->SetRelativePos(20.f, 0.f, 0.f);
+		}
 	}
 public:
 	virtual void Start();

@@ -23,6 +23,8 @@ private:
 	class CBelialHand* m_LeftHand;
 	class CBelialHand* m_RightHand;
 	std::vector<class CBelialWeapon*> m_BelialWeapon;
+	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
+	bool m_Spawn;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -36,9 +38,14 @@ public:
 	void AttackSword(float DeltaTime);
 	void AttackBullet(float DeltaTime);
 	void AttackLaser(float DeltaTime);
+	void Spawn()
+	{
+		m_Spawn = true;
+	}
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
-
+	void CollisionBossSpawnBegin(const HitResult& result, CCollider* Collider);
+	
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);

@@ -324,6 +324,11 @@ void CItem::SetHorizontalReverse2DEnable(bool Enable)
 	m_Sprite->SetHorizontalReverse2DEnable(Enable);
 }
 
+void CItem::SetVerticalReverse2DEnable(bool Enable)
+{
+	m_Sprite->SetVerticalReverse2DEnable(Enable);
+}
+
 void CItem::Drop(float Angle, float Power)
 {
 	m_Body->SetForce2D(Angle, Power);

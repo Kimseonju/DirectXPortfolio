@@ -1,6 +1,6 @@
-
 #include "MainDoor.h"
 #include <Input.h>
+#include "KeyboardUIObject.h"
 CMainDoor::CMainDoor()
 {
 }
@@ -46,6 +46,14 @@ bool CMainDoor::Init()
 	m_DoorCollider2D->SetExtent(33.f, 10.f);
 	m_Sprite->AddChild(m_DoorCollider2D);
 
+
+
+	m_KeyUIObject = m_pScene->SpawnObject<CKeyboardUIObject>("KeyUI_MainDoor");
+	m_KeyUIObject->SetKey("F");
+	m_KeyUIObject->SetWorldPos(GetWorldPos());
+	m_KeyUIObject->AddWorldPos(-30.f, 50.f, 0.f);
+	m_KeyUIObject->Enable(false);
+
 	return true;
 }
 
@@ -88,6 +96,12 @@ CMainDoor* CMainDoor::Clone()
 
 void CMainDoor::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
+	m_KeyUIObject->Enable(true);
+}
+
+void CMainDoor::CollisionEnd(const HitResult& result, CCollider* Collider)
+{
+	m_KeyUIObject->Enable(false);
 }
 
 void CMainDoor::StartDoor()

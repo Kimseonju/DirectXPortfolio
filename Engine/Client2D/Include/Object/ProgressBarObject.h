@@ -22,8 +22,7 @@ protected:
 protected:
 	CSharedPtr<CSpriteComponent> m_SpriteBack;
 	CSharedPtr<CSpriteComponent> m_SpriteBar;
-	CSharedPtr<CColliderBox2D> m_Collider2D;
-
+	Vector2 m_SizeBar;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -32,4 +31,7 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CProgressBarObject* Clone();
+
+public:
+	void SetHPBar(float Percent);
 };

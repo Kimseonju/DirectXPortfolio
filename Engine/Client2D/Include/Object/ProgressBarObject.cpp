@@ -32,13 +32,16 @@ bool CProgressBarObject::Init()
 {
 	CGameObject::Init();
 
-	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_SpriteBack = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_SpriteBar= CreateSceneComponent<CSpriteComponent>("SpriteBar");
 	SetRootComponent(m_SpriteBack);
 
 	m_SpriteBack->SetRelativeScale(20.f, 5.f, 1.f);
+	m_SpriteBack->SetPivot(0.5f, 0.5f,0.f);
 	m_SpriteBar->SetRelativeScale(20.f, 5.f, 1.f);
+	m_SpriteBar->SetRelativePos(-10.f, -2.5f, 0.f);
+	
+	m_SizeBar = Vector2(20.f, 5.f);
 	m_SpriteBar->AddRelativePos(0.f, -1.f, 0.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	CMaterial* material= m_SpriteBack->GetMaterial(0);
@@ -51,10 +54,6 @@ bool CProgressBarObject::Init()
 	material->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 
 
-	m_Collider2D->SetExtent(50.f, 50.f);
-	m_Collider2D->SetCollisionProfile("EnemyAttack");
-
-	m_SpriteBack->AddChild(m_Collider2D);
 	m_SpriteBack->AddChild(m_SpriteBar);
 
 	return true;
@@ -83,4 +82,12 @@ void CProgressBarObject::Render(float DeltaTime)
 CProgressBarObject* CProgressBarObject::Clone()
 {
 	return new CProgressBarObject(*this);
+}
+
+void CProgressBarObject::SetHPBar(float Percent)
+{
+	Vector2 Size = m_SizeBar;
+	Size.x = Size.x * Percent;
+	m_SpriteBar->SetWorldScale(Vector3(Size.x, Size.y, 0.f));
+
 }

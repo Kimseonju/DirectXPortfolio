@@ -22,6 +22,8 @@ CCamera::CCamera()
 	m_MaxX = (float)INT_MAX;
 	m_MaxY = (float)INT_MAX;
 	m_ShakeTime = 0.f;
+	m_MoveTime = 0.f;
+	m_CameraMove = false;
 }
 
 CCamera::CCamera(const CCamera& com) :
@@ -100,6 +102,20 @@ void CCamera::AddCameraShake(const Vector2& Pos, float Time)
 	Shake.Time = Time;
 	m_qCameraShake.push(Shake);
 }
+
+void CCamera::AddCameraMove2D(float x, float y, float Time)
+{
+	AddCameraShake({ x,y }, Time);
+}
+
+void CCamera::AddCameraMove2D(const Vector2& Pos, float Time)
+{
+	CameraMove Move;
+	Move.Pos = Pos;
+	Move.WaitTime = Time;
+	m_qCameraMove.push(Move);
+}
+
 
 void CCamera::Save(FILE* pFile)
 {
@@ -256,7 +272,7 @@ void CCamera::PrevRender(float DeltaTime)
 	CSceneComponent::PostUpdate(DeltaTime);
 
 	m_matView.Identity();
-
+	m_CameraMove = false;
 	for (int i = 0; i < AXIS_END; ++i)
 	{
 		Vector3	Axis = GetAxis((AXIS)i);
@@ -287,33 +303,43 @@ void CCamera::PrevRender(float DeltaTime)
 			Pos.y = m_MaxY;
 		}
 
-		while (true)
+		if (m_qCameraShake.size() != 0)
 		{
-			if (m_qCameraShake.size() != 0)
+			//있을때
+			if (m_ShakeTime < m_qCameraShake.front().Time)
 			{
-				//있을때
-				if (m_ShakeTime < m_qCameraShake.front().Time)
-				{
-					int x = GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
-					int y = GetRandom(-(int)m_qCameraShake.front().Pos.y, (int)m_qCameraShake.front().Pos.y);
-					Pos.x += (float)x;
-					Pos.y += (float)y;
-					m_ShakeTime += DeltaTime;
-					break;
-				}
-				else
-				{
-					m_ShakeTime = 0.f;
-					m_qCameraShake.pop();
-				}
+				int x = GetRandom(-(int)m_qCameraShake.front().Pos.x, (int)m_qCameraShake.front().Pos.x);
+				int y = GetRandom(-(int)m_qCameraShake.front().Pos.y, (int)m_qCameraShake.front().Pos.y);
+				Pos.x += (float)x;
+				Pos.y += (float)y;
+				m_ShakeTime += DeltaTime;
 			}
 			else
 			{
-				break;
+				m_ShakeTime = 0.f;
+				m_qCameraShake.pop();
 			}
 		}
 
-
+		if (m_qCameraMove.size() != 0)
+		{
+			//있을때
+			if (m_MoveTime < m_qCameraMove.front().WaitTime)
+			{
+				Vector2 EndMovePos = m_qCameraMove.front().Pos;
+				Vector2 CameraPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+				CameraPos =EndMovePos.Lerp2D(CameraPos, EndMovePos, m_MoveTime);
+				Pos.x = CameraPos.x;
+				Pos.y = CameraPos.y;
+				m_MoveTime += DeltaTime;
+				m_CameraMove = true;
+			}
+			else
+			{
+				m_MoveTime = 0.f;
+				m_qCameraShake.pop();
+			}
+		}
 		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문
 		Pos.z = 0.f;

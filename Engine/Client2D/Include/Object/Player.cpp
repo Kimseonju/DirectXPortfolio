@@ -110,8 +110,9 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InventoryOnOff", KT_Down, this, &CPlayer::InventoryOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Dash", KT_Down, this, &CPlayer::Dash);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MapOnOff", KT_Down, this, &CPlayer::MapOnOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("MouseWhell", KT_Down, this, &CPlayer::WeaponChange);
 	//마우스회전용
-
+	
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
 	m_WeaponArm->SetRelativePos(20.f,0.f,0.f);
 	PushObjectChild(m_WeaponArm);
@@ -185,18 +186,38 @@ void CPlayer::Update(float DeltaTime)
 			m_Weapon = nullptr;
 		}
 	}
-	float angle= Pos2.GetAngle(MousePos);
+	
+	
+
+	if(m_Body->IsDashEffect())
+	{
+		CPlayerDash* obj = m_pScene->SpawnObject<CPlayerDash>("CPlayerDash");
+		obj->SetWorldPos(GetWorldPos());
+		obj->SetDir(m_Dir);
+		m_Body->SetDashEffect(false);
+	}
+
+}
+
+void CPlayer::PostUpdate(float DeltaTime)
+{
+	CGameObject::PostUpdate(DeltaTime);
+	CGameObject::Render(DeltaTime); 
+	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
+	Vector3 Pos = m_WeaponArm->GetWorldPos();
+	Vector2 Pos2 = Vector2(Pos.x, Pos.y);
+	float angle = Pos2.GetAngle(MousePos);
 
 	if (m_Weapon)
 	{
-		
+
 		m_Weapon->SetDir(m_Dir);
 		if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
 		{
 			//임시로
 			//선형보간 적용하여 움직임구현하기		
 			//게임상엔 없네??ㅇ
-			float LerpAngle = CGlobalValue::Lerp2DMax(0.f, 90.f, m_Weapon->GetCurrentAttackDelay()*10.f);
+			float LerpAngle = CGlobalValue::Lerp2DMax(0.f, 90.f, m_Weapon->GetCurrentAttackDelay() * 10.f);
 			if (m_OneAttack)
 			{
 				m_WeaponArm->SetRelativeRotationZ(angle + 90.f);
@@ -214,22 +235,7 @@ void CPlayer::Update(float DeltaTime)
 			m_Weapon->SetRelativeRotationZ(angle + m_Weapon->GetRebound());
 		}
 	}
-	
-
-	if(m_Body->IsDashEffect())
-	{
-		CPlayerDash* obj = m_pScene->SpawnObject<CPlayerDash>("CPlayerDash");
-		obj->SetWorldPos(GetWorldPos());
-		obj->SetDir(m_Dir);
-		m_Body->SetDashEffect(false);
-	}
-
 	m_Angle = angle;
-}
-
-void CPlayer::PostUpdate(float DeltaTime)
-{
-	CGameObject::PostUpdate(DeltaTime);
 }
 
 void CPlayer::Collision(float DeltaTime)
@@ -239,7 +245,7 @@ void CPlayer::Collision(float DeltaTime)
 
 void CPlayer::Render(float DeltaTime)
 {
-	CGameObject::Render(DeltaTime);
+	
 }
 
 CPlayer* CPlayer::Clone()
@@ -287,8 +293,8 @@ void CPlayer::Attack(float DeltaTime)
 			if (m_Weapon->Attack(angle))
 			{
 				m_OneAttack = !m_OneAttack;
+				m_Camera->AddCameraShake(3.f, 3.f, 0.3f);
 			}
-			m_Camera->AddCameraShake(3.f, 3.f, 0.3f);
 		}
 	}
 }
@@ -334,6 +340,10 @@ void CPlayer::MapOnOff(float DeltaTime)
 		CUIManager::GetInst()->GetStageMap()->Enable(true);
 		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
 	}
+}
+void CPlayer::WeaponChange(float DeltaTime)
+{
+	CUIManager::GetInst()->GetPlayerUI()->WeaponChange();
 }
 void CPlayer::AnimationFrameEnd(const std::string& Name)
 {

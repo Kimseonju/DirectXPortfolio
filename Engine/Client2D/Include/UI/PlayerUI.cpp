@@ -8,7 +8,7 @@
 #include "../BasicStatus.h"
 #include "../Animation2D/LifeWaveAnimation2D.h"
 #include "BossUI.h"
-
+#include "WeaponUI.h"
 CPlayerUI::CPlayerUI() :
 	m_ProgressBar(nullptr),
 	m_BossUI(nullptr),
@@ -22,11 +22,6 @@ CPlayerUI::~CPlayerUI()
 {
 }
 
-void CPlayerUI::Hit()
-{
-	m_HitTime = 1.f;
-}
-
 bool CPlayerUI::Init()
 {
 	CWidgetWindow::Init();
@@ -35,25 +30,25 @@ bool CPlayerUI::Init()
 
 	CImage* image;
 
-
+	SetZOrder(UI_ZOrder::PlayerUI);
 
 	image = CreateWidget<CImage>("PlayerLifeBack");
-	image->SetSize(74.f * 4, 16.f * 4);
+	image->SetSize(296.f, 64.f);
 	image->SetTexture("PlayerLifeBack", TEXT("UI/PlayerLifeBack.png"));
-	image->SetPos(150.f, 100.f);
+	image->SetPos(150.f, 600.f);
 	image->SetCollision(false);
 
 	m_ProgressBar = CreateWidget<CProgressBar>("PlayerHPBar");
-	m_ProgressBar->SetSize(50.f * 4, 16.f * 4);
-	m_ProgressBar->SetPos(240.f, 100.f);
+	m_ProgressBar->SetSize(180.f, 64.f);
+	m_ProgressBar->SetPos(240.f, 600.f);
 	m_ProgressBar->SetTexture("LifeBar", TEXT("UI/LifeBar.png"));
 	m_ProgressBar->SetBackTint(0.f, 0.f, 0.f, 0.f);
 	m_ProgressBar->SetCollision(false);
 
 	image = CreateWidget<CImage>("PlayerLifeBase");
-	image->SetSize(74.f * 4, 16.f * 4);
+	image->SetSize(296.f, 64.f);
 	image->SetTexture("PlayerLifeBase", TEXT("UI/PlayerLifeBase.png"));
-	image->SetPos(150.f, 100.f);
+	image->SetPos(150.f, 600.f);
 	image->SetCollision(false);
 
 	float hp = (float)CGlobalValue::MainPlayer->GetStatus().GetHP();
@@ -63,7 +58,7 @@ bool CPlayerUI::Init()
 	image= CreateWidget<CImage>("LifeWave");
 	image->SetSize(16.f, 40.f);
 	image->CreateAnimation2D<CLifeWaveAnimation2D>();
-	image->SetPos(240.f+(m_ProgressBar->GetSize().x * (hp / hpmax)), 112.f);
+	image->SetPos(240.f+(m_ProgressBar->GetSize().x * (hp / hpmax)), 612.f);
 	image->SetCollision(false);
 
 	m_WarningOnHit0 = CreateWidget<CImage>("RedWarningOnHit_0");
@@ -77,9 +72,10 @@ bool CPlayerUI::Init()
 	m_WarningOnHit1->SetPos(640.f, 0.f);
 	m_WarningOnHit1->SetCollision(false);
 
+	m_PlayerWeaponUI = CreateWidget<CWeaponUI>("WeaponUI");
 
-	m_BossUI = CreateWidget<CBossUI>("BossUI");
-	m_BossUI->SetPos(100.f, 100.f);
+	//m_BossUI = CreateWidget<CBossUI>("BossUI");
+	//m_BossUI->SetPos(100.f, 100.f);
 	return true;
 }
 
@@ -104,5 +100,15 @@ void CPlayerUI::Render()
 CPlayerUI* CPlayerUI::Clone()
 {
 	return new CPlayerUI(*this);
+}
+
+void CPlayerUI::Hit()
+{
+	m_HitTime = 1.f;
+}
+
+void CPlayerUI::WeaponChange()
+{
+	m_PlayerWeaponUI->WeaponChange();
 }
 

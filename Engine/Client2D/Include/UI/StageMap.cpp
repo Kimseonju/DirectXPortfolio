@@ -28,7 +28,8 @@ bool CStageMap::Init()
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
 	CStageManager::GetInst()->GetCurPos();
 	int Size = CStageManager::GetInst()->GetMapSize();
-	
+
+	SetZOrder(UI_ZOrder::MapUI);
 	for (int x= 0; x < Size; ++x)
 	{
 		for (int y = 0; y < Size; ++y)
@@ -41,6 +42,7 @@ bool CStageMap::Init()
 			Base->SetPos(30.f * 4.f *x+300.f, 30.f * 4.f *y+100.f);
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
+			Base->SetCollision(false);
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{
 				std::string str3 = std::to_string((int)WallDir::Left);
@@ -51,6 +53,7 @@ bool CStageMap::Init()
 				Arrow->SetPos(Pos);
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
+				Arrow->SetCollision(false);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Up])
 			{
@@ -62,6 +65,7 @@ bool CStageMap::Init()
 				Arrow->SetPos(Pos);
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
+				Arrow->SetCollision(false);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Right])
 			{
@@ -75,6 +79,7 @@ bool CStageMap::Init()
 				
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
+				Arrow->SetCollision(false);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Down])
 			{
@@ -87,16 +92,20 @@ bool CStageMap::Init()
 				Arrow->SetPos(Pos);
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
+				Arrow->SetCollision(false);
 			}
 		}
 	}
 
 	m_PosX = CreateWidget<CText>("PosX");
 	m_PosX->SetPos(100.f, 100.f);
+	m_PosX->SetCollision(false);
 	m_PosY = CreateWidget<CText>("PosY");
 	m_PosY->SetPos(200.f, 100.f);
+	m_PosY->SetCollision(false);
 	m_Name1 = CreateWidget<CText>("Name");
 	m_Name1->SetPos(300.f, 100.f);
+	m_Name1->SetCollision(false);
 
 
 	m_MapBase1_0 = CreateWidget<CImage>("MapBase1_0");
@@ -104,6 +113,7 @@ bool CStageMap::Init()
 	m_MapBase1_0->SetPos(0.f, RS.Height-32.f*4);
 	m_MapBase1_0->SetTexture("MapBase1_0", TEXT("UI/map/MapBase1_0.png"));
 	m_MapBase1_0->SetSize(320.f*4, 32.f*4);
+	m_MapBase1_0->SetCollision(false);
 
 	m_MapBase1_1 = CreateWidget<CImage>("MapBase1_1");
 			   
@@ -111,6 +121,7 @@ bool CStageMap::Init()
 	m_MapBase1_1->SetPivot(0.5f, 0.5f);
 	m_MapBase1_1->SetTexture("MapBase1_1", TEXT("UI/map/MapBase1_1.png"));
 	m_MapBase1_1->SetSize(260.f * 4, 132.f * 4);
+	m_MapBase1_1->SetCollision(false);
 
 
 

@@ -30,6 +30,7 @@ bool CInventory::Init()
 	CWidgetWindow::Init();
 	Resolution RS = CDevice::GetInst()->GetResolution();
 
+	SetZOrder(UI_ZOrder::InventoryUI);
 	// 인벤 배경
 	m_InventoryBaseImage = CreateWidget<CImage>("InventoryBase");
 
@@ -213,6 +214,24 @@ CItem* CInventory::GetWeapon() const
 		break;
 	}
 	return nullptr;
+}
+
+
+CItem* CInventory::GetInventoryWeapon(int Index) const
+{
+	return m_Weapon[Index]->GetItem();
+}
+
+void CInventory::WeaponChange()
+{
+	if (m_Current == Select_Weapon::Left)
+	{
+		m_Current = Select_Weapon::Right;
+	}
+	else if (m_Current == Select_Weapon::Right)
+	{
+		m_Current = Select_Weapon::Left;
+	}
 }
 
 void CInventory::StartButtonClick()

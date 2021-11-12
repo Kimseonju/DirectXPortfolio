@@ -100,6 +100,36 @@
     <Filter Include="Stage">
       <UniqueIdentifier>{9556f4e2-b438-42bc-9bd0-c79ad2c2197e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Player\Effect">
+      <UniqueIdentifier>{c71bb729-4cd5-44d9-bdea-b4f4327acd4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Animation2D\FSM">
+      <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle">
+      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\RevolverEffect">
+      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\ShortSwordEffect">
+      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\MetalBoomerangEffect">
+      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect_Particle\ObjectDieEffectObject">
+      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Door">
+      <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CreateObject">
+      <UniqueIdentifier>{232b87e9-b9a0-400d-9f7c-72f74dc8da0b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
     </Filter>
@@ -133,35 +163,8 @@
     <Filter Include="UI\UI\WidgetWindow\NewFilter1">
       <UniqueIdentifier>{8e3ac30e-c451-451c-a8ec-7094098de1e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Player\Effect">
-      <UniqueIdentifier>{c71bb729-4cd5-44d9-bdea-b4f4327acd4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Animation2D\FSM">
-      <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle">
-      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\RevolverEffect">
-      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\ShortSwordEffect">
-      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\MetalBoomerangEffect">
-      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\ObjectDieEffectObject">
-      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Door">
-      <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\CreateObject">
-      <UniqueIdentifier>{232b87e9-b9a0-400d-9f7c-72f74dc8da0b}</UniqueIdentifier>
+    <Filter Include="02. Object\ObjectUI">
+      <UniqueIdentifier>{87ba674e-780e-493e-97b7-fa4a6b9fc787}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -411,17 +414,26 @@
     <ClCompile Include="Stage\Door.cpp">
       <Filter>02. Object\Door</Filter>
     </ClCompile>
-    <ClCompile Include="MainDoor.cpp">
-      <Filter>02. Object\Door</Filter>
-    </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Object\CreateObject.cpp">
       <Filter>02. Object\CreateObject</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WeaponUI.cpp">
+      <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
+    </ClCompile>
     <ClCompile Include="Object\ProgressBarObject.cpp">
-      <Filter>02. Object\Enemy</Filter>
+      <Filter>02. Object\ObjectUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KeyboardUIObject.cpp">
+      <Filter>02. Object\ObjectUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MainDoor.cpp">
+      <Filter>02. Object\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BossSpawnUI.cpp">
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -665,17 +677,26 @@
     <ClInclude Include="Stage\Door.h">
       <Filter>02. Object\Door</Filter>
     </ClInclude>
-    <ClInclude Include="MainDoor.h">
-      <Filter>02. Object\Door</Filter>
-    </ClInclude>
     <ClInclude Include="MoveComponent.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Object\CreateObject.h">
       <Filter>02. Object\CreateObject</Filter>
     </ClInclude>
+    <ClInclude Include="UI\WeaponUI.h">
+      <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
+    </ClInclude>
     <ClInclude Include="Object\ProgressBarObject.h">
-      <Filter>02. Object\Enemy</Filter>
+      <Filter>02. Object\ObjectUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KeyboardUIObject.h">
+      <Filter>02. Object\ObjectUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MainDoor.h">
+      <Filter>02. Object\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BossSpawnUI.h">
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

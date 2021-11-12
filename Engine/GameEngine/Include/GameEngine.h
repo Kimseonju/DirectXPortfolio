@@ -420,6 +420,12 @@ struct CameraShake
     Vector2 Pos;
     float	Time;
 };
+struct CameraMove
+{
+    Vector2 Pos;
+    float	WaitTime;
+};
+
 #pragma pack(push, 1)
 
 struct TileInfo

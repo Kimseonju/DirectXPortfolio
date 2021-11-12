@@ -331,9 +331,9 @@ Vector2 Vector2::Lerp2DMax(Vector2 _Start, Vector2 _End, float _Ratio)
         _Ratio = 0.0f;
     }
 
-    if (1.0f <= _Ratio)
+    if (1.f <= _Ratio)
     {
-        _Ratio = 1.0f;
+        _Ratio = 1.f;
     }
 
     return Lerp2D(_Start, _End, _Ratio);

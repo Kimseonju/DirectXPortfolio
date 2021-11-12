@@ -47,7 +47,8 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("Dash", VK_RBUTTON);
     CInput::GetInst()->CreateKey("InventoryOnOff", 'I');
     CInput::GetInst()->CreateKey("MapOnOff", VK_TAB);
-
+    CInput::GetInst()->CreateKey("MouseWhell", DIK_MOUSEWHEEL);
+    
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');
     CInput::GetInst()->SetControlKey("Skill2", true);
@@ -62,6 +63,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateChannel("NextStage", Collision_Interaction::Block);
     CCollisionManager::GetInst()->CreateChannel("Item", Collision_Interaction::Block);
     CCollisionManager::GetInst()->CreateChannel("InteractionInputKey", Collision_Interaction::Block);
+    CCollisionManager::GetInst()->CreateChannel("BossSpawn", Collision_Interaction::Block);
 
     CCollisionManager::GetInst()->CreateProfile("Static", Collision_Channel::Static);
     CCollisionManager::GetInst()->CreateProfile("Player", Collision_Channel::Player);
@@ -73,6 +75,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateProfile("NextStage", Collision_Channel::NextStage);
     CCollisionManager::GetInst()->CreateProfile("Item", Collision_Channel::Item);
     CCollisionManager::GetInst()->CreateProfile("InteractionInputKey", Collision_Channel::InteractionInputKey);
+    CCollisionManager::GetInst()->CreateProfile("BossSpawn", Collision_Channel::BossSpawn);
     
     CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Player,
         Collision_Interaction::Ignore);
@@ -95,9 +98,14 @@ bool CClientManager::Init()
         Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_Nopass,
         Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_pass,
+
+    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Enemy,
         Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Tile_Nopass,
+    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::EnemyAttack,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Tile_Nopass,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Tile_pass,
         Collision_Interaction::Ignore);
     //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
