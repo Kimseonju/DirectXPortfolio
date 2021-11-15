@@ -32,7 +32,6 @@ private:
 
 	std::vector<CGameObject*> m_vDashTexture;
 	CPlayerStatus m_Status;
-	CSharedPtr<CWidgetComponent> m_PlayerInfoWidgetComponent;
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CSharedPtr<CSpringArm2D> m_Arm;
 	CSharedPtr<CCamera> m_Camera;

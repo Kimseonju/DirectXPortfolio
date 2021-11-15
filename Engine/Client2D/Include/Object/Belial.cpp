@@ -7,6 +7,8 @@
 #include "BelialWeaponCharge.h"
 #include <Scene/CameraManager.h>
 #include <Component/Camera.h>
+#include "../UI/UIManager.h"
+#include "../UI/BossSpawnUI.h"
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(10.f),
@@ -19,7 +21,10 @@ CBelial::CBelial() :
 	m_SwordSpawnTimerMax(0.2f),
 	m_SwordSpawnTimer(0.f),
 	m_SwordSpawn(false),
-	m_Spawn(false)
+	m_Spawn(false),
+	m_Alpha(0.f),
+	m_HandAlpha(0.f),
+	m_AlphaUpdate(false)
 	
 {
 	m_StartGravity = true;
@@ -65,12 +70,16 @@ bool CBelial::Init()
 	m_SpawnColliderBox2D = CreateSceneComponent<CColliderBox2D>("SpawnColliderBox2D");
 	m_RootComponent->AddChild(m_SpawnColliderBox2D);
 
-	m_SpawnColliderBox2D->SetExtent(2.f, 50.f);
+	m_SpawnColliderBox2D->SetExtent(2.f, 1000);
 	m_SpawnColliderBox2D->SetCollisionProfile("BossSpawn");
 	m_SpawnColliderBox2D->AddCollisionCallbackFunction<CBelial>(Collision_State::Begin, this, &CBelial::CollisionBossSpawnBegin);
 	m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
 	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack");
+	CMaterial* Material = m_Sprite->GetMaterial(0);
+	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+	Material->SetOpacity(1.f);
+	Enable(true);
 	return true;
 }
 
@@ -79,6 +88,33 @@ void CBelial::Update(float DeltaTime)
 	CGameObject::Update(DeltaTime);
 	if (!m_Spawn)
 		return;
+	else 
+	{
+		CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
+		if (m_AlphaUpdate)
+		{
+			m_Alpha += DeltaTime;
+			if (m_Alpha > 1.f)
+			{
+				m_HandAlpha += DeltaTime;
+				if (m_HandAlpha > 1.f)
+				{
+					
+					Camera->AddCameraMove2D(Vector2(GetWorldPos().x, GetWorldPos().y), 5.f);
+					CUIManager::GetInst()->GetBossSpawnUI()->Spawn();
+					m_AlphaUpdate = false;
+				}
+			}
+			CMaterial* Material = m_Sprite->GetMaterial(0);
+			Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+
+			Material =m_LeftHand->GetMaterial();
+			Material->SetBaseColor(1.f, 1.f, 1.f, m_HandAlpha);
+
+			Material = m_RightHand->GetMaterial();
+			Material->SetBaseColor(1.f, 1.f, 1.f, m_HandAlpha);
+		}
+	}
 	if (m_Attacking)
 	{
 		switch (m_Pattern)
@@ -184,8 +220,8 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 	{
 		m_SpawnColliderBox2D->Enable(false);
 		m_Collider2D->Enable(true);
-		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
-		Camera->AddCameraMove2D(Vector2(GetWorldPos().x, GetWorldPos().y), 5.f);
+		m_Spawn = true;
+		m_AlphaUpdate = true;
 	}
 
 }

@@ -21,5 +21,6 @@ bool CUIManager::Init(CScene* Scene)
 	m_InventoryUI = m_pScene->GetViewport()->AddWindow<CInventory>("Inventory");
 	m_StageMapUI = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMapUI");
 	m_PlayerUI = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
+	m_BossSpawnUI = m_pScene->GetViewport()->AddWindow<CBossSpawnUI>("BossSpawnUI");
 	return true;
 }

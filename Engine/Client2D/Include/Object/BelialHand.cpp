@@ -37,7 +37,8 @@ bool CBelialHand::Init()
 {
 	CEnemy::Init();
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	m_Sprite->SetRelativeScale(228.f, 268.f, 1.f);
+	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, 0.f);
+	m_Sprite->SetRelativeScale(57.f, 67.f, 1.f);
 	m_Animation2D->SetIdleAnimation2D("BelialHand_Idle");
 	m_Animation2D->SetAttackAnimation2D("BelialHand_Attack");
 
@@ -89,6 +90,11 @@ void CBelialHand::SetHorizontalReverse2DEnable(bool Enable)
 	{
 		m_Sprite->SetHorizontalReverse2DEnable(Enable);
 	}
+}
+
+CMaterial* CBelialHand::GetMaterial(int Index)
+{
+	return m_Sprite->GetMaterial(Index);
 }
 
 

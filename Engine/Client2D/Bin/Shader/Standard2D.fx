@@ -137,7 +137,7 @@ PS_OUTPUT_SINGLE Standard2DTexturePS(VS_OUTPUT_UV input)
 	float4	result = (float4)0.f;
 
 	result.rgb = BaseColor.rgb * g_vMtrlBaseColor.rgb + EmissiveColor.rgb * g_vMtrlEmissiveColor.rgb;
-	result.a = BaseColor.a * g_MtrlOpacity;
+	result.a = BaseColor.a * g_MtrlOpacity* g_vMtrlBaseColor.a;
 
 	result = PaperBurn2D(result, input.UV);
 

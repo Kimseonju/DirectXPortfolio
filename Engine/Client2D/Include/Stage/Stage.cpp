@@ -9,6 +9,7 @@
 #include "../Object/Player.h"
 #include "../Object/CreateObject.h"
 #include "../Object/SmallSkel.h"
+#include "../Object/Belial.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -143,6 +144,10 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 
 		case Client_Class_Type::Boss:
 		{
+			Obj = m_pScene->SpawnObject<CBelial>("Belial");
+			//Obj->SetStartTimer(1.f);
+
+
 			break;
 		}
 		}

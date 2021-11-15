@@ -166,5 +166,6 @@ enum UI_ZOrder
     BossUI,
     PlayerUI,
     InventoryUI,
-    MapUI
+    MapUI,
+    BossSpawnUI
 };

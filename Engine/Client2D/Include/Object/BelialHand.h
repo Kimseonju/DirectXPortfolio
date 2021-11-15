@@ -25,6 +25,7 @@ public:
 	void Attack();
 
 	void SetHorizontalReverse2DEnable(bool Enable);
+	CMaterial* GetMaterial(int Index=0);
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 

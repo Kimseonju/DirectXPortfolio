@@ -487,7 +487,9 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	//TileMap->Enable(false);
 	//TileMapObject->Enable(false);
 	TileMapComponent->Enable(false);
+	TileMapComponent->SetEditorMode(false);
 	TileObjectMapComponent->Enable(false);
+	TileObjectMapComponent->SetEditorMode(false);
 	_StageObjectsInfo.TileMap=TileMap;
 	_StageObjectsInfo.TileMapObject = TileMapObject;
 	_StageObjectsInfo.TileMapComponent = TileMapComponent;

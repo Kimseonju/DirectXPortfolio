@@ -12,12 +12,14 @@ class CBossSpawnUI :
     friend class CViewport;
 
 protected:
-    CSharedPtr<CImage>    m_BossUpDonwImage;
-    CSharedPtr<CImage>    m_BossBar;
-    CSharedPtr<CImage>    m_BossPortrait;
-    CSharedPtr<CProgressBar>    m_BossProgressBar;
+    CSharedPtr<CImage>    m_BossUpImage;
+    CSharedPtr<CImage>    m_BossDonwImage;
+    CSharedPtr<CText>    m_BossName;
+    CSharedPtr<CText>    m_BossNinkName;
     bool m_Spawn;
     float m_Alpha;
+    float m_NickNameAlpha;
+    bool m_Play;
 public:
     CBossSpawnUI();
     CBossSpawnUI(const CBossSpawnUI& widget);

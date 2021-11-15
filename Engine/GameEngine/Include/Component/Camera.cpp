@@ -24,6 +24,7 @@ CCamera::CCamera()
 	m_ShakeTime = 0.f;
 	m_MoveTime = 0.f;
 	m_CameraMove = false;
+	m_CameraMoveEnd = false;
 }
 
 CCamera::CCamera(const CCamera& com) :
@@ -60,23 +61,23 @@ void CCamera::CreateProjectionMatrix()
 	{
 		Resolution RS = CDevice::GetInst()->GetResolution();
 		Vector2 ResolutionRatio = CDevice::GetInst()->GetResolutionRatio();
-		Vector2 VRS;
+		
 		if (ResolutionRatio.x == 0.f)
 		{
-			VRS.x = (float)RS.Width;
-			VRS.y = (float)RS.Height;
+			m_VRS.x = (float)RS.Width;
+			m_VRS.y = (float)RS.Height;
 		}
 		else
 		{
-			VRS.x = (float)RS.Width * ResolutionRatio.x;
-			VRS.y = (float)RS.Height * ResolutionRatio.y;
+			m_VRS.x = (float)RS.Width * ResolutionRatio.x;
+			m_VRS.y = (float)RS.Height * ResolutionRatio.y;
 		}
-		Vector2 Size = { VRS.x / 2.f, VRS.y / 2.f };
+		Vector2 Size = { m_VRS.x / 2.f, m_VRS.y / 2.f };
 		Size.x = Size.x / m_CameraZoom - Size.x;
 		Size.y = Size.y / m_CameraZoom - Size.y;
 
-		m_matProj = XMMatrixOrthographicOffCenterLH(-Size.x, (float)VRS.x+ Size.x,
-			-Size.y, VRS.y+ Size.y,
+		m_matProj = XMMatrixOrthographicOffCenterLH(-Size.x, (float)m_VRS.x+ Size.x,
+			-Size.y, m_VRS.y+ Size.y,
 			0.f, m_Distance);
 	}
 		break;
@@ -269,7 +270,6 @@ void CCamera::Collision(float DeltaTime)
 void CCamera::PrevRender(float DeltaTime)
 {
 	CSceneComponent::PrevRender(DeltaTime);
-	CSceneComponent::PostUpdate(DeltaTime);
 
 	m_matView.Identity();
 	m_CameraMove = false;
@@ -296,7 +296,7 @@ void CCamera::PrevRender(float DeltaTime)
 		}
 		if (Pos.y < m_MinY)
 		{
-			Pos.x = m_MinY;
+			Pos.y = m_MinY;
 		}
 		if (Pos.y > m_MaxY)
 		{
@@ -321,14 +321,17 @@ void CCamera::PrevRender(float DeltaTime)
 			}
 		}
 
+		m_CameraMoveEnd = false;
 		if (m_qCameraMove.size() != 0)
 		{
 			//¿÷¿ª∂ß
 			if (m_MoveTime < m_qCameraMove.front().WaitTime)
 			{
 				Vector2 EndMovePos = m_qCameraMove.front().Pos;
+				EndMovePos.x -= 640.f;
+				EndMovePos.y -= 360.f;
 				Vector2 CameraPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-				CameraPos =EndMovePos.Lerp2D(CameraPos, EndMovePos, m_MoveTime);
+				CameraPos =EndMovePos.Lerp2DMax(CameraPos, EndMovePos, m_MoveTime);
 				Pos.x = CameraPos.x;
 				Pos.y = CameraPos.y;
 				m_MoveTime += DeltaTime;
@@ -337,7 +340,8 @@ void CCamera::PrevRender(float DeltaTime)
 			else
 			{
 				m_MoveTime = 0.f;
-				m_qCameraShake.pop();
+				m_qCameraMove.pop();
+				m_CameraMoveEnd = true;
 			}
 		}
 		Pos = Pos * -1.f;

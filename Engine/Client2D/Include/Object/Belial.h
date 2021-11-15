@@ -25,6 +25,9 @@ private:
 	std::vector<class CBelialWeapon*> m_BelialWeapon;
 	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
 	bool m_Spawn;
+	float m_Alpha;
+	float m_HandAlpha;
+	bool  m_AlphaUpdate;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -38,10 +41,6 @@ public:
 	void AttackSword(float DeltaTime);
 	void AttackBullet(float DeltaTime);
 	void AttackLaser(float DeltaTime);
-	void Spawn()
-	{
-		m_Spawn = true;
-	}
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 	void CollisionBossSpawnBegin(const HitResult& result, CCollider* Collider);

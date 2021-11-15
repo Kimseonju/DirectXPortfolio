@@ -96,8 +96,9 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();

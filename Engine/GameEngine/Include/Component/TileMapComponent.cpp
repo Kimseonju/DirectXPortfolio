@@ -835,9 +835,40 @@ void CTileMapComponent::PrevRender(float DeltaTime)
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 	Resolution	RS = Camera->GetResolution();
-
 	Vector3	LB = Camera->GetWorldPos();
 	Vector3	RT = LB + Vector3((float)RS.Width, (float)RS.Height, 0.f);
+
+	{
+		Vector3 VectorRS = Vector3((float)RS.Width, (float)RS.Height, 0.f) / 2.f;
+		Vector3	CameraSize = Vector3(Camera->GetCameraZoomSize().x, Camera->GetCameraZoomSize().y, 0.f);
+		CameraSize /= 2.f;
+
+
+
+		Vector3	CameraLeftCheck = CameraSize;
+		Vector3	CameraRightCheck = CameraSize;
+		if (!m_EditorMode)
+		{
+			if (m_vecTile.size() != 0)
+			{
+				size_t Size = m_vecTile.size();
+				CameraLeftCheck.x = m_vecTile[0]->GetPos().x;
+				Camera->SetMinX(-VectorRS.x +CameraSize.x + CameraLeftCheck.x);
+				CameraLeftCheck.y = m_vecTile[0]->GetPos().y;
+				Camera->SetMinY(-VectorRS.y+CameraSize.y + CameraLeftCheck.y);
+
+				CameraRightCheck.x = m_vecTile[Size - 1]->GetPos().x;
+				Camera->SetMaxX(-VectorRS.x+CameraRightCheck.x - CameraSize.x);
+
+				CameraRightCheck.y = m_vecTile[Size - 1]->GetPos().y;
+				Camera->SetMaxY(-VectorRS.y+CameraRightCheck.y - CameraSize.y);
+
+
+
+			}
+		}
+	}
+	
 
 	int	StartX, StartY, EndX, EndY;
 
@@ -855,6 +886,9 @@ void CTileMapComponent::PrevRender(float DeltaTime)
 		++EndX;
 		++EndY;
 	}
+
+
+
 
 	StartX = StartX < 0 ? 0 : StartX;
 	StartY = StartY < 0 ? 0 : StartY;
@@ -1286,6 +1320,9 @@ void CTileMapComponent::SetWorldInfo()
 		SAFE_DELETE(m_WorldBuffer);
 		return;
 	}
+
+	
+
 }
 
 void CTileMapComponent::SetCollisionTileProfile(const std::string& TilePass, const std::string& TileNoPass)

@@ -38,16 +38,26 @@ protected:
 	float	m_ShakeTime;
 	float	m_MoveTime;
 	bool	m_CameraMove;
+	bool	m_CameraMoveEnd;
+	Vector2 m_VRS;
 public:
 	bool IsCameraMove() const
 	{
 		return m_CameraMove;
 	}
-	Vector2 CameraZoomSize()
+	bool IsCameraMoveEnd() const
+	{
+		return m_CameraMoveEnd;
+	}
+	Vector2 GetVRS()
+	{
+		return m_VRS;
+	}
+	Vector2 GetCameraZoomSize()
 	{
 		Vector2 Size;
-		Size.x = m_RS.Width / m_CameraZoom;
-		Size.y = m_RS.Height/ m_CameraZoom;
+		Size.x = m_VRS.x / m_CameraZoom;
+		Size.y = m_VRS .y/ m_CameraZoom;
 		return Size;
 	}
 	void SetMin(float x, float y)
@@ -55,10 +65,25 @@ public:
 		m_MinX = x;
 		m_MinY = y;
 	}
-
+	void SetMinX(float x)
+	{
+		m_MinX = x;
+	}
+	void SetMinY(float y)
+	{
+		m_MinY = y;
+	}
 	void SetMax(float x, float y)
 	{
 		m_MaxX = x;
+		m_MaxY = y;
+	}
+	void SetMaxX(float x)
+	{
+		m_MaxX = x;
+	}
+	void SetMaxY(float y)
+	{
 		m_MaxY = y;
 	}
 	Vector2 GetMin()

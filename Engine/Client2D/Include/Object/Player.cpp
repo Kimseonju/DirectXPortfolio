@@ -40,8 +40,6 @@ CPlayer::CPlayer(const CPlayer& obj) :
 	m_Weapon = obj.m_Weapon->Clone();
 	m_OneAttack = obj.m_OneAttack;
 	//임시 삭제용
-
-	m_PlayerInfoWidgetComponent = (CWidgetComponent*)FindSceneComponent("PlayerInfoWidget");
 }
 
 CPlayer::~CPlayer()
@@ -66,8 +64,7 @@ bool CPlayer::Init()
 
 	m_Arm = CreateSceneComponent<CSpringArm2D>("Arm");
 	m_Camera = CreateSceneComponent<CCamera>("Camera");
-	m_PlayerInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("PlayerInfoWidget");
-	m_Camera->SetCameraZoom(2.f);
+	m_Camera->SetCameraZoom(4.f);
 	SetRootComponent(m_Sprite);
 
 	m_Sprite->SetRelativeScale(15.f, 20.f, 1.f);
@@ -122,13 +119,6 @@ bool CPlayer::Init()
 	//m_Weapon = m_pScene->SpawnObject<CMetalBoomerang>("MetalBoomerang");
 	//m_Weapon->SetRelativePos(10.f, 0.f, 0.f); 
 	
-
-
-	m_PlayerInfoWidgetComponent->CreateWidget<CPlayerWorldInfoWidget>("PlayerInfo");
-
-	m_PlayerInfoWidgetComponent->SetRelativePos(-100.f, 50.f, 0.f);
-	m_PlayerInfoWidgetComponent->SetRelativeScale(200.f, 120.f, 1.f);
-	m_Sprite->AddChild(m_PlayerInfoWidgetComponent);
 
 
 	m_BodyFSM.CreateState("Idle", this, &CPlayer::BodyIdleStay, &CPlayer::BodyIdleStart);
