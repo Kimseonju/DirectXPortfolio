@@ -66,6 +66,19 @@ public:
 	{
 		return m_CurrentSequence->Sequence->GetName();
 	}
+	int GetFrame()
+	{
+		return m_Frame;
+	}
+
+	int GetFrameSize()
+	{
+		return (int)m_CurrentSequence->Sequence->m_vecAnimFrame.size();
+	}
+	void SetPlayRate(float Rate)
+	{
+		m_CurrentSequence->PlayRate = Rate;
+	}
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -73,7 +86,7 @@ public:
 	virtual CAnimation2D* Clone();
 	void SetShader();
 	void ResetShader();
-
+	virtual bool IsEnable();
 public:
 	Sequence2DInfo* AddAnimationSequence2D(const std::string& Name, bool Loop = true);
 	Sequence2DInfo* AddAnimationSequence2D(CAnimationSequence2D* Sequence, bool Loop = true);

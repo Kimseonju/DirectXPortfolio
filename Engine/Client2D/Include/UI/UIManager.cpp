@@ -22,5 +22,7 @@ bool CUIManager::Init(CScene* Scene)
 	m_StageMapUI = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMapUI");
 	m_PlayerUI = m_pScene->GetViewport()->AddWindow<CPlayerUI>("PlayerUI");
 	m_BossSpawnUI = m_pScene->GetViewport()->AddWindow<CBossSpawnUI>("BossSpawnUI");
+	m_BossSpawnUI = m_pScene->GetViewport()->AddWindow<CBossSpawnUI>("BossSpawnUI");
+	m_BossDieUI = m_pScene->GetViewport()->AddWindow<CBossDieUI>("BossDieUI");
 	return true;
 }

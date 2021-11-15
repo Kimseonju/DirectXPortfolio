@@ -73,6 +73,11 @@ void CWidgetWindow::PostUpdate(float DeltaTime)
 	}
 }
 
+void CWidgetWindow::PrevRender(float DeltaTime)
+{
+	CWidget::PrevRender(DeltaTime);
+}
+
 void CWidgetWindow::Render()
 {
 	// 정렬한다.

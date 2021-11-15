@@ -58,6 +58,17 @@ void CViewport::PostUpdate(float DeltaTime)
 	}
 }
 
+void CViewport::PrevRender(float DeltaTime)
+{
+	auto	iter = m_vecWindow.begin();
+	auto	iterEnd = m_vecWindow.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		(*iter)->PrevRender(DeltaTime);
+	}
+}
+
 void CViewport::Render()
 {
 	if (m_vecWindow.size() > 1)

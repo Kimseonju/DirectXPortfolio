@@ -106,21 +106,6 @@
     <Filter Include="03. Animation2D\FSM">
       <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Effect_Particle">
-      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\RevolverEffect">
-      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\ShortSwordEffect">
-      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\MetalBoomerangEffect">
-      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect_Particle\ObjectDieEffectObject">
-      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Door">
       <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
     </Filter>
@@ -165,6 +150,33 @@
     </Filter>
     <Filter Include="02. Object\ObjectUI">
       <UniqueIdentifier>{87ba674e-780e-493e-97b7-fa4a6b9fc787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Bullet">
+      <UniqueIdentifier>{ba46342b-9af4-4121-b270-119a322c441d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Weapon">
+      <UniqueIdentifier>{f0fd5140-12ab-4c8e-b3e7-3915d209769a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle">
+      <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\RevolverEffect">
+      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\ShortSwordEffect">
+      <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\MetalBoomerangEffect">
+      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\ObjectDieEffectObject">
+      <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Boss">
+      <UniqueIdentifier>{fbf9864c-8e34-413f-a3ca-d2b67c1f01d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Laser">
+      <UniqueIdentifier>{6c4f76cb-1979-424c-9621-5d251a8b250e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +229,7 @@
       <Filter>02. Object\임시오브젝트</Filter>
     </ClCompile>
     <ClCompile Include="Object\EffectObject.cpp">
-      <Filter>02. Object\Effect_Particle</Filter>
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClCompile>
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp">
       <Filter>02. Object\수업듣기용\UI</Filter>
@@ -250,10 +262,10 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClCompile>
     <ClCompile Include="Object\RevolverEffectObject.cpp">
-      <Filter>02. Object\Effect_Particle\RevolverEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\RevolverEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ShortSwordEffectObject.cpp">
-      <Filter>02. Object\Effect_Particle\ShortSwordEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\Bullet.cpp">
       <Filter>02. Object\Bullet</Filter>
@@ -262,10 +274,10 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClCompile>
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp">
-      <Filter>02. Object\Effect_Particle\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\MetalBoomerangEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ObjectDieEffectObject.cpp">
-      <Filter>02. Object\Effect_Particle\ObjectDieEffectObject</Filter>
+      <Filter>02. Object\EffectAndParticle\ObjectDieEffectObject</Filter>
     </ClCompile>
     <ClCompile Include="Object\Player.cpp">
       <Filter>02. Object\Player</Filter>
@@ -366,15 +378,6 @@
     <ClCompile Include="Object\BelialHand.cpp">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClCompile>
-    <ClCompile Include="Object\BelialWeapon.cpp">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BelialWeaponCharge.cpp">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BelialWeaponHit.cpp">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClCompile>
     <ClCompile Include="Object\TestTileMap.cpp">
       <Filter>02. Object\Map</Filter>
     </ClCompile>
@@ -409,7 +412,7 @@
       <Filter>02. Object\Enemy\SmallSkel</Filter>
     </ClCompile>
     <ClCompile Include="Object\BossDieParticle.cpp">
-      <Filter>02. Object\Effect_Particle</Filter>
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClCompile>
     <ClCompile Include="Stage\Door.cpp">
       <Filter>02. Object\Door</Filter>
@@ -434,6 +437,33 @@
     </ClCompile>
     <ClCompile Include="UI\BossSpawnUI.cpp">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialBullet.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeapon.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeaponCharge.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialWeaponHit.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialBulletEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialLaserHead.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialLaserBody.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BossDieUI.cpp">
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialDieEffectStart.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,7 +516,7 @@
       <Filter>02. Object\임시오브젝트</Filter>
     </ClInclude>
     <ClInclude Include="Object\EffectObject.h">
-      <Filter>02. Object\Effect_Particle</Filter>
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClInclude>
     <ClInclude Include="UI\PlayerWorldInfoWidget.h">
       <Filter>02. Object\수업듣기용\UI</Filter>
@@ -519,10 +549,10 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClInclude>
     <ClInclude Include="Object\RevolverEffectObject.h">
-      <Filter>02. Object\Effect_Particle\RevolverEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\RevolverEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ShortSwordEffectObject.h">
-      <Filter>02. Object\Effect_Particle\ShortSwordEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\Bullet.h">
       <Filter>02. Object\Bullet</Filter>
@@ -531,10 +561,10 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClInclude>
     <ClInclude Include="Object\MetalBoomerangEffectObject.h">
-      <Filter>02. Object\Effect_Particle\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\MetalBoomerangEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectDieEffectObject.h">
-      <Filter>02. Object\Effect_Particle\ObjectDieEffectObject</Filter>
+      <Filter>02. Object\EffectAndParticle\ObjectDieEffectObject</Filter>
     </ClInclude>
     <ClInclude Include="Object\Player.h">
       <Filter>02. Object\Player</Filter>
@@ -635,15 +665,6 @@
     <ClInclude Include="Object\BelialHand.h">
       <Filter>02. Object\Enemy\Boss\Belial</Filter>
     </ClInclude>
-    <ClInclude Include="Object\BelialWeapon.h">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BelialWeaponCharge.h">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BelialWeaponHit.h">
-      <Filter>02. Object\Enemy\Boss\Belial</Filter>
-    </ClInclude>
     <ClInclude Include="Object\TestTileMap.h">
       <Filter>02. Object\Map</Filter>
     </ClInclude>
@@ -672,7 +693,7 @@
       <Filter>03. Animation2D\FSM</Filter>
     </ClInclude>
     <ClInclude Include="Object\BossDieParticle.h">
-      <Filter>02. Object\Effect_Particle</Filter>
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClInclude>
     <ClInclude Include="Stage\Door.h">
       <Filter>02. Object\Door</Filter>
@@ -697,6 +718,33 @@
     </ClInclude>
     <ClInclude Include="UI\BossSpawnUI.h">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialBullet.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeapon.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeaponCharge.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialWeaponHit.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialBulletEffect.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialLaserHead.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialLaserBody.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BossDieUI.h">
+      <Filter>UI\UI\WidgetWindow\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialDieEffectStart.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

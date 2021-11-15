@@ -89,6 +89,8 @@ public:
     virtual void Save(FILE* pFile);
     virtual void Load(FILE* pFile);
 public:
+    bool GetHorizontalReverse2DEnable();
+public:
     void SetAnimation2DEnable(bool Enable);
     void SetHorizontalReverse2DEnable(bool Enable);
     void SetVerticalReverse2DEnable(bool Enable);

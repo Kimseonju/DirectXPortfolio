@@ -171,7 +171,12 @@
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
+    <ClCompile Include="Object\BelialBullet.cpp" />
+    <ClCompile Include="Object\BelialBulletEffect.cpp" />
+    <ClCompile Include="Object\BelialDieEffectStart.cpp" />
     <ClCompile Include="Object\BelialHand.cpp" />
+    <ClCompile Include="Object\BelialLaserBody.cpp" />
+    <ClCompile Include="Object\BelialLaserHead.cpp" />
     <ClCompile Include="Object\BelialWeapon.cpp" />
     <ClCompile Include="Object\BelialWeaponCharge.cpp" />
     <ClCompile Include="Object\BelialWeaponHit.cpp" />
@@ -235,6 +240,7 @@
     <ClCompile Include="UI\AbilityWidget_Swiftness.cpp" />
     <ClCompile Include="UI\AbilityWidget_Wrath.cpp" />
     <ClCompile Include="UI\BasicMouse.cpp" />
+    <ClCompile Include="UI\BossDieUI.cpp" />
     <ClCompile Include="UI\BossSpawnUI.cpp" />
     <ClCompile Include="UI\BossUI.cpp" />
     <ClCompile Include="UI\EnemyWorldInfoWidget.cpp" />
@@ -261,7 +267,12 @@
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Belial.h" />
+    <ClInclude Include="Object\BelialBullet.h" />
+    <ClInclude Include="Object\BelialBulletEffect.h" />
+    <ClInclude Include="Object\BelialDieEffectStart.h" />
     <ClInclude Include="Object\BelialHand.h" />
+    <ClInclude Include="Object\BelialLaserBody.h" />
+    <ClInclude Include="Object\BelialLaserHead.h" />
     <ClInclude Include="Object\BelialWeapon.h" />
     <ClInclude Include="Object\BelialWeaponCharge.h" />
     <ClInclude Include="Object\BelialWeaponHit.h" />
@@ -324,6 +335,7 @@
     <ClInclude Include="UI\AbilityWidget_Swiftness.h" />
     <ClInclude Include="UI\AbilityWidget_Wrath.h" />
     <ClInclude Include="UI\BasicMouse.h" />
+    <ClInclude Include="UI\BossDieUI.h" />
     <ClInclude Include="UI\BossSpawnUI.h" />
     <ClInclude Include="UI\BossUI.h" />
     <ClInclude Include="UI\EnemyWorldInfoWidget.h" />

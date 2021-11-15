@@ -43,15 +43,6 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	//가속도 
 	//아이작 가속도 다 가속도...
 	Vector3 moveDir= Vector3::Zero;
-	if (m_Force.x > 100.f)
-		m_Force.x = 100.f;
-	if (m_Force.x < -100.f)
-		m_Force.x = -100.f;
-
-	if (m_Force.y > 200.f)
-		m_Force.y = 200.f;
-	if (m_Force.y < -200.f)
-		m_Force.y = -200.f;
 
 
 	if (m_Gravity)
@@ -66,6 +57,15 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Dash = false;
 				m_Dir = Vector3::Zero;
 			}
+			if (m_Force.x > 100.f)
+				m_Force.x = 100.f;
+			if (m_Force.x < -100.f)
+				m_Force.x = -100.f;
+
+			if (m_Force.y > 200.f)
+				m_Force.y = 200.f;
+			if (m_Force.y < -200.f)
+				m_Force.y = -200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
 			moveDir += m_Force * DeltaTime;
 			moveDir += m_Dir * m_Speed * DeltaTime/3.f;
@@ -76,6 +76,15 @@ void CRigidBodyComponent::Update(float DeltaTime)
 			Dashing(DeltaTime);
 			m_DashTimer -= DeltaTime;
 
+			if (m_Force.x > 100.f)
+				m_Force.x = 100.f;
+			if (m_Force.x < -100.f)
+				m_Force.x = -100.f;
+
+			if (m_Force.y > 200.f)
+				m_Force.y = 200.f;
+			if (m_Force.y < -200.f)
+				m_Force.y = -200.f;
 			if (m_DashEffectTime <= 0.f)
 			{
 				m_DashEffectTime += 0.015f;
@@ -106,6 +115,15 @@ void CRigidBodyComponent::Update(float DeltaTime)
 		}
 		
 
+		if (m_Force.x > 100.f)
+			m_Force.x = 100.f;
+		if (m_Force.x < -100.f)
+			m_Force.x = -100.f;
+
+		if (m_Force.y > 200.f)
+			m_Force.y = 200.f;
+		if (m_Force.y < -200.f)
+			m_Force.y = -200.f;
 		if (m_Dir != Vector3::Zero)
 		{
 			moveDir += m_Dir * m_Speed * DeltaTime;
@@ -115,7 +133,6 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	}
 	m_PrevMoveDir = moveDir;
 	m_MoveDir = moveDir;
-	m_pParent->AddRelativePos(m_MoveDir);
 }
 
 void CRigidBodyComponent::PostUpdate(float DeltaTime)

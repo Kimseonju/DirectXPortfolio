@@ -16,8 +16,12 @@ private:
     float           m_FPSTime;
     int             m_Tick;
     bool            m_FPSEnable;
-
+    float           m_Slow;
 public:
+    float SetSlow(float Slow)
+    {
+        m_Slow = Slow;
+    }
     float GetDeltaTime()    const
     {
         return m_DeltaTime;

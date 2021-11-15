@@ -10,7 +10,8 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 #include "ProgressBarObject.h"
-
+#include "BelialLaserBody.h"
+#include "BelialLaserHead.h"
 CBelialHand::CBelialHand() :
 	m_Belial(nullptr),
 	m_Attacking(false)
@@ -40,8 +41,11 @@ bool CBelialHand::Init()
 	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, 0.f);
 	m_Sprite->SetRelativeScale(57.f, 67.f, 1.f);
 	m_Animation2D->SetIdleAnimation2D("BelialHand_Idle");
-	m_Animation2D->SetAttackAnimation2D("BelialHand_Attack");
+	m_Animation2D->SetAttackAnimation2D("BelialHand_Attack", false);
+	m_Animation2D->ChangeIdleAnimation2D();
+	m_Animation2D->SetFrameEndFunction< CBelialHand>(this, &CBelialHand::AnimationFrameEnd);
 
+	m_Collider2D->Enable(false);
 	return true;
 }
 
@@ -54,6 +58,21 @@ void CBelialHand::Update(float DeltaTime)
 void CBelialHand::PostUpdate(float DeltaTime)
 {
 	CGameObject::PostUpdate(DeltaTime);
+	if (m_Animation2D->GetCurrentSequenceName() == "BelialHand_Attack")
+	{
+		m_Animation2D->SetPlayRate(0.5f);
+		if (m_AttackMove)
+		{
+
+			CPlayer* Player = CGlobalValue::MainPlayer;
+			Vector3 PlayerPos = Player->GetWorldPos();
+			Vector3  Pos = GetWorldPos();
+			PlayerPos -= Pos;
+			PlayerPos.x = 0.f;
+			PlayerPos.Normalize();
+			AddWorldPos(PlayerPos *DeltaTime*50.f);
+		}
+	}
 }
 
 void CBelialHand::Collision(float DeltaTime)
@@ -73,6 +92,35 @@ CBelialHand* CBelialHand::Clone()
 
 void CBelialHand::Animation2DNotify(const std::string& Name)
 {
+	if (Name == "BelialHandAttack")
+	{
+		Vector3 Pos = GetWorldPos();
+		//손에서 레이저발사
+		CBelialLaserHead* Head=m_pScene->SpawnObject<CBelialLaserHead>("BelialLaserHead");
+		Head->SetWorldPos(Pos);
+		Head->SetHorizontalReverse2DEnable(m_Sprite->GetHorizontalReverse2DEnable());
+		Vector3 BodyPos = Pos;
+		for (int i = 1; i < 15; ++i)
+		{
+			std::string str = std::to_string(i);
+			CBelialLaserBody* Body = m_pScene->SpawnObject<CBelialLaserBody>("BelialLaserBody"+str);
+			Body->SetHorizontalReverse2DEnable(m_Sprite->GetHorizontalReverse2DEnable());
+			
+			if (m_Sprite->GetHorizontalReverse2DEnable())
+			{
+				BodyPos.x -= 32.f;
+				Body->SetWorldPos(BodyPos);
+			}
+			else
+			{
+				BodyPos.x += 32.f;
+				Body->SetWorldPos(BodyPos);
+			}
+
+		}
+		m_AttackMove = false;
+		//CEngine::GetInst()->AddDebugLog("Player Attack");
+	}
 }
 
 void CBelialHand::SetBelial(CBelial* Belial)
@@ -80,8 +128,21 @@ void CBelialHand::SetBelial(CBelial* Belial)
 	m_Belial = Belial;
 }
 
-void CBelialHand::Attack()
+bool CBelialHand::Attack()
 {
+	if (m_Animation2D->GetCurrentSequenceName() == "BelialHand_Idle")
+	{
+		m_Animation2D->ChangeAttackAnimation2D();
+		m_AttackMove = true;
+		return true;
+	}
+	return false;
+}
+
+void CBelialHand::SetOpaacity(float Opacity)
+{
+	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
+	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, Opacity);
 }
 
 void CBelialHand::SetHorizontalReverse2DEnable(bool Enable)
@@ -105,6 +166,7 @@ void CBelialHand::CollisionAttackRangeBegin(const HitResult& result, CCollider* 
 
 void CBelialHand::AnimationFrameEnd(const std::string& Name)
 {
+	m_Animation2D->ChangeIdleAnimation2D();
 }
 
 void CBelialHand::CollisionBegin(const HitResult& result, CCollider* Collider)

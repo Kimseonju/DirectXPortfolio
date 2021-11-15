@@ -93,6 +93,7 @@ void CAnimation2D_FSM::ChangeJumpAnimation2D()
 void CAnimation2D_FSM::ChangeAttackAnimation2D()
 {
 	ChangeAnimation(m_SequenceAttack);
+	
 }
 
 void CAnimation2D_FSM::ChangeDieAnimation2D()

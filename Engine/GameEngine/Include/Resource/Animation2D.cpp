@@ -83,7 +83,8 @@ void CAnimation2D::Update(float DeltaTime)
 {
 	if (m_mapSequence.empty())
 		return;
-
+	if (!IsEnable())
+		return;
 	m_FrameTime += DeltaTime;
 
 	float	FrameTime = m_CurrentSequence->Sequence->m_FrameTime /
@@ -192,6 +193,17 @@ void CAnimation2D::ResetShader()
 		m_CurrentSequence->Sequence->m_Texture->ResetShader(0, TST_PIXEL);
 		break;
 	}
+}
+
+bool CAnimation2D::IsEnable()
+{
+	if (m_Owner)
+	{
+
+		if (!m_Owner->IsEnable())
+			return false;
+	}
+	return m_Enable;
 }
 
 

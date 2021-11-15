@@ -13,7 +13,6 @@ private:
 	float m_AttackTimer;
 	float m_AttackTimerMax;
 	float m_PatternTimer;
-	float m_PatternTimerMax;
 
 	float m_SwordSpawnTimer;
 	float m_SwordSpawnTimerMax;
@@ -28,6 +27,12 @@ private:
 	float m_Alpha;
 	float m_HandAlpha;
 	bool  m_AlphaUpdate;
+	float m_BulletAngle;
+	float m_BulletFireCount;
+
+	
+	//기본위치
+	Vector3 m_BasicWorldPos;
 public:
 	virtual void Start();
 	virtual bool Init();

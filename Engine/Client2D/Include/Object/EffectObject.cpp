@@ -37,6 +37,7 @@ bool CEffectObject::Init()
 void CEffectObject::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+
 }
 
 void CEffectObject::PostUpdate(float DeltaTime)

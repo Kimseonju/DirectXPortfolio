@@ -41,6 +41,7 @@ public:
 	bool Init();
 	void Update(float DeltaTime);
 	void PostUpdate(float DeltaTime);
+	void PrevRender(float DeltaTime);
 	void Render();
 
 

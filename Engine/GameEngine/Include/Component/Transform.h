@@ -39,6 +39,10 @@ public:
     {
         return m_DefaultZ;
     }
+    bool GetHorizontalReverse2DEnable()
+    {
+        return m_HorizontalReverse2DEnable;
+    }
     void SetAnimation2DEnable(bool Enable)
     {
         m_Animation2DEnable = Enable;

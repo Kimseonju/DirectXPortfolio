@@ -253,8 +253,8 @@ bool CResourceManager::Init()
 	pMesh->AddMaterialSlot("DefaultMaterial");
 
 	CreateSampler("Point", D3D11_FILTER_MIN_MAG_MIP_POINT);
-	CreateSampler("Linear", D3D11_FILTER_MIN_MAG_MIP_LINEAR);
-	CreateSampler("Anisotropic", D3D11_FILTER_ANISOTROPIC, 2);
+	CreateSampler("Linear", D3D11_FILTER_MIN_MAG_MIP_POINT);
+	CreateSampler("Anisotropic", D3D11_FILTER_MIN_MAG_MIP_POINT, 2);
 	//g_AnisotropicSmp
 	//D3D11_FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR
 	//D3D11_FILTER_ANISOTROPIC

@@ -11,6 +11,7 @@ protected:
 	virtual ~CBelialHand();
 	bool m_Attacking;
 	class CBelial* m_Belial;
+	bool m_AttackMove;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -21,9 +22,10 @@ public:
 	virtual CBelialHand* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
+	bool GetHorizontalReverse2DEnable();
 	void SetBelial(class CBelial* Belial);
-	void Attack();
-
+	bool Attack();
+	void SetOpaacity(float Opacity);
 	void SetHorizontalReverse2DEnable(bool Enable);
 	CMaterial* GetMaterial(int Index=0);
 public:

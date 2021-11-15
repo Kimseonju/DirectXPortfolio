@@ -207,6 +207,7 @@ void CScene::Render(float DeltaTime)
 
         ++iter;
     }
+    m_pViewport->PrevRender(DeltaTime);
 }
 
 void CScene::Clear()

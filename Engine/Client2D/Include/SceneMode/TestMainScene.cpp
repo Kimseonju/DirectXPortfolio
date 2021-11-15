@@ -96,9 +96,9 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
@@ -493,6 +493,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	//Notify설정할부분
 	//m_pScene->GetResource()->AddAnimationSequence2DNotify("PlayerAttack", "Attack", 8);
 
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("BelialHand_Attack", "BelialHandAttack", 7);
 	/*Back*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Circle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_Circle",
@@ -522,12 +523,12 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 32.f, 0.f), Vector2((i + 1) * 32.f, 50.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_LaserHand");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_LaserHand",
-		"Belial_LaserHand", TEXT("boss/Belial/Laser/hand.png"));
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_LaserHead");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_LaserHead",
+		"Belial_LaserHead", TEXT("boss/Belial/Laser/head.png"));
 	for (int i = 0; i < 7; ++i)
 	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_LaserHand",
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_LaserHead",
 			Vector2(i * 27.f, 0), Vector2((i + 1) * 27.f, 44.f));
 	}
 
@@ -549,10 +550,25 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_WeaponHit",
 			Vector2(i * 22.f, 0), Vector2((i + 1) * 22.f, 51.f));
 	}
-	
+	//Bullet
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Bullet");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_Bullet",
+		"Belial_Bullet", TEXT("boss/Belial/bullet.png"));
+	for (int i = 0; i < 1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_Bullet",
+			Vector2(i * 13.f, 0), Vector2((i + 1) * 13.f, 13.f));
+	}
 
-
-
+	//Bulletfx
+	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_BulletFx");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_BulletFx",
+		"Belial_BulletFx", TEXT("boss/Belial/bullet_Fx.png"));
+	for (int i = 0; i < 8; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_BulletFx",
+			Vector2(i * 31.f, 0), Vector2((i + 1) * 31.f, 31.f));
+	}
 
 	/*
 	UI

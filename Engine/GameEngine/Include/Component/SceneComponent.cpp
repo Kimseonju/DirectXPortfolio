@@ -392,6 +392,11 @@ void CSceneComponent::Load(FILE* pFile)
 
 }
 
+bool CSceneComponent::GetHorizontalReverse2DEnable()
+{
+    return m_pTransform->GetHorizontalReverse2DEnable();
+}
+
 void CSceneComponent::SetAnimation2DEnable(bool Enable)
 {
     m_pTransform->SetAnimation2DEnable(Enable);

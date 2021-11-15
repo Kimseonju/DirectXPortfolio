@@ -55,7 +55,17 @@ private:
     Vector2             m_MousePos;
     Vector2             m_MouseMove;
     bool                m_MouseCollision;
+    bool                m_bUpdate;
 public:
+
+    void StopInput()
+    {
+        m_bUpdate = false;
+    } 
+    void StartInput()
+    {
+        m_bUpdate = true;
+    }
     void SetMouseCollision(bool Collision)
     {
         m_MouseCollision = Collision;

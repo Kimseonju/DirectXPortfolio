@@ -10,7 +10,8 @@ CBelialWeapon::CBelialWeapon() :
 	m_Attacking(false),
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(1.f),
-	m_StartAttack(false)
+	m_StartAttack(false),
+	m_AcitveTime(0.f)
 {
 }
 
@@ -35,19 +36,30 @@ void CBelialWeapon::Start()
 bool CBelialWeapon::Init()
 {
 	CEnemy::Init();
+	m_Sprite->DeleteAnimation2D();
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-	SpriteMtrl->AddTexture("BelialWeapon", TEXT("Boss/Belial/Sword/Default.png"));
+	SpriteMtrl->AddTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 	m_Sprite->SetRelativeScale(65.f, 21.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetRelativePos(0.f, 0.f, 0.f);
+	m_Collider2D->Enable(false);
 	return true;
 }
 
 void CBelialWeapon::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	if(!m_StartAttack)
+	if (!m_StartAttack)
+	{
 		m_AttackTimer += DeltaTime;
+		CPlayer* Player = CGlobalValue::MainPlayer;
+		Vector2 Pos;
+		Pos.x = Player->GetWorldPos().x;
+		Pos.y = Player->GetWorldPos().y;
+		Vector2 Pos2 = Vector2(GetWorldPos().x, GetWorldPos().y);
+		float angle = Pos2.GetAngle(Pos);
+		SetRelativeRotationZ(angle);
+	}
 	if (m_Charge)
 	{
 		m_Charge->SetRelativePos(GetRelativePos());
@@ -55,18 +67,23 @@ void CBelialWeapon::Update(float DeltaTime)
 	}
 	if (m_AttackTimer > m_AttackTimerMax)
 	{
-		//m_StartAttack = true;
-		//m_Attacking = true;
-		//m_TextureUpdate = true;
+		SetTarget();
+		m_StartAttack = true;
+		m_Attacking = true;
+		m_TextureUpdate = true;
 		m_AttackTimer = 0.f;
 	}
-	CPlayer* Player=CGlobalValue::MainPlayer;
-	Vector2 Pos;
-	Pos.x = Player->GetWorldPos().x;
-	Pos.y = Player->GetWorldPos().y;
-	Vector2 Pos2 = Vector2(GetWorldPos().x, GetWorldPos().y);
-	float angle = Pos2.GetAngle(Pos);
-	SetRelativeRotationZ(angle);
+	if (m_Attacking)
+	{
+		AddRelativePos(m_TargetMove * 100.f * DeltaTime);
+	}
+
+	if (!m_Attacking && m_StartAttack)
+	{
+		m_AcitveTime += DeltaTime;
+		if (m_AcitveTime > 2.f)
+			Active(false);
+	}
 }
 
 void CBelialWeapon::PostUpdate(float DeltaTime)
@@ -77,6 +94,7 @@ void CBelialWeapon::PostUpdate(float DeltaTime)
 		if (m_Attacking)
 		{
 			CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
+			SpriteMtrl->AddTexture("BelialWeaponShoot", TEXT("boss/Belial/Sword/shoot.png"));
 			SpriteMtrl->SetTexture("BelialWeaponShoot", TEXT("boss/Belial/Sword/shoot.png"));
 			if (m_Charge)
 			{
@@ -84,11 +102,6 @@ void CBelialWeapon::PostUpdate(float DeltaTime)
 				m_Charge->Active(false);
 				m_Charge = nullptr;
 			}
-		}
-		else
-		{
-			CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-			SpriteMtrl->SetTexture("BelialWeapon", TEXT("boss/Belial/Sword/Default.png"));
 		}
 		m_TextureUpdate = false;
 	}
@@ -114,6 +127,21 @@ void CBelialWeapon::Animation2DNotify(const std::string& Name)
 {
 }
 
+void CBelialWeapon::SetTarget()
+{
+	CPlayer* Player = CGlobalValue::MainPlayer;
+	Vector2 Pos;
+	Pos.x = Player->GetWorldPos().x;
+	Pos.y = Player->GetWorldPos().y;
+	Vector2 Pos2 = Vector2(GetWorldPos().x, GetWorldPos().y);
+	float angle = Pos2.GetAngle(Pos);
+	Pos -= Pos2;
+	Pos.Normalize();
+	m_TargetMove = Vector3(Pos.x, Pos.y,0.f);
+	SetRelativeRotationZ(angle);
+	m_Collider2D->Enable(true);
+}
+
 void CBelialWeapon::SetBelial(CBelial* Belial)
 {
 	m_Belial = Belial;
@@ -124,10 +152,6 @@ void CBelialWeapon::SetCharge(CBelialWeaponCharge* Charge)
 	m_Charge = Charge;
 }
 
-void CBelialWeapon::Attack()
-{
-	m_Attacking = true;
-}
 
 void CBelialWeapon::SetHorizontalReverse2DEnable(bool Enable)
 {
@@ -149,7 +173,19 @@ void CBelialWeapon::AnimationFrameEnd(const std::string& Name)
 
 void CBelialWeapon::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		m_Attacking = false;
+		m_Collider2D->Enable(false);
+		CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
+		SpriteMtrl->SetTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 	}
+}
+
+void CBelialWeapon::CollisionMiddle(const HitResult& result, CCollider* Collider)
+{
+}
+
+void CBelialWeapon::CollisionEnd(const HitResult& result, CCollider* Collider)
+{
 }

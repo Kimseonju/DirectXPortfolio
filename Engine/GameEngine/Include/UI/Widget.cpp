@@ -153,6 +153,10 @@ void CWidget::PostUpdate(float DeltaTime)
 
 }
 
+void CWidget::PrevRender(float DeltaTime)
+{
+}
+
 void CWidget::Render()
 {
 	m_TransformCBuffer->SetUISize(m_Size);

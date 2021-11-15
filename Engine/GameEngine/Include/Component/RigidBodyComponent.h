@@ -38,6 +38,10 @@ protected:
     Vector3 m_MoveDir;
     bool m_Jump;
 public:
+    Vector3 GetMove()
+    {
+        return m_MoveDir;
+    }
     bool IsJump()
     {
         return m_Jump;

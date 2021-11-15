@@ -11,7 +11,8 @@ CInput::CInput()	:
 	m_DirectInputKeyResult{},
 	m_ControlState(false),
 	m_AltState(false),
-	m_ShiftState(false)
+	m_ShiftState(false),
+	m_bUpdate(true)
 {
 	// vector resize와 reserve의 차이
 	m_vecKeyState.resize(256);
@@ -69,8 +70,26 @@ Vector2 CInput::GetMouse2DWorldPos() const
 	Vector2 MousePos;
 	MousePos.x = MouseRel_x * (ZoomSize_x * 2.f);
 	MousePos.y = MouseRel_y * (ZoomSize_y * 2.f);
-	
-	return MousePos + Vector2(Camera->GetWorldPos().x + (Size.x - ZoomSize_x), Camera->GetWorldPos().y + (Size.y - ZoomSize_y));
+	Vector2 CameraPos = Vector2(Camera->GetWorldPos().x, Camera->GetWorldPos().y);
+
+	if (CameraPos.x < Camera->GetMin().x)
+	{
+		CameraPos.x = Camera->GetMin().x;
+	}
+	if (CameraPos.x > Camera->GetMax().x)
+	{
+		CameraPos.x = Camera->GetMax().x;
+	}
+	if (CameraPos.y < Camera->GetMin().y)
+	{
+		CameraPos.y = Camera->GetMin().y;
+	}
+	if (CameraPos.y > Camera->GetMax().y)
+	{
+		CameraPos.y = Camera->GetMax().y;
+	}
+
+	return MousePos + Vector2(CameraPos.x + (Size.x - ZoomSize_x), CameraPos.y + (Size.y - ZoomSize_y));
 
 
 }
@@ -163,6 +182,8 @@ bool CInput::Init(HINSTANCE hInst, HWND hWnd)
 
 void CInput::Update(float DeltaTime)
 {
+	if (!m_bUpdate)
+		return;
 	UpdateMouse(DeltaTime);
 
 	switch (m_InputType)

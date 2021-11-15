@@ -68,7 +68,7 @@ bool CEnemy::Init()
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 
 
-	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Collider2D->SetExtent(10.f, 10.f);
 	m_Collider2D->SetCollisionProfile("Enemy");
 	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionBegin);

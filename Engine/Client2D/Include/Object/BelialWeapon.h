@@ -17,6 +17,8 @@ private:
 	float m_AttackTimerMax;
 	class CBelial* m_Belial;
 	class CBelialWeaponCharge* m_Charge;
+	float m_AcitveTime;
+	Vector3 m_TargetMove;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -27,9 +29,9 @@ public:
 	virtual CBelialWeapon* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
+	void SetTarget();
 	void SetBelial(class CBelial* Belial);
 	void SetCharge(class CBelialWeaponCharge* Charge);
-	void Attack();
 	void SetAttackTimerMax(float Timer)
 	{
 		m_AttackTimerMax = Timer;
@@ -41,5 +43,7 @@ public:
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionMiddle(const HitResult& result, CCollider* Collider);
+	virtual void CollisionEnd(const HitResult& result, CCollider* Collider);
 };
 

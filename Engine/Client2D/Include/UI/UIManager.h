@@ -4,6 +4,7 @@
 #include "Inventory.h"
 #include "StageMap.h"
 #include "BossSpawnUI.h"
+#include "BossDieUI.h"
 class CUIManager
 {
 
@@ -28,11 +29,16 @@ public:
 	{
 		return m_BossSpawnUI;
 	}
+	CBossDieUI* GetBossDieUI()
+	{
+		return m_BossDieUI;
+	}
 private:
 	CSharedPtr<CPlayerUI> m_PlayerUI;
 	CSharedPtr<CInventory> m_InventoryUI;
 	CSharedPtr<CStageMap> m_StageMapUI;
 	CSharedPtr<CBossSpawnUI> m_BossSpawnUI;
+	CSharedPtr<CBossDieUI> m_BossDieUI;
 	CScene* m_pScene;
 
 

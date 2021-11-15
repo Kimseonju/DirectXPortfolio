@@ -51,6 +51,10 @@ public:
         m_Animation->Init();
         SetAnimation2DEnable(true);
     }
-
+    void DeleteAnimation2D()
+    {
+        SAFE_DELETE(m_Animation);
+        SetAnimation2DEnable(false);
+    }
 };
 

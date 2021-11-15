@@ -6,24 +6,18 @@
 #include "UI/Text.h"
 #include "UI/ProgressBar.h"
 
-class CBossSpawnUI :
+class CBossDieUI :
     public CWidgetWindow
 {
     friend class CViewport;
 
 protected:
-    CSharedPtr<CImage>    m_BossUpImage;
-    CSharedPtr<CImage>    m_BossDonwImage;
-    CSharedPtr<CText>    m_BossName;
-    CSharedPtr<CText>    m_BossNinkName;
-    bool m_Spawn;
+    CSharedPtr<CImage>    m_Image;
     float m_Alpha;
-    float m_NickNameAlpha;
-    bool m_Play;
 public:
-    CBossSpawnUI();
-    CBossSpawnUI(const CBossSpawnUI& widget);
-    virtual ~CBossSpawnUI();
+    CBossDieUI();
+    CBossDieUI(const CBossDieUI& widget);
+    virtual ~CBossDieUI();
 
 public:
     virtual bool Init();
@@ -31,8 +25,6 @@ public:
     virtual void PostUpdate(float DeltaTime);
     virtual void PrevRender(float DeltaTime);
     virtual void Render();
-    virtual CBossSpawnUI* Clone();
-public:
-    void Spawn();
+    virtual CBossDieUI* Clone();
 };
 

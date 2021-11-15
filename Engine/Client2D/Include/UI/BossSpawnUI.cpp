@@ -9,6 +9,7 @@
 #include "../Animation2D/LifeWaveAnimation2D.h"
 #include <Scene/CameraManager.h>
 #include <Component/Camera.h>
+#include <Input.h>
 CBossSpawnUI::CBossSpawnUI() :
 	m_Spawn(false),
 	m_Alpha(0.f),
@@ -77,12 +78,8 @@ void CBossSpawnUI::Update(float DeltaTime)
 		if (m_Alpha > 1.f)
 		{
 			m_Alpha = 1.f;
-			m_BossNinkName->SetOpacity(m_Alpha);
-		}
-		CCamera* Camera=m_Scene->GetCameraManager()->GetCurrentCamera();
-		if (!Camera->IsCameraMove())
-		{
-			m_Spawn = false;
+			m_NickNameAlpha += DeltaTime;
+			m_BossNinkName->SetOpacity(m_NickNameAlpha);
 		}
 	}
 	else
@@ -103,6 +100,17 @@ void CBossSpawnUI::Update(float DeltaTime)
 void CBossSpawnUI::PostUpdate(float DeltaTime)
 {
 	CWidgetWindow::PostUpdate(DeltaTime);
+}
+
+void CBossSpawnUI::PrevRender(float DeltaTime)
+{
+	CWidgetWindow::PrevRender(DeltaTime);
+	CCamera* Camera = m_Scene->GetCameraManager()->GetCurrentCamera();
+	if (!Camera->IsCameraMove())
+	{
+		m_Spawn = false;
+		CInput::GetInst()->StartInput();
+	}
 }
 
 void CBossSpawnUI::Render()
