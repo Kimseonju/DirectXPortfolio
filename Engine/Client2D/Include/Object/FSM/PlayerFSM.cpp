@@ -82,5 +82,3 @@ void CPlayer::BodyJumpStay()
 		}
 	}
 }
-
-

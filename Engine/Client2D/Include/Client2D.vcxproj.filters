@@ -178,6 +178,9 @@
     <Filter Include="02. Object\Enemy\Boss\Belial\Laser">
       <UniqueIdentifier>{6c4f76cb-1979-424c-9621-5d251a8b250e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Die">
+      <UniqueIdentifier>{6249a996-e256-42c7-89be-b59cbbae5927}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -411,9 +414,6 @@
     <ClCompile Include="Object\SmallSkelFSM.cpp">
       <Filter>02. Object\Enemy\SmallSkel</Filter>
     </ClCompile>
-    <ClCompile Include="Object\BossDieParticle.cpp">
-      <Filter>02. Object\EffectAndParticle</Filter>
-    </ClCompile>
     <ClCompile Include="Stage\Door.cpp">
       <Filter>02. Object\Door</Filter>
     </ClCompile>
@@ -462,8 +462,23 @@
     <ClCompile Include="UI\BossDieUI.cpp">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClCompile>
-    <ClCompile Include="Object\BelialDieEffectStart.cpp">
+    <ClCompile Include="Object\BossDieEffectStart.cpp">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossDieEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossDieParticle.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialDie.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialDeadHead.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BelialDeadMouth.cpp">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,9 +707,6 @@
     <ClInclude Include="Animation2D\Animation2D_FSM.h">
       <Filter>03. Animation2D\FSM</Filter>
     </ClInclude>
-    <ClInclude Include="Object\BossDieParticle.h">
-      <Filter>02. Object\EffectAndParticle</Filter>
-    </ClInclude>
     <ClInclude Include="Stage\Door.h">
       <Filter>02. Object\Door</Filter>
     </ClInclude>
@@ -743,8 +755,23 @@
     <ClInclude Include="UI\BossDieUI.h">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
     </ClInclude>
-    <ClInclude Include="Object\BelialDieEffectStart.h">
+    <ClInclude Include="Object\BossDieEffectStart.h">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossDieEffect.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossDieParticle.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialDie.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialDeadHead.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialDeadMouth.h">
+      <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

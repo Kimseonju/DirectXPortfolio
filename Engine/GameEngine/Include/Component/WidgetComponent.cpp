@@ -7,7 +7,7 @@
 CWidgetComponent::CWidgetComponent()
 {
 	m_PrimitiveType = PrimitiveComponent_Type::PrimitiveWidget;
-	m_2DType = RT2D_Default;
+	SetRender2DType(RT2D_Default);
 	m_3DType = RT3D_Default;
 	m_Space = WidgetComponent_Space::Space2D;
 	m_ComponentClassType = Component_Class_Type::Widget;

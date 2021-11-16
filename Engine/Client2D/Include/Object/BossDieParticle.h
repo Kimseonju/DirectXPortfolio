@@ -23,7 +23,13 @@ protected:
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CSharedPtr<CParticleSystemComponent> m_Particle;
-
+	float m_LifeTime;
+	class CBelial* m_Belial;
+public:
+	void SetBelial(class CBelial* Belial)
+	{
+		m_Belial = Belial;
+	}
 public:
 	virtual void Start();
 	virtual bool Init();

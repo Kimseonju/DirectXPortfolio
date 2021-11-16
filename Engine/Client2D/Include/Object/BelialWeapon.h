@@ -1,7 +1,13 @@
 #pragma once
-#include "Enemy.h"
+#include <GameObject.h>
+#include "Component/SpriteComponent.h"
+#include "Component/Camera.h"
+#include "Component/SpringArm2D.h"
+#include "Component/ColliderBox2D.h"
+#include <Component/RigidBodyComponent.h>
+#include "Component/WidgetComponent.h"
 class CBelialWeapon :
-	public CEnemy
+	public CGameObject
 {
 	friend class CScene;
 
@@ -19,6 +25,11 @@ private:
 	class CBelialWeaponCharge* m_Charge;
 	float m_AcitveTime;
 	Vector3 m_TargetMove;
+	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CColliderBox2D> m_Collider2D;
+
+	class CAnimation2D_FSM* m_Animation2D;
+
 public:
 	virtual void Start();
 	virtual bool Init();

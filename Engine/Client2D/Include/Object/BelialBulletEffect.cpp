@@ -25,6 +25,7 @@ bool CBelialBulletEffect::Init()
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Animation2D->SetIdleAnimation2D("Belial_BulletFx", false);
 	m_Animation2D->SetFrameEndFunction<CBelialBulletEffect>(this, &CEffectObject::AnimationFrameEnd);
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Particle);
 
 	return true;
 }

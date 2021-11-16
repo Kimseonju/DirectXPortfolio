@@ -21,7 +21,7 @@ CParticleSystemComponent::CParticleSystemComponent()    :
     m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
     m_ComponentClassType = Component_Class_Type::Particle;
 
-    m_2DType = RT2D_Particle;
+    SetRender2DType(RT2D_Default);
 
     m_pTransform->SetDefaultZ(0.f);
 }

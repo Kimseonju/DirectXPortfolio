@@ -9,7 +9,6 @@ CEffectObject::CEffectObject(const CEffectObject& obj) :
 	CGameObject(obj)
 {
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
-	m_Collider2D = (CColliderBox2D*)FindSceneComponent("Collider2D");
 
 }
 
@@ -27,7 +26,6 @@ bool CEffectObject::Init()
 	CGameObject::Init();
 
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	SetRootComponent(m_Sprite);
 	m_Sprite->CreateAnimation2D< CAnimation2D_FSM>();
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();

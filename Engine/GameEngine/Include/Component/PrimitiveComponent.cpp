@@ -11,7 +11,7 @@ CPrimitiveComponent::CPrimitiveComponent()
     m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
     m_ComponentClassType = Component_Class_Type::Primitive;
 
-    m_2DType = RT2D_None;
+    SetRender2DType(RT2D_None);
     m_3DType = RT3D_None;
 
     m_pTransform->SetDefaultZ(0.3f);
@@ -24,6 +24,7 @@ CPrimitiveComponent::CPrimitiveComponent(const CPrimitiveComponent& com)    :
 {
     m_PrimitiveType = com.m_PrimitiveType;
     m_2DType = com.m_2DType;
+    SetRender2DType(m_2DType);
     m_3DType = com.m_3DType;
     m_vecMaterialSlot = com.m_vecMaterialSlot;
     m_DistortionEnable = com.m_DistortionEnable;
@@ -31,6 +32,31 @@ CPrimitiveComponent::CPrimitiveComponent(const CPrimitiveComponent& com)    :
 
 CPrimitiveComponent::~CPrimitiveComponent()
 {
+}
+
+void CPrimitiveComponent::SetRender2DType(Render_Type_2D Type)
+{
+    m_2DType = Type;
+    switch (m_2DType)
+    {
+    case RT2D_None:
+        m_pTransform->SetDefaultZ(0.5f);
+        break;
+    case RT2D_MAP:
+        m_pTransform->SetDefaultZ(0.6f);
+        break;
+    case RT2D_Back:
+        m_pTransform->SetDefaultZ(0.7f);
+        break;
+    case RT2D_Default:
+        m_pTransform->SetDefaultZ(0.8f);
+        break;
+    case RT2D_Particle:
+        m_pTransform->SetDefaultZ(0.9f);
+        break;
+    default:
+        break;
+    }
 }
 
 void CPrimitiveComponent::SetMaterial(int SlotIndex, CMaterial* pMaterial)

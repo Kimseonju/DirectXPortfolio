@@ -16,7 +16,7 @@ CBelialWeapon::CBelialWeapon() :
 }
 
 CBelialWeapon::CBelialWeapon(const CBelialWeapon& obj) :
-	CEnemy(obj)
+	CGameObject(obj)
 {
 	m_Attacking = obj.m_Attacking;
 	m_TextureUpdate = obj.m_TextureUpdate;
@@ -30,18 +30,38 @@ CBelialWeapon::~CBelialWeapon()
 
 void CBelialWeapon::Start()
 {
-	CEnemy::Start();
+	CGameObject::Start();
 }
 
 bool CBelialWeapon::Init()
 {
-	CEnemy::Init();
-	m_Sprite->DeleteAnimation2D();
+	CGameObject::Init();
+	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
+	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+
+	SetRootComponent(m_Sprite);
+
+	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
+	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
+	//CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
+
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->AddTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 	m_Sprite->SetRelativeScale(65.f, 21.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetRelativePos(0.f, 0.f, 0.f);
+
+
+	m_Collider2D->SetExtent(10.f, 10.f);
+	m_Collider2D->SetCollisionProfile("EnemyAttack");
+	m_Collider2D->AddCollisionCallbackFunction<CBelialWeapon>(Collision_State::Begin, this,
+		&CBelialWeapon::CollisionBegin);
+	m_Collider2D->AddCollisionCallbackFunction<CBelialWeapon>(Collision_State::Middle, this,
+		&CBelialWeapon::CollisionMiddle);
+	m_Collider2D->AddCollisionCallbackFunction<CBelialWeapon>(Collision_State::End, this,
+		&CBelialWeapon::CollisionEnd);
+	m_Sprite->AddChild(m_Collider2D);
+
 	m_Collider2D->Enable(false);
 	return true;
 }

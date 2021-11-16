@@ -2,7 +2,6 @@
 
 #include "GameObject.h"
 #include "Component/SpriteComponent.h"
-#include "Component/Camera.h"
 #include "Component/SpringArm2D.h"
 #include "Component/ColliderBox2D.h"
 #include <Component/RigidBodyComponent.h>
@@ -23,6 +22,8 @@ protected:
 
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CColliderBox2D> m_Collider2DHorizon;
+	CSharedPtr<CColliderBox2D> m_Collider2DVertical;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CSharedPtr<CColliderBox2D> m_AttackRangeCollider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
@@ -56,16 +57,17 @@ public:
 	virtual void Enable(bool bEnable);
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
-	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
-	virtual void CollisionMiddle(const HitResult& result, CCollider* Collider);
-	virtual void CollisionEnd(const HitResult& result, CCollider* Collider);
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
-
+	void CollisionBegin(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonBegin(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonMiddle(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonEnd(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalBegin(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalMiddle(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalEnd(const HitResult& result, CCollider* Collider);
 	//충돌
-	void ColDirStart(float Angle, CCollider* Col);
-	void ColDirMiddle(float Angle, CCollider* Col);
-	//충돌End
-	void ColDirEnd(CCollider* Col);
+	void ColDirHorizon(float Angle, CCollider* Col);
+	void ColDirVertical(float Angle, CCollider* Col);
 public:
 	virtual void FindStart() {}
 	virtual void FindStay() {}

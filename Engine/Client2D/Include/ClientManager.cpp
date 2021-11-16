@@ -54,16 +54,19 @@ bool CClientManager::Init()
     CInput::GetInst()->SetControlKey("Skill2", true);
 
     CCollisionManager::GetInst()->CreateChannel("Static", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("Player", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("PlayerAttack", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("Enemy", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("EnemyAttack", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("Tile_Nopass", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("Tile_pass", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("NextStage", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("Item", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("InteractionInputKey", Collision_Interaction::Block);
-    CCollisionManager::GetInst()->CreateChannel("BossSpawn", Collision_Interaction::Block);
+    CCollisionManager::GetInst()->CreateChannel("Player", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("PlayerAttack", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("Enemy", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("EnemyAttack", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("Tile_Nopass", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("Tile_pass", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("NextStage", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("Item", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("InteractionInputKey", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("BossSpawn", Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateChannel("Object", Collision_Interaction::Block);
+    CCollisionManager::GetInst()->CreateChannel("Object_Broken", Collision_Interaction::Block);
+    CCollisionManager::GetInst()->CreateChannel("TileCheckCollsion", Collision_Interaction::Ignore);
 
     CCollisionManager::GetInst()->CreateProfile("Static", Collision_Channel::Static);
     CCollisionManager::GetInst()->CreateProfile("Player", Collision_Channel::Player);
@@ -76,36 +79,59 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateProfile("Item", Collision_Channel::Item);
     CCollisionManager::GetInst()->CreateProfile("InteractionInputKey", Collision_Channel::InteractionInputKey);
     CCollisionManager::GetInst()->CreateProfile("BossSpawn", Collision_Channel::BossSpawn);
-    
-    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Player,
-        Collision_Interaction::Ignore);
-   CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Enemy,
-       Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->CreateProfile("Object", Collision_Channel::Object);
+    CCollisionManager::GetInst()->CreateProfile("Object_Broken", Collision_Channel::Object_Broken);
+    CCollisionManager::GetInst()->CreateProfile("TileCheckCollsion", Collision_Channel::TileCheckCollsion);
 
-    CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::PlayerAttack,
+    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::EnemyAttack,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::Player,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::BossSpawn,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Player,
+        Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::PlayerAttack,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::Enemy,
+       Collision_Interaction::Block);
+
+
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::TileCheckCollsion,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::TileCheckCollsion,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Tile_pass,
+       Collision_Interaction::Block);
+
+   CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::EnemyAttack,
+       Collision_Interaction::Block);
+
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Player,
         Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::PlayerAttack,
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Object,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::PlayerAttack,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Enemy,
+        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::EnemyAttack,
         Collision_Interaction::Ignore);
 
-    CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::EnemyAttack,
-        Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::EnemyAttack,
-        Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::EnemyAttack,
+    CCollisionManager::GetInst()->SetProfileChannelState("Object_Broken", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
 
-    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_pass,
+    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Tile_Nopass,
+    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
-
-    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Enemy,
+    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::EnemyAttack,
-        Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Tile_Nopass,
-        Collision_Interaction::Ignore);
-    CCollisionManager::GetInst()->SetProfileChannelState("BossSpawn", Collision_Channel::Tile_pass,
+    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
     //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();

@@ -30,7 +30,8 @@ CPlayer::CPlayer(const CPlayer& obj) :
 {
 
 	m_Body = (CRigidBodyComponent*)FindSceneComponent("Body");
-	m_Collider2D = (CColliderBox2D*)FindSceneComponent("Collider2D");
+	m_Collider2DHorizon = (CColliderBox2D*)FindSceneComponent("Collider2DHorizon");
+	m_Collider2DVertical = (CColliderBox2D*)FindSceneComponent("Collider2DVertical");
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
 	m_Arm = (CSpringArm2D*)FindSceneComponent("Arm");
 	m_Camera = (CCamera*)FindSceneComponent("Camera");
@@ -60,8 +61,10 @@ bool CPlayer::Init()
 
 	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
+	m_Collider2DHorizon = CreateSceneComponent<CColliderBox2D>("Collider2DHorizon");
+	m_Collider2DVertical = CreateSceneComponent<CColliderBox2D>("Collider2DVertical");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-
+	
 	m_Arm = CreateSceneComponent<CSpringArm2D>("Arm");
 	m_Camera = CreateSceneComponent<CCamera>("Camera");
 	m_Camera->SetCameraZoom(4.f);
@@ -72,14 +75,30 @@ bool CPlayer::Init()
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
 	m_Collider2D->SetCollisionProfile("Player");
+	m_Collider2DHorizon->SetCollisionProfile("TileCheckCollsion");
+	m_Collider2DVertical->SetCollisionProfile("TileCheckCollsion");
+
 	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::Begin, this,
 		&CPlayer::CollisionBegin);
-	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::Middle, this,
-		&CPlayer::CollisionMiddle);
-	m_Collider2D->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
-		&CPlayer::CollisionEnd);
-	m_Collider2D->SetExtent(5.f, 5.f);
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CPlayer>(Collision_State::Begin, this,
+		&CPlayer::CollisionHorizonBegin);
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CPlayer>(Collision_State::Middle, this,
+		&CPlayer::CollisionHorizonMiddle);
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
+		&CPlayer::CollisionHorizonEnd);
+
+	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::Begin, this,
+		&CPlayer::CollisionVerticalBegin);
+	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::Middle, this,
+		&CPlayer::CollisionVerticalMiddle);
+	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
+		&CPlayer::CollisionVerticalEnd);
+	m_Collider2D->SetExtent(6.f, 10.f);
+	m_Collider2DHorizon->SetExtent(6.f, 1.f);
+	m_Collider2DVertical->SetExtent(1.f, 10.f);
 	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_Collider2DHorizon);
+	m_Sprite->AddChild(m_Collider2DVertical);
 	m_Sprite->AddChild(m_Body);
 
 	m_Arm->SetOffset(-640.f, -360.f, 0.f);
@@ -341,34 +360,6 @@ void CPlayer::AnimationFrameEnd(const std::string& Name)
 
 void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass )
-	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
-		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirStart(Angle, result.DestCollider);
-	}
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
-	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
-		float Angle = PlayerPos.GetAngle(ColPos);
-		m_Body->StopDash();
-		ColDirStart(Angle, result.DestCollider);
-	}
-
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
 	{
 
@@ -376,7 +367,7 @@ void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 }
 
-void CPlayer::CollisionMiddle(const HitResult& result, CCollider* Collider)
+void CPlayer::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
@@ -388,10 +379,8 @@ void CPlayer::CollisionMiddle(const HitResult& result, CCollider* Collider)
 			PlayerPos.x -= Velocity.x;
 			PlayerPos.y -= Velocity.y;
 		}
-
 		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirMiddle(Angle, result.DestCollider);
-		m_WallCol = true; 
+		ColDirHorizon(Angle, result.DestCollider);
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
@@ -405,13 +394,119 @@ void CPlayer::CollisionMiddle(const HitResult& result, CCollider* Collider)
 		}
 		float Angle = PlayerPos.GetAngle(ColPos);
 		m_Body->StopDash();
-		ColDirStart(Angle, result.DestCollider);
-		m_WallCol = true;
+		ColDirHorizon(Angle, result.DestCollider);
 	}
+
 }
 
-void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
+void CPlayer::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider)
 {
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+
+}
+
+void CPlayer::CollisionHorizonEnd(const HitResult& result, CCollider* Collider)
+{
+
+}
+
+void CPlayer::CollisionVerticalBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+
+}
+
+void CPlayer::CollisionVerticalMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+
+}
+
+void CPlayer::CollisionVerticalEnd(const HitResult& result, CCollider* Collider)
+{
+	
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
@@ -423,151 +518,92 @@ void CPlayer::CollisionEnd(const HitResult& result, CCollider* Collider)
 	}
 }
 
-void CPlayer::ColDirStart(float Angle,CCollider* Col)
+
+void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 {
-	Vector3 ColPos = Col->GetWorldPos();
-	Vector3 ColScale = Col->GetRelativeScale()/2.f;
-	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
-	Vector3 PlayerScale = m_Collider2D->GetRelativeScale()/2.f;
-
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
-	//왼쪽
-	
-
-	if (120.f < Angle && Angle < 230.f)
-	{
-		m_Body->StopForceX();
-		float x = (PlayerScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x += x;
-		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-	}
-	//아래
-	else if (230.f <= Angle && Angle < 310.f)
-	{
-		m_Body->StopForceY();
-		m_Body->StopForceX();
-		m_Body->SetGravity(false);
-		m_Body->SetJump(false);
-		float y = (PlayerScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y += y;
-		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
-	}
-	//오른쪽방향
-	else if (310.f < Angle || Angle < 30.f)
-	{
-		m_Body->StopForceX();
-		float x = (PlayerScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x -= x;
-		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-
-	}
-	//위
-	else if (30.f <= Angle && Angle < 120.f)
-	{
-		m_Body->StopForceY();
-		float y = (PlayerScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y -= y;
-		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
-	}
-
-	//if (ColCheckPos.y < 0.f)
-	//{
-	//	m_Body->StopForceY();
-	//
-	//}
-	//else //아니라면 아래쪽에 있다는 뜻
-	//{
-	//	m_Body->StopForceY();
-	//	m_Body->SetGravity(false);
-	//}
-	////ColCheckPos가 짝수라면 ColPos는 왼쪽에 있음
-	//if (ColCheckPos.x > 0.f)
-	//{
-	//	m_Body->StopForceX();
-	//	float x = (PlayerScale.x + ColScale.x);
-	//	Vector3 XMove = ColPos;
-	//	XMove.x += x;
-	//	SetWorldPos(XMove);
-	//}
-	//else //아니라면 오른쪽에 있다는 뜻
-	//{
-	//	m_Body->StopForceX();
-	//	float x = (PlayerScale.x + ColScale.x);
-	//	Vector3 XMove = ColPos;
-	//	XMove.x -= x;
-	//	SetWorldPos(XMove);
-	//}
-}
-
-void CPlayer::ColDirMiddle(float Angle, CCollider* Col)
-{
+	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
-	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DHorizon->GetRelativeScale() / 2.f;
 
 	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//방향바꾸기
+	Velocity.Normalize();
+	Velocity.x = -Velocity.x;
+	Velocity.y = -Velocity.y;
 
 	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
 	// 
 	//왼쪽
 
 
-	if (120.f < Angle && Angle < 230.f)
+	if (90.f <= Angle && Angle < 270.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
 		Vector3 XMove = ColPos;
 		XMove.x += x;
 		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-	}
-	//아래
-	else if (230.f <= Angle && Angle < 310.f)
-	{
-		m_Body->StopForceY();
-		float y = (PlayerScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y += y;
-		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
-		m_Body->SetGravity(false);
-		m_Body->SetJump(false);
+
 	}
 	//오른쪽방향
-	else if (310.f < Angle || Angle < 30.f)
+	else if (270.f <= Angle || Angle < 90.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
 		Vector3 XMove = ColPos;
 		XMove.x -= x;
 		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
 
 	}
+
+	SetWorldPos(PlayerPos);
+}
+
+void CPlayer::ColDirVertical(float Angle, CCollider* Col)
+{
+	Vector3 Velocity = GetVelocity();
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
+
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//방향바꾸기
+	Velocity.Normalize();
+	Velocity.x = -Velocity.x;
+	Velocity.y = -Velocity.y;
+
+	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
+	// 
+	//왼쪽
+
+	//아래
+	if (180.f <= Angle && Angle < 360.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+	}
 	//위
-	else if (30.f <= Angle && Angle < 120.f)
+	else if (0.f < Angle || Angle < 180.f || 360.f<=Angle)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y -= y;
 		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
 	}
+
+	SetWorldPos(PlayerPos);
 }
 
-void CPlayer::ColDirEnd(CCollider* Col)
-{
-}
+

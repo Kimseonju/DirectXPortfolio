@@ -171,9 +171,9 @@ enum class Collision_Channel
     Item,
     InteractionInputKey,
     BossSpawn,
-    Monster,
-    Custom11,
-    Custom12,
+    Object,
+    Object_Broken,
+    TileCheckCollsion,
     Custom13,
     Custom14,
     Custom15,
@@ -182,7 +182,6 @@ enum class Collision_Channel
     Custom18,
     End
 };
-
 enum class Collision_Interaction
 {
     Ignore,

@@ -32,7 +32,7 @@ bool CSmallSkel::Init()
 {
 	CEnemy::Init();
 
-	m_Collider2D->SetExtent(5.f, 9.f);
+	m_Collider2DVertical->SetExtent(5.f, 10.f);
 	m_AttackRangeCollider2D->SetExtent(7.f, 9.f);
 	m_AttackRangeCollider2D->SetCollisionProfile("Enemy");
 	m_AttackRangeCollider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
@@ -177,9 +177,4 @@ void CSmallSkel::CollisionAttackRangeBegin(const HitResult& result, CCollider* C
 
 void CSmallSkel::AnimationFrameEnd(const std::string& Name)
 {
-}
-
-void CSmallSkel::CollisionBegin(const HitResult& result, CCollider* Collider)
-{
-	CEnemy::CollisionBegin(result, Collider);
 }

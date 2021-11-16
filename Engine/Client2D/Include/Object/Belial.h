@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 class CBelial :
-	public CEnemy
+	public CGameObject
 {
 	friend class CScene;
 
@@ -10,29 +10,46 @@ protected:
 	CBelial(const CBelial& obj);
 	virtual ~CBelial();
 private:
+	std::vector<class CBelialWeapon*> m_BelialWeapon;
+	class CBelialHand* m_LeftHand;
+	class CBelialHand* m_RightHand;
+
+	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
+	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CColliderBox2D> m_Collider2D;
+	CEngineFSM<CEnemy> m_EnemyFSM;
+	CBasicStatus m_Status;
+	class CAnimation2D_FSM* m_Animation2D;
+	bool m_Attacking;
+	Belial_Pattern m_Pattern;
+	float m_PatternTimer;
+
 	float m_AttackTimer;
 	float m_AttackTimerMax;
-	float m_PatternTimer;
 
 	float m_SwordSpawnTimer;
 	float m_SwordSpawnTimerMax;
 	bool m_SwordSpawn;
-	bool m_Attacking;
-	Belial_Pattern m_Pattern;
-	class CBelialHand* m_LeftHand;
-	class CBelialHand* m_RightHand;
-	std::vector<class CBelialWeapon*> m_BelialWeapon;
-	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
+
+	float m_BulletAngle;
+	float m_BulletFireCount;
+
 	bool m_Spawn;
 	float m_Alpha;
 	float m_HandAlpha;
 	bool  m_AlphaUpdate;
-	float m_BulletAngle;
-	float m_BulletFireCount;
-
+	bool m_PatternStop;
 	
 	//기본위치
 	Vector3 m_BasicWorldPos;
+	bool m_EffectEndStart;
+	bool m_EffectEnd;
+	float m_EffectEndTimer;
+public:
+	void EffectEnd()
+	{
+		m_EffectEnd = true;
+	}
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -47,11 +64,17 @@ public:
 	void AttackBullet(float DeltaTime);
 	void AttackLaser(float DeltaTime);
 public:
+	void EffectEndUpdate(float DeltaTime);
+	void AlphaUpdate(float DeltaTime);
+	void PatternUpdate(float DeltaTime);
+public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 	void CollisionBossSpawnBegin(const HitResult& result, CCollider* Collider);
 	
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionMiddle(const HitResult& result, CCollider* Collider);
+	virtual void CollisionEnd(const HitResult& result, CCollider* Collider);
 };
 

@@ -19,7 +19,7 @@ CBelialHand::CBelialHand() :
 }
 
 CBelialHand::CBelialHand(const CBelialHand& obj) :
-	CEnemy(obj)
+	CGameObject(obj)
 {
 	m_Belial = nullptr;
 	m_Attacking = false;
@@ -31,21 +31,27 @@ CBelialHand::~CBelialHand()
 
 void CBelialHand::Start()
 {
-	CEnemy::Start();
+	CGameObject::Start();
 }
 
 bool CBelialHand::Init()
 {
-	CEnemy::Init();
+	CGameObject::Init();
+	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+	SetRootComponent(m_Sprite);
+
+
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, 0.f);
 	m_Sprite->SetRelativeScale(57.f, 67.f, 1.f);
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Sprite->SetPivot(0.5f, 0.5f,0.f);
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
+
 	m_Animation2D->SetIdleAnimation2D("BelialHand_Idle");
 	m_Animation2D->SetAttackAnimation2D("BelialHand_Attack", false);
 	m_Animation2D->ChangeIdleAnimation2D();
 	m_Animation2D->SetFrameEndFunction< CBelialHand>(this, &CBelialHand::AnimationFrameEnd);
-
-	m_Collider2D->Enable(false);
 	return true;
 }
 
@@ -60,7 +66,7 @@ void CBelialHand::PostUpdate(float DeltaTime)
 	CGameObject::PostUpdate(DeltaTime);
 	if (m_Animation2D->GetCurrentSequenceName() == "BelialHand_Attack")
 	{
-		m_Animation2D->SetPlayRate(0.5f);
+		m_Animation2D->SetSequencePlayRate("BelialHand_Attack", 0.5f);
 		if (m_AttackMove)
 		{
 

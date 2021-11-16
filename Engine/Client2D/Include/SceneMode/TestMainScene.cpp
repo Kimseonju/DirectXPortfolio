@@ -123,8 +123,8 @@ bool CTestMainScene::Init()
 	//
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 
-	CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
-
+	//CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
+	//BossDieParticle->SetWorldPos(200.f, 200.f,0.f);
 	//CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
 	//Widget->SetPlayer(pPlayer);
 
@@ -306,6 +306,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
 	}
 
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("ObjectDieEffect", "CreateEffect", 5);
 
 	/*
 	Door
@@ -687,7 +688,7 @@ void CTestMainScene::CreateParticle()
 	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
 	m_pScene->GetResource()->SetParticleLifeTimeMin("BossDieParticle", 10.5f);
 	m_pScene->GetResource()->SetParticleLifeTimeMax("BossDieParticle", 10.8f);
-	m_pScene->GetResource()->SetParticleRange("BossDieParticle", 500.f, 500.f, 0.f);
+	m_pScene->GetResource()->SetParticleRange("BossDieParticle", 200.f, 200.f, 0.f);
 	m_pScene->GetResource()->SetParticleMoveEnable("BossDieParticle", false);
 	m_pScene->GetResource()->SetParticle2D("BossDieParticle", true);
 }

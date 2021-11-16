@@ -9,7 +9,7 @@ CSpriteComponent::CSpriteComponent()
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
 	m_ComponentClassType = Component_Class_Type::Sprite;
-	m_2DType = RT2D_Default;
+	SetRender2DType(RT2D_Default);
 }
 
 CSpriteComponent::CSpriteComponent(const CSpriteComponent& com) :
@@ -137,7 +137,8 @@ void CSpriteComponent::Collision(float DeltaTime)
 void CSpriteComponent::Render(float DeltaTime)
 {
 	CPrimitiveComponent::Render(DeltaTime);
-
+	if (!IsEnable())
+		return;
 	for (int i = 0; i < (int)m_vecMaterialSlot.size(); ++i)
 	{
 		m_vecMaterialSlot[i]->SetMaterial();

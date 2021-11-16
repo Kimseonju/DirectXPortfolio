@@ -8,7 +8,8 @@ struct Animation2DFrame
 	Vector2		End;
 };
 
-struct Animation2DNotify
+struct Animation2DNotify :
+	public CRef
 {
 	std::string		Name;
 	class CAnimationSequence2D* pOwner;
@@ -31,6 +32,7 @@ class CAnimationSequence2D :
 
 private:
 	CAnimationSequence2D();
+	CAnimationSequence2D(const CAnimationSequence2D& Sequence);
 	~CAnimationSequence2D();
 
 private:
@@ -43,7 +45,7 @@ private:
 	float					m_FrameTime;
 	std::vector<Animation2DFrame>	m_vecAnimFrame;
 	//몇프레임때 총알발사등
-	std::vector<Animation2DNotify*> m_vecNotify;
+	std::vector<CSharedPtr<Animation2DNotify>> m_vecNotify;
 
 public:
 	Animation2D_Type GetAnimation2DType()	const
@@ -76,5 +78,6 @@ public:
 	void AddFrame(const Vector2& Start, const Vector2& End);
 	void AddFrame(const Vector2& Start, const Vector2& End, int Count);
 	void AddNotify(const std::string& Name, int Frame);
+	CAnimationSequence2D* Clone();
 };
 

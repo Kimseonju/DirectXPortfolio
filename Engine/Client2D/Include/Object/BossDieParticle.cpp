@@ -1,6 +1,8 @@
 
 #include "BossDieParticle.h"
 #include <Input.h>
+#include "BossDieEffect.h"
+#include <Scene/Scene.h>
 CBossDieParticle::CBossDieParticle()
 {
 }
@@ -40,7 +42,7 @@ bool CBossDieParticle::Init()
 	m_Particle->SetParticle("BossDieParticle");
 	//m_Particle->SetParticle("DoorParticle");
 
-	m_Particle->SetRelativePos(Vector3(0.f, -30.f, 0.f));
+	m_Particle->SetRelativePos(Vector3(0.f, 0.f, 0.f));
 	m_Particle->SetPivot(0.5f, 0.5f, 0.f);
 	m_Particle->SetSpawnTime(0.1f);
 	m_Particle->SetTwinkleEnable(false);
@@ -51,13 +53,27 @@ bool CBossDieParticle::Init()
 	Size.y = m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
 	m_Particle->SetAnimation2DSize(Size);
 	m_Particle->SetAnimation2DPlayRate(0.1f);
+	m_Particle->SetRender2DType(Render_Type_2D::RT2D_Particle);
+
 	return true;
 }
 
 void CBossDieParticle::Update(float DeltaTime)
 {
  	CGameObject::Update(DeltaTime);
-	
+	m_LifeTime += DeltaTime;
+	if (m_LifeTime > 5.f)
+	{
+		for (int i = 0; i < 8; ++i)
+		{
+			CBossDieEffect* Effect = m_pScene->SpawnObject<CBossDieEffect>("BossDieEffect");
+			Effect->SetWorldPos(GetWorldPos());
+			Effect->SetWorldRotationZ(45.f * i);
+			Effect->SetBelial(m_Belial);
+
+		}
+		Active(false);
+	}
 }
 
 void CBossDieParticle::PostUpdate(float DeltaTime)

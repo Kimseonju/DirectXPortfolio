@@ -104,6 +104,12 @@ void CCamera::AddCameraShake(const Vector2& Pos, float Time)
 	m_qCameraShake.push(Shake);
 }
 
+void CCamera::CameraCurrentShakeStop()
+{
+	m_ShakeTime = 99999999.f;
+	
+}
+
 void CCamera::AddCameraMove2D(float x, float y, float Time)
 {
 	AddCameraShake({ x,y }, Time);
@@ -115,6 +121,11 @@ void CCamera::AddCameraMove2D(const Vector2& Pos, float Time)
 	Move.Pos = Pos;
 	Move.WaitTime = Time;
 	m_qCameraMove.push(Move);
+}
+
+void CCamera::CameraCurrentMoveStop()
+{
+	m_MoveTime = 99999999.f;
 }
 
 
@@ -316,11 +327,13 @@ void CCamera::PrevRender(float DeltaTime)
 			}
 			else
 			{
-				m_ShakeTime = 0.f;
 				m_qCameraShake.pop();
 			}
 		}
-
+		else
+		{
+			m_ShakeTime = 0.f;
+		}
 		m_CameraMoveEnd = false;
 		if (m_qCameraMove.size() != 0)
 		{
@@ -343,6 +356,10 @@ void CCamera::PrevRender(float DeltaTime)
 				m_qCameraMove.pop();
 				m_CameraMoveEnd = true;
 			}
+		}
+		else
+		{
+			m_MoveTime = 0.f;
 		}
 		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문

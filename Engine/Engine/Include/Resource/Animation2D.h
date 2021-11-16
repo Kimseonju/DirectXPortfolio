@@ -39,10 +39,21 @@ protected:
 	float		m_FrameTime;
 	int		m_Frame;
 	bool	m_End;
+	bool	m_Play;
 protected:
 	std::function<void(const std::string&)>	m_FrameEndFunction;
 
 public:
+
+	void StopPlay()
+	{
+		m_Play = false;
+	}
+	void Play()
+	{
+		m_Play = true;
+	}
+
 	std::unordered_map<std::string, Sequence2DInfo*>& GetMapSequence()
 	{
 		return m_mapSequence;
@@ -74,10 +85,6 @@ public:
 	int GetFrameSize()
 	{
 		return (int)m_CurrentSequence->Sequence->m_vecAnimFrame.size();
-	}
-	void SetPlayRate(float Rate)
-	{
-		m_CurrentSequence->PlayRate = Rate;
 	}
 public:
 	virtual void Start();

@@ -1378,26 +1378,27 @@ void CTransform::PrevRender(float DeltaTime)
 
         float   Ratio = ConvertY / (RS.Height * 2.f);
 
-        // Back
-        if (m_DefaultZ >= 0.7f)
-        {
-            // Min : 0.7f   Max : 0.99999f 
-            m_WorldPos.z = (0.99999f - 0.7f) * Ratio + 0.7f;
-        }
-
-        // Default
-        else if (m_DefaultZ >= 0.3f)
-        {
-            // Min : 0.3f   Max : 0.69999f 
-            m_WorldPos.z = (0.69999f - 0.3f) * Ratio + 0.3f;
-        }
-
-        // Particle
-        else
-        {
-            // Min : 0.f   Max : 0.29999f 
-            m_WorldPos.z = 0.29999f * Ratio;
-        }
+        m_WorldPos.z = (0.99999f - m_DefaultZ) * Ratio + 0.7f;
+        //// Back
+        //if (m_DefaultZ >= 0.7f)
+        //{
+        //    // Min : 0.7f   Max : 0.99999f 
+        //    m_WorldPos.z = (0.99999f - 0.7f) * Ratio + 0.7f;
+        //}
+        //
+        //// Default
+        //else if (m_DefaultZ >= 0.3f)
+        //{
+        //    // Min : 0.3f   Max : 0.69999f 
+        //    m_WorldPos.z = (0.69999f - 0.3f) * Ratio + 0.3f;
+        //}
+        //
+        //// Particle
+        //else
+        //{
+        //    // Min : 0.f   Max : 0.29999f 
+        //    m_WorldPos.z = 0.29999f * Ratio;
+        //}
     }
 
     if (m_UpdateScale)

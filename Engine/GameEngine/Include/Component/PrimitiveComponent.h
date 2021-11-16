@@ -49,11 +49,7 @@ public:
         return m_3DType;
     }
 
-    void SetRender2DType(Render_Type_2D Type)
-    {
-        m_2DType = Type;
-    }
-
+    void SetRender2DType(Render_Type_2D Type);
     void SetRender3DType(Render_Type_3D Type)
     {
         m_3DType = Type;

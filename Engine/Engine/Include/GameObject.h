@@ -55,6 +55,7 @@ protected:
     //Enemy일때만 사용
     bool             m_CreateEnemyEffect;
     int             m_CreateEnemyOrder;
+    //속도방지용
     float m_StartTimer;
     bool m_StartGravity;
 public:

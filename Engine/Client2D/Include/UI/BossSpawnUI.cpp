@@ -10,6 +10,7 @@
 #include <Scene/CameraManager.h>
 #include <Component/Camera.h>
 #include <Input.h>
+#include "UIManager.h"
 CBossSpawnUI::CBossSpawnUI() :
 	m_Spawn(false),
 	m_Alpha(0.f),
@@ -80,6 +81,8 @@ void CBossSpawnUI::Update(float DeltaTime)
 			m_Alpha = 1.f;
 			m_NickNameAlpha += DeltaTime;
 			m_BossNinkName->SetOpacity(m_NickNameAlpha);
+			CUIManager::GetInst()->GetBossUI()->Enable(true);
+
 		}
 	}
 	else
@@ -92,7 +95,10 @@ void CBossSpawnUI::Update(float DeltaTime)
 		if (m_Alpha < 0.f)
 		{
 			if (m_Play)
+			{
 				Enable(false);
+			}
+				
 		}
 	}
 }

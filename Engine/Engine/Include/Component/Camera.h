@@ -170,8 +170,10 @@ public:
 
 	void AddCameraShake(float x, float y, float Time);
 	void AddCameraShake(const Vector2& Pos, float Time);
+	void CameraCurrentShakeStop();
 	void AddCameraMove2D(float x, float y, float Time);
 	void AddCameraMove2D(const Vector2& Pos, float Time);
+	void CameraCurrentMoveStop();
 	virtual void Save(FILE* pFile);
 	virtual void Load(FILE* pFile);
 public:

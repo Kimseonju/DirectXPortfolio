@@ -1,4 +1,4 @@
-
+	
 #include "AnimationSequence2D.h"
 
 CAnimationSequence2D::CAnimationSequence2D()	:
@@ -11,17 +11,39 @@ CAnimationSequence2D::CAnimationSequence2D()	:
 {
 }
 
+CAnimationSequence2D::CAnimationSequence2D(const CAnimationSequence2D& Sequence)
+{
+
+	m_pScene = Sequence.m_pScene;
+	m_Name = Sequence.m_Name;
+	m_Texture = Sequence.m_Texture;
+	m_Type = Sequence.m_Type;
+	m_vecAnimFrame = Sequence.m_vecAnimFrame;
+	m_PlayRate = Sequence.m_PlayRate;
+	m_PlayTime = Sequence.m_PlayTime;
+	m_FrameTime = Sequence.m_FrameTime;
+	
+	auto iter = Sequence.m_vecNotify.begin();
+	auto iterEnd = Sequence.m_vecNotify.end();
+	
+	for (; iter != iterEnd; ++iter)
+	{
+		Animation2DNotify* pNotify = new Animation2DNotify;
+
+		pNotify->Name = (*iter)->Name;
+		pNotify->Frame = (*iter)->Frame;
+		pNotify->pOwner = this;
+
+		m_vecNotify.push_back(pNotify);
+		pNotify->Release();
+	}
+	//다른곳으로 바로 복사가됨 카운트++
+	m_RefCount = 0;
+}
+
 CAnimationSequence2D::~CAnimationSequence2D()
 {
-	{
-		auto	iter = m_vecNotify.begin();
-		auto	iterEnd = m_vecNotify.end();
-
-		for (; iter != iterEnd; ++iter)
-		{
-			SAFE_DELETE((*iter));
-		}
-	}
+	m_vecNotify.clear();
 }
 
 void CAnimationSequence2D::SetTexture(CTexture* pTexture)
@@ -84,4 +106,10 @@ void CAnimationSequence2D::AddNotify(const std::string& Name, int Frame)
 	pNotify->pOwner = this;
 
 	m_vecNotify.push_back(pNotify);
+	pNotify->Release();
+}
+
+CAnimationSequence2D* CAnimationSequence2D::Clone()
+{
+	return new CAnimationSequence2D(*this);
 }

@@ -1,7 +1,12 @@
 #pragma once
-#include "Enemy.h"
+#include <GameObject.h>
+#include "Component/SpriteComponent.h"
+#include "Component/SpringArm2D.h"
+#include "Component/ColliderBox2D.h"
+#include <Component/RigidBodyComponent.h>
+#include "Component/WidgetComponent.h"
 class CBelialHand :
-	public CEnemy
+	public CGameObject
 {
 	friend class CScene;
 
@@ -9,9 +14,13 @@ protected:
 	CBelialHand();
 	CBelialHand(const CBelialHand& obj);
 	virtual ~CBelialHand();
+private:
+
+	CSharedPtr<CSpriteComponent> m_Sprite;
 	bool m_Attacking;
 	class CBelial* m_Belial;
 	bool m_AttackMove;
+	class CAnimation2D_FSM* m_Animation2D;
 public:
 	virtual void Start();
 	virtual bool Init();

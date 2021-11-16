@@ -36,6 +36,8 @@ private:
 	CSharedPtr<CSpringArm2D> m_Arm;
 	CSharedPtr<CCamera> m_Camera;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
+	CSharedPtr<CColliderBox2D> m_Collider2DHorizon;
+	CSharedPtr<CColliderBox2D> m_Collider2DVertical;
 	CSharedPtr<CRigidBodyComponent> m_Body;
 	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
 	class CWeaponArm* m_WeaponArm;
@@ -94,8 +96,15 @@ public:
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);
-	void CollisionMiddle(const HitResult& result, CCollider* Collider);
-	void CollisionEnd(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonBegin(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonMiddle(const HitResult& result, CCollider* Collider);
+	void CollisionHorizonEnd(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalBegin(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalMiddle(const HitResult& result, CCollider* Collider);
+	void CollisionVerticalEnd(const HitResult& result, CCollider* Collider);
+	//충돌
+	void ColDirHorizon(float Angle, CCollider* Col);
+	void ColDirVertical(float Angle, CCollider* Col);
 public:
 	//FSM
 	void BodyIdleStart();
@@ -105,9 +114,4 @@ public:
 	void BodyJumpStart();
 	void BodyJumpStay();
 
-	//충돌
-	void ColDirStart(float Angle, CCollider* Col);
-	void ColDirMiddle(float Angle, CCollider* Col);
-	//충돌End
-	void ColDirEnd(CCollider* Col);
 };

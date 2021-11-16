@@ -21,7 +21,7 @@ CTileMapComponent::CTileMapComponent() :
 	m_EditorMode(true)
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
-	m_2DType = RT2D_MAP;
+	SetRender2DType(RT2D_MAP);
 	m_3DType = RT3D_Default;
 }
 

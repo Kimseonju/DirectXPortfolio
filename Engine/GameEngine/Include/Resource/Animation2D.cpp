@@ -15,7 +15,8 @@ CAnimation2D::CAnimation2D()	:
 	m_FrameTime(0.f),
 	m_Frame(0),
 	m_CurrentSequence(nullptr),
-	m_End(false)
+	m_End(false),
+	m_Play(true)
 {
 }
 
@@ -85,6 +86,8 @@ void CAnimation2D::Update(float DeltaTime)
 		return;
 	if (!IsEnable())
 		return;
+	if (!m_Play)
+		return;
 	m_FrameTime += DeltaTime;
 
 	float	FrameTime = m_CurrentSequence->Sequence->m_FrameTime /
@@ -131,7 +134,7 @@ void CAnimation2D::Update(float DeltaTime)
 	{
 		if ((*iter)->Frame == m_Frame && !(*iter)->Call)
 		{
-			(*iter)->Call = true;
+			//(*iter)->Call = true;
 			
 			if (m_Owner)
 				m_Owner->CallNotify((*iter)->Name);
@@ -227,13 +230,15 @@ Sequence2DInfo* CAnimation2D::AddAnimationSequence2D(const std::string& Name, bo
 
 	pInfo = new Sequence2DInfo;
 
-	pInfo->Sequence = pSequence;
+	pInfo->Sequence = pSequence->Clone();
 	pInfo->Loop = Loop;
 
 	m_mapSequence.insert(std::make_pair(Name, pInfo));
 
 	if (!m_CurrentSequence)
+	{
 		m_CurrentSequence = pInfo;
+	}
 
 	return pInfo;
 }

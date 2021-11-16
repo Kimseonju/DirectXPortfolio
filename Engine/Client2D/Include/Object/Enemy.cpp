@@ -27,7 +27,8 @@ CEnemy::CEnemy(const CEnemy& obj) :
 	m_ChildFire = false;
 
 	m_Body = (CRigidBodyComponent*)FindSceneComponent("Body");
-	m_Collider2D = (CColliderBox2D*)FindSceneComponent("Collider2D");
+	m_Collider2DHorizon = (CColliderBox2D*)FindSceneComponent("Collider2DHorizon");
+	m_Collider2DVertical = (CColliderBox2D*)FindSceneComponent("Collider2DVertical");
 	m_AttackRangeCollider2D = (CColliderBox2D*)FindSceneComponent("AttackRangeCollider2D");
 	m_Sprite = (CSpriteComponent*)FindSceneComponent("Sprite");
 
@@ -49,6 +50,8 @@ bool CEnemy::Init()
 	CGameObject::Init();
 
 	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
+	m_Collider2DHorizon = CreateSceneComponent<CColliderBox2D>("Collider2DHorizon");
+	m_Collider2DVertical = CreateSceneComponent<CColliderBox2D>("Collider2DVertical");
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_AttackRangeCollider2D = CreateSceneComponent<CColliderBox2D>("AttackRangeCollider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
@@ -68,15 +71,30 @@ bool CEnemy::Init()
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 
 
+	m_Collider2DHorizon->SetExtent(10.f, 1.f);
+	m_Collider2DVertical->SetExtent(1.f, 10.f);
 	m_Collider2D->SetExtent(10.f, 10.f);
 	m_Collider2D->SetCollisionProfile("Enemy");
 	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionBegin);
-	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Middle, this,
-		&CEnemy::CollisionMiddle);
-	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::End, this,
-		&CEnemy::CollisionEnd);
-	m_Sprite->AddChild(m_Collider2D);
+
+	m_Collider2DHorizon->SetCollisionProfile("TileCheckCollsion");
+	m_Collider2DVertical->SetCollisionProfile("TileCheckCollsion");
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
+		&CEnemy::CollisionHorizonBegin);
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CEnemy>(Collision_State::Middle, this,
+		&CEnemy::CollisionHorizonMiddle);
+	m_Collider2DHorizon->AddCollisionCallbackFunction<CEnemy>(Collision_State::End, this,
+		&CEnemy::CollisionHorizonEnd);
+
+	m_Collider2DVertical->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
+		&CEnemy::CollisionVerticalBegin);
+	m_Collider2DVertical->AddCollisionCallbackFunction<CEnemy>(Collision_State::Middle, this,
+		&CEnemy::CollisionVerticalMiddle);
+	m_Collider2DVertical->AddCollisionCallbackFunction<CEnemy>(Collision_State::End, this,
+		&CEnemy::CollisionVerticalEnd);
+	m_Sprite->AddChild(m_Collider2DHorizon);
+	m_Sprite->AddChild(m_Collider2DVertical);
 
 
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -175,7 +193,8 @@ void CEnemy::Enable(bool bEnable)
 {
 	CGameObject::Enable(bEnable);
 	m_Sprite->Enable(bEnable);
-	m_Collider2D->Enable(bEnable);
+	m_Collider2DHorizon->Enable(bEnable);
+	m_Collider2DVertical->Enable(bEnable);
 	m_AttackRangeCollider2D->Enable(bEnable);
 	m_Body->Enable(bEnable);
 	m_ProgressBar->Enable(bEnable);
@@ -186,67 +205,13 @@ void CEnemy::AnimationFrameEnd(const std::string& Name)
 {
 }
 
-void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
-{
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
-		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
-	{
-		Vector2 EnemyPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		float Angle = EnemyPos.GetAngle(ColPos);
-		ColDirStart(Angle, result.DestCollider);
-	}
-
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
-	{
-		m_Status.SetHP(m_Status.GetHP()- CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		m_ProgressBar->Enable(true);
-	}
-
-}
-
-void CEnemy::CollisionMiddle(const HitResult& result, CCollider* Collider)
-{
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
-		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
-	{
-		Vector2 EnemyPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		float Angle = EnemyPos.GetAngle(ColPos);
-		ColDirMiddle(Angle, result.DestCollider);
-		m_WallCol = true;
-	}
-}
-
-void CEnemy::CollisionEnd(const HitResult& result, CCollider* Collider)
-{
-	if (result.DestCollider == nullptr || result.DestCollider == nullptr)
-		return;
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
-		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
-	{
-		if(!m_WallCol)
-			m_Body->SetGravity(true);
-	}
-}
-
-void CEnemy::DieStart()
-{
-	//죽으면 이펙트생성 후 삭제
-}
-
-void CEnemy::DieStay()
-{
-	Active(false);
-}
-
 void CEnemy::CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
-		Vector3 DestPos=result.DestObject->GetWorldPos();
+		Vector3 DestPos = result.DestObject->GetWorldPos();
 		Vector3 Pos = GetWorldPos();
-		Pos=Pos - DestPos;
+		Pos = Pos - DestPos;
 		float Dir;
 		if (m_Dir == Object_Dir::Left)
 		{
@@ -261,124 +226,264 @@ void CEnemy::CollisionAttackRangeBegin(const HitResult& result, CCollider* Colli
 	}
 
 }
-void CEnemy::ColDirStart(float Angle, CCollider* Col)
+
+void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
+	{
+		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		m_ProgressBar->Enable(true);
+	}
+}
+
+
+void CEnemy::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+
+}
+
+void CEnemy::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirHorizon(Angle, result.DestCollider);
+	}
+
+}
+
+void CEnemy::CollisionHorizonEnd(const HitResult& result, CCollider* Collider)
+{
+
+}
+
+void CEnemy::CollisionVerticalBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+
+}
+
+void CEnemy::CollisionVerticalMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_Body->IsDash())
+		{
+			Vector3 Velocity = GetVelocity();
+			PlayerPos.x -= Velocity.x;
+			PlayerPos.y -= Velocity.y;
+		}
+		float Angle = PlayerPos.GetAngle(ColPos);
+		m_Body->StopDash();
+		ColDirVertical(Angle, result.DestCollider);
+		m_WallCol = true;
+	}
+
+}
+
+void CEnemy::CollisionVerticalEnd(const HitResult& result, CCollider* Collider)
+{
+
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
+		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		if (!m_WallCol)
+		{
+			m_Body->SetGravity(true);
+			m_Body->SetJump(true);
+		}
+	}
+}
+
+
+void CEnemy::ColDirHorizon(float Angle, CCollider* Col)
+{
+	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
-	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DHorizon->GetRelativeScale() / 2.f;
 
 	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//방향바꾸기
+	Velocity.Normalize();
+	Velocity.x = -Velocity.x;
+	Velocity.y = -Velocity.y;
 
 	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
 	// 
 	//왼쪽
 
 
-	if (121.f < Angle && Angle < 239.f)
+	if (90.f <= Angle && Angle < 270.f)
 	{
 		m_Body->StopForceX();
 		float x = (PlayerScale.x + ColScale.x);
 		Vector3 XMove = ColPos;
 		XMove.x += x;
 		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
+
 	}
+	//오른쪽방향
+	else if (270.f <= Angle || Angle < 90.f)
+	{
+		m_Body->StopForceX();
+		float x = (PlayerScale.x + ColScale.x);
+		Vector3 XMove = ColPos;
+		XMove.x -= x;
+		PlayerPos.x = XMove.x;
+
+	}
+
+	SetWorldPos(PlayerPos);
+}
+
+void CEnemy::ColDirVertical(float Angle, CCollider* Col)
+{
+	Vector3 Velocity = GetVelocity();
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
+
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	//방향바꾸기
+	Velocity.Normalize();
+	Velocity.x = -Velocity.x;
+	Velocity.y = -Velocity.y;
+
+	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
+	// 
+	//왼쪽
+
 	//아래
-	else if (240.f < Angle && Angle < 300.f)
+	if (180.f <= Angle && Angle < 360.f)
 	{
 		m_Body->StopForceY();
 		m_Body->StopForceX();
-		m_Body->SetGravity(false);
-		float y = (PlayerScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y += y;
-		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
 		m_Body->SetGravity(false);
 		m_Body->SetJump(false);
-	}
-	//오른쪽방향
-	else if (301.f < Angle || Angle < 29.f)
-	{
-		m_Body->StopForceX();
-		float x = (PlayerScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x -= x;
-		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-
-	}
-	//위
-	else if (30.f < Angle && Angle < 120.f)
-	{
-		m_Body->StopForceY();
-		float y = (PlayerScale.y + ColScale.y);
-		Vector3 XMove = ColPos;
-		XMove.y -= y;
-		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
-	}
-
-}
-
-void CEnemy::ColDirMiddle(float Angle, CCollider* Col)
-{
-	Vector3 ColPos = Col->GetWorldPos();
-	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
-	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
-
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
-	//왼쪽
-
-
-	if (131.f < Angle && Angle < 229.f)
-	{
-		m_Body->StopForceX();
-		float x = (PlayerScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x += x;
-		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-	}
-	//아래
-	else if (240.f < Angle && Angle < 300.f)
-	{
-		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y += y;
 		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
-		m_Body->SetGravity(false);
-	}
-	//오른쪽방향
-	else if (310.f < Angle || Angle < 49.f)
-	{
-		m_Body->StopForceX();
-		float x = (PlayerScale.x + ColScale.x);
-		Vector3 XMove = ColPos;
-		XMove.x -= x;
-		PlayerPos.x = XMove.x;
-		SetWorldPos(PlayerPos);
-
 	}
 	//위
-	else if (30.f < Angle && Angle < 120.f)
+	else if (0.f < Angle || Angle < 180.f || 360.f <= Angle)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);
 		Vector3 XMove = ColPos;
 		XMove.y -= y;
 		PlayerPos.y = XMove.y;
-		SetWorldPos(PlayerPos);
 	}
+
+	SetWorldPos(PlayerPos);
 }
 
-void CEnemy::ColDirEnd(CCollider* Col)
+
+
+void CEnemy::DieStart()
 {
+	//죽으면 이펙트생성 후 삭제
+}
+
+void CEnemy::DieStay()
+{
+	Active(false);
 }

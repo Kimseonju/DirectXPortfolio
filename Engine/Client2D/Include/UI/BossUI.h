@@ -22,11 +22,12 @@ public:
     virtual ~CBossUI();
 
 public:
+    virtual void Enable(bool bEnable);
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);
     virtual void Render();
     virtual CBossUI* Clone();
-
+    void SetProgressBarPercent(float Percent);
 };
 
