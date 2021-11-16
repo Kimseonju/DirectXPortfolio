@@ -37,6 +37,7 @@ public:
 	void SetOpaacity(float Opacity);
 	void SetHorizontalReverse2DEnable(bool Enable);
 	CMaterial* GetMaterial(int Index=0);
+	void StopAnimation();
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 

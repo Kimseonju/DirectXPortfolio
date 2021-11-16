@@ -74,6 +74,6 @@ public:
 	void SetAnimation2DSize(const Vector2& Size);
 	void SetAnimation2DCount(int Count);
 	void SetAnimation2DPlayRate(float PlayRate);
-
+ 	virtual void SetRender2DType(Render_Type_2D Type);
 };
 

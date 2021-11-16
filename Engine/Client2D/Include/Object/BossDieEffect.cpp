@@ -3,7 +3,7 @@
 #include "BossDieParticle.h"
 #include "Belial.h"
 CBossDieEffect::CBossDieEffect() :
-	m_SpawnCountMax(5.f),
+	m_SpawnCountMax(10.f),
 	m_SpawnCount(0.f)
 {
 }
@@ -78,7 +78,7 @@ void CBossDieEffect::Animation2DNotify(const std::string& Name)
 		CBossDieEffect* Obj=m_pScene->SpawnObject<CBossDieEffect>("BossDieEffect");
 		Obj->SetWorldRotation(GetWorldRotation());
 		Obj->SetWorldPos(GetWorldPos());
-		Obj->AddRelativePos(Obj->GetAxis(AXIS_Y) * 20.f);
+		Obj->AddRelativePos(Obj->GetAxis(AXIS_Y) * 10.f);
 		Obj->SetSpawnCount(m_SpawnCount + 1);
 		Obj->SetBelial(m_Belial);
 	}

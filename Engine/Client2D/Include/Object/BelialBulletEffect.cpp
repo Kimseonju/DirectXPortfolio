@@ -61,4 +61,5 @@ void CBelialBulletEffect::Animation2DNotify(const std::string& Name)
 
 void CBelialBulletEffect::AnimationFrameEnd(const std::string& Name)
 {
+	CEffectObject::AnimationFrameEnd(Name);
 }

@@ -114,8 +114,7 @@ void CBelialWeapon::PostUpdate(float DeltaTime)
 		if (m_Attacking)
 		{
 			CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-			SpriteMtrl->AddTexture("BelialWeaponShoot", TEXT("boss/Belial/Sword/shoot.png"));
-			SpriteMtrl->SetTexture("BelialWeaponShoot", TEXT("boss/Belial/Sword/shoot.png"));
+			SpriteMtrl->AddTexture("BelialWeaponshoot", TEXT("boss/Belial/Sword/shoot.png"));
 			if (m_Charge)
 			{
 				//공격시작 Charge끝
@@ -198,6 +197,7 @@ void CBelialWeapon::CollisionBegin(const HitResult& result, CCollider* Collider)
 		m_Attacking = false;
 		m_Collider2D->Enable(false);
 		CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
+		SpriteMtrl->AddTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 		SpriteMtrl->SetTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 	}
 }

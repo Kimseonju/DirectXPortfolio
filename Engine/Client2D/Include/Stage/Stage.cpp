@@ -145,6 +145,8 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 		case Client_Class_Type::Boss:
 		{
 			Obj = m_pScene->SpawnObject<CBelial>("Belial");
+			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
+			Obj = nullptr;
 			//Obj->SetStartTimer(1.f);
 
 

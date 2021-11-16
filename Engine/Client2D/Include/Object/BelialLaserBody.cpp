@@ -45,7 +45,7 @@ bool CBelialLaserBody::Init()
 
     m_Sprite->AddChild(m_Collider2D);
 
-    m_Collider2D->SetExtent(5.f, 5.f);
+    m_Collider2D->SetExtent(16.f, 25.f);
     m_Collider2D->SetCollisionProfile("EnemyAttack");
     m_Collider2D->AddCollisionCallbackFunction<CBelialLaserBody>(Collision_State::Begin, this,
         &CBelialLaserBody::CollisionBegin);

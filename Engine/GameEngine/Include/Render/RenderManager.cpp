@@ -294,7 +294,7 @@ void CRenderManager::Render2D(float DeltaTime)
 	m_DepthDisable->ResetState();
 
 
-	for (int i = RT2D_Back; i < RT2D_End; ++i)
+	for (int i = RT2D_Back1; i < RT2D_End; ++i)
 	{
 		std::sort(m_pRenderList2D[i], m_pRenderList2D[i] + m_RenderList2DCount[i],
 			CRenderManager::Sort2DObject);

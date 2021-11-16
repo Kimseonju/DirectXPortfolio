@@ -83,13 +83,59 @@ bool CBelial::Init()
 	m_SpawnColliderBox2D = CreateSceneComponent<CColliderBox2D>("SpawnColliderBox2D");
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+	m_BackSprite = CreateSceneComponent<CSpriteComponent>("BackSprite");
+	m_BackParticle = CreateSceneComponent<CParticleSystemComponent>("BackParticle");
 
 	SetRootComponent(m_Sprite);
 
 	m_RootComponent->AddChild(m_SpawnColliderBox2D);
 	m_RootComponent->AddChild(m_Collider2D);
+	m_RootComponent->AddChild(m_BackSprite);
+	m_RootComponent->AddChild(m_BackParticle);
 	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
 	m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
+	m_Sprite->SetPivot(0.6f, 0.3f, 0.f);
+
+	m_Collider2D->SetPivot(0.6f, 0.3f, 0.f);
+
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
+	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
+	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack", false);
+	CMaterial* Material = m_Sprite->GetMaterial(0);
+	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+	Material->SetOpacity(1.f);
+
+	m_BackSprite->SetRelativeScale(50.f, 50.f, 1.f);
+	m_BackSprite->SetPivot(0.5f, 0.5f, 0.f);
+	m_BackSprite->CreateAnimation2D < CAnimation2D_FSM>();
+	m_BackSprite->SetRender2DType(Render_Type_2D::RT2D_Back1);
+	m_BackAnimation2D = (CAnimation2D_FSM*)m_BackSprite->GetAnimation2D();
+	m_BackAnimation2D->SetIdleAnimation2D("Belial_Circle");
+	Material = m_BackSprite->GetMaterial(0);
+	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+	Material->SetOpacity(1.f);
+
+
+	m_BackParticle->SetParticle("BossBackParticle");
+	Material = m_BackParticle->GetMaterial(0);
+	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+	Material->SetOpacity(1.f);
+	//m_Particle->SetParticle("DoorParticle");
+
+	m_BackParticle->SetRelativePos(Vector3(0.f, 0.f, 0.f));
+	m_BackParticle->SetPivot(0.5f, 0.5f, 0.f);
+	m_BackParticle->SetSpawnTime(0.1f);
+	m_BackParticle->SetTwinkleEnable(false);
+	m_BackParticle->SetAnimation2DEnable(true);
+	m_BackParticle->SetAnimation2DCount(8);
+	m_BackParticle->SetRender2DType(Render_Type_2D::RT2D_Back1);
+	Vector2 Size;
+	Size.x = m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
+	Size.y = m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
+	m_BackParticle->SetAnimation2DSize(Size);
+	m_BackParticle->SetAnimation2DPlayRate(0.1f);
+
+	m_BackParticle->Enable(false);
 	m_Collider2D->SetExtent(30.f, 30.f);
 	m_Collider2D->Enable(false);
 	m_Collider2D->SetCollisionProfile("Enemy");
@@ -99,13 +145,6 @@ bool CBelial::Init()
 		&CBelial::CollisionMiddle);
 	m_Collider2D->AddCollisionCallbackFunction<CBelial>(Collision_State::End, this,
 		&CBelial::CollisionEnd);
-	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
-	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
-	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack", false);
-	CMaterial* Material = m_Sprite->GetMaterial(0);
-	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
-	Material->SetOpacity(1.f);
 
 
 	m_SpawnColliderBox2D->SetExtent(2.f, 1000);
@@ -130,7 +169,10 @@ void CBelial::Update(float DeltaTime)
 	if (m_PatternStop)
 	{
 		m_Animation2D->StopPlay();
-
+		if(m_LeftHand)
+			m_LeftHand->StopAnimation();
+		if(m_RightHand)
+			m_RightHand->StopAnimation();
 		if (m_EffectEnd)
 			EffectEndUpdate(DeltaTime);
 	}
@@ -208,6 +250,7 @@ void CBelial::AttackBullet(float DeltaTime)
 		m_PatternTimer = 0.f;
 		m_Attacking = false;
 		m_Animation2D->ChangeIdleAnimation2D();
+		m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 		m_BulletAngle = 0.f;
 		return;
 	}
@@ -250,13 +293,14 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 		//부셔진 해골 오브젝트 생성 후 본인 오브젝트 싹다 Enable를 false로 만들어놓기
 		m_EffectEndStart = true;
 		m_Sprite->Enable(false);
+		m_BackSprite->Enable(false);
 		m_Collider2D->SetExtent(0.f, 0.f);
 		m_Collider2D->Enable(false);
 		m_LeftHand->Active(false);
 		m_LeftHand = nullptr;
 		m_RightHand->Active(false);
 		m_RightHand = nullptr;
-
+		m_BackParticle->Enable(false);
 		CBelialDeadHead* Head=m_pScene->SpawnObject<CBelialDeadHead>("BelialDeadHead");
 		Head->SetWorldPos(GetWorldPos());
 
@@ -271,13 +315,13 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 		Camera->CameraCurrentMoveStop();
 		Camera->CameraCurrentShakeStop();
+		Active(false);
 	}
 }
 
 void CBelial::AlphaUpdate(float DeltaTime)
 {
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
-	m_Collider2D->Enable(true);
 	if (m_AlphaUpdate)
 	{
 		m_Alpha += DeltaTime;
@@ -294,6 +338,13 @@ void CBelial::AlphaUpdate(float DeltaTime)
 		}
 		CMaterial* Material = m_Sprite->GetMaterial(0);
 		Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+
+		Material = m_BackSprite->GetMaterial(0);
+		Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha); 
+
+		Material = m_BackParticle->GetMaterial(0);
+		Material->SetOpacity(m_Alpha);
+		
 		m_LeftHand->SetOpaacity(m_Alpha);
 		m_RightHand->SetOpaacity(m_Alpha);
 
@@ -302,6 +353,8 @@ void CBelial::AlphaUpdate(float DeltaTime)
 
 		Material = m_RightHand->GetMaterial();
 		Material->SetBaseColor(1.f, 1.f, 1.f, m_HandAlpha);
+		m_Collider2D->Enable(true);
+		m_BackParticle->Enable(true);
 	}
 }
 

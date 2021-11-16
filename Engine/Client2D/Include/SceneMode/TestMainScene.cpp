@@ -181,6 +181,12 @@ void CTestMainScene::CreateMaterial()
 		TEXT("Boss/Effect/Finish.png"));
 	m_pScene->GetResource()->SetMaterialTransparency("BossDieParticle", true);
 
+
+
+	m_pScene->GetResource()->CreateMaterial("BossBackParticle");
+	m_pScene->GetResource()->AddMaterialTexture("BossBackParticle", "BossBackParticle",
+		TEXT("boss/Belial/Back/particle.png"));
+	m_pScene->GetResource()->SetMaterialTransparency("BossBackParticle", true);
 	//юс╫ц
 	m_pScene->GetResource()->CreateMaterial("MainMap");
 	m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
@@ -691,4 +697,24 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleRange("BossDieParticle", 200.f, 200.f, 0.f);
 	m_pScene->GetResource()->SetParticleMoveEnable("BossDieParticle", false);
 	m_pScene->GetResource()->SetParticle2D("BossDieParticle", true);
+
+	CMaterial* BossBackParticle = m_pScene->GetResource()->FindMaterial("BossBackParticle");
+
+	m_pScene->GetResource()->CreateParticle("BossBackParticle");
+	m_pScene->GetResource()->SetParticleUpdateShader("BossBackParticle", "ParticleAnimation2DShader");
+	m_pScene->GetResource()->SetParticleMaterial("BossBackParticle", BossBackParticle);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("BossBackParticle", 100);
+	m_pScene->GetResource()->SetParticleStartColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleStartScale("BossBackParticle", 30.f, 30.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("BossBackParticle", 30.f, 30.f, 1.f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
+	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
+	m_pScene->GetResource()->SetParticleMinSpeed("BossBackParticle", 50.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("BossBackParticle", 50.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("BossBackParticle", 10.5f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("BossBackParticle", 10.8f);
+	m_pScene->GetResource()->SetParticleRange("BossBackParticle", 1.f, 1.f, 0.f);
+	m_pScene->GetResource()->SetParticleMoveEnable("BossBackParticle", true);
+	m_pScene->GetResource()->SetParticle2D("BossBackParticle", true);
 }

@@ -76,7 +76,7 @@ void CBelialHand::PostUpdate(float DeltaTime)
 			PlayerPos -= Pos;
 			PlayerPos.x = 0.f;
 			PlayerPos.Normalize();
-			AddWorldPos(PlayerPos *DeltaTime*50.f);
+			AddWorldPos(PlayerPos *DeltaTime*100.f);
 		}
 	}
 }
@@ -162,6 +162,11 @@ void CBelialHand::SetHorizontalReverse2DEnable(bool Enable)
 CMaterial* CBelialHand::GetMaterial(int Index)
 {
 	return m_Sprite->GetMaterial(Index);
+}
+
+void CBelialHand::StopAnimation()
+{
+	m_Animation2D->StopPlay();
 }
 
 

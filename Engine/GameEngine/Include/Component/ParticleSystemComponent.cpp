@@ -21,9 +21,6 @@ CParticleSystemComponent::CParticleSystemComponent()    :
     m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
     m_ComponentClassType = Component_Class_Type::Particle;
 
-    SetRender2DType(RT2D_Default);
-
-    m_pTransform->SetDefaultZ(0.f);
 }
 
 CParticleSystemComponent::CParticleSystemComponent(const CParticleSystemComponent& com) :
@@ -120,6 +117,7 @@ bool CParticleSystemComponent::Init()
 
     m_Mesh = CResourceManager::GetInst()->FindMesh("ParticlePoint");
     m_RenderShader = CShaderManager::GetInst()->FindShader("ParticleShader");
+    SetRender2DType(RT2D_Default);
 
     return true;
 }
@@ -346,4 +344,11 @@ void CParticleSystemComponent::SetAnimation2DCount(int Count)
 void CParticleSystemComponent::SetAnimation2DPlayRate(float PlayRate)
 {
     m_CBuffer->SetAnimation2DPlayRate(PlayRate);
+}
+
+void CParticleSystemComponent::SetRender2DType(Render_Type_2D Type)
+{
+    CPrimitiveComponent::SetRender2DType(Type);
+    if(m_CBuffer)
+        m_CBuffer->SetDefaultZ(m_pTransform->GetDefaultZ());
 }

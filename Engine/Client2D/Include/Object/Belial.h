@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include <Component/ParticleSystemComponent.h>
 class CBelial :
 	public CGameObject
 {
@@ -16,10 +17,13 @@ private:
 
 	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
 	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CSpriteComponent> m_BackSprite;
+	CSharedPtr<CParticleSystemComponent> m_BackParticle;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CEngineFSM<CEnemy> m_EnemyFSM;
 	CBasicStatus m_Status;
 	class CAnimation2D_FSM* m_Animation2D;
+	class CAnimation2D_FSM* m_BackAnimation2D;
 	bool m_Attacking;
 	Belial_Pattern m_Pattern;
 	float m_PatternTimer;

@@ -51,15 +51,21 @@ bool CBossSpawnUI::Init()
 
 	m_BossName = CreateWidget<CText>("BossName");
 	m_BossName->SetText(TEXT("벨리알"));
-	m_BossName->SetPos(250.f, 0.f);
+	m_BossName->SetFontSize(25.f);
+	m_BossName->SetColor(0.f, 0.f, 0.f);
+	m_BossName->SetPos(50.f, 170.f);
 	m_BossName->SetCollision(false);
 	m_BossName->SetOpacity(0.f);
 	m_BossName->SetAlphaEnable(true);
 
 	m_BossNinkName = CreateWidget<CText>("BossNinkName");
+	m_BossNinkName->SetMaxTextCount(25);
 	m_BossNinkName->SetText(TEXT("감옥의 수문장"));
+	m_BossNinkName->SetSize(300.f, 100.f);
 	m_BossNinkName->SetColorTint(1.f, 1.f, 1.f, 0.f);
-	m_BossNinkName->SetPos(300.f, 0.f);
+	m_BossNinkName->SetFontSize(20.f);
+	m_BossNinkName->SetColor(0.f, 0.f, 0.f);
+	m_BossNinkName->SetPos(60.f, 200.f);
 	m_BossNinkName->SetCollision(false);
 	m_BossNinkName->SetOpacity(0.f);
 	m_BossNinkName->SetAlphaEnable(true);

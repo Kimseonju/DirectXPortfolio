@@ -129,28 +129,8 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 		float	ConvertY = g_ParticleArray[ThreadID.x].WorldPos.y - g_CameraBottom;
 
 		float	RatioZ = ConvertY / (g_Resolution.y * 2.f);
-		if (g_ParticleDefaultZ >= 0.7f)
-		{
-			// Min : 0.7f   Max : 0.99999f 
 			g_ParticleArray[ThreadID.x].WorldPos.z =
-				(0.99999f - 0.7f) * RatioZ + 0.7f;
-		}
-
-		// Default
-		else if (g_ParticleDefaultZ >= 0.3f)
-		{
-			// Min : 0.3f   Max : 0.69999f 
-			g_ParticleArray[ThreadID.x].WorldPos.z =
-				(0.69999f - 0.3f) * RatioZ + 0.3f;
-		}
-
-		// Particle
-		else
-		{
-			// Min : 0.f   Max : 0.29999f 
-			g_ParticleArray[ThreadID.x].WorldPos.z =
-				0.29999f * RatioZ;
-		}
+				(0.99999f - g_ParticleDefaultZ) * RatioZ + 0.7f;
 
 		g_ParticleArray[ThreadID.x].FallTime = 0.f;
 		g_ParticleArray[ThreadID.x].FallStartY =
@@ -159,11 +139,13 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 
 		g_ParticleArray[ThreadID.x].MaxLifeTime = RandomPos.x * (g_ParticleLifeTimeMax - g_ParticleLifeTimeMin) + g_ParticleLifeTimeMin;
 		g_ParticleArray[ThreadID.x].LifeTime = 0.f;
-		g_ParticleArray[ThreadID.x].Animation2DCount = 0.f;
+		g_ParticleArray[ThreadID.x].Animation2DCount = 0.f;	
+		
 		if (g_ParticleMove == 1)
 		{
 			g_ParticleArray[ThreadID.x].Speed = RandomPos.x * (g_MaxSpeed - g_MinSpeed) + g_MinSpeed;
-			g_ParticleArray[ThreadID.x].Dir = normalize(g_ParticleMoveDir);
+			float2	RandomDir = RandomPos.xy * 2.f - 1.f;
+			g_ParticleArray[ThreadID.x].Dir = normalize(normalize(float3(RandomDir, 0.f)) + g_ParticleMoveDir);
 			//g_ParticleArray[ThreadID.x].Dir = normalize(PosRange);
 		}
 	}
@@ -207,28 +189,9 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 
 			float	RatioZ = ConvertY / (g_Resolution.y * 2.f);
 
-			if (g_ParticleDefaultZ >= 0.7f)
-			{
-				// Min : 0.7f   Max : 0.99999f 
-				g_ParticleArray[ThreadID.x].WorldPos.z =
-					(0.99999f - 0.7f) * RatioZ + 0.7f;
-			}
+			g_ParticleArray[ThreadID.x].WorldPos.z =
+				(0.99999f - g_ParticleDefaultZ) * RatioZ + 0.7f;
 
-			// Default
-			else if (g_ParticleDefaultZ >= 0.3f)
-			{
-				// Min : 0.3f   Max : 0.69999f 
-				g_ParticleArray[ThreadID.x].WorldPos.z =
-					(0.69999f - 0.3f) * RatioZ + 0.3f;
-			}
-
-			// Particle
-			else
-			{
-				// Min : 0.f   Max : 0.29999f 
-				g_ParticleArray[ThreadID.x].WorldPos.z =
-					0.29999f * RatioZ;
-			}
 		}
 
 		if (g_ParticleArray[ThreadID.x].Animation2DCount >=

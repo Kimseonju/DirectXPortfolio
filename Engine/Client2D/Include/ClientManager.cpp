@@ -111,8 +111,14 @@ bool CClientManager::Init()
    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::EnemyAttack,
        Collision_Interaction::Block);
 
-    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Player,
-        Collision_Interaction::Ignore);
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Tile_Nopass,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Object,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Tile_pass,
+        Collision_Interaction::Block);
+    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Object,
+        Collision_Interaction::Block);
     CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Object,
         Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::PlayerAttack,
