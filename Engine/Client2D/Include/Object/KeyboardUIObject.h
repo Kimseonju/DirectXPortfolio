@@ -2,11 +2,6 @@
 
 #include "GameObject.h"
 #include "Component/SpriteComponent.h"
-#include "Component/Camera.h"
-#include "Component/SpringArm2D.h"
-#include "Component/ColliderBox2D.h"
-#include <Component/RigidBodyComponent.h>
-#include "Component/WidgetComponent.h"
 #include "../BasicStatus.h"
 
 class CKeyboardUIObject :

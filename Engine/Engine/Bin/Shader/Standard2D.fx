@@ -43,17 +43,37 @@ float2 ComputeAnimation2DUV(float2 UV)
 
 	float2	ResultUV;
 
-	if (UV.x <= 0.f)
-		ResultUV.x = g_vAnimation2DStartUV.x;
+	if (g_HorizontalReverse2DEnable == 1)
+	{
 
+		if (UV.x <= 0.f)
+			ResultUV.x = g_vAnimation2DEndUV.x;
+
+		else
+			ResultUV.x = g_vAnimation2DStartUV.x;
+
+		if (UV.y <= 0.f)
+			ResultUV.y = g_vAnimation2DStartUV.y;
+
+		else
+			ResultUV.y = g_vAnimation2DEndUV.y;
+
+	}
 	else
-		ResultUV.x = g_vAnimation2DEndUV.x;
+	{
+		if (UV.x <= 0.f)
+			ResultUV.x = g_vAnimation2DStartUV.x;
 
-	if (UV.y <= 0.f)
-		ResultUV.y = g_vAnimation2DStartUV.y;
+		else
+			ResultUV.x = g_vAnimation2DEndUV.x;
 
-	else
-		ResultUV.y = g_vAnimation2DEndUV.y;
+		if (UV.y <= 0.f)
+			ResultUV.y = g_vAnimation2DStartUV.y;
+
+		else
+			ResultUV.y = g_vAnimation2DEndUV.y;
+
+	}
 
 	return ResultUV;
 }
@@ -112,11 +132,15 @@ VS_OUTPUT_UV Standard2DTextureVS(VS_INPUT_UV input)
 	output.ProjPos = mul(float4(Pos, 1.f), g_matWVP);
 	output.Pos = output.ProjPos;
 	output.UV = ComputeAnimation2DUV(input.UV);
-	if (g_HorizontalReverse2DEnable==1)
+
+	if (g_HorizontalReverse2DEnable==1 && g_Animation2DEnable == 1)
+	{
+		int b = 0;
+	}
+	else if (g_HorizontalReverse2DEnable == 1 )
 	{
 		output.UV.x = 1 - output.UV.x;
 	}
-
 	if (g_VerticalReverse2DEnable == 1)
 	{
 		output.UV.y = 1 - output.UV.y;

@@ -290,6 +290,13 @@ enum class Client_Enemy_Type
 {
     SmallSkel_Sword,
     SmallSkel_Bow,
+    Ghost,
+    Banshee,
+    Bat,    
+    Giant_Red,
+    Minotaurs,
+    Ovibos,
+    Big_Normal,
     End
 };
 

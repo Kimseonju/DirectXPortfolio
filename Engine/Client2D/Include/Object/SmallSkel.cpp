@@ -10,7 +10,8 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 
-CSmallSkel::CSmallSkel()
+CSmallSkel::CSmallSkel():
+	m_PlayerFind(false)
 {
 }
 
@@ -41,7 +42,7 @@ bool CSmallSkel::Init()
 	m_Animation2D->SetIdleAnimation2D("SmallEnemyIdle");
 	m_Animation2D->SetMoveAnimation2D("SmallEnemyMove");
 	m_Animation2D->SetAttackAnimation2D("SmallEnemyIdle");
-
+	m_Animation2D->ChangeIdleAnimation2D();
 	m_Weapon = m_pScene->SpawnObject<CSkelSmallDagger>("SkelSmallDagger");
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
@@ -57,77 +58,13 @@ void CSmallSkel::Update(float DeltaTime)
 	CEnemy::Update(DeltaTime);
 	if (m_StartTimer > 0.f)
 		return;
-	m_Body->SetGravity(true);
 	if (m_Weapon->IsAttack())
 	{
 		return;
 	}
 
-	if (CGlobalValue::MainPlayer)
-	{
-		CPlayer* player = CGlobalValue::MainPlayer;
-		Vector2 PlayerPos=Vector2(player->GetWorldPos().x, player->GetWorldPos().y);
-		float Distance = abs(PlayerPos.Distance(Vector2(GetWorldPos().x, GetWorldPos().y)));
-		if (Distance >30.f)
-		{
-			return;
-		}
-		Vector3 Pos = player->GetWorldPos() - GetWorldPos();
-		Pos.Normalize();
-		float Angle = GetWorldPos().Angle(player->GetWorldPos());
 	
-		//위
-		if (Angle > 330.f && Angle < 30.f)
-		{
-	
-		}
-	
-		//아래
-	
-		else if (Angle > 150.f && Angle < 210.f)
-		{
-	
-		}
-		else
-		{
-			Pos.y = 0.f;
-			Pos.z = 0.f;
-			Pos.Normalize();
-			m_Body->SetDir(Pos);
-	
-			if (Pos.x < 0.f)
-			{
-				m_Dir = Object_Dir::Left;
-				m_Sprite->SetHorizontalReverse2DEnable(true);
-			}
-			else
-			{
-				m_Dir = Object_Dir::Right;
-				m_Sprite->SetHorizontalReverse2DEnable(false);
-			}
-			m_WeaponArm->SetDir(m_Dir);
-	
-			if (m_Weapon)
-			{
-				m_Weapon->SetDir(m_Dir);
-				if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
-				{
-					if (m_Dir == Object_Dir::Left)
-					{
-						m_Weapon->SetHorizontalReverse2DEnable(true);
-					}
-					else if (m_Dir == Object_Dir::Right)
-					{
-						m_Weapon->SetHorizontalReverse2DEnable(false);
-					}
-				}
-				else if (m_Weapon->GetWeaponType() == Weapon_Type::Range)
-				{
-				}
-			}
-	
-		}
-	}
+	AddRelativePos(m_Body->GetMove());
 }
 
 void CSmallSkel::PostUpdate(float DeltaTime)
@@ -172,6 +109,7 @@ void CSmallSkel::CollisionAttackRangeBegin(const HitResult& result, CCollider* C
 		}
 		//왼쪽 오른쪽
 		m_Weapon->Attack(Dir);
+		m_State = Enemy_State::Attack;
 	}
 }
 

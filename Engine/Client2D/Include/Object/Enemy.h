@@ -37,6 +37,7 @@ protected:
 	bool m_OneAttack;
 	Object_Dir m_Dir;
 	bool m_WallCol;
+	bool m_StartGravity;
 	class CProgressBarObject* m_ProgressBar;
 protected:
 	bool    m_ChildFire;

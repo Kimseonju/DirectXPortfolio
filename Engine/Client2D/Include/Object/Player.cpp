@@ -15,6 +15,7 @@
 #include "PlayerDash.h"
 #include "../UI/BasicMouse.h"
 #include "../UI/UIManager.h"
+#include "PlayerInteractionCollision.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
 	m_Weapon(nullptr),
@@ -127,6 +128,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Dash", KT_Down, this, &CPlayer::Dash);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MapOnOff", KT_Down, this, &CPlayer::MapOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MouseWhell", KT_Down, this, &CPlayer::WeaponChange);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("InteractionInputKey", KT_Up, this, &CPlayer::InputInteractionInputKey);
 	//마우스회전용
 	
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -353,6 +355,14 @@ void CPlayer::MapOnOff(float DeltaTime)
 void CPlayer::WeaponChange(float DeltaTime)
 {
 	CUIManager::GetInst()->GetPlayerUI()->WeaponChange();
+}
+void CPlayer::InputInteractionInputKey(float DeltaTime)
+{
+	CPlayerInteractionCollision* CollisionObj = m_pScene->SpawnObject<CPlayerInteractionCollision>("PlayerInteractionCollision");
+	CollisionObj->SetWorldPos(GetWorldPos());
+
+	CUIManager::GetInst()->GetShopUI()->Enable(true);
+
 }
 void CPlayer::AnimationFrameEnd(const std::string& Name)
 {

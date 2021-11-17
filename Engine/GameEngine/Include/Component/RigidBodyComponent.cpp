@@ -68,7 +68,7 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Force.y = -200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
 			moveDir += m_Force * DeltaTime;
-			moveDir += m_Dir * m_Speed * DeltaTime/3.f;
+			moveDir += m_Dir * m_Speed * DeltaTime;
 		}
 		//대쉬중일때
 		else

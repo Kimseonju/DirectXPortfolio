@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "../GlobalValue.h"
 class CSmallSkel :
     public CEnemy
 {
@@ -9,7 +10,8 @@ protected:
 	CSmallSkel();
 	CSmallSkel(const CSmallSkel& obj);
 	virtual ~CSmallSkel();
-
+private:
+	bool m_PlayerFind;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -27,10 +29,10 @@ public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 public:
 
-	void FindStay() override;
-	void MoveStart() override;
-	void MoveStay() override;
-	void AttackStart()override;
-	void AttackStay() override;
+	virtual void FindStay() override;
+	virtual void MoveStart() override;
+	virtual void MoveStay() override;
+	virtual void AttackStart()override;
+	virtual void AttackStay() override;
 };
 

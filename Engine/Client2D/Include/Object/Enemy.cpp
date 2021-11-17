@@ -17,7 +17,8 @@ CEnemy::CEnemy() :
 	m_ChildFireTime(0.f),
 	m_ChildFireTimeMax(0.2f),
 	m_State(Enemy_State::Idle),
-	 m_WallCol(false)
+	m_WallCol(false),
+	m_StartGravity(false)
 {
 }
 
@@ -63,6 +64,10 @@ bool CEnemy::Init()
 
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Body);
+	m_Sprite->AddChild(m_Collider2DHorizon);
+	m_Sprite->AddChild(m_Collider2DVertical);
+	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_AttackRangeCollider2D);
 
 	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
@@ -93,8 +98,6 @@ bool CEnemy::Init()
 		&CEnemy::CollisionVerticalMiddle);
 	m_Collider2DVertical->AddCollisionCallbackFunction<CEnemy>(Collision_State::End, this,
 		&CEnemy::CollisionVerticalEnd);
-	m_Sprite->AddChild(m_Collider2DHorizon);
-	m_Sprite->AddChild(m_Collider2DVertical);
 
 
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -105,7 +108,6 @@ bool CEnemy::Init()
 	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
 	m_Status.SetHP(30);
 	m_Status.SetHPMax(30);
-	m_Sprite->AddChild(m_AttackRangeCollider2D);
 
 
 	m_EnemyFSM.CreateState("Find", this, &CEnemy::FindStay, &CEnemy::FindStart, &CEnemy::FindEnd);
@@ -129,17 +131,17 @@ void CEnemy::Update(float DeltaTime)
 		return;
 	else
 	{
-		if (!m_Start)
+		if (!m_StartGravity)
 		{
-			m_Start = true;
+			m_StartGravity = true;
 			m_Body->SetGravity(true);
 		}
 	}
+	m_EnemyFSM.Update();
 	Vector3 Pos = GetWorldPos();
 	Pos.y -= 10.f;
 	m_ProgressBar->SetWorldPos(Pos);
 	m_WallCol= false;
-	m_EnemyFSM.Update();
 	m_ProgressBar->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
 
 
@@ -195,6 +197,7 @@ void CEnemy::Enable(bool bEnable)
 	m_Sprite->Enable(bEnable);
 	m_Collider2DHorizon->Enable(bEnable);
 	m_Collider2DVertical->Enable(bEnable);
+	m_Collider2D->Enable(bEnable);
 	m_AttackRangeCollider2D->Enable(bEnable);
 	m_Body->Enable(bEnable);
 	m_ProgressBar->Enable(bEnable);

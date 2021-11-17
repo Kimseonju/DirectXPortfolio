@@ -67,6 +67,7 @@ public:
 	{
 		return &m_Status;
 	}
+	
 public:
 
 	const TCHAR* GetItemName() const;

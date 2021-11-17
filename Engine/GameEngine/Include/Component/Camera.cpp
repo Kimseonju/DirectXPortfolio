@@ -313,6 +313,32 @@ void CCamera::PrevRender(float DeltaTime)
 		{
 			Pos.y = m_MaxY;
 		}
+		if (m_qCameraMove.size() != 0)
+		{
+			//있을때
+			if (m_MoveTime < m_qCameraMove.front().WaitTime)
+			{
+				Vector2 EndMovePos = m_qCameraMove.front().Pos;
+				EndMovePos.x -= 640.f;
+				EndMovePos.y -= 360.f;
+				Vector2 CameraPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+				CameraPos = EndMovePos.Lerp2DMax(CameraPos, EndMovePos, m_MoveTime);
+				Pos.x = CameraPos.x;
+				Pos.y = CameraPos.y;
+				m_MoveTime += DeltaTime;
+				m_CameraMove = true;
+			}
+			else
+			{
+				m_MoveTime = 0.f;
+				m_qCameraMove.pop();
+				m_CameraMoveEnd = true;
+			}
+		}
+		else
+		{
+			m_MoveTime = 0.f;
+		}
 
 		if (m_qCameraShake.size() != 0)
 		{
@@ -335,32 +361,7 @@ void CCamera::PrevRender(float DeltaTime)
 			m_ShakeTime = 0.f;
 		}
 		m_CameraMoveEnd = false;
-		if (m_qCameraMove.size() != 0)
-		{
-			//있을때
-			if (m_MoveTime < m_qCameraMove.front().WaitTime)
-			{
-				Vector2 EndMovePos = m_qCameraMove.front().Pos;
-				EndMovePos.x -= 640.f;
-				EndMovePos.y -= 360.f;
-				Vector2 CameraPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-				CameraPos =EndMovePos.Lerp2DMax(CameraPos, EndMovePos, m_MoveTime);
-				Pos.x = CameraPos.x;
-				Pos.y = CameraPos.y;
-				m_MoveTime += DeltaTime;
-				m_CameraMove = true;
-			}
-			else
-			{
-				m_MoveTime = 0.f;
-				m_qCameraMove.pop();
-				m_CameraMoveEnd = true;
-			}
-		}
-		else
-		{
-			m_MoveTime = 0.f;
-		}
+		
 		Pos = Pos * -1.f;
 		//임시값 (Object에붙으면 Z알아서계산되기때문
 		Pos.z = 0.f;

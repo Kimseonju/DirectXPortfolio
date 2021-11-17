@@ -70,8 +70,8 @@ public:
     void SetForce2D(float Angle, float Power)
     {
         float Radian = DegreeToRadian(Angle);
-        m_Force.x = cosf(m_DashRadian) * Power;
-        m_Force.y = sinf(m_DashRadian) * Power;
+        m_Force.x = cosf(Radian) * Power;
+        m_Force.y = sinf(Radian) * Power;
     }
     bool IsDash() const
     {

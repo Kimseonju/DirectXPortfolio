@@ -125,8 +125,16 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_EnemyType = m_Owner->AddWidget<CIMGUIComboBox>("##EnemyTypeCombo", 100.f, 20.f);
 	m_EnemyType->AddItem("SmallSkel_Sword");
 	m_EnemyType->AddItem("SmallSkel_Bow");
+	m_EnemyType->AddItem("Ghost");
+	m_EnemyType->AddItem("Banshee");
+	m_EnemyType->AddItem("Bat");
+	m_EnemyType->AddItem("Giant_Red");
+	m_EnemyType->AddItem("Minotaurs");
+	m_EnemyType->AddItem("Ovibos");
+	m_EnemyType->AddItem("Big_Normal");
 	m_EnemyType->AddItem("End");
 	m_EnemyType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::EnemyTypeComboCallback);
+
 
 	m_vecWidget.push_back(m_EnemyType);
 #pragma endregion

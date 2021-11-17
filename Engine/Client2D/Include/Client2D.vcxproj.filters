@@ -145,9 +145,6 @@
     <Filter Include="UI\UI\WidgetWindow\PlayerUI">
       <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\UI\WidgetWindow\NewFilter1">
-      <UniqueIdentifier>{8e3ac30e-c451-451c-a8ec-7094098de1e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\ObjectUI">
       <UniqueIdentifier>{87ba674e-780e-493e-97b7-fa4a6b9fc787}</UniqueIdentifier>
     </Filter>
@@ -156,6 +153,24 @@
     </Filter>
     <Filter Include="02. Object\Enemy\Boss\Belial\Weapon">
       <UniqueIdentifier>{f0fd5140-12ab-4c8e-b3e7-3915d209769a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Laser">
+      <UniqueIdentifier>{6c4f76cb-1979-424c-9621-5d251a8b250e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Boss\Belial\Die">
+      <UniqueIdentifier>{6249a996-e256-42c7-89be-b59cbbae5927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject">
+      <UniqueIdentifier>{5796c5a8-95b4-4820-b295-55b1d7bb8796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\NPC">
+      <UniqueIdentifier>{b6894723-db8b-47c6-bbcb-3f6dcbb086c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\Shop">
+      <UniqueIdentifier>{6faf6257-0685-4aa8-a5fc-81a0182474ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\SmallSkel_Bow">
+      <UniqueIdentifier>{f58f99b5-fc0f-402a-adba-147155bb3da5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\EffectAndParticle">
       <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
@@ -174,12 +189,6 @@
     </Filter>
     <Filter Include="02. Object\EffectAndParticle\Boss">
       <UniqueIdentifier>{fbf9864c-8e34-413f-a3ca-d2b67c1f01d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Enemy\Boss\Belial\Laser">
-      <UniqueIdentifier>{6c4f76cb-1979-424c-9621-5d251a8b250e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Enemy\Boss\Belial\Die">
-      <UniqueIdentifier>{6249a996-e256-42c7-89be-b59cbbae5927}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -480,6 +489,57 @@
     <ClCompile Include="Object\BelialDeadMouth.cpp">
       <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
     </ClCompile>
+    <ClCompile Include="Object\HPFairy.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BasicTresure.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossTresure.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Gold.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GoldBullion.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerInteractionCollision.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossTorchLight.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TorchLight.cpp">
+      <Filter>02. Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RestaurantNPC.cpp">
+      <Filter>02. Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ShopNPC.cpp">
+      <Filter>02. Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ShopUI.cpp">
+      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ShopButton.cpp">
+      <Filter>UI\UI\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ShopInfoWidget.cpp">
+      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SmallSkel_Bow.cpp">
+      <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SmallSkelBow.cpp">
+      <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EnemyArrow.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallSkel_Bow_FSM.cpp">
+      <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -772,6 +832,54 @@
     </ClInclude>
     <ClInclude Include="Object\BelialDeadMouth.h">
       <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HPFairy.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BasicTresure.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossTresure.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Gold.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GoldBullion.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerInteractionCollision.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossTorchLight.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TorchLight.h">
+      <Filter>02. Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RestaurantNPC.h">
+      <Filter>02. Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ShopNPC.h">
+      <Filter>02. Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ShopUI.h">
+      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ShopButton.h">
+      <Filter>UI\UI\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ShopInfoWidget.h">
+      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SmallSkel_Bow.h">
+      <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SmallSkelBow.h">
+      <Filter>02. Object\Item\Weapon\EnemyWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EnemyArrow.h">
+      <Filter>02. Object\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

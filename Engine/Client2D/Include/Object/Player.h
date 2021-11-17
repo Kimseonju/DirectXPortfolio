@@ -93,6 +93,7 @@ public:
 	void InventoryOnOff(float DeltaTime);
 	void MapOnOff(float DeltaTime);
 	void WeaponChange(float DeltaTime);
+	void InputInteractionInputKey(float DeltaTime);
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);

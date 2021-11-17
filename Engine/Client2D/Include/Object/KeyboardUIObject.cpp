@@ -35,13 +35,11 @@ bool CKeyboardUIObject::Init()
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	SetRootComponent(m_Sprite);
 
-	m_Sprite->SetRelativeScale(42.f, 56.f, 1.f);
+	m_Sprite->SetRelativeScale(13.f, 14.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
 	m_Sprite->AddRelativePos(0.f, -1.f, 0.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
-	CMaterial* Material = m_Sprite->GetMaterial(0);
-	Material->SetBaseColor(0.f, 0.f, 0.f, 1.f);
 
 	return true;
 }

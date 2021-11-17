@@ -95,7 +95,7 @@ void CBelialDeadHead::CollisionBegin(const HitResult& result, CCollider* Collide
 		Vector2 EnemyPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = EnemyPos.GetAngle(ColPos);
-		ColDirMiddle(Angle, result.DestCollider);
+		ColDirStart(Angle, result.DestCollider);
 	}
 }
 void CBelialDeadHead::CollisionMiddle(const HitResult& result, CCollider* Collider)
@@ -106,7 +106,7 @@ void CBelialDeadHead::CollisionMiddle(const HitResult& result, CCollider* Collid
 		Vector2 EnemyPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = EnemyPos.GetAngle(ColPos);
-		ColDirMiddle(Angle, result.DestCollider);
+		ColDirStart(Angle, result.DestCollider);
 	}
 }
 
@@ -143,32 +143,4 @@ void CBelialDeadHead::ColDirStart(float Angle, CCollider* Col)
 
 }
 
-void CBelialDeadHead::ColDirMiddle(float Angle, CCollider* Col)
-{
-	Vector3 ColPos = Col->GetWorldPos();
-	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
-	Vector3 PlayerPos = m_Collider2D->GetWorldPos();
-	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
 
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
-	//왼쪽
-
-
-	m_Body->StopForceY();
-	m_Body->StopForceX();
-	m_Body->SetGravity(false);
-	float y = (PlayerScale.y + ColScale.y);
-	Vector3 XMove = ColPos;
-	XMove.y += y;
-	PlayerPos.y = XMove.y;
-	SetWorldPos(PlayerPos);
-	m_Body->SetGravity(false);
-	m_Body->SetJump(false);
-}
-
-void CBelialDeadHead::ColDirEnd(CCollider* Col)
-{
-}

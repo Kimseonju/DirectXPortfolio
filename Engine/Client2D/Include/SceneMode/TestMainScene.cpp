@@ -40,6 +40,8 @@
 #include "../Object/BossDieParticle.h"
 #include "../Stage/StageManager.h"
 #include "../Object/ProgressBarObject.h"
+#include "../Object/BasicTresure.h"
+#include "../Object/TorchLight.h"
 CTestMainScene::CTestMainScene() :
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
@@ -97,8 +99,8 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
@@ -108,6 +110,9 @@ bool CTestMainScene::Init()
 
 	CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
 	pEnemy->SetWorldPos(0.f, 100.f, 0.f);
+
+	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
+	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
 	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
@@ -454,6 +459,27 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 30.f));
 	}
 
+
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyBowIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("SmallEnemyBowIdle",
+		"SmallEnemyBow", TEXT("Enemy/SKel/Small/bow.png"));
+	for (int i = 0; i < 1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyBowIdle",
+			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
+	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyBowAttack");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("SmallEnemyBowAttack",
+		"SmallEnemyBow", TEXT("Enemy/SKel/Small/bow.png"));
+	for (int i = 1; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyBowAttack",
+			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
+	}
+
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 5);
+
 	/*
 	
 	Boss. Belial
@@ -575,6 +601,70 @@ void CTestMainScene::CreateAnimationSequence2D()
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_BulletFx",
 			Vector2(i * 31.f, 0), Vector2((i + 1) * 31.f, 31.f));
+	}
+
+	//Item
+
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gold");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Gold",
+		"Gold", TEXT("object/gold/goldCoin.png"));
+	for (int i = 0; i < 8; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gold",
+			Vector2(i * 7.f, 0), Vector2((i + 1) * 7.f, 7.f));
+	}
+
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("GoldBullion");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("GoldBullion",
+		"GoldBullion", TEXT("object/gold/goldBullion.png"));
+	for (int i = 0; i <7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("GoldBullion",
+			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 9.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("HPFairy");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("HPFairy",
+		"HPFairy", TEXT("object/hpFairy/Fairy.png"));
+	for (int i = 0; i <16; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("HPFairy",
+			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 20.f));
+	}
+
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Torch");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Torch",
+		"Torch", TEXT("object/torch/torch.png"));
+	for (int i = 0; i < 7; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Torch",
+			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 30.f));
+	}
+
+
+	/*
+	NPC
+	*/
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Shop");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Shop",
+		"Shop", TEXT("NPC/shop.png"));
+	for (int i = 0; i < 4; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Shop",
+			Vector2(i * 48.f, 0), Vector2((i + 1) * 48.f, 48.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
+		"Restaurant", TEXT("NPC/restaurant.png"));
+	for (int i = 0; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
+			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
 	}
 
 	/*

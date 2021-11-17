@@ -25,5 +25,7 @@ bool CUIManager::Init(CScene* Scene)
 	m_BossSpawnUI = m_pScene->GetViewport()->AddWindow<CBossSpawnUI>("BossSpawnUI");
 	m_BossDieUI = m_pScene->GetViewport()->AddWindow<CBossDieUI>("BossDieUI");
 	m_BossUI = m_pScene->GetViewport()->AddWindow<CBossUI>("BossUI");
+	m_ShopUI = m_pScene->GetViewport()->AddWindow<CShopUI>("ShopUI");
+	m_ShopUI->Enable(false);
 	return true;
 }

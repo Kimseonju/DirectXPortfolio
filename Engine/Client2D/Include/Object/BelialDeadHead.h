@@ -39,8 +39,6 @@ public:
 	virtual void CollisionMiddle(const HitResult& result, CCollider* Collider);
 	virtual void CollisionEnd(const HitResult& result, CCollider* Collider);
 	void ColDirStart(float Angle, CCollider* Col);
-	void ColDirMiddle(float Angle, CCollider* Col);
 	//Ãæµ¹End
-	void ColDirEnd(CCollider* Col);
 };
 

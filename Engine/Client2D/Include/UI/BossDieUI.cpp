@@ -46,7 +46,7 @@ void CBossDieUI::Update(float DeltaTime)
 	if (IsEnable())
 	{
 		m_Alpha -= DeltaTime;
-		m_Image->SetColorTint(0.f, 0.f, 0.f, m_Alpha);
+		m_Image->SetColorTint(1.f, 1.f, 1.f, m_Alpha);
 
 		if (m_Alpha < 0.f)
 		{
