@@ -166,29 +166,50 @@
     <Filter Include="02. Object\NPC">
       <UniqueIdentifier>{b6894723-db8b-47c6-bbcb-3f6dcbb086c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI\UI\WidgetWindow\Shop">
-      <UniqueIdentifier>{6faf6257-0685-4aa8-a5fc-81a0182474ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Enemy\SmallSkel_Bow">
       <UniqueIdentifier>{f58f99b5-fc0f-402a-adba-147155bb3da5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\EffectAndParticle">
       <UniqueIdentifier>{41311654-a96e-4b69-bdd5-02b4328f9b17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\EffectAndParticle\RevolverEffect">
-      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\EffectAndParticle\ShortSwordEffect">
       <UniqueIdentifier>{55812950-e4c4-48c5-b574-95b8fafb0d8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\EffectAndParticle\MetalBoomerangEffect">
-      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\EffectAndParticle\ObjectDieEffectObject">
       <UniqueIdentifier>{b1d0d5ea-ec60-49cf-92f0-7e2acb67c3cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\EffectAndParticle\Boss">
       <UniqueIdentifier>{fbf9864c-8e34-413f-a3ca-d2b67c1f01d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Ghost">
+      <UniqueIdentifier>{d634089b-b92e-415d-b123-b48c7b67c9fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Banshee">
+      <UniqueIdentifier>{e0fa3655-c556-4f8a-9bb3-9ed03084a545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Bullet">
+      <UniqueIdentifier>{94008da7-bc74-4ba7-9bf5-81189f08593e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Bullet\MetalBoomerangEffect">
+      <UniqueIdentifier>{5061b24a-fd1f-4c32-80c1-6526c5e237ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Bullet\RevolverEffect">
+      <UniqueIdentifier>{c5779b4c-b49c-431c-89fd-bdf9cb18ff63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Bullet\BanShee">
+      <UniqueIdentifier>{e42a6057-22e5-4d7d-9c19-289b65e779b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Enemy\Giant_Red">
+      <UniqueIdentifier>{7eee8ab2-7dd4-439d-92aa-e75348739174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Bullet\Giant_Red">
+      <UniqueIdentifier>{0a909868-8f07-43c4-a513-58b10f7578a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Bullet\Giant_Red">
+      <UniqueIdentifier>{a9c34489-1f86-4544-af37-7ff75f867645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\ShopUI">
+      <UniqueIdentifier>{6faf6257-0685-4aa8-a5fc-81a0182474ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -274,7 +295,7 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClCompile>
     <ClCompile Include="Object\RevolverEffectObject.cpp">
-      <Filter>02. Object\EffectAndParticle\RevolverEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\Bullet\RevolverEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ShortSwordEffectObject.cpp">
       <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
@@ -286,7 +307,7 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClCompile>
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp">
-      <Filter>02. Object\EffectAndParticle\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\Bullet\MetalBoomerangEffect</Filter>
     </ClCompile>
     <ClCompile Include="Object\ObjectDieEffectObject.cpp">
       <Filter>02. Object\EffectAndParticle\ObjectDieEffectObject</Filter>
@@ -520,13 +541,13 @@
       <Filter>02. Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="UI\ShopUI.cpp">
-      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+      <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
     </ClCompile>
     <ClCompile Include="UI\ShopButton.cpp">
       <Filter>UI\UI\Widget</Filter>
     </ClCompile>
     <ClCompile Include="UI\ShopInfoWidget.cpp">
-      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+      <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
     </ClCompile>
     <ClCompile Include="Object\SmallSkel_Bow.cpp">
       <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
@@ -539,6 +560,39 @@
     </ClCompile>
     <ClCompile Include="Object\SmallSkel_Bow_FSM.cpp">
       <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Ghost.cpp">
+      <Filter>02. Object\Enemy\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Ghost_FSM.cpp">
+      <Filter>02. Object\Enemy\Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Banshee.cpp">
+      <Filter>02. Object\Enemy\Banshee</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Banshee_FSM.cpp">
+      <Filter>02. Object\Enemy\Banshee</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BansheeBullet.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BansheeBulletFX.cpp">
+      <Filter>02. Object\EffectAndParticle\Bullet\BanShee</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Giant_Red.cpp">
+      <Filter>02. Object\Enemy\Giant_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Giant_Red_FSM.cpp">
+      <Filter>02. Object\Enemy\Giant_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Giant_RedBullet.cpp">
+      <Filter>02. Object\Bullet\Giant_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Giant_RedBulletMain.cpp">
+      <Filter>02. Object\Bullet\Giant_Red</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Giant_RedBulletFX.cpp">
+      <Filter>02. Object\EffectAndParticle\Bullet\Giant_Red</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -624,7 +678,7 @@
       <Filter>02. Object\Item\Weapon\Revolver</Filter>
     </ClInclude>
     <ClInclude Include="Object\RevolverEffectObject.h">
-      <Filter>02. Object\EffectAndParticle\RevolverEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\Bullet\RevolverEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ShortSwordEffectObject.h">
       <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
@@ -636,7 +690,7 @@
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClInclude>
     <ClInclude Include="Object\MetalBoomerangEffectObject.h">
-      <Filter>02. Object\EffectAndParticle\MetalBoomerangEffect</Filter>
+      <Filter>02. Object\EffectAndParticle\Bullet\MetalBoomerangEffect</Filter>
     </ClInclude>
     <ClInclude Include="Object\ObjectDieEffectObject.h">
       <Filter>02. Object\EffectAndParticle\ObjectDieEffectObject</Filter>
@@ -864,13 +918,13 @@
       <Filter>02. Object\NPC</Filter>
     </ClInclude>
     <ClInclude Include="UI\ShopUI.h">
-      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+      <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
     </ClInclude>
     <ClInclude Include="UI\ShopButton.h">
       <Filter>UI\UI\Widget</Filter>
     </ClInclude>
     <ClInclude Include="UI\ShopInfoWidget.h">
-      <Filter>UI\UI\WidgetWindow\Shop</Filter>
+      <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
     </ClInclude>
     <ClInclude Include="Object\SmallSkel_Bow.h">
       <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
@@ -880,6 +934,30 @@
     </ClInclude>
     <ClInclude Include="Object\EnemyArrow.h">
       <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Ghost.h">
+      <Filter>02. Object\Enemy\Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Banshee.h">
+      <Filter>02. Object\Enemy\Banshee</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BansheeBullet.h">
+      <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BansheeBulletFX.h">
+      <Filter>02. Object\EffectAndParticle\Bullet\BanShee</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Giant_Red.h">
+      <Filter>02. Object\Enemy\Giant_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Giant_RedBullet.h">
+      <Filter>02. Object\Bullet\Giant_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Giant_RedBulletMain.h">
+      <Filter>02. Object\Bullet\Giant_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Giant_RedBulletFX.h">
+      <Filter>02. Object\EffectAndParticle\Bullet\Giant_Red</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

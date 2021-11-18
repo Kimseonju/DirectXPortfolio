@@ -23,11 +23,33 @@ protected:
 	int m_Armor; //방어력
 	int m_Critical;
 	int m_Evasion; //회피
-	
+	int m_Magazine;//탄창
+	int m_MagazineMax;
 public:
 	void Dash();
 public:
+	void SetMagazine(int Magazine)
+	{
+		m_Magazine = Magazine;
+		m_MagazineMax = Magazine;
+	}
+	int GetMagazine() const
+	{
+		return m_Magazine;
+	}
+	void Reload()
+	{
+		m_Magazine = m_MagazineMax;
+	}
 
+	bool IsMagazine() const
+	{
+		return m_MagazineMax != 0;
+	}
+	void MagazineFire()
+	{
+		m_Magazine--;
+	}
 	void SetHP(int HP);
 	void SetHPMax(int HP);
 	void SetDash(int Dash);

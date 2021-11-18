@@ -11,6 +11,9 @@
 #include "../Object/SmallSkel.h"
 #include "../Object/Belial.h"
 #include "../Object/SmallSkel_Bow.h"
+#include "../Object/Ghost.h"
+#include "../Object/Banshee.h"
+#include "../Object/Giant_Red.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -128,11 +131,31 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 					Obj->SetStartTimer(1.f);
 					m_vecEnemy.push_back(Obj);
 					break;
+
+				case Client_Enemy_Type::Ghost:
+					Obj = m_pScene->SpawnObject<CGhost>("CreateObject" + str);
+					Obj->SetStartTimer(1.f);
+					m_vecEnemy.push_back(Obj);
+					break;
+
+				case Client_Enemy_Type::Banshee:
+					Obj = m_pScene->SpawnObject<CBanshee>("CreateObject" + str);
+					Obj->SetStartTimer(1.f);
+					m_vecEnemy.push_back(Obj);
+					break;
+
+				case Client_Enemy_Type::Giant_Red:
+					Obj = m_pScene->SpawnObject<CGiant_Red>("CreateObject" + str);
+					Obj->SetStartTimer(1.f);
+					m_vecEnemy.push_back(Obj);
+					break;
 				case Client_Enemy_Type::End:
 					break;
 				default:
 					break;
 				}
+
+
 			}
 			else
 			{
@@ -157,12 +180,11 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			break;
 		}
 		}
+
+
 		if (Obj)
 		{
 			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
-			Obj->SetWorldRotation(Info.StageSpawn[i].Rot);
-			Obj->SetWorldScale(Info.StageSpawn[i].Scale);
-			Obj->SetPivot(Info.StageSpawn[i].Pivot);
 		}
 		
 

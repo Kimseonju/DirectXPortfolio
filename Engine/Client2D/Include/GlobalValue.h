@@ -14,6 +14,14 @@ public:
     static float Lerp2D(float _Start, float _End, float _Ratio);
 };
 
+enum Weapons
+{
+    ShortSword,
+    MetalBoomerang,
+    Revolver,
+    End
+};
+
 enum class Object_Dir
 {
     Left,

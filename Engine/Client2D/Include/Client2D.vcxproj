@@ -170,6 +170,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
+    <ClCompile Include="Object\Banshee.cpp" />
+    <ClCompile Include="Object\BansheeBullet.cpp" />
+    <ClCompile Include="Object\BansheeBulletFX.cpp" />
+    <ClCompile Include="Object\Banshee_FSM.cpp" />
     <ClCompile Include="Object\BasicTresure.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
     <ClCompile Include="Object\BelialBullet.cpp" />
@@ -199,6 +203,13 @@
     <ClCompile Include="Object\EnemyAttack.cpp" />
     <ClCompile Include="Object\FlameEffect.cpp" />
     <ClCompile Include="Object\FSM\PlayerFSM.cpp" />
+    <ClCompile Include="Object\Ghost.cpp" />
+    <ClCompile Include="Object\Ghost_FSM.cpp" />
+    <ClCompile Include="Object\Giant_Red.cpp" />
+    <ClCompile Include="Object\Giant_RedBullet.cpp" />
+    <ClCompile Include="Object\Giant_RedBulletFX.cpp" />
+    <ClCompile Include="Object\Giant_RedBulletMain.cpp" />
+    <ClCompile Include="Object\Giant_Red_FSM.cpp" />
     <ClCompile Include="Object\Gold.cpp" />
     <ClCompile Include="Object\GoldBullion.cpp" />
     <ClCompile Include="Object\HPFairy.cpp" />
@@ -287,6 +298,9 @@
     <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
+    <ClInclude Include="Object\Banshee.h" />
+    <ClInclude Include="Object\BansheeBullet.h" />
+    <ClInclude Include="Object\BansheeBulletFX.h" />
     <ClInclude Include="Object\BasicTresure.h" />
     <ClInclude Include="Object\Belial.h" />
     <ClInclude Include="Object\BelialBullet.h" />
@@ -315,6 +329,11 @@
     <ClInclude Include="Object\EnemyArrow.h" />
     <ClInclude Include="Object\EnemyAttack.h" />
     <ClInclude Include="Object\FlameEffect.h" />
+    <ClInclude Include="Object\Ghost.h" />
+    <ClInclude Include="Object\Giant_Red.h" />
+    <ClInclude Include="Object\Giant_RedBullet.h" />
+    <ClInclude Include="Object\Giant_RedBulletFX.h" />
+    <ClInclude Include="Object\Giant_RedBulletMain.h" />
     <ClInclude Include="Object\Gold.h" />
     <ClInclude Include="Object\GoldBullion.h" />
     <ClInclude Include="Object\HPFairy.h" />

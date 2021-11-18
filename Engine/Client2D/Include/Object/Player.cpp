@@ -22,7 +22,8 @@ CPlayer::CPlayer() :
 	m_WeaponArm(nullptr),
 	m_Angle(0.f),
 	m_Dir(Object_Dir::Left),
-	m_WallCol(false)
+	m_WallCol(false),
+	m_Coin(100000)
 {
 }
 
@@ -129,6 +130,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MapOnOff", KT_Down, this, &CPlayer::MapOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MouseWhell", KT_Down, this, &CPlayer::WeaponChange);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InteractionInputKey", KT_Up, this, &CPlayer::InputInteractionInputKey);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("ShopUI", KT_Up, this, &CPlayer::ShopUIOnOff);
 	//마우스회전용
 	
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -364,6 +366,19 @@ void CPlayer::InputInteractionInputKey(float DeltaTime)
 	CUIManager::GetInst()->GetShopUI()->Enable(true);
 
 }
+void CPlayer::ShopUIOnOff(float DeltaTime)
+{
+	if (CUIManager::GetInst()->GetShopUI()->IsEnable())
+	{
+		CUIManager::GetInst()->GetShopUI()->Enable(false);
+		CGlobalValue::MainMouse->SetState(Mouse_State::World);
+	}
+	else
+	{
+		CUIManager::GetInst()->GetShopUI()->Enable(true);
+		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
+	}
+}
 void CPlayer::AnimationFrameEnd(const std::string& Name)
 {
 }
@@ -531,24 +546,12 @@ void CPlayer::CollisionVerticalEnd(const HitResult& result, CCollider* Collider)
 
 void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 {
-	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
 	Vector3 PlayerPos = GetWorldPos();
 	Vector3 PlayerScale = m_Collider2DHorizon->GetRelativeScale() / 2.f;
 
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//방향바꾸기
-	Velocity.Normalize();
-	Velocity.x = -Velocity.x;
-	Velocity.y = -Velocity.y;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
 	//왼쪽
-
-
 	if (90.f <= Angle && Angle < 270.f)
 	{
 		m_Body->StopForceX();
@@ -574,21 +577,11 @@ void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 
 void CPlayer::ColDirVertical(float Angle, CCollider* Col)
 {
-	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
 	Vector3 PlayerPos = GetWorldPos();
 	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
 
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//방향바꾸기
-	Velocity.Normalize();
-	Velocity.x = -Velocity.x;
-	Velocity.y = -Velocity.y;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
 	//왼쪽
 
 	//아래

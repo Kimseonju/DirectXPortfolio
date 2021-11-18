@@ -16,7 +16,7 @@ protected:
     CText* m_ItemName;
     CText* m_ItemPrice;
 
-protected:
+public:
     CShopInfoWidget();
     CShopInfoWidget(const CShopInfoWidget& widget);
     virtual ~CShopInfoWidget();

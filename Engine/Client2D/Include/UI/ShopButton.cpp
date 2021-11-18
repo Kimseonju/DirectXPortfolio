@@ -24,14 +24,10 @@ void CShopButton::Start()
 {
 	CButton::Start();
 	Vector2 Pos = GetPos();
-	m_ShopInfoWidget->SetPos(Pos);
-	m_ShopInfoWidget->SetPivot(0.f, 0.f);
-	m_ShopInfoWidget->SetCollision(false);
 	Vector2 Size = m_ItemInfoWidget->GetSize();
 	Pos.x -= Size.x;
 	m_ItemInfoWidget->SetPos(Pos);
 	m_ItemInfoWidget->SetCollision(false);
-	m_ItemInfoWidget->Enable(false);
 }
 
 bool CShopButton::Init()
@@ -45,10 +41,7 @@ bool CShopButton::Init()
 	m_ItemInfoWidget = m_Scene->GetViewport()->AddWindow<CItemInfoWidget>("ItemInfoWidget" + m_Name);
 	m_ItemInfoWidget->Enable(false);
 	m_ItemInfoWidget->SetZOrder(10);
-	//아이템정보들 (일단 안만들기 맵먼저만들자)
-	m_ShopInfoWidget = m_Scene->GetViewport()->AddWindow<CShopInfoWidget>("ShopInfoWidget" + m_Name);
-	m_ShopInfoWidget->Enable(false);
-	m_ShopInfoWidget->SetZOrder(9);
+
 
 	return true;
 }
@@ -91,19 +84,6 @@ void CShopButton::Render()
 
 	if (m_ButtonState[(int)m_State].Texture)
 		m_ButtonState[(int)m_State].Texture->ResetShader(0, TST_PIXEL);
-
-
-	if (m_Item)
-	{
-		m_TransformCBuffer->SetTextureEnable(true);
-		m_TransformCBuffer->UpdateCBuffer();
-		CTexture* texture = m_Item->GetItemTexture();
-
-		texture->SetShader(0, TST_PIXEL);
-		m_Mesh->Render();
-		texture->ResetShader(0, TST_PIXEL);
-
-	}
 }
 
 CShopButton* CShopButton::Clone()

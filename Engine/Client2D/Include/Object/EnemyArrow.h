@@ -16,6 +16,7 @@ protected:
 
 protected:
     CSharedPtr<CSpriteComponent> m_Sprite;
+    CSharedPtr<CSpriteComponent> m_Sprite2;
     CSharedPtr<CColliderBox2D> m_ColliderBox2D;
 public:
    

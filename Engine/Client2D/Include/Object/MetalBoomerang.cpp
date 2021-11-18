@@ -18,6 +18,7 @@ CMetalBoomerang::CMetalBoomerang()
 	m_Status.SetDamage(16);
 	m_Status.SetDamageMax(19);
 	m_Status.SetAttackSpeed(0.5f);
+	m_price = 1000;
 }
 
 CMetalBoomerang::CMetalBoomerang(const CMetalBoomerang& obj) :

@@ -67,9 +67,17 @@ void CWidgetWindow::PostUpdate(float DeltaTime)
 	auto	iter = m_vecWidget.begin();
 	auto	iterEnd = m_vecWidget.end();
 
-	for (; iter != iterEnd; ++iter)
+	for (; iter != iterEnd; )
 	{
+		if (!(*iter)->IsActive())
+		{
+			iter=m_vecWidget.erase(iter);
+			iterEnd = m_vecWidget.end();
+			continue;
+		}
+
 		(*iter)->PostUpdate(DeltaTime);
+		++iter;
 	}
 }
 

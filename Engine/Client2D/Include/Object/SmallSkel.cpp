@@ -64,12 +64,12 @@ void CSmallSkel::Update(float DeltaTime)
 	}
 
 	
-	AddRelativePos(m_Body->GetMove());
 }
 
 void CSmallSkel::PostUpdate(float DeltaTime)
 {
 	CEnemy::PostUpdate(DeltaTime);
+	AddRelativePos(m_Body->GetMove());
 }
 
 void CSmallSkel::Collision(float DeltaTime)
@@ -108,8 +108,8 @@ void CSmallSkel::CollisionAttackRangeBegin(const HitResult& result, CCollider* C
 			Dir = 90.f;
 		}
 		//¿ÞÂÊ ¿À¸¥ÂÊ
-		m_Weapon->Attack(Dir);
 		m_State = Enemy_State::Attack;
+		m_Weapon->Attack(Dir);
 	}
 }
 

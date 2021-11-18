@@ -49,7 +49,8 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("MapOnOff", VK_TAB);
     CInput::GetInst()->CreateKey("MouseWhell", DIK_MOUSEWHEEL);
     CInput::GetInst()->CreateKey("InteractionInputKey", 'F');
-    
+    CInput::GetInst()->CreateKey("ShopUI", 'R');
+  
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');
     CInput::GetInst()->SetControlKey("Skill2", true);

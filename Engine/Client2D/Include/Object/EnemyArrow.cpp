@@ -28,15 +28,24 @@ bool CEnemyArrow::Init()
 {
     CGameObject::Init();
 
-    m_ColliderBox2D = CreateSceneComponent<CColliderBox2D>("Collider2DCircle");
+    m_ColliderBox2D = CreateSceneComponent<CColliderBox2D>("ColliderBox2D");
     m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+    m_Sprite2 = CreateSceneComponent<CSpriteComponent>("Sprite2");
 
     SetRootComponent(m_Sprite);
 
-    m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
+    m_Sprite->SetRelativeScale(0.f, 0.f, 0.f);
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
     m_Sprite->AddChild(m_ColliderBox2D);
-    m_ColliderBox2D->SetExtent(6.f, 2.f);
+
+
+    m_Sprite->AddChild(m_Sprite2);
+    m_Sprite2->SetRelativeScale(13.f, 5.f, 1.f);
+    m_Sprite2->SetPivot(0.5f, 0.5f, 0.f);
+    CMaterial* Material = m_Sprite2->GetMaterial(0);
+    Material->AddTexture("Arrow", TEXT("Weapon/Range/Arrow.png"));
+
+    m_ColliderBox2D->SetExtent(2.f, 6.f);
     m_ColliderBox2D->SetCollisionProfile("EnemyAttack");
 
     //m_Body->SetCollisionProfile("Monster");
@@ -53,6 +62,7 @@ void CEnemyArrow::Update(float DeltaTime)
     CGameObject::Update(DeltaTime);
 
     AddRelativePos(GetAxis(AXIS_Y) * DeltaTime * 100.f);
+    m_Sprite2->SetRelativeRotationZ(GetWorldRotation().z+90.f);
 
 }
 

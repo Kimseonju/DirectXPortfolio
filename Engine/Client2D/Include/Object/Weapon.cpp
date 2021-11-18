@@ -46,10 +46,19 @@ void CWeapon::Update(float DeltaTime)
 		if (m_Reload)
 		{
 			m_CurrentReloadDelay += DeltaTime;
+			float ReloadSpeed = GetReloadSpeed();
+
+			if (m_CurrentReloadDelay >= ReloadSpeed)
+			{
+				m_Reload = false;
+				m_Status.Reload();
+				//사운드재생
+			}
+
 		}
 		m_CurrentAttackDelay += DeltaTime;
 
-		if (m_BulletMaxCount != 0 && m_BulletCount == 0)
+		if (IsMagazine() && GetMagazine() == 0)
 		{
 			Reload();
 		}
@@ -79,7 +88,7 @@ void CWeapon::Update(float DeltaTime)
 		//	m_Sprite->SetVerticalReverse2DEnable(false);
 		//}
 	}
-	
+
 }
 
 void CWeapon::PostUpdate(float DeltaTime)
@@ -108,24 +117,19 @@ void CWeapon::Animation2DNotify(const std::string& Name)
 
 bool CWeapon::Attack(float Angle)
 {
-	float AttackSpeed=1.f/GetAttackSpeed();
+	float AttackSpeed = 1.f / GetAttackSpeed();
 	float ReloadSpeed = GetReloadSpeed();
 	if (m_CurrentAttackDelay >= AttackSpeed)
 	{
 		if (m_Reload)
 		{
-			if (m_CurrentReloadDelay < ReloadSpeed)
-				return false;
-			else
-			{
-				m_Reload = false;
-			}
+			return false;
 		}
 		m_CurrentAttackDelay = 0.f;
 
-		if (m_BulletMaxCount != 0)
+		if (IsMagazine())
 		{
-			m_BulletCount--;
+			m_Status.MagazineFire();
 		}
 		return true;
 	}
@@ -142,8 +146,6 @@ void CWeapon::Dash(CPlayer* player)
 void CWeapon::Reload()
 {
 	m_Reload = true;
-	m_CurrentReloadDelay = 0.f;
-	m_BulletCount = m_BulletMaxCount;
 }
 
 void CWeapon::GetHit()

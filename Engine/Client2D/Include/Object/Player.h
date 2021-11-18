@@ -54,8 +54,28 @@ private:
 	ePlayerState m_State;
 	ePlayerState m_PrevState;
 	bool m_WallCol;
+	int m_Coin;
 protected:
 public:
+	int GetCoin()
+	{
+		return m_Coin;
+	}
+
+	void AddCoin(int Coin)
+	{
+		m_Coin += Coin;
+	}
+	bool SubCoin(int Coin)
+	{
+		if (m_Coin < Coin)
+		{
+			return false;
+		}
+		m_Coin -= Coin;
+		return true;
+	}
+
 	CPlayerStatus& GetStatus()
 	{
 		return m_Status;
@@ -94,6 +114,7 @@ public:
 	void MapOnOff(float DeltaTime);
 	void WeaponChange(float DeltaTime);
 	void InputInteractionInputKey(float DeltaTime);
+	void ShopUIOnOff(float DeltaTime);
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);

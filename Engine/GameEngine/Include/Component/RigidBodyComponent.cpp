@@ -10,7 +10,8 @@ CRigidBodyComponent::CRigidBodyComponent() :
 	m_GravityPower(600),
 	m_JumpPower(200),
 	m_Speed(100.f),
-	m_Jump(false)
+	m_Jump(false),
+	m_GravityEnable(true)
 {
 }
 
@@ -44,7 +45,8 @@ void CRigidBodyComponent::Update(float DeltaTime)
 	//아이작 가속도 다 가속도...
 	Vector3 moveDir= Vector3::Zero;
 
-
+	if (!m_GravityEnable)
+		m_Gravity = false;
 	if (m_Gravity)
 	{
 		//공중상태

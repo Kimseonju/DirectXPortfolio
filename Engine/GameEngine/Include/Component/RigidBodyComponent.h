@@ -16,6 +16,7 @@ protected:
 
 protected:
     bool        m_Gravity;
+    bool        m_GravityEnable;
     bool        m_DashEffect;
     bool        m_Dash;
 
@@ -133,6 +134,11 @@ public:
     void SetGravityPower(float Power)
     {
         m_GravityPower = Power;
+    }
+
+    void SetGravityNo()
+    {
+        m_GravityEnable = false;
     }
 public:
     virtual void Start();

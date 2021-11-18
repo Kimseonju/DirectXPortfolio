@@ -145,13 +145,7 @@ void CEnemy::Update(float DeltaTime)
 	m_ProgressBar->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
 
 
-	if (m_Status.GetHP() <= 0)
-	{
-		CObjectDieEffectObject* Effect=m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
-		Effect->SetWorldPos(GetWorldPos());
-		Active(false);
-		m_ProgressBar->Active(false);
-	}
+	
 
 
 	//if (m_Weapon->IsAttack())
@@ -236,6 +230,14 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 	{
 		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
 		m_ProgressBar->Enable(true);
+		if (m_Status.GetHP() <= 0)
+		{
+			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
+			Effect->SetWorldPos(GetWorldPos());
+			Active(false);
+			m_ProgressBar->Active(false);
+		}
+
 	}
 }
 
@@ -246,12 +248,6 @@ void CEnemy::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirHorizon(Angle, result.DestCollider);
 	}
@@ -259,14 +255,7 @@ void CEnemy::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
-		m_Body->StopDash();
 		ColDirHorizon(Angle, result.DestCollider);
 	}
 
@@ -278,12 +267,6 @@ void CEnemy::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirHorizon(Angle, result.DestCollider);
 	}
@@ -291,14 +274,7 @@ void CEnemy::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
-		m_Body->StopDash();
 		ColDirHorizon(Angle, result.DestCollider);
 	}
 
@@ -315,12 +291,6 @@ void CEnemy::CollisionVerticalBegin(const HitResult& result, CCollider* Collider
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
@@ -329,14 +299,7 @@ void CEnemy::CollisionVerticalBegin(const HitResult& result, CCollider* Collider
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
-		m_Body->StopDash();
 		ColDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
@@ -349,12 +312,6 @@ void CEnemy::CollisionVerticalMiddle(const HitResult& result, CCollider* Collide
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
@@ -363,14 +320,7 @@ void CEnemy::CollisionVerticalMiddle(const HitResult& result, CCollider* Collide
 	{
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
-		if (m_Body->IsDash())
-		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
-		}
 		float Angle = PlayerPos.GetAngle(ColPos);
-		m_Body->StopDash();
 		ColDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
@@ -394,22 +344,10 @@ void CEnemy::CollisionVerticalEnd(const HitResult& result, CCollider* Collider)
 
 void CEnemy::ColDirHorizon(float Angle, CCollider* Col)
 {
-	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
 	Vector3 PlayerPos = GetWorldPos();
 	Vector3 PlayerScale = m_Collider2DHorizon->GetRelativeScale() / 2.f;
-
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//방향바꾸기
-	Velocity.Normalize();
-	Velocity.x = -Velocity.x;
-	Velocity.y = -Velocity.y;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
-	//왼쪽
 
 
 	if (90.f <= Angle && Angle < 270.f)
@@ -437,22 +375,11 @@ void CEnemy::ColDirHorizon(float Angle, CCollider* Col)
 
 void CEnemy::ColDirVertical(float Angle, CCollider* Col)
 {
-	Vector3 Velocity = GetVelocity();
 	Vector3 ColPos = Col->GetWorldPos();
 	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
 	Vector3 PlayerPos = GetWorldPos();
 	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
 
-	Vector3 ColCheckPos = PlayerPos - ColPos;
-
-	//방향바꾸기
-	Velocity.Normalize();
-	Velocity.x = -Velocity.x;
-	Velocity.y = -Velocity.y;
-
-	//ColCheckPos의 y값이 음수라면 ColPos가 위쪽에있다는뜻인데..
-	// 
-	//왼쪽
 
 	//아래
 	if (180.f <= Angle && Angle < 360.f)

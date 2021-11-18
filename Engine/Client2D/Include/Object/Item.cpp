@@ -242,6 +242,11 @@ void CItem::SetItemTexture(const std::string& Name, const TCHAR* FileName,
 	}
 }
 
+void CItem::SetMagazine(int Magazine)
+{
+	m_Status.SetMagazine(Magazine);
+}
+
 int CItem::GetHP() const
 {
 	return m_Status.GetHP();
@@ -302,6 +307,16 @@ int CItem::GetEvasion() const
 	return m_Status.GetEvasion();
 }
 
+int CItem::GetMagazine() const
+{
+	return m_Status.GetMagazine();
+}
+
+bool CItem::IsMagazine() const
+{
+	return m_Status.IsMagazine();
+}
+
 CTexture* CItem::GetItemTexture() const
 {
 	return m_ItemImage;
@@ -316,7 +331,7 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
-		StatePlayerItem();
+		StateNoMapItem();
 	}
 }
 
@@ -342,7 +357,7 @@ void CItem::Drop()
 	m_UpdateDelay = 1.f;
 }
 
-void CItem::StatePlayerItem()
+void CItem::StateNoMapItem()
 {
 	m_MapDrop = false;
 	m_Body->SetGravity(false);

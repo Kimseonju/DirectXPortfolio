@@ -21,9 +21,7 @@ protected:
 	CImage*  m_TextBase;
 	CText* m_ItemName;
 	CImage* m_CoinImage;
-
 	class CItemInfoWidget* m_ItemInfoWidget;
-	class CShopInfoWidget* m_ShopInfoWidget;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -37,7 +35,14 @@ public:
 	virtual void CollisionUpdateMouse(const Vector2& MousePos, float DeltaTime);
 	virtual void CollisionReleaseMouse(const Vector2& MousePos, float DeltaTime);
 public:
-	
+	bool IsClick()
+	{
+		if (m_State == Button_State::Click)
+		{
+			return true;
+		}
+		return false;
+	}
 	void SetItem(CItem* Item);
 	CItem* GetItem() const;
 	void Click();

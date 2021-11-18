@@ -119,7 +119,7 @@ void CSmallSkel::AttackStart()
 
 void CSmallSkel::AttackStay()
 {
-	if (!m_Weapon->IsAttack())
+	if (!m_Weapon->IsAttacking())
 		m_State = Enemy_State::Move;
 	if (m_State == Enemy_State::Move)
 	{

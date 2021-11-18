@@ -16,6 +16,7 @@ protected:
 
 protected:
     bool        m_Gravity;
+    bool        m_GravityEnable;
     bool        m_DashEffect;
     bool        m_Dash;
 
@@ -70,8 +71,8 @@ public:
     void SetForce2D(float Angle, float Power)
     {
         float Radian = DegreeToRadian(Angle);
-        m_Force.x = cosf(Radian) * Power;
-        m_Force.y = sinf(Radian) * Power;
+        m_Force.x = cosf(m_DashRadian) * Power;
+        m_Force.y = sinf(m_DashRadian) * Power;
     }
     bool IsDash() const
     {
@@ -133,6 +134,11 @@ public:
     void SetGravityPower(float Power)
     {
         m_GravityPower = Power;
+    }
+
+    void SetGravityNo()
+    {
+        m_GravityEnable = false;
     }
 public:
     virtual void Start();

@@ -134,7 +134,7 @@ void CAnimation2D::Update(float DeltaTime)
 	{
 		if ((*iter)->Frame == m_Frame && !(*iter)->Call)
 		{
-			//(*iter)->Call = true;
+			(*iter)->Call = true;
 			
 			if (m_Owner)
 				m_Owner->CallNotify((*iter)->Name);

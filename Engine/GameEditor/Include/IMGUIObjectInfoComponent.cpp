@@ -127,7 +127,6 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_EnemyType->AddItem("SmallSkel_Bow");
 	m_EnemyType->AddItem("Ghost");
 	m_EnemyType->AddItem("Banshee");
-	m_EnemyType->AddItem("Bat");
 	m_EnemyType->AddItem("Giant_Red");
 	m_EnemyType->AddItem("Minotaurs");
 	m_EnemyType->AddItem("Ovibos");

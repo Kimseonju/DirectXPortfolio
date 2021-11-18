@@ -19,6 +19,7 @@ CShortSword::CShortSword()
 	m_Status.SetDamage(8);
 	m_Status.SetDamageMax(10);
 	m_Status.SetAttackSpeed(3.03f);
+	m_price = 1000;
 }
 
 CShortSword::CShortSword(const CShortSword& obj) :

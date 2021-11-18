@@ -89,7 +89,7 @@ public:
 	void SetEvasion(int Evasion);
 	void SetItemTexture(const std::string& Name, const TCHAR* FileName,
 		const std::string& PathName = TEXTURE_PATH);
-
+	void SetMagazine(int Magazine);
 	
 	int GetHP()			 const;
 	int GetHPMax()		 const;
@@ -103,6 +103,9 @@ public:
 	int GetArmor()		 const;
 	int GetCritical()	 const;
 	int GetEvasion()	 const;
+	int GetMagazine() const;
+
+	bool IsMagazine() const;
 	CTexture* GetItemTexture() const;
 public:
 	
@@ -113,7 +116,7 @@ public:
 	//동전이 드랍됬을때
 	void Drop(float Angle, float Power);
 	void Drop();
-	//플레이어가 아이템과 충돌시
-	virtual void StatePlayerItem();
+	//맵에 있지않다(상점이나 인벤토리등)
+	virtual void StateNoMapItem();
 };
 

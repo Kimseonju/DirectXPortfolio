@@ -156,12 +156,12 @@ bool CInventory::Init()
 
 	CItem* Item = m_Scene->SpawnObject<CShortSword>("CShortSword1");
 	Item->Enable(false);
-	Item->StatePlayerItem();
+	Item->StateNoMapItem();
 	m_Items[5]->SetItem(Item);
 
 	Item = m_Scene->SpawnObject<CMetalBoomerang>("MetalBoomerang");
 	Item->Enable(false);
-	Item->StatePlayerItem();
+	Item->StateNoMapItem();
 	m_Items[2]->SetItem(Item);
 	CText* text= CreateWidget<CText>("GoldText");
 	text->SetText(L"1000");
@@ -232,6 +232,25 @@ void CInventory::WeaponChange()
 	{
 		m_Current = Select_Weapon::Left;
 	}
+}
+
+bool CInventory::AddInventoryItem(CItem* Item)
+{
+	auto iter = m_Items.begin();
+	auto iterEnd = m_Items.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		//아이템이 없다면 추가하기
+		if (!(*iter)->GetItem())
+		{
+			(*iter)->SetItem(Item);
+			return true;
+		}
+	}
+	//인벤토리가 꽉차있다.
+	return false;
+
 }
 
 void CInventory::StartButtonClick()

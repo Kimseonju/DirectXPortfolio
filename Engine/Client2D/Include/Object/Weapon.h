@@ -25,8 +25,6 @@ protected:
 	
 protected:
 	float m_CurrentAttackDelay; 
-	int m_BulletMaxCount; 
-	int m_BulletCount; 
 	float m_CurrentReloadDelay;
 	bool m_Reload;
 	//애니메이션쓸때 공격중인지확인

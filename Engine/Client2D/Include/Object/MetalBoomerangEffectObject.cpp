@@ -60,4 +60,5 @@ void CMetalBoomerangEffectObject::Animation2DNotify(const std::string& Name)
 
 void CMetalBoomerangEffectObject::AnimationFrameEnd(const std::string& Name)
 {
+	Active(false);
 }

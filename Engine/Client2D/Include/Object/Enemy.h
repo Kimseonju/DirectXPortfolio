@@ -59,16 +59,16 @@ public:
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
-	void CollisionBegin(const HitResult& result, CCollider* Collider);
-	void CollisionHorizonBegin(const HitResult& result, CCollider* Collider);
-	void CollisionHorizonMiddle(const HitResult& result, CCollider* Collider);
-	void CollisionHorizonEnd(const HitResult& result, CCollider* Collider);
-	void CollisionVerticalBegin(const HitResult& result, CCollider* Collider);
-	void CollisionVerticalMiddle(const HitResult& result, CCollider* Collider);
-	void CollisionVerticalEnd(const HitResult& result, CCollider* Collider);
+	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionHorizonBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionHorizonMiddle(const HitResult& result, CCollider* Collider);
+	virtual void CollisionHorizonEnd(const HitResult& result, CCollider* Collider);
+	virtual void CollisionVerticalBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionVerticalMiddle(const HitResult& result, CCollider* Collider);
+	virtual void CollisionVerticalEnd(const HitResult& result, CCollider* Collider);
 	//Ãæµ¹
-	void ColDirHorizon(float Angle, CCollider* Col);
-	void ColDirVertical(float Angle, CCollider* Col);
+	virtual void ColDirHorizon(float Angle, CCollider* Col);
+	virtual void ColDirVertical(float Angle, CCollider* Col);
 public:
 	virtual void FindStart() {}
 	virtual void FindStay() {}

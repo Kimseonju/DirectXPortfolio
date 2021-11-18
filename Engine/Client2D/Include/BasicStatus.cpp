@@ -15,7 +15,9 @@ CBasicStatus::CBasicStatus() :
 	m_DamageMax(0),
 	m_Armor(0),
 	m_Critical(0),
-	m_Evasion(0)
+	m_Evasion(0),
+	m_Magazine(0),
+	m_MagazineMax(0)
 {
 }
 
