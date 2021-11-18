@@ -10,6 +10,7 @@
 #include "../Object/CreateObject.h"
 #include "../Object/SmallSkel.h"
 #include "../Object/Belial.h"
+#include "../Object/SmallSkel_Bow.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -123,6 +124,9 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 					m_vecEnemy.push_back(Obj);
 					break;
 				case Client_Enemy_Type::SmallSkel_Bow:
+					Obj = m_pScene->SpawnObject<CSmallSkel_Bow>("CreateObject" + str);
+					Obj->SetStartTimer(1.f);
+					m_vecEnemy.push_back(Obj);
 					break;
 				case Client_Enemy_Type::End:
 					break;

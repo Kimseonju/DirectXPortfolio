@@ -30,7 +30,7 @@ protected:
 	float m_CurrentReloadDelay;
 	bool m_Reload;
 	//애니메이션쓸때 공격중인지확인
-	bool m_PlayAttack;
+	bool m_PlayAttacking;
 	Weapon_Type m_WeaponType;
 	float m_Rebound;
 	Object_Dir m_Dir;
@@ -51,9 +51,9 @@ public:
 		return m_CurrentAttackDelay;
 	}
 
-	bool IsAttack() const
+	bool IsAttacking() const
 	{
-		return m_PlayAttack;
+		return m_PlayAttacking;
 	}
 	void SetCurrentAttackDelay(float Delay)
 	{
@@ -84,5 +84,6 @@ public:
 	virtual void GetHit();
 	// 아이템 장착
 	virtual void Equip();
+	bool IsAttack();
 
 };

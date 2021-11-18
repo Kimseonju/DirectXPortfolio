@@ -537,7 +537,7 @@
     <ClCompile Include="Object\EnemyArrow.cpp">
       <Filter>02. Object\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="SmallSkel_Bow_FSM.cpp">
+    <ClCompile Include="Object\SmallSkel_Bow_FSM.cpp">
       <Filter>02. Object\Enemy\SmallSkel_Bow</Filter>
     </ClCompile>
   </ItemGroup>

@@ -40,19 +40,22 @@ void CPrimitiveComponent::SetRender2DType(Render_Type_2D Type)
     switch (m_2DType)
     {
     case RT2D_None:
-        m_pTransform->SetDefaultZ(0.4f);
+        m_pTransform->SetDefaultZ(0.1f);
         break;
     case RT2D_MAP:
-        m_pTransform->SetDefaultZ(0.5f);
+        m_pTransform->SetDefaultZ(0.2f);
         break;
     case RT2D_Back1:
-        m_pTransform->SetDefaultZ(0.6f);
+        m_pTransform->SetDefaultZ(0.3f);
         break;
     case RT2D_Back2:
-        m_pTransform->SetDefaultZ(0.7f);
+        m_pTransform->SetDefaultZ(0.4f);
         break;
     case RT2D_Default:
-        m_pTransform->SetDefaultZ(0.8f);
+        m_pTransform->SetDefaultZ(0.5f);
+        break;
+    case RT2D_Default2:
+        m_pTransform->SetDefaultZ(0.6f);
         break;
     case RT2D_Particle:
         m_pTransform->SetDefaultZ(0.9f);

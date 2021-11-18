@@ -19,7 +19,7 @@ protected:
 	CSmallSkelBow();
 	CSmallSkelBow(const CSmallSkelBow& obj);
 	virtual ~CSmallSkelBow();
-
+	float m_AttackAngle;
 public:
 	virtual void Start();
 	virtual bool Init();

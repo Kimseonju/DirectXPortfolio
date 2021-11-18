@@ -11,6 +11,7 @@ protected:
 	int m_HPMax;
 	int m_Dash;
 	int m_DashMax;
+	//초당 몇번공격하는지
 	float m_AttackSpeed; //0~1
 	float m_OldAttackSpeed;
 

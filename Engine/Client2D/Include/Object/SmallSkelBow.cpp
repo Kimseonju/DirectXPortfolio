@@ -7,11 +7,12 @@
 #include "Engine.h"
 #include "EnemyArrow.h"
 #include "../Animation2D/Animation2D_FSM.h"
-CSmallSkelBow::CSmallSkelBow()
+CSmallSkelBow::CSmallSkelBow() :
+	m_AttackAngle(0.f)
 {
 	Enable(true);
-	m_WeaponType = Weapon_Type::Melee;
-	m_Status.SetAttackSpeed(1.f);
+	m_WeaponType = Weapon_Type::Range;
+	m_Status.SetAttackSpeed(0.2);
 	m_Status.SetDamage(2);
 }
 
@@ -47,7 +48,7 @@ bool CSmallSkelBow::Init()
 	m_Animation2D->SetIdleAnimation2D("SmallEnemyBowIdle");
 	m_Animation2D->SetAttackAnimation2D("SmallEnemyBowAttack", false);
 	m_Animation2D->SetFrameEndFunction<CSmallSkelBow>(this, &CSmallSkelBow::AnimationFrameEnd);
-	m_Sprite->SetWorldScale(26.f, 30.f, 0.f);
+	m_Sprite->SetWorldScale(18.f, 13.f, 0.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	return true;
 }
@@ -85,7 +86,7 @@ void CSmallSkelBow::Animation2DNotify(const std::string& Name)
 	{
 		CEnemyArrow* EnemyArrow = m_pScene->SpawnObject<CEnemyArrow>("EnemyArrow");
 		EnemyArrow->SetWorldPos(GetWorldPos());
-		EnemyArrow->SetWorldRotation(GetWorldRotation());
+		EnemyArrow->SetWorldRotationZ(m_AttackAngle);
 
 	}
 }
@@ -97,8 +98,10 @@ bool CSmallSkelBow::Attack(float Angle)
 		return false;
 	}
 	m_Animation2D->ChangeAttackAnimation2D();
-	m_PlayAttack = true;
+	m_PlayAttacking = true;
+	m_AttackAngle = Angle - 90.f;
 	return true;
+
 }
 
 void CSmallSkelBow::Dash(CPlayer* player)
@@ -119,6 +122,6 @@ void CSmallSkelBow::Equip()
 
 void CSmallSkelBow::AnimationFrameEnd(const std::string& Name)
 {
-	m_PlayAttack = false;
+	m_PlayAttacking = false;
 	m_Animation2D->ChangeIdleAnimation2D();
 }

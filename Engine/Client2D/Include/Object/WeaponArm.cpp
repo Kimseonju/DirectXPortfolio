@@ -8,7 +8,8 @@
 #include "Weapon.h"
 CWeaponArm::CWeaponArm():
 	m_Dir(Object_Dir::End),
-	m_Animation2D(nullptr)
+	m_Animation2D(nullptr),
+	m_DirPos(0.f,0.f,0.f)
 {
 }
 

@@ -46,7 +46,7 @@ bool CSmallSkel::Init()
 	m_Weapon = m_pScene->SpawnObject<CSkelSmallDagger>("SkelSmallDagger");
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
-
+	m_WeaponArm->SetDirPos(Vector3(10.f, 0.f, 0.f));
 	m_Status.SetMoveSpeed(50.f);
 	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
 

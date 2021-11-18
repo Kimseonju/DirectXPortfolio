@@ -7,7 +7,7 @@
 #include "Engine.h"
 #include "EffectObject.h"
 CWeapon::CWeapon() :
-	m_PlayAttack(false),
+	m_PlayAttacking(false),
 	m_WeaponType(Weapon_Type::Melee),
 	m_Rebound(0.f),
 	m_Dir(Object_Dir::Right)
@@ -152,4 +152,19 @@ void CWeapon::GetHit()
 
 void CWeapon::Equip()
 {
+}
+
+bool CWeapon::IsAttack()
+{
+	float AttackSpeed = 1.f / GetAttackSpeed();
+	float ReloadSpeed = GetReloadSpeed();
+	if (m_CurrentAttackDelay >= AttackSpeed)
+	{
+		if (m_Reload)
+		{
+			return false;
+		}
+		return true;
+	}
+	return false;
 }

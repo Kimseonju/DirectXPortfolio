@@ -75,6 +75,7 @@ enum class Select_Weapon
 
 enum class Enemy_State
 {
+    //Idle==Find
     Idle,
     Move,
     Attack,

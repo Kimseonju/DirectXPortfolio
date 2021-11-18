@@ -16,7 +16,7 @@ protected:
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	class CAnimation2D* m_Animation2D;
-
+	Vector3 m_DirPos;
 	Object_Dir m_Dir;
 public:
 	void SetDir(Object_Dir Dir)
@@ -24,11 +24,11 @@ public:
 		m_Dir = Dir;
 		if (m_Dir == Object_Dir::Left)
 		{
-			m_Sprite->SetRelativePos(-20.f, 0.f, 0.f);
+			m_Sprite->SetRelativePos(Vector3::Zero-m_DirPos);
 		}
 		else if (m_Dir == Object_Dir::Right)
 		{
-			m_Sprite->SetRelativePos(20.f, 0.f, 0.f);
+			m_Sprite->SetRelativePos(m_DirPos);
 		}
 	}
 public:
@@ -42,6 +42,10 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 
 public:
+	void SetDirPos(Vector3 Pos)
+	{
+		m_DirPos = Pos;
+	}
 	void Fire(float DeltaTime);
 
 };

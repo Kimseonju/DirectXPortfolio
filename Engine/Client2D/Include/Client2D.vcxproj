@@ -229,6 +229,7 @@
     <ClCompile Include="Object\SmallSkelBow.cpp" />
     <ClCompile Include="Object\SmallSkelFSM.cpp" />
     <ClCompile Include="Object\SmallSkel_Bow.cpp" />
+    <ClCompile Include="Object\SmallSkel_Bow_FSM.cpp" />
     <ClCompile Include="Object\Stage1MapEffect.cpp" />
     <ClCompile Include="Object\StartScene\BackGround.cpp" />
     <ClCompile Include="Object\StartScene\Bird.cpp" />
@@ -245,7 +246,6 @@
     <ClCompile Include="SceneMode\MainScene.cpp" />
     <ClCompile Include="SceneMode\StartScene.cpp" />
     <ClCompile Include="SceneMode\TestMainScene.cpp" />
-    <ClCompile Include="SmallSkel_Bow_FSM.cpp" />
     <ClCompile Include="Stage\Door.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
     <ClCompile Include="Stage\StageManager.cpp" />

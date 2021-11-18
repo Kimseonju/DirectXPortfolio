@@ -47,6 +47,7 @@ bool CItem::Init()
 	CGameObject::Init();
 
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default2);
 	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
 	m_Body->SetGravityPower(500.f);
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");

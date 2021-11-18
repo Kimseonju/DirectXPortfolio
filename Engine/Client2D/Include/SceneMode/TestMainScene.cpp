@@ -478,7 +478,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
 	}
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 5);
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 2);
 
 	/*
 	

@@ -96,7 +96,7 @@ bool CSkelSmallDagger::Attack(float Angle)
 		return false;
 	}
 	m_Animation2D->ChangeAnimation("SmallEnemyDaggerAttack");
-	m_PlayAttack = true;
+	m_PlayAttacking = true;
 	return true;
 }
 
@@ -118,6 +118,6 @@ void CSkelSmallDagger::Equip()
 
 void CSkelSmallDagger::AnimationFrameEnd(const std::string& Name)
 {
-	m_PlayAttack = false;
+	m_PlayAttacking = false;
 	m_Animation2D->ChangeIdleAnimation2D();
 }
