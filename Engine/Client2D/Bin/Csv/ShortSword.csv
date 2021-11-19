@@ -1,0 +1,16 @@
+Object,ShotSword
+HP,0
+HPMAX,0
+Dash,0
+DashMax,0
+AttackSpeed,3.03
+ReloadSpeed,0
+MoveSpeed,0
+Damage,8
+DamageMax,10
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,0
+Price,1200

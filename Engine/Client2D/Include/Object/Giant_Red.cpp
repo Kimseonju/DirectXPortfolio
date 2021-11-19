@@ -19,6 +19,7 @@ CGiant_Red::CGiant_Red() :
 	m_Bullet(nullptr),
 	m_Giant_RedAttack(false)
 {
+	SetStatus("Giant_Red");
 }
 
 CGiant_Red::CGiant_Red(const CGiant_Red& obj) :
@@ -109,9 +110,9 @@ void CGiant_Red::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
 		m_ProgressBar->Enable(true);
-		if (m_Status.GetHP() <= 0)
+		if (m_Status->GetHP() <= 0)
 		{
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());

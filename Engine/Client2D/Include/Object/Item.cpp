@@ -3,18 +3,17 @@
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
 #include <Resource/Texture.h>
+#include "../ObjectStatusManager.h"
 CItem::CItem() :
 	m_ItemImage(nullptr),
 	m_Type(ITEM_TYPE::End),
 	m_Rank(ITEM_RANK::End),
 	m_ItemName(nullptr),
 	m_ItemText(nullptr),
-	m_price(0),
 	m_Fire(false),
-	m_FireTime(0.f),
-	m_FireTimeMax(10.f),
 	m_MapDrop(false),
-	m_UpdateDelay(0.f)
+	m_UpdateDelay(0.f),
+	m_Status(nullptr)
 {
 }
 
@@ -27,10 +26,7 @@ CItem::CItem(const CItem& obj) :
 	m_Rank = obj.m_Rank;
 	m_ItemName = obj.m_ItemName;
 	m_ItemText = obj.m_ItemText;
-	m_price = obj.m_price;
 	m_Fire = obj.m_Fire;
-	m_FireTime = obj.m_FireTime;
-	m_FireTimeMax = obj.m_FireTimeMax;
 }
 
 CItem::~CItem()
@@ -103,6 +99,16 @@ void CItem::Animation2DNotify(const std::string& Name)
 {
 }
 
+void CItem::SetStatus(const std::string& Name)
+{
+	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
+	if (Status)
+	{
+		m_Status = Status;
+	}
+
+}
+
 
 
 void CItem::GetHit()
@@ -166,62 +172,62 @@ const TCHAR* CItem::GetItemText() const
 
 void CItem::SetHP(int HP)
 {
-	m_Status.SetHP(HP);
+	m_Status->SetHP(HP);
 }
 
 void CItem::SetHPMax(int HP)
 {
-	m_Status.SetHPMax(HP);
+	m_Status->SetHPMax(HP);
 }
 
 void CItem::SetDash(int Dash)
 {
-	m_Status.SetDash(Dash);
+	m_Status->SetDash(Dash);
 }
 
 void CItem::SetDashMax(int Dash)
 {
-	m_Status.SetDashMax(Dash);
+	m_Status->SetDashMax(Dash);
 }
 
 void CItem::SetAttackSpeed(float Attack)
 {
-	m_Status.SetAttackSpeed(Attack);
+	m_Status->SetAttackSpeed(Attack);
 }
 
 void CItem::SetReloadSpeed(float Reload)
 {
-	m_Status.SetReloadSpeed(Reload);
+	m_Status->SetReloadSpeed(Reload);
 }
 
 void CItem::SetMoveSpeed(float MoveSpeed)
 {
-	m_Status.SetMoveSpeed(MoveSpeed);
+	m_Status->SetMoveSpeed(MoveSpeed);
 }
 
 void CItem::SetDamage(int Damage)
 {
-	m_Status.SetDamage(Damage);
+	m_Status->SetDamage(Damage);
 }
 
 void CItem::SetDamageMax(int Damage)
 {
-	m_Status.SetDamageMax(Damage);
+	m_Status->SetDamageMax(Damage);
 }
 
 void CItem::SetArmor(int Armor)
 {
-	m_Status.SetArmor(Armor);
+	m_Status->SetArmor(Armor);
 }
 
 void CItem::SetCritical(int Critical)
 {
-	m_Status.SetCritical(Critical);
+	m_Status->SetCritical(Critical);
 }
 
 void CItem::SetEvasion(int Evasion)
 {
-	m_Status.SetEvasion(Evasion);
+	m_Status->SetEvasion(Evasion);
 }
 
 void CItem::SetItemTexture(const std::string& Name, const TCHAR* FileName,
@@ -244,77 +250,77 @@ void CItem::SetItemTexture(const std::string& Name, const TCHAR* FileName,
 
 void CItem::SetMagazine(int Magazine)
 {
-	m_Status.SetMagazine(Magazine);
+	m_Status->SetMagazine(Magazine);
 }
 
 int CItem::GetHP() const
 {
-	return m_Status.GetHP();
+	return m_Status->GetHP();
 }
 
 int CItem::GetHPMax() const
 {
-	return m_Status.GetHPMax();
+	return m_Status->GetHPMax();
 }
 
 int CItem::GetDash() const
 {
-	return m_Status.GetDash();
+	return m_Status->GetDash();
 }
 
 int CItem::GetDashMax() const
 {
-	return m_Status.GetDashMax();
+	return m_Status->GetDashMax();
 }
 
 float CItem::GetAttackSpeed() const
 {
-	return m_Status.GetAttackSpeed();
+	return m_Status->GetAttackSpeed();
 }
 
 float CItem::GetReloadSpeed() const
 {
-	return m_Status.GetReloadSpeed();
+	return m_Status->GetReloadSpeed();
 }
 
 float CItem::GetMoveSpeed() const
 {
-	return m_Status.GetMoveSpeed();
+	return m_Status->GetMoveSpeed();
 }
 
 int CItem::GetDamage() const
 {
-	return m_Status.GetDamage();
+	return m_Status->GetDamage();
 }
 
 int CItem::GetDamageMax() const
 {
-	return m_Status.GetDamageMax();
+	return m_Status->GetDamageMax();
 }
 
 int CItem::GetArmor() const
 {
-	return m_Status.GetArmor();
+	return m_Status->GetArmor();
 }
 
 int CItem::GetCritical() const
 {
-	return m_Status.GetCritical();
+	return m_Status->GetCritical();
 }
 
 int CItem::GetEvasion() const
 {
-	return m_Status.GetEvasion();
+	return m_Status->GetEvasion();
 }
 
 int CItem::GetMagazine() const
 {
-	return m_Status.GetMagazine();
+	return m_Status->GetMagazine();
 }
 
 bool CItem::IsMagazine() const
 {
-	return m_Status.IsMagazine();
+	return m_Status->IsMagazine();
 }
 
 CTexture* CItem::GetItemTexture() const

@@ -20,7 +20,7 @@ CShopNPC::~CShopNPC()
 void CShopNPC::Start()
 {
 	CGameObject::Start();
-
+	m_KeyUIObject->SetWorldPos(GetWorldPos());
 }
 
 bool CShopNPC::Init()
@@ -28,10 +28,12 @@ bool CShopNPC::Init()
 	CGameObject::Init();
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+	m_SpriteObject = CreateSceneComponent<CSpriteComponent>("SpriteObject");
 
 
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_SpriteObject);
 
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetWorldScale(48.f, 48.f, 0.f);
@@ -49,12 +51,14 @@ bool CShopNPC::Init()
 
 	m_Collider2D->SetExtent(24.f, 24.f);
 
-
-
+	m_SpriteObject->SetPivot(0.5f, 0.5f, 0.f);
+	m_SpriteObject->SetRelativePos(70.f, -10.f, 0.f);
+	m_SpriteObject->SetRelativeScale(101.f, 27.f, 0.f);
+	CMaterial* Material=m_SpriteObject->GetMaterial(0);
+	Material->AddTexture("InDungeonShop", TEXT("Villiage/InDungeonShop.png"));
 	m_KeyUIObject = m_pScene->SpawnObject<CKeyboardUIObject>("KeyUIObject");
 	m_KeyUIObject->SetKey("F");
-	m_KeyUIObject->SetWorldPos(GetWorldPos());
-	m_KeyUIObject->AddWorldPos(-0.f, 30.f, 0.f);
+	m_KeyUIObject->AddWorldPos(0.f, 60.f, 0.f);
 	m_KeyUIObject->Enable(false);
 
 	return true;
@@ -63,6 +67,11 @@ bool CShopNPC::Init()
 void CShopNPC::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	CPlayer* Player = CGlobalValue::MainPlayer;
+	if (Player)
+	{
+		SetWorldPos(Player->GetWorldPos());
+	}
 }
 
 void CShopNPC::PostUpdate(float DeltaTime)

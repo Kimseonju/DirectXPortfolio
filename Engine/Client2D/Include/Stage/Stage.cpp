@@ -14,6 +14,7 @@
 #include "../Object/Ghost.h"
 #include "../Object/Banshee.h"
 #include "../Object/Giant_Red.h"
+#include "../Object/ShopNPC.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -108,6 +109,14 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 				Door->SetDoorDir(Info.StageSpawn[i].DoorDir);
 				Door->SetDir(Info.StageSpawn[i].DoorDir);
 				Obj = Door;
+
+				break;
+			}
+			case Client_Object_Type::Shop:
+			{
+				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+				m_Object.push_back(NPC);
+				Obj = NPC;
 
 				break;
 			}

@@ -109,7 +109,12 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ObjectType->AddItem("MainDoor");
 	m_ObjectType->AddItem("House");
 	m_ObjectType->AddItem("Door");
+	m_ObjectType->AddItem("Torch");
+	m_ObjectType->AddItem("BossTorch");
+	m_ObjectType->AddItem("Shop");
+	m_ObjectType->AddItem("Restaurant");
 	m_ObjectType->AddItem("End");
+
 	m_ObjectType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ObjectTypeComboCallback);
 	m_vecWidget.push_back(m_ObjectType);
 

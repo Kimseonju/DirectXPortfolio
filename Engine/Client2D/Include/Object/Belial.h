@@ -21,7 +21,7 @@ private:
 	CSharedPtr<CParticleSystemComponent> m_BackParticle;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CEngineFSM<CEnemy> m_EnemyFSM;
-	CBasicStatus m_Status;
+	CBasicStatus* m_Status;
 	class CAnimation2D_FSM* m_Animation2D;
 	class CAnimation2D_FSM* m_BackAnimation2D;
 	bool m_Attacking;
@@ -64,6 +64,7 @@ public:
 	virtual CBelial* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
+	void SetStatus(const std::string& Name);
 	void AttackSword(float DeltaTime);
 	void AttackBullet(float DeltaTime);
 	void AttackLaser(float DeltaTime);

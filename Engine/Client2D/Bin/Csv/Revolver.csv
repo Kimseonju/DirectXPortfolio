@@ -1,0 +1,16 @@
+Object,Revolver
+HP,0
+HPMAX,0
+Dash,0
+DashMax,0
+AttackSpeed,8.03
+ReloadSpeed,3
+MoveSpeed,50
+Damage,5
+DamageMax,8
+Armor,0
+Critical,0
+Evasion,0
+Magazine,10
+MagazineMax,10
+Price,1000

@@ -12,8 +12,7 @@ CSmallSkelBow::CSmallSkelBow() :
 {
 	Enable(true);
 	m_WeaponType = Weapon_Type::Range;
-	m_Status.SetAttackSpeed(0.2);
-	m_Status.SetDamage(2);
+	SetStatus("SmallSkelBow");
 }
 
 CSmallSkelBow::CSmallSkelBow(const CSmallSkelBow& obj) :

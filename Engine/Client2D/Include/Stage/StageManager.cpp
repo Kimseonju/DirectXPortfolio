@@ -184,7 +184,7 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 		Info = GetMainDoorStageSpawnInfo(num);
 		break;
 	case StageType::Shop:
-		Info = GetStageSpawnInfo(num);
+		Info = GetShopStageSpawnInfo(num);
 		break;
 	case StageType::Restaurant:
 		Info = GetStageSpawnInfo(num);
@@ -252,6 +252,32 @@ bool CStageManager::CreateStage_Special()
 	m_EndPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_EndPos.x][(int)m_EndPos.y].StageType = StageType::End;
 
+	vecStagePos.clear();
+
+	//상점방 넣기
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			if (m_StartPos.x == x && m_StartPos.y == y)
+				continue;
+			//벽체크 
+			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
+	m_ShopPos = vecStagePos[RandomNum];
+	m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Shop;
+
+	vecStagePos.clear();
+
+
 	//상점
 
 	//vecStagePos.clear();
@@ -313,6 +339,8 @@ bool CStageManager::CreateStage_Special()
 			if (m_EndPos.x == x && m_EndPos.y == y) 
 				continue;
 
+			if (m_ShopPos.x == x && m_ShopPos.y == y)
+				continue;
 
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
@@ -386,6 +414,7 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	//Client_Object_Type에서 MainDoor가 있는지 없는지 확인한다 따로분류요함
 	bool bMainDoor = false;
 	bool bBoss = false;
+	bool bShop = false;
 
 	for (size_t i = 0; i < Size; ++i)
 	{
@@ -444,7 +473,13 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 				//이자리는 문이있는자리
 				bDoorDir[(int)DoorDir] = 1;
 				//문위치가정해지면 자동으로 스폰위치도 정해진다
+				break;
+			}
 
+			case Client_Object_Type::Shop:
+			{
+				bShop = true;
+				break;
 			}
 			}
 			break;
@@ -505,6 +540,10 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	{
 
 		PushBossStageSpawnInfo(num, _StageObjectsInfo);
+	}
+	else if (bShop)
+	{
+		PushShopStageSpawnInfo(num, _StageObjectsInfo);
 	}
 	else
 	{

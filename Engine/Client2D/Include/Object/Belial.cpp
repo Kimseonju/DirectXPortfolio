@@ -17,6 +17,7 @@
 #include "../UI/UIManager.h"
 #include "BelialDeadHead.h"
 #include "BelialDeadMouth.h"
+#include "../ObjectStatusManager.h"
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(5.f),
@@ -40,9 +41,7 @@ CBelial::CBelial() :
 	m_EffectEndStart(false)
 	
 {
-	m_StartGravity = true;
-	m_Status.SetHP(50);
-	m_Status.SetHPMax(50);
+	SetStatus("Belial");
 }
 
 CBelial::CBelial(const CBelial& obj) :
@@ -205,6 +204,15 @@ CBelial* CBelial::Clone()
 
 void CBelial::Animation2DNotify(const std::string& Name)
 {
+}
+
+void CBelial::SetStatus(const std::string& Name)
+{
+	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
+	if (Status)
+	{
+		m_Status = Status;
+	}
 }
 
 void CBelial::AttackSword(float DeltaTime)
@@ -439,9 +447,9 @@ void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		CUIManager::GetInst()->GetBossUI()->SetProgressBarPercent((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
-		if (m_Status.GetHP() < 0.f)
+		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		CUIManager::GetInst()->GetBossUI()->SetProgressBarPercent((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
+		if (m_Status->GetHP() < 0.f)
 		{
 			m_PatternStop = true;
 			CBossDieEffectStart* Obj=m_pScene->SpawnObject<CBossDieEffectStart>("BossDieEffectStart");

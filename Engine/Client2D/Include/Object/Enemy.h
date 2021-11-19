@@ -31,7 +31,7 @@ protected:
 
 	Enemy_State m_State;
 	class CAnimation2D_FSM* m_Animation2D;
-	CBasicStatus m_Status;
+	CBasicStatus* m_Status;
 	class CWeapon* m_Weapon;
 	class CWeaponArm* m_WeaponArm;
 	bool m_OneAttack;
@@ -56,6 +56,7 @@ public:
 
 public:
 	virtual void Enable(bool bEnable);
+	virtual void SetStatus(const std::string& Name);
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);

@@ -1,0 +1,16 @@
+Object,Banshee
+HP,40
+HPMAX,40
+Dash,0
+DashMax,0
+AttackSpeed,5
+ReloadSpeed,0
+MoveSpeed,0
+Damage,5
+DamageMax,7
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,0
+Price,0

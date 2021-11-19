@@ -211,6 +211,9 @@
     <Filter Include="UI\UI\WidgetWindow\ShopUI">
       <UniqueIdentifier>{6faf6257-0685-4aa8-a5fc-81a0182474ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\UI\WidgetWindow\RestaurantUI">
+      <UniqueIdentifier>{43ddd63d-7b4a-4968-a85a-70c72fb107c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -594,6 +597,9 @@
     <ClCompile Include="Object\Giant_RedBulletFX.cpp">
       <Filter>02. Object\EffectAndParticle\Bullet\Giant_Red</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectStatusManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -958,6 +964,9 @@
     </ClInclude>
     <ClInclude Include="Object\Giant_RedBulletFX.h">
       <Filter>02. Object\EffectAndParticle\Bullet\Giant_Red</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectStatusManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

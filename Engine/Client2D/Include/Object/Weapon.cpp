@@ -51,7 +51,7 @@ void CWeapon::Update(float DeltaTime)
 			if (m_CurrentReloadDelay >= ReloadSpeed)
 			{
 				m_Reload = false;
-				m_Status.Reload();
+				m_Status->Reload();
 				//사운드재생
 			}
 
@@ -69,8 +69,6 @@ void CWeapon::Update(float DeltaTime)
 			{
 				m_Rebound -= DeltaTime * 100.f;
 			}
-			else if (m_Rebound < -0.1f)
-				m_Rebound += DeltaTime * 100.f;
 			else if (m_Rebound > 30.f || m_Rebound < 30.f || m_Rebound<0.1f || m_Rebound>-0.1f)
 			{
 				m_Rebound = 0.f;
@@ -129,7 +127,7 @@ bool CWeapon::Attack(float Angle)
 
 		if (IsMagazine())
 		{
-			m_Status.MagazineFire();
+			m_Status->MagazineFire();
 		}
 		return true;
 	}

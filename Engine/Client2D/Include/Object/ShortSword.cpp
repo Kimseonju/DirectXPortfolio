@@ -14,12 +14,9 @@ CShortSword::CShortSword()
 	SetItemTexture("ShortSword", TEXT("Weapon/Melee/ShortSword.png"));
 	m_Type = ITEM_TYPE::Weapon_One_Hand;
 	m_Rank = ITEM_RANK::Normal;
+	SetStatus("ShortSword");
 	m_ItemName=TEXT("¼ô¼Òµå");
 	m_ItemText= TEXT("\"°¡º±°í ÈÖµÎ¸£±â ÆíÇÑ °Ë\"");
-	m_Status.SetDamage(8);
-	m_Status.SetDamageMax(10);
-	m_Status.SetAttackSpeed(3.03f);
-	m_price = 1000;
 }
 
 CShortSword::CShortSword(const CShortSword& obj) :
@@ -40,7 +37,7 @@ void CShortSword::Start()
 bool CShortSword::Init()
 {
 	CWeapon::Init();
-
+	m_Sprite->SetRelativeScale(19.f, 7.f, 0.f);
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);

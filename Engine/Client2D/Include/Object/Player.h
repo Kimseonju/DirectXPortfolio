@@ -55,8 +55,14 @@ private:
 	ePlayerState m_PrevState;
 	bool m_WallCol;
 	int m_Coin;
+	bool m_StageMove;
 protected:
 public:
+
+	void StageMove()
+	{
+		m_StageMove = true;
+	}
 	int GetCoin()
 	{
 		return m_Coin;
@@ -102,7 +108,8 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CPlayer* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
-
+public:
+	void SetStatus(const std::string& Name);
 public:
 	void LeftMove(float DeltaTime);
 	void RightMove(float DeltaTime);
@@ -127,6 +134,7 @@ public:
 	//Ãæµ¹
 	void ColDirHorizon(float Angle, CCollider* Col);
 	void ColDirVertical(float Angle, CCollider* Col);
+	void ColTilePassDirVertical(float Angle, CCollider* Col);
 public:
 	//FSM
 	void BodyIdleStart();

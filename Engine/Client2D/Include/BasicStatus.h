@@ -25,17 +25,31 @@ protected:
 	int m_Evasion; //È¸ÇÇ
 	int m_Magazine;//ÅºÃ¢
 	int m_MagazineMax;
+	int m_Price;
 public:
 	void Dash();
 public:
+
+	void SetPrice(int Price)
+	{
+		m_Price = Price;
+	}
 	void SetMagazine(int Magazine)
 	{
 		m_Magazine = Magazine;
-		m_MagazineMax = Magazine;
+	}
+	void SetMagazineMax(int MagazineMax)
+	{
+		m_MagazineMax = MagazineMax;
 	}
 	int GetMagazine() const
 	{
 		return m_Magazine;
+	}
+
+	int GetMagazineMax() const
+	{
+		return m_MagazineMax;
 	}
 	void Reload()
 	{
@@ -62,8 +76,10 @@ public:
 	void SetArmor(int Armor);
 	void SetCritical(int Critical);
 	void SetEvasion(int Evasion);
-
-
+	int GetPrice() const
+	{
+		return m_Price;
+	}
 	int GetHP()			 const;
 	int GetHPMax()		 const;
 	int GetDash()		 const;

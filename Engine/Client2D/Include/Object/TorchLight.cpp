@@ -52,11 +52,6 @@ bool CTorchLight::Init()
 void CTorchLight::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	CPlayer* Player = CGlobalValue::MainPlayer;
-	if (Player)
-	{
-		SetWorldPos(Player->GetWorldPos());
-	}
 }
 
 void CTorchLight::PostUpdate(float DeltaTime)

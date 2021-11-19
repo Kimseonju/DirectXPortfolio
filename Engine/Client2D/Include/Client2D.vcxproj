@@ -169,6 +169,7 @@
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
+    <ClCompile Include="ObjectStatusManager.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Banshee.cpp" />
     <ClCompile Include="Object\BansheeBullet.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
     <ClInclude Include="MoveComponent.h" />
+    <ClInclude Include="ObjectStatusManager.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Banshee.h" />
     <ClInclude Include="Object\BansheeBullet.h" />

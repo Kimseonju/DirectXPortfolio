@@ -1,0 +1,16 @@
+Object,Ghost
+HP,30
+HPMAX,30
+Dash,0
+DashMax,0
+AttackSpeed,2
+ReloadSpeed,0
+MoveSpeed,50
+Damage,3
+DamageMax,7
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,0
+Price,0

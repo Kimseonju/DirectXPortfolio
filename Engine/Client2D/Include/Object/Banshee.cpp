@@ -15,6 +15,7 @@ CBanshee::CBanshee() :
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(3.f)
 {
+	SetStatus("Banshee");
 }
 
 CBanshee::CBanshee(const CBanshee& obj) :

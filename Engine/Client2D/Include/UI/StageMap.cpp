@@ -43,6 +43,22 @@ bool CStageMap::Init()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
 			Base->SetCollision(false);
+			switch (Info[x][y].StageType)
+			{
+			case StageType::Base:
+				break;
+			case StageType::Start:
+				Base->SetColorTint(1.f, 0.f, 0.f, 1.f);
+				break;
+			case StageType::End:
+				Base->SetColorTint(0.f, 0.f, 1.f, 1.f);
+				break;
+			case StageType::Shop:
+				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
+				break;
+			case StageType::Restaurant:
+				break;
+			}
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{
 				std::string str3 = std::to_string((int)WallDir::Left);

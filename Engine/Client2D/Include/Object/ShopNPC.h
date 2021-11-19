@@ -17,6 +17,7 @@ protected:
 
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CSpriteComponent> m_SpriteObject;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CSharedPtr<CAnimation2D> m_Animation2D;
 	class CKeyboardUIObject* m_KeyUIObject;

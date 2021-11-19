@@ -1344,17 +1344,16 @@ bool CTransform::Init()
 
 void CTransform::Update(float DeltaTime)
 {
+}
+
+void CTransform::PostUpdate(float DeltaTime)
+{
     if (m_pParent)
     {
         InheritScale();
         InheritRot();
         InheritPos();
     }
-}
-
-void CTransform::PostUpdate(float DeltaTime)
-{
-    
 }
 
 void CTransform::PrevRender(float DeltaTime)

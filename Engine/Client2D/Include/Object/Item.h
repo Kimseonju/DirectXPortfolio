@@ -20,14 +20,11 @@ protected:
 	virtual ~CItem();
 
 protected:
-	CBasicStatus m_Status;
+	CBasicStatus* m_Status;
 	//아이템이름은 Ref에서 들고있게
 	const TCHAR* m_ItemName;
 	const TCHAR* m_ItemText;
-	int m_price; // 가격
 	bool    m_Fire;
-	float   m_FireTime;
-	float   m_FireTimeMax;
 	ITEM_TYPE m_Type;
 	ITEM_RANK m_Rank;
 	class CTexture* m_ItemImage;
@@ -47,6 +44,7 @@ public:
 	virtual CItem* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
+	void SetStatus(const std::string& Name);
 	// 피격
 	virtual void GetHit(); 
 	// 아이템 장착
@@ -61,11 +59,11 @@ public:
 	}
 	int GetPrice() const  
 	{ 
-		return m_price; 
+		return m_Status->GetPrice();
 	}
 	CBasicStatus* GetStatus()  
 	{
-		return &m_Status;
+		return m_Status;
 	}
 	
 public:

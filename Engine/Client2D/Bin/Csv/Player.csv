@@ -1,0 +1,16 @@
+Object,Player
+HP,30
+HPMAX,30
+Dash,4
+DashMax,4
+AttackSpeed,0
+ReloadSpeed,0
+MoveSpeed,50
+Damage,0
+DamageMax,4
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,0
+Price,0

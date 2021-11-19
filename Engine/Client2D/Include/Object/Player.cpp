@@ -16,6 +16,7 @@
 #include "../UI/BasicMouse.h"
 #include "../UI/UIManager.h"
 #include "PlayerInteractionCollision.h"
+#include "../ObjectStatusManager.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
 	m_Weapon(nullptr),
@@ -25,6 +26,7 @@ CPlayer::CPlayer() :
 	m_WallCol(false),
 	m_Coin(100000)
 {
+	SetStatus("Player");
 }
 
 CPlayer::CPlayer(const CPlayer& obj) :
@@ -93,11 +95,11 @@ bool CPlayer::Init()
 		&CPlayer::CollisionVerticalBegin);
 	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::Middle, this,
 		&CPlayer::CollisionVerticalMiddle);
-	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this,
+	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this, 
 		&CPlayer::CollisionVerticalEnd);
 	m_Collider2D->SetExtent(6.f, 10.f);
 	m_Collider2DHorizon->SetExtent(6.f, 1.f);
-	m_Collider2DVertical->SetExtent(1.f, 10.f);
+	m_Collider2DVertical->SetExtent(1.f, 7.f);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_Collider2DHorizon);
 	m_Sprite->AddChild(m_Collider2DVertical);
@@ -155,6 +157,7 @@ void CPlayer::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 	m_WallCol = false;
+	m_StageMove = false;
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Vector3 Pos = m_WeaponArm->GetWorldPos();
 	Vector2 Pos2 = Vector2(Pos.x, Pos.y);
@@ -269,6 +272,29 @@ CPlayer* CPlayer::Clone()
 void CPlayer::Animation2DNotify(const std::string& Name)
 {
 	
+}
+
+void CPlayer::SetStatus(const std::string& Name)
+{
+	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
+	if (Status)
+	{
+		m_Status.SetHP(Status->GetHP());
+		m_Status.SetHPMax(Status->GetHPMax());
+		m_Status.SetDash(Status->GetDash());
+		m_Status.SetDashMax(Status->GetDashMax());
+		m_Status.SetAttackSpeed(Status->GetAttackSpeed());
+		m_Status.SetReloadSpeed(Status->GetReloadSpeed());
+		m_Status.SetMoveSpeed(Status->GetMoveSpeed());
+		m_Status.SetDamage(Status->GetDamage());
+		m_Status.SetDamageMax(Status->GetDamageMax());
+		m_Status.SetArmor(Status->GetArmor());
+		m_Status.SetCritical(Status->GetCritical());
+		m_Status.SetEvasion(Status->GetEvasion());
+		m_Status.SetMagazine(Status->GetMagazine());
+		m_Status.SetMagazineMax(Status->GetMagazineMax());
+		m_Status.SetPrice(Status->GetPrice());
+	}
 }
 
 void CPlayer::LeftMove(float DeltaTime)
@@ -396,19 +422,20 @@ void CPlayer::CollisionHorizonBegin(const HitResult& result, CCollider* Collider
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_StageMove)
+			return;
+		Vector3 Velocity = GetVelocity();
+		if (Velocity.y > 0.f)
+			return;
 		if (m_Body->IsDash())
 		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
+			return;
 		}
-		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirHorizon(Angle, result.DestCollider);
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		if (m_StageMove)
+			return;
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		if (m_Body->IsDash())
@@ -428,19 +455,20 @@ void CPlayer::CollisionHorizonMiddle(const HitResult& result, CCollider* Collide
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_StageMove)
+			return;
+		Vector3 Velocity = GetVelocity();
+		if (Velocity.y > 0.f)
+			return;
 		if (m_Body->IsDash())
 		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
+			return;
 		}
-		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirHorizon(Angle, result.DestCollider);
 	}
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		if (m_StageMove)
+			return;
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		if (m_Body->IsDash())
@@ -465,20 +493,25 @@ void CPlayer::CollisionVerticalBegin(const HitResult& result, CCollider* Collide
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		if (m_StageMove)
+			return;
+		Vector3 Velocity = GetVelocity();
+		if (Velocity.y > 0.f)
+			return;
 		if (m_Body->IsDash())
 		{
-			Vector3 Velocity = GetVelocity();
-			PlayerPos.x -= Velocity.x;
-			PlayerPos.y -= Velocity.y;
+			return;
 		}
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirVertical(Angle, result.DestCollider);
+		ColTilePassDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		if (m_StageMove)
+			return;
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		if (m_Body->IsDash())
@@ -499,6 +532,15 @@ void CPlayer::CollisionVerticalMiddle(const HitResult& result, CCollider* Collid
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass)
 	{
+		if (m_StageMove)
+			return;
+		Vector3 Velocity = GetVelocity();
+		if (Velocity.y > 0.f)
+			return;
+		if (m_Body->IsDash())
+		{
+			return;
+		}
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		if (m_Body->IsDash())
@@ -508,11 +550,13 @@ void CPlayer::CollisionVerticalMiddle(const HitResult& result, CCollider* Collid
 			PlayerPos.y -= Velocity.y;
 		}
 		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirVertical(Angle, result.DestCollider);
+		ColTilePassDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
+		if (m_StageMove)
+			return;
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		if (m_Body->IsDash())
@@ -607,6 +651,31 @@ void CPlayer::ColDirVertical(float Angle, CCollider* Col)
 	}
 
 	SetWorldPos(PlayerPos);
+}
+
+void CPlayer::ColTilePassDirVertical(float Angle, CCollider* Col)
+{
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
+
+	//¿ÞÂÊ
+
+	//¾Æ·¡
+	if (180.f <= Angle && Angle < 360.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+	}
+	SetWorldPos(PlayerPos);
+
 }
 
 

@@ -13,6 +13,7 @@
 CSmallSkel_Bow::CSmallSkel_Bow() :
 	m_PlayerFind(false)
 {
+	SetStatus("SmallSkel_Bow");
 }
 
 CSmallSkel_Bow::CSmallSkel_Bow(const CSmallSkel_Bow& obj) :
@@ -44,8 +45,8 @@ bool CSmallSkel_Bow::Init()
 	m_Weapon = m_pScene->SpawnObject<CSmallSkelBow>("SmallSkelBow");
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
-	m_Status.SetMoveSpeed(50.f);
-	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
+	m_Status->SetMoveSpeed(50.f);
+	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 
 	return true;
 }

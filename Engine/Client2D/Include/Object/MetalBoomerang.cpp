@@ -13,12 +13,9 @@ CMetalBoomerang::CMetalBoomerang()
 	m_WeaponType = Weapon_Type::Range;
 	m_Type = ITEM_TYPE::Weapon_Two_Hand;
 	m_Rank = ITEM_RANK::Normal;
+	SetStatus("MetalBoomerang");
 	m_ItemName = TEXT("부메랑");
 	m_ItemText = TEXT("\"부메랑은 돌아오지만 사랑은 돌아오지 않는다.\"");
-	m_Status.SetDamage(16);
-	m_Status.SetDamageMax(19);
-	m_Status.SetAttackSpeed(0.5f);
-	m_price = 1000;
 }
 
 CMetalBoomerang::CMetalBoomerang(const CMetalBoomerang& obj) :

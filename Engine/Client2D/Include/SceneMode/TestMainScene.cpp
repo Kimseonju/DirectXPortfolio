@@ -42,6 +42,8 @@
 #include "../Object/ProgressBarObject.h"
 #include "../Object/BasicTresure.h"
 #include "../Object/TorchLight.h"
+#include "../Object/ShopNPC.h"
+#include "../ObjectStatusManager.h"
 CTestMainScene::CTestMainScene() :
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
@@ -53,6 +55,7 @@ CTestMainScene::~CTestMainScene()
 {
 	CUIManager::GetInst()->DestroyInst();
 	CStageManager::GetInst()->DestroyInst();
+	CObjectStatusManager::GetInst()->DestroyInst();
 }
 
 bool CTestMainScene::Init()
@@ -60,7 +63,21 @@ bool CTestMainScene::Init()
 	CreateMaterial();
 	CreateAnimationSequence2D();
 	CreateParticle();
+	CObjectStatusManager::GetInst()->LoadStatus("Player", TEXT("Player.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Revolver", TEXT("Revolver.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("ShortSword", TEXT("ShortSword.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("MetalBoomerang", TEXT("MetalBoomerang.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("SmallSkelBow", TEXT("SmallSkelBow.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("SkelSmallDagger", TEXT("SkelSmallDagger.csv"));
 
+
+
+	CObjectStatusManager::GetInst()->LoadStatus("SmallSkel_Sword", TEXT("SmallSkel_Sword.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("SmallSkel_Bow", TEXT("SmallSkel_Bow.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Giant_Red", TEXT("Giant_Red.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Ghost", TEXT("Ghost.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Belial", TEXT("Belial.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Banshee", TEXT("Banshee.csv"));
 	//CTestTileMap* TestTileMap = m_pScene->SpawnObject<CTestTileMap>("TestTileMap");
 
 	//구름
@@ -98,6 +115,8 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLRT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
@@ -114,6 +133,7 @@ bool CTestMainScene::Init()
 
 	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
 	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
+	CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
 	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
@@ -125,8 +145,8 @@ bool CTestMainScene::Init()
 	//pTeemo->SetRelativePos(500.f, 500.f, 0.f);
 	
 	//CPixelCollisionTest* pPixelCollisionTest = m_pScene->SpawnObject<CPixelCollisionTest>("PixelCollisionTest");
-	//CStage1MapEffect* pPixelCollisionTest = m_pScene->SpawnObject<CStage1MapEffect>("PixelCollisionTest1");
-	//
+	CStage1MapEffect* Stage1MapEffect = m_pScene->SpawnObject<CStage1MapEffect>("Stage1MapEffect");
+	
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 
 	//CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
@@ -766,7 +786,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Shop",
-			Vector2(i * 48.f, 0), Vector2((i + 1) * 48.f, 48.f));
+			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");

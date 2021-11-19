@@ -59,6 +59,7 @@ bool CPathManager::Init()
     AddPath(FONT_PATH, TEXT("Font\\"));
     AddPath(SOUND_PATH, TEXT("Sound\\"));
     AddPath(MAP_PATH, TEXT("Map\\"));
+    AddPath(CSV_PATH, TEXT("Csv\\"));
 
 
 

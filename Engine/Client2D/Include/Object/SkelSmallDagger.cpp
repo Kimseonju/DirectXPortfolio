@@ -12,8 +12,7 @@ CSkelSmallDagger::CSkelSmallDagger()
 {
 	Enable(true);
 	m_WeaponType = Weapon_Type::Melee;
-	m_Status.SetAttackSpeed(1.f);
-	m_Status.SetDamage(2);
+	SetStatus("SkelSmallDagger");
 }
 
 CSkelSmallDagger::CSkelSmallDagger(const CSkelSmallDagger& obj) :

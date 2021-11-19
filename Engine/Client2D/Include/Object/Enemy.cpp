@@ -12,13 +12,15 @@
 #include "SkelSmallDagger.h"
 #include "ObjectDieEffectObject.h"
 #include "ProgressBarObject.h"
+#include "../ObjectStatusManager.h"
 CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
 	m_ChildFireTimeMax(0.2f),
 	m_State(Enemy_State::Idle),
 	m_WallCol(false),
-	m_StartGravity(false)
+	m_StartGravity(false),
+	m_Status(nullptr)
 {
 }
 
@@ -58,8 +60,8 @@ bool CEnemy::Init()
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 
 	//테스트용 
-	m_Status.SetHP(1);
-	m_Status.SetHPMax(1);
+	m_Status->SetHP(1);
+	m_Status->SetHPMax(1);
 
 
 	SetRootComponent(m_Sprite);
@@ -104,10 +106,10 @@ bool CEnemy::Init()
 	m_WeaponArm->SetRelativePos(0.f, 0.f, 0.f);
 	PushObjectChild(m_WeaponArm);
 
-	m_Status.SetMoveSpeed(200.f);
-	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
-	m_Status.SetHP(30);
-	m_Status.SetHPMax(30);
+	m_Status->SetMoveSpeed(200.f);
+	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
+	m_Status->SetHP(30);
+	m_Status->SetHPMax(30);
 
 
 	m_EnemyFSM.CreateState("Find", this, &CEnemy::FindStay, &CEnemy::FindStart, &CEnemy::FindEnd);
@@ -142,7 +144,7 @@ void CEnemy::Update(float DeltaTime)
 	Pos.y -= 10.f;
 	m_ProgressBar->SetWorldPos(Pos);
 	m_WallCol= false;
-	m_ProgressBar->SetHPBar((float)m_Status.GetHP() / (float)m_Status.GetHPMax());
+	m_ProgressBar->SetHPBar((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
 
 
 	
@@ -198,6 +200,15 @@ void CEnemy::Enable(bool bEnable)
 	m_Sprite->Enable(bEnable);
 }
 
+void CEnemy::SetStatus(const std::string& Name)
+{
+	CBasicStatus* Status=CObjectStatusManager::GetInst()->FindStatus(Name);
+	if (Status)
+	{
+		m_Status = Status;
+	}
+}
+
 void CEnemy::AnimationFrameEnd(const std::string& Name)
 {
 }
@@ -228,9 +239,9 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status.SetHP(m_Status.GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
 		m_ProgressBar->Enable(true);
-		if (m_Status.GetHP() <= 0)
+		if (m_Status->GetHP() <= 0)
 		{
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());

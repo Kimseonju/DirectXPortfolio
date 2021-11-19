@@ -285,6 +285,10 @@ enum class Client_Object_Type
     MainDoor,
     House,
     Door,
+    Torch,
+    BossTorch,
+    Shop,
+    Restaurant,
     End
 };
 enum class Client_Enemy_Type

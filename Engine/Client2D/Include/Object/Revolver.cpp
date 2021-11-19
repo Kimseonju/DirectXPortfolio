@@ -10,16 +10,12 @@
 CRevolver::CRevolver()
 {
 	m_WeaponType = Weapon_Type::Range;
-	SetItemTexture("Revolver", TEXT("Weapon/Range/Revolver.png"));
 	m_Type = ITEM_TYPE::Weapon_One_Hand;
 	m_Rank = ITEM_RANK::Normal;
+	SetItemTexture("Revolver", TEXT("Weapon/Range/Revolver.png"));
+	SetStatus("Revolver");
 	m_ItemName = TEXT("리볼버");
 	m_ItemText = TEXT("\"휴대하기 좋고 순간적으로 빠르게 쏠 수 있는 총\"");
-	m_Status.SetDamage(5);
-	m_Status.SetDamageMax(8);
-	m_Status.SetAttackSpeed(8.03f);
-	m_price = 1000;
-	SetMagazine(10);
 }
 
 CRevolver::CRevolver(const CRevolver& obj) :
@@ -42,7 +38,7 @@ bool CRevolver::Init()
 	CWeapon::Init();
 
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
-
+	m_Sprite->SetRelativeScale(11.f, 7.f, 0.f);
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
 	SpriteMtrl->AddTexture("Revolver", TEXT("Weapon/Range/Revolver.png"));
 	//m_Sprite->CreateAnimation2D<>()

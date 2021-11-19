@@ -60,6 +60,7 @@
 #define	FONT_PATH		"FontPath"
 #define	SOUND_PATH		"SoundPath"
 #define	MAP_PATH		"MapPath"
+#define	CSV_PATH		"CSVPath"
 
 struct Resolution
 {

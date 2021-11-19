@@ -13,6 +13,7 @@
 CSmallSkel::CSmallSkel():
 	m_PlayerFind(false)
 {
+	SetStatus("SmallSkel_Sword");
 }
 
 CSmallSkel::CSmallSkel(const CSmallSkel& obj) :
@@ -47,8 +48,8 @@ bool CSmallSkel::Init()
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
 	m_WeaponArm->SetDirPos(Vector3(10.f, 0.f, 0.f));
-	m_Status.SetMoveSpeed(50.f);
-	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
+	m_Status->SetMoveSpeed(50.f);
+	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 
 	return true;
 }

@@ -17,7 +17,8 @@ CBasicStatus::CBasicStatus() :
 	m_Critical(0),
 	m_Evasion(0),
 	m_Magazine(0),
-	m_MagazineMax(0)
+	m_MagazineMax(0),
+	m_Price(1000)
 {
 }
 

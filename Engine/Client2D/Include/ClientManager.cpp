@@ -152,6 +152,14 @@ bool CClientManager::Init()
         Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Object_Broken,
         Collision_Interaction::Ignore);
+
+
+    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::NextStage,
+        Collision_Interaction::Block);
+
+    CCollisionManager::GetInst()->SetProfileChannelState("NextStage", Collision_Channel::Player,
+        Collision_Interaction::Block);
+
     //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
     //CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();

@@ -14,6 +14,7 @@
 CGhost::CGhost() :
 	m_PlayerFind(false)
 {
+	SetStatus("Ghost");
 }
 
 CGhost::CGhost(const CGhost& obj) :
@@ -44,8 +45,8 @@ bool CGhost::Init()
 	m_Animation2D->SetMoveAnimation2D("GhostMove");
 	m_Animation2D->SetAttackAnimation2D("GhostAttack", false);
 	m_Animation2D->ChangeIdleAnimation2D();
-	m_Status.SetMoveSpeed(50.f);
-	m_Body->SetMoveSpeed(m_Status.GetMoveSpeed());
+	m_Status->SetMoveSpeed(50.f);
+	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 	m_Body->SetGravityNo();
 	return true;
 }

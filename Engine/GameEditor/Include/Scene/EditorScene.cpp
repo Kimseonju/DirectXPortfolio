@@ -865,7 +865,7 @@ void CEditorScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Shop",
-			Vector2(i * 48.f, 0), Vector2((i + 1) * 48.f, 48.f));
+			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
@@ -875,6 +875,15 @@ void CEditorScene::CreateAnimationSequence2D()
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
 			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("InDungeonShop");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("InDungeonShop",
+		"InDungeonShop", TEXT("Villiage/InDungeonShop.png"));
+	for (int i = 0; i < 1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("InDungeonShop",
+			Vector2(i * 101.f, 0), Vector2((i + 1) * 101.f, 27.f));
 	}
 
 	/*

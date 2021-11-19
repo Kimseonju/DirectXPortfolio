@@ -68,7 +68,7 @@ bool CDoor::Init()
 	m_NextStageCollider2D->AddCollisionCallbackFunction<CDoor>(Collision_State::Begin, this,
 		&CDoor::CollisionBegin_NextStage);
 	m_NextStageCollider2D->SetExtent(33.f, 5.f);
-	m_NextStageCollider2D->SetRelativePos(0, +5.f, 0.f);
+	m_NextStageCollider2D->SetRelativePos(0, -5.f, 0.f);
 
 	m_DoorCollider2D->SetCollisionProfile("Tile_Nopass");
 	m_DoorCollider2D->AddCollisionCallbackFunction<CDoor>(Collision_State::Begin, this,
@@ -122,18 +122,21 @@ void CDoor::Animation2DNotify(const std::string& Name)
 
 void CDoor::DoorOpenClose(bool Open)
 {
-	m_Open = Open;
-	if (m_Open)
+	if (m_Open != Open)
 	{
-		m_Animation2D->ChangeAnimation("DoorOpen");
-		m_Particle->Enable(true);
-		m_DoorCollider2D->Enable(false);
-	}
-	else
-	{
-		m_Animation2D->ChangeAnimation("DoorClose");
-		m_Particle->Enable(false);
-		m_DoorCollider2D->Enable(true);
+		m_Open = Open;
+		if (m_Open)
+		{
+			m_Animation2D->ChangeAnimation("DoorOpen");
+			m_Particle->Enable(true);
+			m_DoorCollider2D->Enable(false);
+		}
+		else
+		{
+			m_Animation2D->ChangeAnimation("DoorClose");
+			m_Particle->Enable(false);
+			m_DoorCollider2D->Enable(true);
+		}
 	}
 }
 
@@ -174,6 +177,7 @@ void CDoor::CollisionBegin_NextStage(const HitResult& result, CCollider* Collide
 void CDoor::PlayerMove()
 {
 	Vector3 Pos = GetWorldPos();
+	CGlobalValue::MainPlayer->StageMove();
 	switch (m_DoorDir)
 	{
 	case Door_Dir::Door_Left:
@@ -209,26 +213,26 @@ void CDoor::SetDir(Door_Dir Dir)
 	{
 	case Door_Dir::Door_Left:
 	{
-		m_Particle->SetMoveDir({ -1,0,0 });
+		m_Particle->SetMoveDir({ 1,0,0 });
 		SetWorldRotation(0.f, 0.f, 90.f);
 		break;
 	}
 	case Door_Dir::Door_Right:
 	{
-		m_Particle->SetMoveDir({ 1,0,0 });
+		m_Particle->SetMoveDir({ -1,0,0 });
 		SetWorldRotation(0.f, 0.f, 270.f);
 		break;
 	}
 	case Door_Dir::Door_Up:
 	{
 
-		m_Particle->SetMoveDir({ 0,1,0 });
+		m_Particle->SetMoveDir({ 0,-1,0 });
 		break;
 	}
 	case Door_Dir::Door_Down:
 	{
 
-		m_Particle->SetMoveDir({ 0,-1,0 });
+		m_Particle->SetMoveDir({ 0,1,0 });
 		SetWorldRotation(0.f, 0.f, 180.f);
 		break;
 	}
