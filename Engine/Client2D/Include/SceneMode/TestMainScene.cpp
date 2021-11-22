@@ -133,7 +133,7 @@ bool CTestMainScene::Init()
 	pEnemy->SetWorldPos(0.f, 100.f, 0.f);
 
 	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
-	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
+	//CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
 	//CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");

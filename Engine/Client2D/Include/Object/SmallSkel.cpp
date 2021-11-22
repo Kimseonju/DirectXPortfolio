@@ -40,7 +40,7 @@ bool CSmallSkel::Init()
 	m_AttackRangeCollider2D->SetCollisionProfile("Enemy");
 	m_AttackRangeCollider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionAttackRangeBegin);
-	m_Sprite->SetWorldScale(100.f, 100.f,0.f);
+	m_Sprite->SetWorldScale(14.f, 19.f, 0.f);
 	m_Animation2D->SetIdleAnimation2D("SmallEnemyIdle");
 	m_Animation2D->SetMoveAnimation2D("SmallEnemyMove");
 	m_Animation2D->SetAttackAnimation2D("SmallEnemyIdle");

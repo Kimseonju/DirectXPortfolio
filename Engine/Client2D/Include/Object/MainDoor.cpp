@@ -4,7 +4,9 @@
 #include "../Stage/StageManager.h"
 #include "../UI/UIManager.h"
 #include "../UI/StageMap.h"
-CMainDoor::CMainDoor()
+CMainDoor::CMainDoor():
+	m_DoorCollider2D(nullptr),
+	m_Open(false)
 {
 }
 
@@ -22,6 +24,13 @@ CMainDoor::~CMainDoor()
 void CMainDoor::Enable(bool bEnable)
 {
 	CGameObject::Enable(bEnable);
+	if (bEnable)
+	{
+		if (m_Open)
+		{
+			m_DoorCollider2D->Enable(bEnable);
+		}
+	}
 }
 
 void CMainDoor::Active(bool bActive)
@@ -142,14 +151,17 @@ void CMainDoor::CollisionEnd(const HitResult& result, CCollider* Collider)
 
 void CMainDoor::StartDoor()
 {
+	if(m_DoorCollider2D)
+		m_DoorCollider2D->Enable(false);
 	m_Animation2D->ChangeAnimation("MainDoorClose");
-	m_DoorCollider2D->Enable(false);
 	m_Open = false;
 }
 
 void CMainDoor::EndDoor()
 {
+	if(m_DoorCollider2D)
+		m_DoorCollider2D->Enable(true);
+
 	m_Animation2D->ChangeAnimation("MainDoorOpen");
-	m_DoorCollider2D->Enable(true);
 	m_Open = true;
 }

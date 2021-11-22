@@ -257,6 +257,10 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());
 			Active(false);
+			if (m_Weapon)
+			{
+				m_Weapon->Active(false);
+			}
 			DropGold();
 		}
 

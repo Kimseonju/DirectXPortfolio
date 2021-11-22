@@ -22,10 +22,16 @@ CGold::~CGold()
 {
 }
 
+void CGold::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Collider2DHorizon->Enable(bEnable);
+	m_Collider2DVertical->Enable(bEnable);
+}
+
 void CGold::Start()
 {
 	CGameObject::Start();
-
 }
 
 bool CGold::Init()

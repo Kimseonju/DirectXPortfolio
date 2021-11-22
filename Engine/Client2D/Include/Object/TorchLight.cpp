@@ -41,9 +41,14 @@ bool CTorchLight::Init()
 
 
 	CMaterial* Material= m_SpriteBlend->GetMaterial(0);
-	Material->SetTransparency(true);
-	Material->AddTexture("TestBleindf", TEXT("object/torch/bullet.png"));
-	Material->SetBaseColor(1.f, 0.f, 0.f, 0.8f);
+	
+	Material->AddTexture("torchRight", TEXT("object/torch/torchRight.png"));
+	Material->SetBaseColor(1.f, 1.f, 1.f, 1.f);
+	Material->SetEmissiveColor(1.f, 1.f, 1.f, 1.f);
+	//Material->SetOpacity(0.51f);
+	//Material->SetTransparency(true);
+	//Material->DistortionEnable(true);
+	
 	//Material->AddTexture("TorchLightt", TEXT("object/torch/torchEffect.png"));
 
 	return true;
@@ -52,6 +57,11 @@ bool CTorchLight::Init()
 void CTorchLight::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	CPlayer* Player = CGlobalValue::MainPlayer;
+	if (Player)
+	{
+		SetWorldPos(Player->GetWorldPos());
+	}
 }
 
 void CTorchLight::PostUpdate(float DeltaTime)

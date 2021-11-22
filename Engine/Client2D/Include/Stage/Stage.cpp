@@ -237,6 +237,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			Obj = m_pScene->SpawnObject<CBelial>("Belial");
 			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
 			Obj = nullptr;
+			m_vecEnemy.push_back(Obj);
 			//Obj->SetStartTimer(1.f);
 
 
