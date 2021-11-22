@@ -18,23 +18,9 @@ protected:
 protected:
     class CScene* m_pScene;
     bool            m_Start;
-    float			m_LifeTime;
-    bool			m_LifeTimeEnable;
-    bool			m_LifeTimeCheck;
 
 public:
-    void SetLifeTime(float Time)
-    {
-        if (Time > 0.f)
-            m_LifeTimeEnable = true;
 
-        m_LifeTime = Time;
-    }
-
-    void SetLifeTimeCheck(bool check)
-    {
-        m_LifeTimeCheck = check;
-    }
 public:
     bool IsStart()  const
     {

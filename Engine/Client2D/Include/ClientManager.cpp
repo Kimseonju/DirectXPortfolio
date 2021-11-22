@@ -71,7 +71,8 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateChannel("Object", Collision_Interaction::Ignore);
     CCollisionManager::GetInst()->CreateChannel("Object_Broken", Collision_Interaction::Block);
     CCollisionManager::GetInst()->CreateChannel("TileCheckCollsion", Collision_Interaction::Ignore);
-
+    CCollisionManager::GetInst()->CreateChannel("Door", Collision_Interaction::Ignore);
+    
     CCollisionManager::GetInst()->CreateProfile("Static", Collision_Channel::Static);
     CCollisionManager::GetInst()->CreateProfile("Player", Collision_Channel::Player);
     CCollisionManager::GetInst()->CreateProfile("PlayerAttack", Collision_Channel::PlayerAttack);
@@ -86,6 +87,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->CreateProfile("Object", Collision_Channel::Object);
     CCollisionManager::GetInst()->CreateProfile("Object_Broken", Collision_Channel::Object_Broken);
     CCollisionManager::GetInst()->CreateProfile("TileCheckCollsion", Collision_Channel::TileCheckCollsion);
+    CCollisionManager::GetInst()->CreateProfile("Door", Collision_Channel::Door);
 
     CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::EnemyAttack,
         Collision_Interaction::Block);
@@ -105,6 +107,16 @@ bool CClientManager::Init()
 
    CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Player,
        Collision_Interaction::Block);
+
+
+   CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::InteractionInputKey,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("InteractionInputKey", Collision_Channel::Player,
+       Collision_Interaction::Block);
+
+   CCollisionManager::GetInst()->SetProfileChannelState("InteractionInputKey", Collision_Channel::InteractionInputKey,
+       Collision_Interaction::Block);
+
    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::TileCheckCollsion,
        Collision_Interaction::Block);
    CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::TileCheckCollsion,
@@ -112,6 +124,10 @@ bool CClientManager::Init()
    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Tile_Nopass,
        Collision_Interaction::Block);
    CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Tile_pass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("TileCheckCollsion", Collision_Channel::Door,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Door", Collision_Channel::TileCheckCollsion,
        Collision_Interaction::Block);
 
    CCollisionManager::GetInst()->SetProfileChannelState("EnemyAttack", Collision_Channel::Tile_Nopass,

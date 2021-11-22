@@ -176,7 +176,7 @@ enum class Collision_Channel
     Object,
     Object_Broken,
     TileCheckCollsion,
-    Custom13,
+    Door,
     Custom14,
     Custom15,
     Custom16,

@@ -10,6 +10,7 @@
 #include "../Object/ShortSword.h"
 #include "../Object/MetalBoomerang.h"
 #include "../Object/Item.h"
+#include "../Object/Player.h"
 CInventory::CInventory():
 	m_Current(Select_Weapon::Left),
 	m_WeaponSelect_Left(nullptr),
@@ -163,10 +164,11 @@ bool CInventory::Init()
 	Item->Enable(false);
 	Item->StateNoMapItem();
 	m_Items[2]->SetItem(Item);
-	CText* text= CreateWidget<CText>("GoldText");
-	text->SetText(L"1000");
-	text->SetFontSize(20.f);
-	text->SetPos(1180.f, -40.f);
+	m_CoinText = CreateWidget<CText>("GoldText");
+	m_CoinText->SetColor(0.f, 0.f, 0.f);
+	m_CoinText->SetText(L"1000");
+	m_CoinText->SetFontSize(20.f);
+	m_CoinText->SetPos(1130.f, -40.f);
 	//text->SetAlignH(TEXT_ALIGN_H::Right);
 	return true;
 }
@@ -185,6 +187,12 @@ void CInventory::Update(float DeltaTime)
 		m_WeaponSelect_Left->Enable(false);
 		m_WeaponSelect_Right->Enable(true);
 	}
+	CPlayer* Player=CGlobalValue::MainPlayer;
+
+	std::wstring str;
+	str = std::to_wstring(Player->GetCoin());
+
+	m_CoinText->SetText(str.c_str());
 }
 
 void CInventory::PostUpdate(float DeltaTime)

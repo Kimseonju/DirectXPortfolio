@@ -26,8 +26,6 @@
 CGameObject::CGameObject() :
 	m_Start(false),
 	m_pScene(nullptr),
-	m_LifeTime(0.f),
-	m_LifeTimeEnable(false),
 	m_Owner(nullptr),
 	m_CreateEnemyEffect(false),
 	m_CreateEnemyOrder(0),

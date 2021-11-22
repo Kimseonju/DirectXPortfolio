@@ -1,6 +1,9 @@
 #include "MainDoor.h"
 #include <Input.h>
 #include "KeyboardUIObject.h"
+#include "../Stage/StageManager.h"
+#include "../UI/UIManager.h"
+#include "../UI/StageMap.h"
 CMainDoor::CMainDoor()
 {
 }
@@ -14,6 +17,17 @@ CMainDoor::CMainDoor(const CMainDoor& obj)
 
 CMainDoor::~CMainDoor()
 {
+}
+
+void CMainDoor::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+}
+
+void CMainDoor::Active(bool bActive)
+{
+	CGameObject::Active(bActive);
+	m_KeyUIObject->Active(bActive);
 }
 
 void CMainDoor::Start()
@@ -36,14 +50,16 @@ bool CMainDoor::Init()
 
 	m_Animation2D->AddAnimationSequence2D("MainDoorClose", false);
 	m_Animation2D->AddAnimationSequence2D("MainDoorCloseIdle", false);
-	m_Animation2D->AddAnimationSequence2D("MainDoorOpen", true);
+	m_Animation2D->AddAnimationSequence2D("MainDoorOpen", false);
 	m_Animation2D->AddAnimationSequence2D("MainDoorOpenIdle", true);
 
 
 	m_DoorCollider2D->SetCollisionProfile("InteractionInputKey");
 	m_DoorCollider2D->AddCollisionCallbackFunction<CMainDoor>(Collision_State::Begin, this,
 		&CMainDoor::CollisionBegin);
-	m_DoorCollider2D->SetExtent(33.f, 10.f);
+	m_DoorCollider2D->AddCollisionCallbackFunction<CMainDoor>(Collision_State::End, this,
+		&CMainDoor::CollisionEnd);
+	m_DoorCollider2D->SetExtent(33.f, 60.f);
 	m_Sprite->AddChild(m_DoorCollider2D);
 
 
@@ -51,7 +67,6 @@ bool CMainDoor::Init()
 	m_KeyUIObject = m_pScene->SpawnObject<CKeyboardUIObject>("KeyUI_MainDoor");
 	m_KeyUIObject->SetKey("F");
 	m_KeyUIObject->SetWorldPos(GetWorldPos());
-	m_KeyUIObject->AddWorldPos(-30.f, 50.f, 0.f);
 	m_KeyUIObject->Enable(false);
 
 	return true;
@@ -96,22 +111,45 @@ CMainDoor* CMainDoor::Clone()
 
 void CMainDoor::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-	m_KeyUIObject->Enable(true);
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		m_KeyUIObject->Enable(true);
+		m_KeyUIObject->SetWorldPos(GetWorldPos());
+	}
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
+	{
+		if (CStageManager::GetInst()->IsBossStage())
+		{
+			//¿£µù
+		}
+		else
+		{
+			CStageManager::GetInst()->CreateBossStage();
+			CUIManager::GetInst()->GetStageMap()->StageUpdate();
+		}
+	}
 }
 
 void CMainDoor::CollisionEnd(const HitResult& result, CCollider* Collider)
 {
 	m_KeyUIObject->Enable(false);
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		m_KeyUIObject->Enable(false);
+	}
+
 }
 
 void CMainDoor::StartDoor()
 {
 	m_Animation2D->ChangeAnimation("MainDoorClose");
 	m_DoorCollider2D->Enable(false);
+	m_Open = false;
 }
 
 void CMainDoor::EndDoor()
 {
 	m_Animation2D->ChangeAnimation("MainDoorOpen");
 	m_DoorCollider2D->Enable(true);
+	m_Open = true;
 }

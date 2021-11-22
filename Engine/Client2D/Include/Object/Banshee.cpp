@@ -9,7 +9,8 @@
 #include "../UI/EnemyWorldInfoWidget.h"
 #include "Player.h"
 #include "SmallSkelBow.h"
-
+#include "Gold.h"
+#include "GoldBullion.h"
 CBanshee::CBanshee() :
 	m_PlayerFind(false),
 	m_AttackTimer(0.f),
@@ -98,4 +99,24 @@ void CBanshee::CollisionAttackRangeBegin(const HitResult& result, CCollider* Col
 
 void CBanshee::AnimationFrameEnd(const std::string& Name)
 {
+}
+
+void CBanshee::DropGold()
+{
+	int DropCount = GetRandom(0, 4);
+	for (int i = 0; i < DropCount; ++i)
+	{
+		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
+		Gold->SetWorldPos(GetWorldPos());
+		Gold->AddWorldPos(0.f, 20.f, 0.f);
+		Gold->Drop((float)GetRandom(0, 180), 300.f);
+	}
+	DropCount = GetRandom(0, 3);
+	for (int i = 0; i < DropCount; ++i)
+	{
+		CGoldBullion* Gold = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
+		Gold->SetWorldPos(GetWorldPos());
+		Gold->AddWorldPos(0.f, 20.f, 0.f);
+		Gold->Drop((float)GetRandom(0, 180), 300.f);
+	}
 }

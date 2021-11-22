@@ -2,7 +2,7 @@
 #include <GameObject.h>
 #include "../GlobalValue.h"
 #include "Door.h"
-
+#include <Component/TileMapComponent.h>
 //Enemy,Object,Tile Door 등 들고있는 클래스
 class CStage
 {
@@ -23,11 +23,11 @@ private:
 	std::unordered_map<int, std::vector<CSharedPtr<CGameObject>>> m_SpawnEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_vecEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_Object;
-	std::vector<CDoor*> m_Doors;
+	std::vector<CSharedPtr<CDoor>> m_Doors;
 	class CGameObject* m_TileMap;
 	class CGameObject* m_TileMapObject;
-	class CTileMapComponent* m_TileMapComponent;
-	class CTileMapComponent* m_TileObjectMapComponent;
+	CSharedPtr<CTileMapComponent> m_TileMapComponent;
+	CSharedPtr<CTileMapComponent> m_TileObjectMapComponent;
 	
 	bool m_Enable;
 	class CScene* m_pScene;
@@ -42,6 +42,7 @@ public:
 		m_pScene = Scene;
 	}
 	void Enable(bool Enable);
+	void Active(bool bActive);
 	Stage_State GetStageState()
 	{
 		return m_State;
@@ -63,6 +64,9 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CStage* Clone();
 public:
+
+	void PushObject(class CGameObject* obj);
+	void DeleteObject(class CGameObject* obj);
 	void PlayerStageMove(Stage_Dir Dir);
 	void PushSpawnEnemy(CGameObject* Obj);
 };

@@ -23,6 +23,12 @@ CKeyboardUIObject::~CKeyboardUIObject()
 {
 }
 
+void CKeyboardUIObject::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Sprite->Enable(bEnable);
+}
+
 void CKeyboardUIObject::Start()
 {
 	CGameObject::Start();
@@ -39,6 +45,7 @@ bool CKeyboardUIObject::Init()
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
 	m_Sprite->AddRelativePos(0.f, -1.f, 0.f);
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default2);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 
 	return true;

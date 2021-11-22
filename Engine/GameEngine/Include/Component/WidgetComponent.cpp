@@ -65,14 +65,40 @@ void CWidgetComponent::PostUpdate(float DeltaTime)
 		if (m_Space == WidgetComponent_Space::Space2D)
 		{
 			Vector2	WidgetPos = Vector2(GetWorldPos().x, GetWorldPos().y);
-
 			// 2D 에서는 카메라의 위치를 빼서 윈도우 상에서의 위치를 구해준다.
 			CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 			Vector2	CameraPos = Vector2(Camera->GetWorldPos().x, Camera->GetWorldPos().y);
+			if (CameraPos.x < Camera->GetMin().x)
+			{
+				CameraPos.x = Camera->GetMin().x;
+			}
+			if (CameraPos.x > Camera->GetMax().x)
+			{
+				CameraPos.x = Camera->GetMax().x;
+			}
+			if (CameraPos.y < Camera->GetMin().y)
+			{
+				CameraPos.y = Camera->GetMin().y;
+			}
+			if (CameraPos.y > Camera->GetMax().y)
+			{
+				CameraPos.y = Camera->GetMax().y;
+			}
+
+			Vector2	CameraZoomSize=Camera->GetCameraZoomSize();
+			float Zoom = Camera->GetCameraZoom();
+			Vector2 VRS = Camera->GetVRS();
+			Vector2 Size = { VRS.x / 2.f, VRS.y / 2.f };
+			Size.x = Size.x / Zoom - Size.x;
+			Size.y = Size.y / Zoom - Size.y;
+
+			CameraPos += (VRS+ Size) / 2.f;
 
 			WidgetPos -= CameraPos;
+			WidgetPos /= CameraZoomSize;
 
+			WidgetPos *= VRS;
 			m_WidgetWindow->SetPos(WidgetPos);
 		}
 

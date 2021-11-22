@@ -5,8 +5,9 @@
 #include "../Object/Player.h"
 CStageManager::CStageManager():
 	m_pScene(nullptr),
-	m_MapSize(4),
-	m_MapCount(0)
+	m_MapSize(3),
+	m_MapCount(0),
+	m_BossStage(false)
 {
 
 }
@@ -26,6 +27,11 @@ std::string CStageManager::GetCurName()
 	return m_SelectStage->GetName();
 }
 
+CStage* CStageManager::GetCurStage()
+{
+	return m_SelectStage;
+}
+
 void CStageManager::Init()
 {
 	CreateDungeon();
@@ -42,6 +48,67 @@ void CStageManager::Update(float DeltaTime)
 {
 	if(m_SelectStage)
 		m_SelectStage->Update(DeltaTime);
+}
+
+void CStageManager::CreateBossStage()
+{
+	m_SelectStage->Enable(false);
+	m_SelectStage = nullptr;
+	m_BossStage = true;
+	m_StartPos = Vector2(0.f, 0.f);
+	m_EndPos = Vector2(0.f, 2.f);
+	m_CurPos = m_StartPos;
+	for (size_t i = 0; i < m_vecStage.size(); i++)
+	{
+		for (size_t j = 0; j < m_vecStage[i].size(); ++j)
+		{
+			SAFE_DELETE(m_vecStage[i][j]);
+		}
+		m_vecStage[i].clear();
+	}
+	m_vecStage.clear();
+
+	for (size_t i = 0; i < m_vecStageInfo.size(); i++)
+	{
+		m_vecStageInfo[i].clear();
+	}
+	m_vecStageInfo.clear();
+
+
+
+	m_vecStage.resize(3);
+
+	m_vecStage[0].resize(3);
+	m_vecStage[1].resize(3);
+	m_vecStage[2].resize(3);
+
+	m_vecStageInfo.resize(3);
+
+	m_vecStageInfo[0].resize(3);
+	m_vecStageInfo[1].resize(3);
+	m_vecStageInfo[2].resize(3);
+
+	for (int x = 0; x < 3; x++)
+	{
+		for (int dir = 0; dir < 4; dir++)
+		{
+			m_vecStageInfo[x][0].Wall[dir] = true;
+		}
+		m_vecStageInfo[x][0].visit = false;
+		m_vecStageInfo[x][0].StageType = StageType::Base;
+	}
+	m_vecStageInfo[0][0].Wall[(int)Door_Dir::Door_Right] = false;
+	m_vecStageInfo[1][0].Wall[(int)Door_Dir::Door_Left] = false;
+	m_vecStageInfo[1][0].Wall[(int)Door_Dir::Door_Right] = false;
+	m_vecStageInfo[2][0].Wall[(int)Door_Dir::Door_Left] = false;
+
+	m_vecStageInfo[0][0].StageType= StageType::Start;
+
+	m_vecStageInfo[1][0].StageType = StageType::Boss;
+
+	m_vecStageInfo[2][0].StageType = StageType::End;
+
+	PlayStage(Stage_Dir::END);
 }
 
 void CStageManager::CreateDungeon()
@@ -144,8 +211,8 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	{
 		m_SelectStage->Enable(false);
 	}
-	int x=(int)m_CurPos.x ;
-	int y=(int)m_CurPos.y ;
+	int x = (int)m_CurPos.x;
+	int y = (int)m_CurPos.y;
 	if (m_vecStage[x][y])
 	{
 		//만약있는방이면 이미 방문했던방이다.
@@ -189,17 +256,20 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	case StageType::Restaurant:
 		Info = GetStageSpawnInfo(num);
 		break;
+
+	case StageType::Boss:
+		Info = GetBossStageSpawnInfo(num);
+		break;
 	}
-	
 
-
-	CGlobalValue::MainPlayer->SetWorldPos(-100.f, 0.f, 0.f);
 	Stage->SetScene(m_pScene);
 	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType, num);
 	Stage->PlayerStageMove(Dir);
 	m_vecStage[x][y] = Stage;
 	Stage->Enable(true);
 	m_SelectStage = Stage;
+	
+	
 }
 
 bool CStageManager::CreateStage_Special()

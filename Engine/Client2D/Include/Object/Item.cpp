@@ -31,6 +31,7 @@ CItem::CItem(const CItem& obj) :
 
 CItem::~CItem()
 {
+	SAFE_DELETE(m_Status);
 }
 
 void CItem::Start()
@@ -104,7 +105,8 @@ void CItem::SetStatus(const std::string& Name)
 	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
 	if (Status)
 	{
-		m_Status = Status;
+		SAFE_DELETE(m_Status);
+		m_Status = Status->Clone();;
 	}
 
 }

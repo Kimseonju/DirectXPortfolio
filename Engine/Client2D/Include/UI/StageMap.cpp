@@ -26,7 +26,6 @@ bool CStageMap::Init()
 	Resolution RS = CDevice::GetInst()->GetResolution();
 	Vector2 Pos;
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
-	CStageManager::GetInst()->GetCurPos();
 	int Size = CStageManager::GetInst()->GetMapSize();
 
 	SetZOrder(UI_ZOrder::MapUI);
@@ -59,6 +58,7 @@ bool CStageMap::Init()
 			case StageType::Restaurant:
 				break;
 			}
+			m_MapBase.push_back(Base);
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{
 				std::string str3 = std::to_string((int)WallDir::Left);
@@ -70,6 +70,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Up])
 			{
@@ -82,6 +83,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Right])
 			{
@@ -96,6 +98,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Down])
 			{
@@ -109,10 +112,101 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
 			}
 		}
 	}
-
+	for (int x= 0; x < Size; ++x)
+	{
+		for (int y = 0; y < Size; ++y)
+		{
+			if (Info[x][y].StageType == StageType::None)
+				continue;
+			std::string str1 = std::to_string(x);
+			std::string str2 = std::to_string(y);
+			CImage* Base=CreateWidget<CImage>("Base"+str1+str2);
+			Base->SetPos(30.f * 4.f *x+300.f, 30.f * 4.f *y+100.f);
+			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
+			Base->SetSize(24.f*4.f, 24.f * 4.f);
+			Base->SetCollision(false);
+			switch (Info[x][y].StageType)
+			{
+			case StageType::Base:
+				break;
+			case StageType::Start:
+				Base->SetColorTint(1.f, 0.f, 0.f, 1.f);
+				break;
+			case StageType::End:
+				Base->SetColorTint(0.f, 0.f, 1.f, 1.f);
+				break;
+			case StageType::Shop:
+				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
+				break;
+			case StageType::Restaurant:
+				break;
+			}
+			m_MapBase.push_back(Base);
+			//if (!Info[x][y].Wall[(int)WallDir::Left])
+			//{
+			//	std::string	 str3 = std::to_string((int)WallDir::Left);
+			//	CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2+ str3);
+			//	Vector2 Pos = Base->GetPos();
+			//	Pos += Base->GetSize() / 2.f;
+			//	Pos.x -= 20.f;
+			//	Arrow->SetPos(Pos);
+			//	Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+			//	Arrow->SetSize(10.f * 4.f, 1.f);
+			//	Arrow->SetCollision(false);
+			//	Arrow->SetZOrder(3);
+			//	m_MapArrow.push_back(Arrow);
+			//}
+			//if (!Info[x][y].Wall[(int)WallDir::Up])
+			//{
+			//	std::string str3 = std::to_string((int)WallDir::Up);
+			//	CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+			//	Vector2 Pos = Base->GetPos();
+			//	Pos += Base->GetSize() / 2.f;
+			//	Pos.y += 20.f;
+			//	Arrow->SetPos(Pos);
+			//	Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+			//	Arrow->SetSize(1.f, 10.f * 4.f);
+			//	Arrow->SetCollision(false);
+			//	Arrow->SetZOrder(3);
+			//	m_MapArrow.push_back(Arrow);
+			//}
+			//if (!Info[x][y].Wall[(int)WallDir::Right])
+			//{
+			//
+			//	std::string str3 = std::to_string((int)WallDir::Right);
+			//	CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+			//	Vector2 Pos = Base->GetPos();
+			//	Pos += Base->GetSize() / 2.f;
+			//	Pos.x += 20.f;
+			//	Arrow->SetPos(Pos);
+			//	
+			//	Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+			//	Arrow->SetSize(10.f * 4.f, 1.f);
+			//	Arrow->SetCollision(false);
+			//	Arrow->SetZOrder(3);
+			//	m_MapArrow.push_back(Arrow);
+			//}
+			//if (!Info[x][y].Wall[(int)WallDir::Down])
+			//{
+			//
+			//	std::string str3 = std::to_string((int)WallDir::Down);
+			//	CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+			//	Vector2 Pos = Base->GetPos();
+			//	Pos += Base->GetSize() / 2.f;
+			//	Pos.y -= 20.f;
+			//	Arrow->SetPos(Pos);
+			//	Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+			//	Arrow->SetSize(1.f, 10.f * 4.f);
+			//	Arrow->SetCollision(false);
+			//	Arrow->SetZOrder(3);
+			//	m_MapArrow.push_back(Arrow);
+			//}
+		}
+	}
 	m_PosX = CreateWidget<CText>("PosX");
 	m_PosX->SetPos(100.f, 100.f);
 	m_PosX->SetCollision(false);
@@ -171,27 +265,107 @@ CStageMap* CStageMap::Clone()
 	return new CStageMap(*this);
 }
 
-void CStageMap::CreateStage()
+void CStageMap::StageUpdate()
 {
-	if (!m_StageUpdate)
+	for (size_t i = 0; i < m_MapBase.size(); i++)
 	{
-		return;
+		m_MapBase[i]->Active(false);
 	}
+	m_MapBase.clear();
+	for (size_t i = 0; i < m_MapArrow.size(); i++)
+	{
+		m_MapArrow[i]->Active(false);
+	}
+	m_MapArrow.clear();
 
-	m_StageUpdate = false;
-	Resolution RS = CDevice::GetInst()->GetResolution();
-	//for (int i = 0; i < 20; ++i)
-	//{
-	//	for (int j = 0; j < 20; ++j)
-	//	{
-	//		CRoom* room = m_Stage->GetRooms(i, j);
-	//		if (room == nullptr)
-	//			continue;
-	//
-	//		m_MapBase1_0 = CreateWidget<CImage>("Room");
-	//		m_MapBase1_0->SetPos((float)RS.Width/2.f+(26.f * ((float)i-4.f)*4.f), (float)RS.Height / 2.f+(26.f*((float)j-4.f)*4.f));
-	//		m_MapBase1_0->SetTexture("Room", TEXT("UI/map/Room.png"));
-	//		m_MapBase1_0->SetSize(24.f * 4, 24.f * 4);
-	//	}
-	//}
+	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
+
+	SetZOrder(UI_ZOrder::MapUI);
+	for (int x = 0; x < 3; ++x)
+	{
+		for (int y = 0; y < 1; ++y)
+		{
+			if (Info[x][y].StageType == StageType::None)
+				continue;
+			std::string str1 = std::to_string(x);
+			std::string str2 = std::to_string(y);
+			CImage* Base = CreateWidget<CImage>("Base" + str1 + str2);
+			Base->SetPos(30.f * 4.f * x + 300.f, 30.f * 4.f * y + 100.f);
+			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
+			Base->SetSize(24.f * 4.f, 24.f * 4.f);
+			Base->SetCollision(false);
+			switch (Info[x][y].StageType)
+			{
+			case StageType::Base:
+				break;
+			case StageType::Start:
+				Base->SetColorTint(1.f, 0.f, 0.f, 1.f);
+				break;
+			case StageType::End:
+				Base->SetColorTint(0.f, 0.f, 1.f, 1.f);
+				break;
+			case StageType::Shop:
+				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
+				break;
+			case StageType::Restaurant:
+				break;
+			}
+			m_MapBase.push_back(Base);
+			if (!Info[x][y].Wall[(int)WallDir::Left])
+			{
+				std::string str3 = std::to_string((int)WallDir::Left);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.x -= 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f * 4.f, 10.f);
+				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Up])
+			{
+				std::string str3 = std::to_string((int)WallDir::Up);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.y += 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f, 10.f * 4.f);
+				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Right])
+			{
+
+				std::string str3 = std::to_string((int)WallDir::Right);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.x += 40.f;
+				Arrow->SetPos(Pos);
+
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f * 4.f, 10.f);
+				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
+			}
+			if (!Info[x][y].Wall[(int)WallDir::Down])
+			{
+
+				std::string str3 = std::to_string((int)WallDir::Down);
+				CImage* Arrow = CreateWidget<CImage>("Arrow" + str1 + str2 + str3);
+				Vector2 Pos = Base->GetPos();
+				Pos += Base->GetSize() / 2.f;
+				Pos.y -= 40.f;
+				Arrow->SetPos(Pos);
+				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
+				Arrow->SetSize(10.f, 10.f * 4.f);
+				Arrow->SetCollision(false);
+				m_MapArrow.push_back(Arrow);
+			}
+		}
+	}
 }

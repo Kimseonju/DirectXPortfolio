@@ -27,6 +27,7 @@ public:
 
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
+	virtual void DropGold();
 public:
 
 	virtual void FindStay() override;

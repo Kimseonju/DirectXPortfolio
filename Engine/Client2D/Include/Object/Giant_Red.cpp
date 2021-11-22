@@ -12,6 +12,9 @@
 #include "Giant_RedBulletMain.h"
 #include "ProgressBarObject.h"
 #include "ObjectDieEffectObject.h"
+#include "TextObject.h"
+#include "Gold.h"
+#include "GoldBullion.h"
 CGiant_Red::CGiant_Red() :
 	m_PlayerFind(false),
 	m_AttackTimer(0.f),
@@ -29,6 +32,15 @@ CGiant_Red::CGiant_Red(const CGiant_Red& obj) :
 
 CGiant_Red::~CGiant_Red()
 {
+}
+
+void CGiant_Red::Active(bool bActive)
+{
+	CEnemy::Active(bActive);
+	if (m_Bullet)
+	{
+		m_Bullet->Active(bActive);
+	}
 }
 
 void CGiant_Red::Start()
@@ -111,17 +123,18 @@ void CGiant_Red::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
 		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		m_ProgressBar->Enable(true);
+		m_EnemyInfoWidget->Enable(true);
+		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
+		TextObj->SetText(std::to_string(CGlobalValue::MainPlayer->GetStatus().GetAttackDamage()));
+		TextObj->SetWorldPos(GetWorldPos());
+		TextObj->Damage();
 		if (m_Status->GetHP() <= 0)
 		{
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());
 			Active(false);
-			m_ProgressBar->Active(false);
-			if (m_Bullet)
-			{
+			DropGold();
 
-			}
 		}
 
 	}
@@ -136,4 +149,24 @@ void CGiant_Red::CollisionAttackRangeBegin(const HitResult& result, CCollider* C
 
 void CGiant_Red::AnimationFrameEnd(const std::string& Name)
 {
+}
+
+void CGiant_Red::DropGold()
+{
+	int DropCount = GetRandom(0, 4);
+	for (int i = 0; i < DropCount; ++i)
+	{
+		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
+		Gold->SetWorldPos(GetWorldPos());
+		Gold->AddWorldPos(0.f, 20.f, 0.f);
+		Gold->Drop((float)GetRandom(0, 180), 300.f);
+	}
+	DropCount = GetRandom(0, 3);
+	for (int i = 0; i < DropCount; ++i)
+	{
+		CGoldBullion* Gold = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
+		Gold->SetWorldPos(GetWorldPos());
+		Gold->AddWorldPos(0.f, 20.f, 0.f);
+		Gold->Drop((float)GetRandom(0, 180), 300.f);
+	}
 }

@@ -1,5 +1,10 @@
 #include "GoldBullion.h"
 #include <Input.h>
+#include "TextObject.h"
+#include "Scene/Scene.h"
+#include "Player.h"
+#include "../Stage/StageManager.h"
+#include "../Stage/Stage.h"
 CGoldBullion::CGoldBullion() :
 	m_Open(false),
 	m_WallCol(false)
@@ -63,6 +68,9 @@ bool CGoldBullion::Init()
 	m_Body->SetGravity(true);
 
 
+	CStage* Stage = CStageManager::GetInst()->GetCurStage();
+	Stage->PushObject(this);
+
 	return true;
 }
 
@@ -116,6 +124,11 @@ void CGoldBullion::CollisionHorizonBegin(const HitResult& result, CCollider* Col
 	{
 		//플레이어의 골드를 증가시켜주고 사운드 재생
 		CPlayer* Player = CGlobalValue::MainPlayer;
+		Player->AddCoin(100);
+		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
+		TextObj->SetText(std::to_string(100)+"G");
+		TextObj->SetWorldPos(GetWorldPos());
+		TextObj->Gold();
 		Active(false);
 	}
 

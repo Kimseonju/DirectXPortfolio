@@ -43,7 +43,7 @@ bool CFlameEffect::Init()
 	m_Particle->SetDistortion(true);
 	//m_Distortion->SetTargetPrimitive(m_Particle);
 
-	SetLifeTime(9.9f);
+	//SetLifeTime(9.9f);
 
 	return true;
 }

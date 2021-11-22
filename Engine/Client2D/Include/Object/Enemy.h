@@ -28,6 +28,8 @@ protected:
 	CSharedPtr<CColliderBox2D> m_AttackRangeCollider2D;
 	CSharedPtr<CRigidBodyComponent> m_Body;
 	CEngineFSM<CEnemy> m_EnemyFSM;
+	CSharedPtr<CWidgetComponent> m_EnemyInfoWidgetComponent;
+	class CEnemyWorldInfoWidget* m_EnemyInfoWidget;
 
 	Enemy_State m_State;
 	class CAnimation2D_FSM* m_Animation2D;
@@ -38,7 +40,6 @@ protected:
 	Object_Dir m_Dir;
 	bool m_WallCol;
 	bool m_StartGravity;
-	class CProgressBarObject* m_ProgressBar;
 protected:
 	bool    m_ChildFire;
 	float   m_ChildFireTime;
@@ -57,6 +58,7 @@ public:
 public:
 	virtual void Enable(bool bEnable);
 	virtual void SetStatus(const std::string& Name);
+	virtual void DropGold() {}
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
@@ -83,4 +85,6 @@ public:
 	virtual void DieStart();
 	virtual void DieStay();
 	virtual void DieEnd() {}
+
+	
 };

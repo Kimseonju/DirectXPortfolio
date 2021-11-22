@@ -115,6 +115,7 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_LR.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLRT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
@@ -133,7 +134,7 @@ bool CTestMainScene::Init()
 
 	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
 	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
-	CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+	//CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
 	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
@@ -146,7 +147,7 @@ bool CTestMainScene::Init()
 	
 	//CPixelCollisionTest* pPixelCollisionTest = m_pScene->SpawnObject<CPixelCollisionTest>("PixelCollisionTest");
 	CStage1MapEffect* Stage1MapEffect = m_pScene->SpawnObject<CStage1MapEffect>("Stage1MapEffect");
-	
+	Stage1MapEffect->SetWorldPos(400.f, 200.f,0.f);
 	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
 
 	//CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
@@ -810,7 +811,14 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 4.f, 0), Vector2((i + 1) * 4.f, 10.f));
 	}
 
-
+	m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("RestaurantTable",
+		"RestaurantTable", TEXT("UI/restaurant/RestaurantTable.png"));
+	for (int i = 0; i < 3; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
+			Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
+	}
 }
 
 void CTestMainScene::CreateParticle()
@@ -861,18 +869,18 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->CreateParticle("StageMapParticle");
 	m_pScene->GetResource()->SetParticleUpdateShader("StageMapParticle", "ParticleRandomScaleUpdateShader");
 	m_pScene->GetResource()->SetParticleMaterial("StageMapParticle", StageMapMaterial);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 500);
-	m_pScene->GetResource()->SetParticleStartColor("StageMapParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
-	m_pScene->GetResource()->SetParticleEndColor("StageMapParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
-	m_pScene->GetResource()->SetParticleStartScale("StageMapParticle", 20.f, 20.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("StageMapParticle", 10.f, 10.f, 1.f);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 1000);
+	m_pScene->GetResource()->SetParticleStartColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleStartScale("StageMapParticle", 4.f, 4.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("StageMapParticle", 4.f, 4.f, 1.f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
 	m_pScene->GetResource()->SetParticleLifeTimeMin("StageMapParticle", 2.f);
 	m_pScene->GetResource()->SetParticleLifeTimeMax("StageMapParticle", 2.f);
-	m_pScene->GetResource()->SetParticleRange("StageMapParticle", 5000.f, 5000.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("StageMapParticle", 50.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("StageMapParticle", 50.f);
+	m_pScene->GetResource()->SetParticleRange("StageMapParticle", 1000.f, 1000.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("StageMapParticle", 10.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("StageMapParticle", 10.f);
 	m_pScene->GetResource()->SetParticleMoveEnable("StageMapParticle", true);
 	m_pScene->GetResource()->SetParticle2D("StageMapParticle", true);
 	//m_pScene->GetResource()->SetParticleMoveDir("StageMapParticle", 0.f, 1.f, 0.f);
@@ -884,17 +892,17 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleUpdateShader("DoorParticle", "ParticleDirUpdateShader");
 	m_pScene->GetResource()->SetParticleMaterial("DoorParticle", StageMapMateria1l);
 	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 500);
-	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
-	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
-	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 4.f, 4.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 4.f, 4.f, 1.f);
+	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 1.f, 1.f, 1.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 1.f, 1.f, 1.f, 0.7f);
+	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 5.f, 5.f, 1.f);
+	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 5.f, 5.f, 1.f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
 	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("DoorParticle", 10.5f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("DoorParticle", 10.8f);
-	m_pScene->GetResource()->SetParticleRange("DoorParticle", 200.f, 200.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("DoorParticle", 100.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("DoorParticle", 100.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMin("DoorParticle", 2.f);
+	m_pScene->GetResource()->SetParticleLifeTimeMax("DoorParticle", 2.f);
+	m_pScene->GetResource()->SetParticleRange("DoorParticle", 100.f, 100.f, 0.f);
+	m_pScene->GetResource()->SetParticleMinSpeed("DoorParticle", 10.f);
+	m_pScene->GetResource()->SetParticleMaxSpeed("DoorParticle", 10.f);
 	m_pScene->GetResource()->SetParticleMoveEnable("DoorParticle", true);
 	m_pScene->GetResource()->SetParticle2D("DoorParticle", true);
 	m_pScene->GetResource()->SetParticleMoveDir("DoorParticle", 0.f, 1.f, 0.f);

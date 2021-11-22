@@ -12,7 +12,6 @@ public:
     ~CEnemyWorldInfoWidget();
 
 private:
-    CSharedPtr<CText>        m_NameText;
     CSharedPtr<CProgressBar> m_HPBar;
 
 public:

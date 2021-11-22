@@ -10,6 +10,7 @@
 #include <Component/RigidBodyComponent.h>
 #include "Component/WidgetComponent.h"
 #include <Component/ParticleSystemComponent.h>
+#include "KeyboardUIObject.h"
 class CMainDoor :
 	public CGameObject
 {
@@ -24,12 +25,15 @@ protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CSharedPtr<CColliderBox2D> m_DoorCollider2D;
 	CSharedPtr<CAnimation2D> m_Animation2D;
-	class CKeyboardUIObject* m_KeyUIObject;
+	CSharedPtr<CKeyboardUIObject>m_KeyUIObject;
 protected:
 	bool m_Open;
+	
 public:
 
 public:
+	virtual void Enable(bool bEnable);
+	virtual void Active(bool bActive);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

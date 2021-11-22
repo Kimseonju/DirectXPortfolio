@@ -4,7 +4,9 @@
 #include "StageManager.h"
 #include "../GlobalValue.h"
 #include "../Object/Player.h"
-CDoor::CDoor() 
+CDoor::CDoor() :
+	m_Open(true),
+	m_StartInput(false)
 {
 }
 
@@ -34,7 +36,6 @@ void CDoor::Enable(bool bEnable)
 void CDoor::Start()
 {
 	CGameObject::Start();
-
 }
 
 bool CDoor::Init()
@@ -42,6 +43,7 @@ bool CDoor::Init()
 	CGameObject::Init();
 	m_DoorCollider2D = CreateSceneComponent<CColliderBox2D>("DoorCollider2D");
 	m_NextStageCollider2D = CreateSceneComponent<CColliderBox2D>("NextStageCollider2D");
+	m_SpriteBody = CreateSceneComponent<CSpriteComponent>("SpriteBody");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_Particle = CreateSceneComponent<CParticleSystemComponent>("Particle");
 
@@ -53,7 +55,7 @@ bool CDoor::Init()
 	m_Particle->SetTwinkleEnable(false);
 	//m_Particle->SetGravityEnable(true);
 
-	SetRootComponent(m_Sprite);
+	SetRootComponent(m_SpriteBody);
 
 	m_Sprite->CreateAnimation2D<CAnimation2D>();
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
@@ -74,9 +76,11 @@ bool CDoor::Init()
 	m_DoorCollider2D->AddCollisionCallbackFunction<CDoor>(Collision_State::Begin, this,
 		&CDoor::CollisionBegin);
 	m_DoorCollider2D->SetExtent(33.f, 10.f);
-	m_Sprite->AddChild(m_DoorCollider2D);
-	m_Sprite->AddChild(m_Particle);
-	m_Sprite->AddChild(m_NextStageCollider2D);
+
+	m_SpriteBody->AddChild(m_Sprite);
+	m_SpriteBody->AddChild(m_DoorCollider2D);
+	m_SpriteBody->AddChild(m_Particle);
+	m_SpriteBody->AddChild(m_NextStageCollider2D);
 	return true;
 }
 
@@ -92,6 +96,7 @@ void CDoor::Update(float DeltaTime)
 		else
 		{
 
+			m_Sprite->Enable(false);
 		}
 	}
 }
@@ -122,20 +127,25 @@ void CDoor::Animation2DNotify(const std::string& Name)
 
 void CDoor::DoorOpenClose(bool Open)
 {
-	if (m_Open != Open)
+	if (m_Open != Open || !m_StartInput)
 	{
+		m_StartInput = true;
 		m_Open = Open;
 		if (m_Open)
 		{
+			m_Sprite->Enable(true);
 			m_Animation2D->ChangeAnimation("DoorOpen");
 			m_Particle->Enable(true);
 			m_DoorCollider2D->Enable(false);
+			m_NextStageCollider2D->Enable(true);
 		}
 		else
 		{
+			m_Sprite->Enable(true);
 			m_Animation2D->ChangeAnimation("DoorClose");
 			m_Particle->Enable(false);
 			m_DoorCollider2D->Enable(true);
+			m_NextStageCollider2D->Enable(false);
 		}
 	}
 }
@@ -172,6 +182,10 @@ void CDoor::CollisionBegin_NextStage(const HitResult& result, CCollider* Collide
 		}
 		}
 	}
+
+
+
+	
 }
 
 void CDoor::PlayerMove()
@@ -214,26 +228,41 @@ void CDoor::SetDir(Door_Dir Dir)
 	case Door_Dir::Door_Left:
 	{
 		m_Particle->SetMoveDir({ 1,0,0 });
-		SetWorldRotation(0.f, 0.f, 90.f);
+		m_Particle->SetRelativeRotationZ(90.f);
+		m_Particle->SetRelativePos(0.f, 5.f, 0.f);
+		m_Sprite->SetRelativeRotationZ(90.f);
+		m_DoorCollider2D->SetExtent(10.f, 33.f);
+		m_NextStageCollider2D->SetExtent(10.f, 33.f);
 		break;
 	}
 	case Door_Dir::Door_Right:
 	{
 		m_Particle->SetMoveDir({ -1,0,0 });
-		SetWorldRotation(0.f, 0.f, 270.f);
+		m_Particle->SetRelativeRotationZ(270.f);
+		m_Particle->SetRelativePos(0.f, 5.f, 0.f);
+
+		m_Sprite->SetRelativeRotationZ(270.f);
+		m_DoorCollider2D->SetExtent(10.f, 33.f);
+		m_NextStageCollider2D->SetExtent(10.f, 33.f);
 		break;
 	}
 	case Door_Dir::Door_Up:
 	{
 
 		m_Particle->SetMoveDir({ 0,-1,0 });
+		m_Particle->SetRelativeRotationZ(0.f);
+		m_Sprite->SetRelativeRotationZ(0.f);
+		m_DoorCollider2D->SetExtent(33.f, 10.f);
+		m_NextStageCollider2D->SetExtent(33.f, 10.f);
 		break;
 	}
 	case Door_Dir::Door_Down:
 	{
-
 		m_Particle->SetMoveDir({ 0,1,0 });
-		SetWorldRotation(0.f, 0.f, 180.f);
+		m_Particle->SetRelativeRotationZ(180.f);
+		m_Sprite->SetRelativeRotationZ(180.f);
+		m_DoorCollider2D->SetExtent(33.f, 10.f);
+		m_NextStageCollider2D->SetExtent(33.f, 10.f);
 		break;
 	}
 	}

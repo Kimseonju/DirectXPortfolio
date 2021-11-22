@@ -17,6 +17,7 @@ private:
 	bool m_Giant_RedAttack;
 	class CGiant_RedBulletMain* m_Bullet;
 public:
+	virtual void Active(bool bActive);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -31,6 +32,7 @@ public:
 
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
+	virtual void DropGold();
 public:
 
 	virtual void FindStay() override;

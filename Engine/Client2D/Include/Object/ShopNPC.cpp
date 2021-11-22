@@ -2,6 +2,7 @@
 #include <Input.h>
 #include "KeyboardUIObject.h"
 #include "Player.h"
+#include "../UI/UIManager.h"
 CShopNPC::CShopNPC()
 {
 }
@@ -15,6 +16,13 @@ CShopNPC::CShopNPC(const CShopNPC& obj)
 
 CShopNPC::~CShopNPC()
 {
+}
+
+void CShopNPC::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Collider2D->Enable(bEnable);
+	m_Sprite->Enable(bEnable);
 }
 
 void CShopNPC::Start()
@@ -49,7 +57,7 @@ bool CShopNPC::Init()
 	m_Collider2D->AddCollisionCallbackFunction<CShopNPC>(Collision_State::End, this,
 		&CShopNPC::CollisionEnd);
 
-	m_Collider2D->SetExtent(24.f, 24.f);
+	m_Collider2D->SetExtent(24.f, 48.f);
 
 	m_SpriteObject->SetPivot(0.5f, 0.5f, 0.f);
 	m_SpriteObject->SetRelativePos(70.f, -10.f, 0.f);
@@ -67,11 +75,11 @@ bool CShopNPC::Init()
 void CShopNPC::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	CPlayer* Player = CGlobalValue::MainPlayer;
-	if (Player)
-	{
-		SetWorldPos(Player->GetWorldPos());
-	}
+	//CPlayer* Player = CGlobalValue::MainPlayer;
+	//if (Player)
+	//{
+	//	SetWorldPos(Player->GetWorldPos());
+	//}
 }
 
 void CShopNPC::PostUpdate(float DeltaTime)
@@ -100,11 +108,13 @@ void CShopNPC::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
 		m_KeyUIObject->Enable(true);
+		m_KeyUIObject->SetWorldPos(GetWorldPos());
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
 		//상점 UI시작
 		//플레이어 키 다 잠금
+		CUIManager::GetInst()->GetShopUI()->Enable(true);
 	}
 
 }

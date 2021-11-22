@@ -33,6 +33,6 @@ public:
     virtual void Render();
     virtual CStageMap* Clone();
 
-    void CreateStage();
+    void StageUpdate();
 };
 

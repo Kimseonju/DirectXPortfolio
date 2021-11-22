@@ -13,7 +13,7 @@ CColliderBox2D::CColliderBox2D()
 
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
 	m_ComponentClassType = Component_Class_Type::ColliderBox2D;
-	SetRender2DType(RT2D_Default);
+	SetRender2DType(RT2D_Particle);
 }
 
 CColliderBox2D::CColliderBox2D(const CColliderBox2D& com) :

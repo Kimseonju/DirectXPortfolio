@@ -18,6 +18,7 @@ protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	Vector2 m_SizeBar;
 public:
+	virtual void Enable(bool bEnable);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

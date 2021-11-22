@@ -343,7 +343,7 @@ bool CResourceManager::Init()
 
 	CreateTextFormat("Default", FontFaceName, 600, 20.f, TEXT("ko"));
 
-	FontFaceName = GetFontFaceName("DungreedFont");
+	const TCHAR*  FontFaceName2 = GetFontFaceName("DungreedFont");
 	CreateTextFormat("DungreedFont", FontFaceName, 600, 20.f, TEXT("ko"));
 	
 	return true;

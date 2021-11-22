@@ -1,5 +1,7 @@
 #include "BelialDeadHead.h"
 #include <Component/Collider.h>
+#include "../Stage/StageManager.h"
+#include "../Stage/Stage.h"
 CBelialDeadHead::CBelialDeadHead() :
 	m_Rotation(false),
 	m_RotationTimer(0.f)
@@ -49,6 +51,10 @@ bool CBelialDeadHead::Init()
 		&CBelialDeadHead::CollisionEnd);
 
 	m_Body->SetGravity(true);
+
+
+	CStage* Stage = CStageManager::GetInst()->GetCurStage();
+	Stage->PushObject(this);
 	return true;
 }
 

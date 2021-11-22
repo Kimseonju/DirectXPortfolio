@@ -57,6 +57,7 @@ CBelial::CBelial(const CBelial& obj) :
 
 CBelial::~CBelial()
 {
+	SAFE_DELETE(m_Status);
 }
 
 void CBelial::Start()
@@ -211,7 +212,8 @@ void CBelial::SetStatus(const std::string& Name)
 	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
 	if (Status)
 	{
-		m_Status = Status;
+		SAFE_DELETE(m_Status);
+		m_Status = Status->Clone();;
 	}
 }
 
@@ -449,6 +451,7 @@ void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 	{
 		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
 		CUIManager::GetInst()->GetBossUI()->SetProgressBarPercent((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
+
 		if (m_Status->GetHP() < 0.f)
 		{
 			m_PatternStop = true;

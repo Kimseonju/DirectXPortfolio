@@ -3,6 +3,7 @@
 #include "../GlobalValue.h"
 class CInventoryButton;
 class CImage;
+class CText;
 class CInventory :
     public CWidgetWindow
 {
@@ -14,7 +15,7 @@ protected:
     CImage* m_AccBaseImage;
     CImage* m_WeaponSelect_Left;
     CImage* m_WeaponSelect_Right;
-
+    CText* m_CoinText;
     Select_Weapon m_Current;
     std::vector<CInventoryButton*> m_Weapon;
     std::vector<CInventoryButton*> m_Accs;

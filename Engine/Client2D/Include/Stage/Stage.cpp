@@ -25,7 +25,7 @@ CStage::CStage() :
 
 CStage::~CStage()
 {
-
+	Active(false);
 	m_vecEnemy.clear();
 	auto iter = m_SpawnEnemy.begin();
 	auto iterEnd = m_SpawnEnemy.end();
@@ -54,6 +54,33 @@ void CStage::Enable(bool Enable)
 		m_Doors[i]->Enable(m_Enable);
 	}
 }
+void CStage::Active(bool bActive)
+{
+	m_TileMapComponent->Active(m_Enable);
+	m_TileObjectMapComponent->Active(m_Enable);
+	for (size_t i = 0; i < m_vecEnemy.size(); ++i)
+	{
+		m_vecEnemy[i]->Active(bActive);
+	}
+	for (size_t i = 0; i < m_Object.size(); ++i)
+	{
+		m_Object[i]->Active(bActive);
+	}
+	for (size_t i = 0; i < m_Doors.size(); ++i)
+	{
+		m_Doors[i]->Active(bActive);
+		
+
+	}
+	if (!bActive)
+	{
+		m_vecEnemy.clear();
+		m_Object.clear();
+		m_Doors.clear();
+
+	}
+}
+
 void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 {
 	if (m_State != Stage_State::Idle)
@@ -120,6 +147,33 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 
 				break;
 			}
+			case Client_Object_Type::Torch:
+			{
+				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+				m_Object.push_back(NPC);
+				Obj = NPC;
+
+				break;
+			}
+			case Client_Object_Type::BossTorch:
+			{
+				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+				m_Object.push_back(NPC);
+				Obj = NPC;
+
+				break;
+			}
+
+			case Client_Object_Type::Restaurant:
+			{
+				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+				m_Object.push_back(NPC);
+				Obj = NPC;
+
+				break;
+			}
+
+
 			}
 			break;
 		}
@@ -272,12 +326,24 @@ void CStage::Update(float DeltaTime)
 		size_t Size = m_Doors.size();
 		for (size_t i = 0; i < Size; i++)
 		{
-			m_Doors[i]->DoorOpenClose(false);
+			m_Doors[i]->DoorOpenClose(true);
 		}
 		break;
 	}
 	}
+	auto iter = m_Object.begin();
+	auto iterEnd = m_Object.end();
 
+	for (; iter != iterEnd;)
+	{
+		if (!(*iter)->IsActive())
+		{
+			iter = m_Object.erase(iter);
+			iterEnd = m_Object.end();
+			continue;
+		}
+		++iter;
+	}
 }
 
 void CStage::PostUpdate(float DeltaTime)
@@ -295,6 +361,26 @@ void CStage::Render(float DeltaTime)
 CStage* CStage::Clone()
 {
 	return new CStage(*this);
+}
+
+void CStage::PushObject(CGameObject* obj)
+{
+	m_Object.push_back(obj);
+}
+
+void CStage::DeleteObject(CGameObject* obj)
+{
+	auto iter = m_Object.begin();
+	auto iterEnd = m_Object.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		if ((*iter) == obj)
+		{
+			m_Object.erase(iter);
+			return;
+		}
+	}
 }
 
 void CStage::PlayerStageMove(Stage_Dir Dir)

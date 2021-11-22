@@ -10,7 +10,7 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 #include "EnemyAttack.h"
-
+#include "Gold.h"
 CGhost::CGhost() :
 	m_PlayerFind(false)
 {
@@ -112,6 +112,18 @@ void CGhost::CollisionAttackRangeBegin(const HitResult& result, CCollider* Colli
 		//¿ÞÂÊ ¿À¸¥ÂÊ
 		m_GhostAttack = true;
 		m_State = Enemy_State::Attack;
+	}
+}
+
+void CGhost::DropGold()
+{
+	int DropCount = GetRandom(0, 4);
+	for (int i = 0; i < DropCount; ++i)
+	{
+		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
+		Gold->SetWorldPos(GetWorldPos());
+		Gold->AddWorldPos(0.f, 20.f, 0.f);
+		Gold->Drop((float)GetRandom(0, 180), 300.f);
 	}
 }
 

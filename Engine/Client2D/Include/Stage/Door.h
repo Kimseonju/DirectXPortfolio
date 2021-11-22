@@ -22,6 +22,7 @@ protected:
 
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
+	CSharedPtr<CSpriteComponent> m_SpriteBody;
 	CSharedPtr<CColliderBox2D> m_DoorCollider2D;
 	CSharedPtr<CColliderBox2D> m_NextStageCollider2D;
 	CSharedPtr<CParticleSystemComponent> m_Particle;
@@ -30,6 +31,7 @@ protected:
 protected:
 	Vector2    m_MapPos;
 	bool m_Open;
+	bool m_StartInput;
 public:
 	
 public:

@@ -121,7 +121,8 @@ enum class StageType
     Start,
     End,
     Shop,
-    Restaurant
+    Restaurant,
+    Boss
 };
 
 

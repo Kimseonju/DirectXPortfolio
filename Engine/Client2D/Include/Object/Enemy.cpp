@@ -13,6 +13,7 @@
 #include "ObjectDieEffectObject.h"
 #include "ProgressBarObject.h"
 #include "../ObjectStatusManager.h"
+#include "TextObject.h"
 CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
@@ -41,6 +42,7 @@ CEnemy::CEnemy(const CEnemy& obj) :
 
 CEnemy::~CEnemy()
 {
+	SAFE_DELETE(m_Status);
 }
 
 void CEnemy::Start()
@@ -59,6 +61,14 @@ bool CEnemy::Init()
 	m_AttackRangeCollider2D = CreateSceneComponent<CColliderBox2D>("AttackRangeCollider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 
+
+	m_EnemyInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("InfoWidget");
+	m_EnemyInfoWidgetComponent->SetWorldPos(0.f, 0.f, 0.f);
+	m_EnemyInfoWidget = m_EnemyInfoWidgetComponent->CreateWidget<CEnemyWorldInfoWidget>("EnemyWorldInfoWidget");
+	//m_EnemyInfoWidget->Enable(false);
+	m_EnemyInfoWidgetComponent->SetRelativePos(-90.f, -60.f, 0.f);
+	//
+
 	//테스트용 
 	m_Status->SetHP(1);
 	m_Status->SetHPMax(1);
@@ -70,6 +80,7 @@ bool CEnemy::Init()
 	m_Sprite->AddChild(m_Collider2DVertical);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_AttackRangeCollider2D);
+	m_Sprite->AddChild(m_EnemyInfoWidgetComponent);
 
 	m_Sprite->SetRelativeScale(50.f, 50.f, 1.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
@@ -120,9 +131,6 @@ bool CEnemy::Init()
 
 
 	//프로그래스바
-	m_ProgressBar =m_pScene->SpawnObject<CProgressBarObject>("EnemyProgressBar");
-	m_ProgressBar->SetOwner(this);
-	m_ProgressBar->AddRelativePos(0.f, -10.f, 0.f);
 	return true;
 }
 
@@ -142,11 +150,10 @@ void CEnemy::Update(float DeltaTime)
 	m_EnemyFSM.Update();
 	Vector3 Pos = GetWorldPos();
 	Pos.y -= 10.f;
-	m_ProgressBar->SetWorldPos(Pos);
 	m_WallCol= false;
-	m_ProgressBar->SetHPBar((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
 
 
+	m_EnemyInfoWidget->SetHPBar((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
 	
 
 
@@ -196,7 +203,6 @@ void CEnemy::Enable(bool bEnable)
 	m_Collider2D->Enable(bEnable);
 	m_AttackRangeCollider2D->Enable(bEnable);
 	m_Body->Enable(bEnable);
-	m_ProgressBar->Enable(bEnable);
 	m_Sprite->Enable(bEnable);
 }
 
@@ -205,7 +211,8 @@ void CEnemy::SetStatus(const std::string& Name)
 	CBasicStatus* Status=CObjectStatusManager::GetInst()->FindStatus(Name);
 	if (Status)
 	{
-		m_Status = Status;
+		SAFE_DELETE(m_Status);
+		m_Status = Status->Clone();
 	}
 }
 
@@ -240,13 +247,17 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
 		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
-		m_ProgressBar->Enable(true);
+		m_EnemyInfoWidget->Enable(true);
+		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
+		TextObj->SetText(std::to_string(CGlobalValue::MainPlayer->GetStatus().GetAttackDamage()));
+		TextObj->SetWorldPos(GetWorldPos());
+		TextObj->Damage();
 		if (m_Status->GetHP() <= 0)
 		{
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());
 			Active(false);
-			m_ProgressBar->Active(false);
+			DropGold();
 		}
 
 	}

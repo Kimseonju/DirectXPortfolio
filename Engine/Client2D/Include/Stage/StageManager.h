@@ -13,7 +13,7 @@ private:
 	CStage* m_SelectStage;
 	std::vector<std::vector<CStage*>> m_vecStage;
 	std::vector<std::vector<StageInfo>> m_vecStageInfo;
-
+	bool m_BossStage;
 	Vector2 m_StartPos;
 	Vector2 m_EndPos;
 	Vector2 m_ShopPos;
@@ -38,7 +38,12 @@ private:
 	class CScene* m_pScene;
 	int m_MapCount;
 public:
+	bool IsBossStage()
+	{
+		return m_BossStage;
+	}
 	std::string GetCurName();
+	CStage* GetCurStage();
 	Vector2 GetCurPos() const
 	{
 		return m_CurPos;
@@ -54,6 +59,10 @@ public:
 	void SetScene(class CScene* Scene)
 	{
 		m_pScene = Scene;
+	}
+	void SetBossStage(bool Stage)
+	{
+		m_BossStage = Stage;
 	}
 public:
 	void Init();

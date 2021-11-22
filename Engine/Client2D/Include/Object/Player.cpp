@@ -98,8 +98,8 @@ bool CPlayer::Init()
 	m_Collider2DVertical->AddCollisionCallbackFunction<CPlayer>(Collision_State::End, this, 
 		&CPlayer::CollisionVerticalEnd);
 	m_Collider2D->SetExtent(6.f, 10.f);
-	m_Collider2DHorizon->SetExtent(6.f, 1.f);
-	m_Collider2DVertical->SetExtent(1.f, 7.f);
+	m_Collider2DHorizon->SetExtent(6.f, 0.3f);
+	m_Collider2DVertical->SetExtent(0.3f, 10.f);
 	m_Sprite->AddChild(m_Collider2D);
 	m_Sprite->AddChild(m_Collider2DHorizon);
 	m_Sprite->AddChild(m_Collider2DVertical);
@@ -389,7 +389,6 @@ void CPlayer::InputInteractionInputKey(float DeltaTime)
 	CPlayerInteractionCollision* CollisionObj = m_pScene->SpawnObject<CPlayerInteractionCollision>("PlayerInteractionCollision");
 	CollisionObj->SetWorldPos(GetWorldPos());
 
-	CUIManager::GetInst()->GetShopUI()->Enable(true);
 
 }
 void CPlayer::ShopUIOnOff(float DeltaTime)
@@ -432,7 +431,7 @@ void CPlayer::CollisionHorizonBegin(const HitResult& result, CCollider* Collider
 			return;
 		}
 	}
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
 		if (m_StageMove)
 			return;
@@ -449,6 +448,11 @@ void CPlayer::CollisionHorizonBegin(const HitResult& result, CCollider* Collider
 		ColDirHorizon(Angle, result.DestCollider);
 	}
 
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Door)
+	{
+
+		SetWorldPos(GetWorldPos() - GetVelocity());
+	}
 }
 
 void CPlayer::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider)
@@ -482,6 +486,11 @@ void CPlayer::CollisionHorizonMiddle(const HitResult& result, CCollider* Collide
 		ColDirHorizon(Angle, result.DestCollider);
 	}
 
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Door)
+	{
+
+		SetWorldPos(GetWorldPos() - GetVelocity());
+	}
 }
 
 void CPlayer::CollisionHorizonEnd(const HitResult& result, CCollider* Collider)
@@ -525,7 +534,11 @@ void CPlayer::CollisionVerticalBegin(const HitResult& result, CCollider* Collide
 		ColDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
-
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Door)
+	{
+		
+		SetWorldPos(GetWorldPos() - GetVelocity());
+	}
 }
 
 void CPlayer::CollisionVerticalMiddle(const HitResult& result, CCollider* Collider)
@@ -571,6 +584,11 @@ void CPlayer::CollisionVerticalMiddle(const HitResult& result, CCollider* Collid
 		m_WallCol = true;
 	}
 
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Door)
+	{
+
+		SetWorldPos(GetWorldPos() - GetVelocity());
+	}
 }
 
 void CPlayer::CollisionVerticalEnd(const HitResult& result, CCollider* Collider)
@@ -603,6 +621,7 @@ void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 		Vector3 XMove = ColPos;
 		XMove.x += x;
 		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
 
 	}
 	//오른쪽방향
@@ -613,10 +632,10 @@ void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 		Vector3 XMove = ColPos;
 		XMove.x -= x;
 		PlayerPos.x = XMove.x;
+		SetWorldPos(PlayerPos);
 
 	}
 
-	SetWorldPos(PlayerPos);
 }
 
 void CPlayer::ColDirVertical(float Angle, CCollider* Col)
@@ -641,7 +660,7 @@ void CPlayer::ColDirVertical(float Angle, CCollider* Col)
 		PlayerPos.y = XMove.y;
 	}
 	//위
-	else if (0.f < Angle || Angle < 180.f || 360.f<=Angle)
+	else if (0.f <= Angle || Angle < 180.f || 360.f<=Angle)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);
