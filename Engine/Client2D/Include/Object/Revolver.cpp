@@ -6,7 +6,7 @@
 #include "Resource/Material.h"
 #include "Engine.h"
 #include "RevolverEffectObject.h"
-#include "Bullet.h"
+#include "RevolverBullet.h"
 CRevolver::CRevolver()
 {
 	m_WeaponType = Weapon_Type::Range;
@@ -55,6 +55,15 @@ void CRevolver::Update(float DeltaTime)
 void CRevolver::PostUpdate(float DeltaTime)
 {
 	CWeapon::PostUpdate(DeltaTime);
+
+	if (m_Dir == Object_Dir::Left)
+	{
+		m_Sprite->SetVerticalReverse2DEnable(true);
+	}
+	else if (m_Dir == Object_Dir::Right)
+	{
+		m_Sprite->SetVerticalReverse2DEnable(false);
+	}
 }
 
 void CRevolver::Collision(float DeltaTime)
@@ -94,13 +103,12 @@ bool CRevolver::Attack(float Angle)
 	obj->SetWorldPos(GetWorldPos());
 	obj->SetRelativeRotationZ(Angle);
 	Vector3 Axis = Vector3::AxisY(Angle - 90.f);
-	obj->AddRelativePos(Axis * 50.f);
+	obj->AddRelativePos(Axis * 20.f);
 
-	CBullet* pBullet = m_pScene->SpawnObject<CBullet>("Bullet");
+	CRevolverBullet* pBullet = m_pScene->SpawnObject<CRevolverBullet>("RevolverBullet");
 
 	pBullet->SetRelativePos(obj->GetWorldPos());
 	pBullet->SetRelativeRotationZ(Angle- 90.f);
-	pBullet->SetCollisionProfile("PlayerAttack");
 	return true;
 }
 

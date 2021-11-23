@@ -102,12 +102,21 @@ bool CClientManager::Init()
    CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::Enemy,
        Collision_Interaction::Block);
 
+   CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::Player,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::PlayerAttack,
+       Collision_Interaction::Block);
+
    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Enemy,
        Collision_Interaction::Block);
 
    CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Player,
        Collision_Interaction::Block);
 
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::PlayerAttack,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
 
    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::InteractionInputKey,
        Collision_Interaction::Block);

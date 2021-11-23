@@ -324,6 +324,12 @@ void CAnimation2D::ChangeAnimation(Sequence2DInfo* Info)
 	m_CurrentSequence = Info;
 }
 
+void CAnimation2D::Animation2DRestart()
+{
+	m_Frame = 0;
+	m_End = false;
+}
+
 Sequence2DInfo* CAnimation2D::FindSequence(const std::string& Name)
 {
 	auto	iter = m_mapSequence.find(Name);

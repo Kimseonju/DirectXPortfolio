@@ -51,8 +51,8 @@ public:
     {
         m_DashRadian = DegreeToRadian(Angle);
         m_Gravity = true;
-        m_DashTimer = 0.1f;
-        m_DashEffectTime = 0.015f;
+        m_DashTimer = 0.15f;
+        m_DashEffectTime = 0.03f;
         m_Force.x = 0.f;
         m_Force.y = 0.f;
         m_Dash = true;

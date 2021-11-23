@@ -288,6 +288,18 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 23.f, 0), Vector2((i + 1) * 23.f, 14.f));
 	}
 
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("ReloadEffect");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("ReloadEffect",
+		"ReloadEffect", TEXT("Weapon/Range/effect/Reload.png"));
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("ReloadEffect",
+			Vector2(i * 28.f, 0), Vector2((i + 1) * 28.f, 9.f));
+
+
+	}
 	/*ShortSwordEfect*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("ShortSwordEffect");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("ShortSwordEffect",
@@ -313,6 +325,16 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 15.f));
 	}
 
+	m_pScene->GetResource()->CreateAnimationSequence2D("RevolverBullet");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("RevolverBullet",
+		"RevolverBullet", TEXT("Weapon/Range/Bullet.png"));
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("RevolverBullet",
+			Vector2(i * 35.f, 0), Vector2((i + 1) * 35.f, 7.f));
+		}
+
 	/*
 	MetalBoomerang
 	*/
@@ -326,6 +348,15 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 22.f, 0), Vector2((i + 1) * 22.f, 22.f));
 	}
 
+	m_pScene->GetResource()->CreateAnimationSequence2D("MetalBoomerangBullet");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("MetalBoomerangBullet",
+		"MetalBoomerangBullet", TEXT("Weapon/Range/Boomerang_Moving.png"));
+
+	for (int i = 0; i < 2; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("MetalBoomerangBullet",
+			Vector2(i * 37.f, 0), Vector2((i + 1) * 37.f, 37.f));
+	}
 	/*
 	ObjectDieEffect
 	*/

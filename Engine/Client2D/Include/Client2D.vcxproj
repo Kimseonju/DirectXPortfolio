@@ -218,6 +218,7 @@
     <ClCompile Include="Object\MainDoor.cpp" />
     <ClCompile Include="Object\MainStageMapEffect.cpp" />
     <ClCompile Include="Object\MetalBoomerang.cpp" />
+    <ClCompile Include="Object\MetalBoomerangBullet.cpp" />
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp" />
     <ClCompile Include="Object\Monster.cpp" />
     <ClCompile Include="Object\ObjectDieEffectObject.cpp" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Object\ProgressBarObject.cpp" />
     <ClCompile Include="Object\RestaurantNPC.cpp" />
     <ClCompile Include="Object\Revolver.cpp" />
+    <ClCompile Include="Object\RevolverBullet.cpp" />
     <ClCompile Include="Object\RevolverEffectObject.cpp" />
     <ClCompile Include="Object\ShopNPC.cpp" />
     <ClCompile Include="Object\ShortSword.cpp" />
@@ -275,6 +277,7 @@
     <ClCompile Include="UI\BossSpawnUI.cpp" />
     <ClCompile Include="UI\BossUI.cpp" />
     <ClCompile Include="UI\EnemyWorldInfoWidget.cpp" />
+    <ClCompile Include="UI\FadeInOutUI.cpp" />
     <ClCompile Include="UI\Inventory.cpp" />
     <ClCompile Include="UI\InventoryButton.cpp" />
     <ClCompile Include="UI\ItemInfoWidget.cpp" />
@@ -282,6 +285,7 @@
     <ClCompile Include="UI\MainHUDWidget.cpp" />
     <ClCompile Include="UI\PlayerUI.cpp" />
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp" />
+    <ClCompile Include="UI\PlayerWorldWidget.cpp" />
     <ClCompile Include="UI\RestaurantUI.cpp" />
     <ClCompile Include="UI\ShopButton.cpp" />
     <ClCompile Include="UI\ShopInfoWidget.cpp" />
@@ -346,6 +350,7 @@
     <ClInclude Include="Object\MainDoor.h" />
     <ClInclude Include="Object\MainStageMapEffect.h" />
     <ClInclude Include="Object\MetalBoomerang.h" />
+    <ClInclude Include="Object\MetalBoomerangBullet.h" />
     <ClInclude Include="Object\MetalBoomerangEffectObject.h" />
     <ClInclude Include="Object\Monster.h" />
     <ClInclude Include="Object\ObjectDieEffectObject.h" />
@@ -359,6 +364,7 @@
     <ClInclude Include="Object\ProgressBarObject.h" />
     <ClInclude Include="Object\RestaurantNPC.h" />
     <ClInclude Include="Object\Revolver.h" />
+    <ClInclude Include="Object\RevolverBullet.h" />
     <ClInclude Include="Object\RevolverEffectObject.h" />
     <ClInclude Include="Object\ShopNPC.h" />
     <ClInclude Include="Object\ShortSword.h" />
@@ -402,6 +408,7 @@
     <ClInclude Include="UI\BossSpawnUI.h" />
     <ClInclude Include="UI\BossUI.h" />
     <ClInclude Include="UI\EnemyWorldInfoWidget.h" />
+    <ClInclude Include="UI\FadeInOutUI.h" />
     <ClInclude Include="UI\Inventory.h" />
     <ClInclude Include="UI\InventoryButton.h" />
     <ClInclude Include="UI\ItemInfoWidget.h" />
@@ -409,6 +416,7 @@
     <ClInclude Include="UI\MainHUDWidget.h" />
     <ClInclude Include="UI\PlayerUI.h" />
     <ClInclude Include="UI\PlayerWorldInfoWidget.h" />
+    <ClInclude Include="UI\PlayerWorldWidget.h" />
     <ClInclude Include="UI\RestaurantUI.h" />
     <ClInclude Include="UI\ShopButton.h" />
     <ClInclude Include="UI\ShopInfoWidget.h" />

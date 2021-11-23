@@ -32,9 +32,17 @@ protected:
 	Weapon_Type m_WeaponType;
 	float m_Rebound;
 	Object_Dir m_Dir;
+	bool m_ReloadEffect;
 public:
 
-
+	bool IsReloadEffect()
+	{
+		return m_ReloadEffect;
+	}
+	void SetReloadEffect(bool Effect)
+	{
+		m_ReloadEffect = Effect;
+	}
 	void SetDir(Object_Dir Dir)
 	{
 		m_Dir = Dir;
@@ -48,7 +56,19 @@ public:
 	{
 		return m_CurrentAttackDelay;
 	}
-
+	float GetReloadPercent()
+	{
+		if (m_Reload)
+		{
+			float ReloadSpeed = GetReloadSpeed();
+			float Percent = m_CurrentReloadDelay / ReloadSpeed;
+			return Percent > 1.f ? 1.f : Percent;
+		}
+		else
+		{
+			return 0.f;
+		}
+	}
 	bool IsAttacking() const
 	{
 		return m_PlayAttacking;

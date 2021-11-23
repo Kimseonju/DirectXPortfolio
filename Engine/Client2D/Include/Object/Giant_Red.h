@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "../GlobalValue.h"
+#include "Giant_RedBulletMain.h"
 class CGiant_Red :
 	public CEnemy
 {
@@ -15,7 +16,7 @@ private:
 	float m_AttackTimer;
 	float m_AttackTimerMax;
 	bool m_Giant_RedAttack;
-	class CGiant_RedBulletMain* m_Bullet;
+	CSharedPtr<CGiant_RedBulletMain> m_Bullet;
 public:
 	virtual void Active(bool bActive);
 	virtual void Start();

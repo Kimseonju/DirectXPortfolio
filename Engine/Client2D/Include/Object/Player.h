@@ -40,6 +40,10 @@ private:
 	CSharedPtr<CColliderBox2D> m_Collider2DVertical;
 	CSharedPtr<CRigidBodyComponent> m_Body;
 	CSharedPtr<CAnimation2D_FSM> m_Animation2D;
+
+	CSharedPtr<CWidgetComponent> m_WidgetComponent;
+	class CPlayerWorldWidget* m_PlayerWidget;
+
 	class CWeaponArm* m_WeaponArm;
 
 	CEngineFSM<CPlayer>m_BodyFSM;

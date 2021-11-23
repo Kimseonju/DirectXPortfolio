@@ -108,6 +108,7 @@ public:
 	}
 public:
 public:
+	void Animation2DRestart();
 public:
 	Sequence2DInfo* FindSequence(const std::string& Name);
 	Sequence2DInfo* FindSequence(CAnimationSequence2D* Sequence);

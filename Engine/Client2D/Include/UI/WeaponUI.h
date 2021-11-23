@@ -16,9 +16,20 @@ protected:
     class CInventory* m_InventoryUI;
     CSharedPtr<CImage>    m_WeaponUIBase1;
     CSharedPtr<CImage>    m_WeaponUIBase2;
+    CSharedPtr<CProgressBar>    m_WeaponUIProgressBar1;
+    CSharedPtr<CProgressBar>    m_WeaponUIProgressBar2;
 
     CSharedPtr<CImage>    m_WeaponImage1;
     CSharedPtr<CImage>    m_WeaponImage2;
+
+
+    CSharedPtr<CText>    m_WeaponMagazine1;
+    CSharedPtr<CText>    m_WeaponMagazineMiddle1;
+    CSharedPtr<CText>    m_WeaponMagazineMax1;
+
+    CSharedPtr<CText>    m_WeaponMagazine2;
+    CSharedPtr<CText>    m_WeaponMagazineMiddle2;
+    CSharedPtr<CText>    m_WeaponMagazineMax2;
 
     Select_Weapon m_SelectWeapon;
     Vector2 m_MoveWeapon1;

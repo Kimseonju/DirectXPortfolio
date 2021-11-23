@@ -322,6 +322,7 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 	if (m_EffectEndTimer > 3.f)
 	{
 		//돈을 뿌리면서 카메라흔들림, 카메라무브 원래대로
+		CUIManager::GetInst()->GetBossUI()->Enable(false);
 		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 		Camera->CameraCurrentMoveStop();
 		Camera->CameraCurrentShakeStop();

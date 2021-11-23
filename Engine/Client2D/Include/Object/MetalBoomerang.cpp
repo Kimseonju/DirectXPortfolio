@@ -6,7 +6,8 @@
 #include "Resource/Material.h"
 #include "Engine.h"
 #include "MetalBoomerangEffectObject.h"
-#include "Bullet.h"
+#include "MetalBoomerangBullet.h"
+
 CMetalBoomerang::CMetalBoomerang()
 {
 	SetItemTexture("MetalBoomerang", TEXT("Weapon/Range/MetalBoomerang.png"));
@@ -94,7 +95,7 @@ bool CMetalBoomerang::Attack(float Angle)
 
 	obj->SetWorldPos(GetWorldPos());
 
-	CBullet* pBullet = m_pScene->SpawnObject<CBullet>("Bullet");
+	CMetalBoomerangBullet* pBullet = m_pScene->SpawnObject<CMetalBoomerangBullet>("Bullet");
 	pBullet->SetComeback(true);
 	pBullet->SetWeapon(this);
 	pBullet->SetRelativePos(obj->GetWorldPos());

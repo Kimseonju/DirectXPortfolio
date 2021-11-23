@@ -17,10 +17,13 @@ private:
 
     CSharedPtr<CImage>    m_WarningOnHit0;
     CSharedPtr<CImage>    m_WarningOnHit1;
+    std::vector<CSharedPtr<CImage>> m_vecDashBack;
+    std::vector<CSharedPtr<CImage>> m_vecDashCount;
 
     class CBossUI* m_BossUI;
     class CWeaponUI* m_PlayerWeaponUI;
     float m_HitTime;
+
 protected:
     CPlayerUI();
     virtual ~CPlayerUI();

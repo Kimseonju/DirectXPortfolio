@@ -17,6 +17,7 @@
 #include "../UI/UIManager.h"
 #include "PlayerInteractionCollision.h"
 #include "../ObjectStatusManager.h"
+#include "../UI/PlayerWorldWidget.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
 	m_Weapon(nullptr),
@@ -68,15 +69,28 @@ bool CPlayer::Init()
 	m_Collider2DHorizon = CreateSceneComponent<CColliderBox2D>("Collider2DHorizon");
 	m_Collider2DVertical = CreateSceneComponent<CColliderBox2D>("Collider2DVertical");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-	
 	m_Arm = CreateSceneComponent<CSpringArm2D>("Arm");
 	m_Camera = CreateSceneComponent<CCamera>("Camera");
-	m_Camera->SetCameraZoom(4.f);
+
+	m_WidgetComponent = CreateSceneComponent<CWidgetComponent>("PlayerWidgetComponent");
+	m_WidgetComponent->SetWorldPos(0.f, 0.f, 0.f);
+	m_PlayerWidget = m_WidgetComponent->CreateWidget<CPlayerWorldWidget>("PlayerWidget");
+	m_WidgetComponent->SetRelativePos(-90.f, -30.f, 0.f);
+
 	SetRootComponent(m_Sprite);
+	m_Sprite->AddChild(m_WidgetComponent);
+	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_Collider2DHorizon);
+	m_Sprite->AddChild(m_Collider2DVertical);
+	m_Sprite->AddChild(m_Body);
+	m_Sprite->AddChild(m_Arm);
+	m_Arm->AddChild(m_Camera);
 
 	m_Sprite->SetRelativeScale(15.f, 20.f, 1.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
+
+	m_Camera->SetCameraZoom(4.f);
 
 	m_Collider2D->SetCollisionProfile("Player");
 	m_Collider2DHorizon->SetCollisionProfile("TileCheckCollsion");
@@ -100,16 +114,10 @@ bool CPlayer::Init()
 	m_Collider2D->SetExtent(6.f, 10.f);
 	m_Collider2DHorizon->SetExtent(6.f, 0.3f);
 	m_Collider2DVertical->SetExtent(0.3f, 10.f);
-	m_Sprite->AddChild(m_Collider2D);
-	m_Sprite->AddChild(m_Collider2DHorizon);
-	m_Sprite->AddChild(m_Collider2DVertical);
-	m_Sprite->AddChild(m_Body);
 
 	m_Arm->SetOffset(-640.f, -360.f, 0.f);
 	m_Arm->SetInheritPosZ(false);
 
-	m_Sprite->AddChild(m_Arm);
-	m_Arm->AddChild(m_Camera);
 
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 
@@ -201,7 +209,20 @@ void CPlayer::Update(float DeltaTime)
 			m_Weapon = nullptr;
 		}
 	}
-	
+	if (m_Weapon)
+	{
+
+		if (m_Weapon->GetReloadPercent() > 0.f)
+		{
+			m_PlayerWidget->SetPercentBar(m_Weapon->GetReloadPercent());
+		}
+		if (m_Weapon->IsReloadEffect())
+		{
+			m_Weapon->SetReloadEffect(false);
+			m_PlayerWidget->EffectStart();
+
+		}
+	}
 	
 
 	if(m_Body->IsDashEffect())
@@ -382,6 +403,13 @@ void CPlayer::MapOnOff(float DeltaTime)
 }
 void CPlayer::WeaponChange(float DeltaTime)
 {
+	if (m_Weapon)
+	{
+		if (m_Weapon->GetReloadPercent() > 0.f)
+		{
+			return;
+		}
+	}
 	CUIManager::GetInst()->GetPlayerUI()->WeaponChange();
 }
 void CPlayer::InputInteractionInputKey(float DeltaTime)

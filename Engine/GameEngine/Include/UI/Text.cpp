@@ -364,6 +364,8 @@ void CText::PostUpdate(float DeltaTime)
 
 void CText::Render()
 {
+	if (!IsEnable())
+		return;
 	m_2DTarget->BeginDraw();
 
 	Resolution	RS = CDevice::GetInst()->GetResolution();

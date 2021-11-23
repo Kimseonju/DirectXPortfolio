@@ -36,7 +36,6 @@ public:
     {
         return m_Current;
     }
-
     CItem* GetInventoryWeapon(int Index)const;
     void WeaponChange();
     bool AddInventoryItem(CItem* Item);

@@ -9,6 +9,7 @@
 
 #include "../Object/ShortSword.h"
 #include "../Object/MetalBoomerang.h"
+#include "../Object/Revolver.h"
 #include "../Object/Item.h"
 #include "../Object/Player.h"
 CInventory::CInventory():
@@ -164,6 +165,13 @@ bool CInventory::Init()
 	Item->Enable(false);
 	Item->StateNoMapItem();
 	m_Items[2]->SetItem(Item);
+
+
+	Item = m_Scene->SpawnObject<CRevolver>("Revolver");
+	Item->Enable(false);
+	Item->StateNoMapItem();
+	m_Items[4]->SetItem(Item);
+
 	m_CoinText = CreateWidget<CText>("GoldText");
 	m_CoinText->SetColor(0.f, 0.f, 0.f);
 	m_CoinText->SetText(L"1000");

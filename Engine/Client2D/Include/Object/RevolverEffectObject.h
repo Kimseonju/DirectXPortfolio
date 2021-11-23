@@ -22,6 +22,4 @@ public:
 	virtual CRevolverEffectObject* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 
-public:
-	void AnimationFrameEnd(const std::string& Name);
 };

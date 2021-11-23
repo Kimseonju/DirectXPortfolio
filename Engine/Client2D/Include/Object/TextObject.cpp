@@ -53,7 +53,7 @@ bool CTextObject::Init()
 void CTextObject::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	m_LifeTime -= DeltaTime;
+	m_LifeTime -= DeltaTime*2.f;
 	if (m_LifeTime < 0.f)
 		Active(false);
 	m_Widget->SetOpacity(m_LifeTime);

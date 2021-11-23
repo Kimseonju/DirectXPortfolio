@@ -214,6 +214,9 @@
     <Filter Include="UI\UI\WidgetWindow\RestaurantUI">
       <UniqueIdentifier>{43ddd63d-7b4a-4968-a85a-70c72fb107c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\UI\WidgetWindow\FadeInout">
+      <UniqueIdentifier>{35efe5c3-0c96-414a-bb39-c80cc96798ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -609,6 +612,18 @@
     <ClCompile Include="UI\RestaurantUI.cpp">
       <Filter>UI\UI\WidgetWindow\RestaurantUI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\PlayerWorldWidget.cpp">
+      <Filter>UI\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RevolverBullet.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MetalBoomerangBullet.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FadeInOutUI.cpp">
+      <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -985,6 +1000,18 @@
     </ClInclude>
     <ClInclude Include="UI\RestaurantUI.h">
       <Filter>UI\UI\WidgetWindow\RestaurantUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PlayerWorldWidget.h">
+      <Filter>UI\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MetalBoomerangBullet.h">
+      <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RevolverBullet.h">
+      <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FadeInOutUI.h">
+      <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

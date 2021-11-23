@@ -10,7 +10,8 @@ CWeapon::CWeapon() :
 	m_PlayAttacking(false),
 	m_WeaponType(Weapon_Type::Melee),
 	m_Rebound(0.f),
-	m_Dir(Object_Dir::Right)
+	m_Dir(Object_Dir::Right),
+	m_ReloadEffect(false)
 {
 	Enable(false);
 }
@@ -50,7 +51,9 @@ void CWeapon::Update(float DeltaTime)
 
 			if (m_CurrentReloadDelay >= ReloadSpeed)
 			{
+				m_CurrentReloadDelay = 0.f;
 				m_Reload = false;
+				m_ReloadEffect = true;
 				m_Status->Reload();
 				//사운드재생
 			}

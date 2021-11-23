@@ -21,10 +21,8 @@ bool CRevolverEffectObject::Init()
 	if (!CEffectObject::Init())
 		return false;
 
-	m_Sprite->SetRelativeScale(Vector3(28.f, 40.f, 1.f));
+	m_Sprite->SetRelativeScale(Vector3(14.f, 15.f, 1.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	CSharedPtr<CMaterial> SpriteMtrl = m_Sprite->GetMaterial(0);
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 
 	m_Animation2D->SetIdleAnimation2D("RevolverEffect", false);
 	m_Animation2D->SetSequencePlayRate("RevolverEffect", 4.f);
@@ -58,9 +56,5 @@ CRevolverEffectObject* CRevolverEffectObject::Clone()
 }
 
 void CRevolverEffectObject::Animation2DNotify(const std::string& Name)
-{
-}
-
-void CRevolverEffectObject::AnimationFrameEnd(const std::string& Name)
 {
 }
