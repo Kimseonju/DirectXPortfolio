@@ -195,14 +195,12 @@
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
     <ClCompile Include="Object\CollisionObject.cpp" />
-    <ClCompile Include="Object\CreateObject.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
     <ClCompile Include="Object\Enemy.cpp" />
     <ClCompile Include="Object\EnemyArrow.cpp" />
     <ClCompile Include="Object\EnemyAttack.cpp" />
     <ClCompile Include="Object\FlameEffect.cpp" />
-    <ClCompile Include="Object\FSM\PlayerFSM.cpp" />
     <ClCompile Include="Object\Ghost.cpp" />
     <ClCompile Include="Object\Ghost_FSM.cpp" />
     <ClCompile Include="Object\Giant_Red.cpp" />
@@ -228,6 +226,8 @@
     <ClCompile Include="Object\Player2D.cpp" />
     <ClCompile Include="Object\PlayerAttack.cpp" />
     <ClCompile Include="Object\PlayerDash.cpp" />
+    <ClCompile Include="Object\PlayerDustEffect.cpp" />
+    <ClCompile Include="Object\PlayerFSM.cpp" />
     <ClCompile Include="Object\PlayerInteractionCollision.cpp" />
     <ClCompile Include="Object\ProgressBarObject.cpp" />
     <ClCompile Include="Object\RestaurantNPC.cpp" />
@@ -243,6 +243,7 @@
     <ClCompile Include="Object\SmallSkelFSM.cpp" />
     <ClCompile Include="Object\SmallSkel_Bow.cpp" />
     <ClCompile Include="Object\SmallSkel_Bow_FSM.cpp" />
+    <ClCompile Include="Object\SpawnEffect.cpp" />
     <ClCompile Include="Object\Stage1MapEffect.cpp" />
     <ClCompile Include="Object\StartScene\BackGround.cpp" />
     <ClCompile Include="Object\StartScene\Bird.cpp" />
@@ -330,7 +331,6 @@
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Cloud.h" />
     <ClInclude Include="Object\CollisionObject.h" />
-    <ClInclude Include="Object\CreateObject.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
     <ClInclude Include="Object\Enemy.h" />
@@ -360,6 +360,7 @@
     <ClInclude Include="Object\Player2D.h" />
     <ClInclude Include="Object\PlayerAttack.h" />
     <ClInclude Include="Object\PlayerDash.h" />
+    <ClInclude Include="Object\PlayerDustEffect.h" />
     <ClInclude Include="Object\PlayerInteractionCollision.h" />
     <ClInclude Include="Object\ProgressBarObject.h" />
     <ClInclude Include="Object\RestaurantNPC.h" />
@@ -373,6 +374,7 @@
     <ClInclude Include="Object\SmallSkel.h" />
     <ClInclude Include="Object\SmallSkelBow.h" />
     <ClInclude Include="Object\SmallSkel_Bow.h" />
+    <ClInclude Include="Object\SpawnEffect.h" />
     <ClInclude Include="Object\Stage1MapEffect.h" />
     <ClInclude Include="Object\StartScene\BackGround.h" />
     <ClInclude Include="Object\StartScene\Bird.h" />

@@ -101,7 +101,7 @@ bool CShopUI::Init()
 		ShopUIButton->SetStateTexture(Button_State::MouseOn, "Shopselected", TEXT("UI/shop/shopItemBase_selected.png"));
 		ShopUIButton->SetStateTexture(Button_State::Click, "Shopselected", TEXT("UI/shop/shopItemBase_selected.png"));
 		ShopUIButton->SetClickCallback< CShopUI>(this, &CShopUI::ShopButtonClick);
-
+		ShopUIButton->SetItem(Item);
 		ItemName = CreateWidget<CText>("ItemName");
 		ItemName->SetSize(400.f, 105.f);
 		ItemName->SetPos(140.f, 80.f + 110.f * i);

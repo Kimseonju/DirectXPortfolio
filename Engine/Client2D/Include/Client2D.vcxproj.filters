@@ -100,9 +100,6 @@
     <Filter Include="Stage">
       <UniqueIdentifier>{9556f4e2-b438-42bc-9bd0-c79ad2c2197e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Player\Effect">
-      <UniqueIdentifier>{c71bb729-4cd5-44d9-bdea-b4f4327acd4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Animation2D\FSM">
       <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
@@ -111,9 +108,6 @@
     </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\CreateObject">
-      <UniqueIdentifier>{232b87e9-b9a0-400d-9f7c-72f74dc8da0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
@@ -216,6 +210,12 @@
     </Filter>
     <Filter Include="UI\UI\WidgetWindow\FadeInout">
       <UniqueIdentifier>{35efe5c3-0c96-414a-bb39-c80cc96798ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Player">
+      <UniqueIdentifier>{4d5262f7-c5c8-48f7-a20c-17bc4142a917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\Spawn">
+      <UniqueIdentifier>{ba978d17-ae9a-42cf-b5c5-3c01e6e45247}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -435,15 +435,6 @@
     <ClCompile Include="WorldNumberEffect.cpp">
       <Filter>UI\World</Filter>
     </ClCompile>
-    <ClCompile Include="Object\PlayerAttack.cpp">
-      <Filter>02. Object\Player\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\PlayerDash.cpp">
-      <Filter>02. Object\Player\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\FSM\PlayerFSM.cpp">
-      <Filter>02. Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Animation2D\Animation2D_FSM.cpp">
       <Filter>03. Animation2D\FSM</Filter>
     </ClCompile>
@@ -455,9 +446,6 @@
     </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\CreateObject.cpp">
-      <Filter>02. Object\CreateObject</Filter>
     </ClCompile>
     <ClCompile Include="UI\WeaponUI.cpp">
       <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
@@ -623,6 +611,21 @@
     </ClCompile>
     <ClCompile Include="UI\FadeInOutUI.cpp">
       <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerDustEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerAttack.cpp">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerDash.cpp">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerFSM.cpp">
+      <Filter>02. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SpawnEffect.cpp">
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -842,12 +845,6 @@
     <ClInclude Include="WorldNumberEffect.h">
       <Filter>UI\World</Filter>
     </ClInclude>
-    <ClInclude Include="Object\PlayerDash.h">
-      <Filter>02. Object\Player\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\PlayerAttack.h">
-      <Filter>02. Object\Player\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Animation2D\Animation2D_FSM.h">
       <Filter>03. Animation2D\FSM</Filter>
     </ClInclude>
@@ -856,9 +853,6 @@
     </ClInclude>
     <ClInclude Include="MoveComponent.h">
       <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\CreateObject.h">
-      <Filter>02. Object\CreateObject</Filter>
     </ClInclude>
     <ClInclude Include="UI\WeaponUI.h">
       <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
@@ -1012,6 +1006,18 @@
     </ClInclude>
     <ClInclude Include="UI\FadeInOutUI.h">
       <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerDustEffect.h">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerDash.h">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PlayerAttack.h">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SpawnEffect.h">
+      <Filter>02. Object\EffectAndParticle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -120,9 +120,10 @@ bool CTestMainScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLRT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
-
+	
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
 
@@ -224,25 +225,6 @@ void CTestMainScene::CreateMaterial()
 
 void CTestMainScene::CreateAnimationSequence2D()
 {
-
-
-	/*
-	Create Object
-	*/
-
-	m_pScene->GetResource()->CreateAnimationSequence2D("");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("CreateObjectEffect",
-		"CreateObjectEffect", TEXT("Enemy/create.png"));
-
-	for (int y = 0; y < 3; ++y)
-	{
-		for (int x = 0; x < 5; ++x)
-		{
-			m_pScene->GetResource()->AddAnimationSequence2DFrame("CreateObjectEffect",
-				Vector2(x * 31.f, y * 31.f), Vector2((x + 1) * 31.f, (y + 1) * 31.f));
-		}
-	}
-
 	/*
 	Player
 	*/
@@ -288,6 +270,15 @@ void CTestMainScene::CreateAnimationSequence2D()
 			Vector2(i * 23.f, 0), Vector2((i + 1) * 23.f, 14.f));
 	}
 
+	m_pScene->GetResource()->CreateAnimationSequence2D("PlayerDustEffeect");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("PlayerDustEffeect",
+		"PlayerDustEffeect", TEXT("Effect/Dash/DustEffect.png"));
+
+	for (int i = 0; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("PlayerDustEffeect",
+			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 13.f));
+	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("ReloadEffect");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("ReloadEffect",
@@ -324,7 +315,6 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RevolverEffect",
 			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 15.f));
 	}
-	zz
 	m_pScene->GetResource()->CreateAnimationSequence2D("RevolverBullet");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("RevolverBullet",
 		"RevolverBullet", TEXT("Weapon/Range/Bullet.png"));
@@ -850,6 +840,21 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
 			Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
 	}
+
+	/*±âÅ¸*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("SpawnEffect");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("SpawnEffect",
+		"SpawnEffect", TEXT("object/create.png"));
+	for (int y = 0; y < 3; ++y)
+	{
+		for (int x = 0; x < 5; ++x)
+		{
+			m_pScene->GetResource()->AddAnimationSequence2DFrame("SpawnEffect",
+				Vector2(x * 31.f, 31.f*y), Vector2((x + 1) * 31.f, 31.f * (y+1)));
+		}
+	}
+
+
 }
 
 void CTestMainScene::CreateParticle()

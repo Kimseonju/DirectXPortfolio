@@ -1,20 +1,21 @@
 
-#include "../Player.h"
+#include "Player.h"
 #include "Input.h"
-#include "../Bullet.h"
+#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
-#include "../Weapon.h"
-#include "../WeaponArm.h"
-#include "../ShortSword.h"
-#include "../../GlobalValue.h"
-#include "../Revolver.h"
-#include "../../UI/PlayerWorldInfoWidget.h"
-#include "../MetalBoomerang.h"
-#include "../PlayerDash.h"
-#include "../../UI/BasicMouse.h"
-#include "../../UI/UIManager.h"
+#include "Weapon.h"
+#include "WeaponArm.h"
+#include "ShortSword.h"
+#include "../GlobalValue.h"
+#include "Revolver.h"
+#include "../UI/PlayerWorldInfoWidget.h"
+#include "MetalBoomerang.h"
+#include "PlayerDash.h"
+#include "../UI/BasicMouse.h"
+#include "../UI/UIManager.h"
+#include "PlayerDustEffect.h"
 
 
 
@@ -46,6 +47,22 @@ void CPlayer::BodyMoveStart()
 
 void CPlayer::BodyMoveStay()
 {
+	if (m_DustCount >= 0.5f)
+	{
+		m_DustCount -= 0.5f;
+		CPlayerDustEffect* Effect = m_pScene->SpawnObject< CPlayerDustEffect>("PlayerDustEffect");
+		Effect->SetWorldPos(GetWorldPos());
+		Effect->AddWorldPos(0.f, -m_Collider2DVertical->GetRelativeScale().y / 4.f, 0.f);
+		Vector3 Velocity=GetVelocity();
+		if (Velocity.x<0.f)
+		{
+			Effect->SetHorizontalReverse2DEnable(true);
+		}
+		else
+		{
+			Effect->SetHorizontalReverse2DEnable(false);
+		}
+	}
 	if (m_RootComponent->GetVelocity().y != 0.f)
 	{
 		m_BodyFSM.ChangeState("Jump");

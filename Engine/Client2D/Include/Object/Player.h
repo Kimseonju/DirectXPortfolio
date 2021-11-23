@@ -60,6 +60,7 @@ private:
 	bool m_WallCol;
 	int m_Coin;
 	bool m_StageMove;
+	float m_DustCount;
 protected:
 public:
 

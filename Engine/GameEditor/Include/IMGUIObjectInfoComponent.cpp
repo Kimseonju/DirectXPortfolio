@@ -40,6 +40,8 @@ void CIMGUIObjectInfoComponent::UpdateInfo(CGameObject* Object)
 	Client_Class_Type ClassType = m_Object->GetClassType();
 	Client_Object_Type ObjectType = m_Object->GetObjectType();
 	Client_Enemy_Type EnemyType = m_Object->GetEnemyType();
+	m_CreateEnemyEffect->SetCheck(m_Object->GetCreateEnemyEffect());
+	m_CreateEnemyOrder->SetInt(m_Object->GetCreateEnemyOrder());
 	Door_Dir DoorDir = m_Object->GetDoorDir();
 	m_ClassType->SetPrevName((int)ClassType);
 	m_ObjectType->SetPrevName((int)ObjectType);
@@ -92,6 +94,7 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ClassType->AddItem("Object");
 	m_ClassType->AddItem("Enemy");
 	m_ClassType->AddItem("Boss");
+	m_ClassType->AddItem("Spawn");
 	m_ClassType->AddItem("End");
 	m_ClassType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ClassTypeComboCallback);
 	m_vecWidget.push_back(m_ClassType);
@@ -113,6 +116,8 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ObjectType->AddItem("BossTorch");
 	m_ObjectType->AddItem("Shop");
 	m_ObjectType->AddItem("Restaurant");
+	m_ObjectType->AddItem("TresureBox");
+	m_ObjectType->AddItem("BossTresureBox");
 	m_ObjectType->AddItem("End");
 
 	m_ObjectType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ObjectTypeComboCallback);

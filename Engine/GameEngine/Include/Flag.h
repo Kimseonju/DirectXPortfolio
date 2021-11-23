@@ -277,6 +277,7 @@ enum class Client_Class_Type
     Object,
     Enemy,
     Boss,
+    Spawn,
     End
 };
 
@@ -289,6 +290,8 @@ enum class Client_Object_Type
     BossTorch,
     Shop,
     Restaurant,
+    TresureBox,
+    BossTresureBox,
     End
 };
 enum class Client_Enemy_Type

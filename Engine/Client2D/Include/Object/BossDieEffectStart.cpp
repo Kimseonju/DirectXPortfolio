@@ -86,5 +86,5 @@ void CBossDieEffectStart::AnimationFrameEnd(const std::string& Name)
 	obj->SetBelial(m_Belial);
 	CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 	Camera->AddCameraMove2D(Vector2(GetWorldPos().x, GetWorldPos().y), 99999.f);
-	Camera->AddCameraShake(Vector2(2.f, 2.f), 99999.f);
+	Camera->AddCameraShake(Vector2(1.f, 1.f), 99999.f);
 }

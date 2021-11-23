@@ -23,6 +23,7 @@ protected:
 	CImage* m_CoinImage;
 	class CItemInfoWidget* m_ItemInfoWidget;
 public:
+	virtual void Active(bool bActive);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

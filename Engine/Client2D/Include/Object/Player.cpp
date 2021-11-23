@@ -25,7 +25,8 @@ CPlayer::CPlayer() :
 	m_Angle(0.f),
 	m_Dir(Object_Dir::Left),
 	m_WallCol(false),
-	m_Coin(100000)
+	m_Coin(100000),
+	m_DustCount(0.f)
 {
 	SetStatus("Player");
 }
@@ -227,10 +228,18 @@ void CPlayer::Update(float DeltaTime)
 
 	if(m_Body->IsDashEffect())
 	{
-		CPlayerDash* obj = m_pScene->SpawnObject<CPlayerDash>("CPlayerDash");
+		CPlayerDash* obj = m_pScene->SpawnObject<CPlayerDash>("PlayerDash");
 		obj->SetWorldPos(GetWorldPos());
 		obj->SetDir(m_Dir);
 		m_Body->SetDashEffect(false);
+	}
+	if (m_State == ePlayerState::Move)
+	{
+		m_DustCount += DeltaTime;
+	}
+	else
+	{
+		m_DustCount = 0.f;
 	}
 	AddRelativePos(m_Body->GetMove());       
 }

@@ -31,6 +31,7 @@ protected:
     virtual ~CItemInfoWidget();
 
 public:
+    virtual void Active(bool bActive);
     virtual bool Init();
     virtual void Update(float DeltaTime);
     virtual void PostUpdate(float DeltaTime);

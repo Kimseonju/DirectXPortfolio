@@ -26,6 +26,24 @@ CItemInfoWidget::~CItemInfoWidget()
 {
 }
 
+void CItemInfoWidget::Active(bool bActive)
+{
+	CWidgetWindow::Active(bActive);
+
+	m_Base->Active(bActive);
+	m_ItemImageBase->Active(bActive);
+	m_ItemImage->Active(bActive);
+	m_AttackDamageText->Active(bActive);
+	m_AttackSpeedText->Active(bActive);
+	m_ItemName->Active(bActive);
+	m_AttackDamage->Active(bActive);
+	m_AttackSpeed->Active(bActive);
+	m_ItemRank->Active(bActive);
+	m_ItemType->Active(bActive);
+	m_ItemText->Active(bActive);
+	m_Base->Active(bActive);
+}
+
 bool CItemInfoWidget::Init()
 {
 	CWidgetWindow::Init();

@@ -7,7 +7,6 @@
 #include <Component/TileMapComponent.h>
 #include "../GlobalValue.h"
 #include "../Object/Player.h"
-#include "../Object/CreateObject.h"
 #include "../Object/SmallSkel.h"
 #include "../Object/Belial.h"
 #include "../Object/SmallSkel_Bow.h"
@@ -15,6 +14,7 @@
 #include "../Object/Banshee.h"
 #include "../Object/Giant_Red.h"
 #include "../Object/ShopNPC.h"
+#include "../Object/SpawnEffect.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -222,11 +222,13 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			}
 			else
 			{
-				Obj = m_pScene->SpawnObject<CCreateObject>("CreateObject"+ str);
+				Obj = m_pScene->SpawnObject<CSpawnEffect>("CSpawnEffect"+ str);
+				Obj->SetClassType(Info.StageSpawn[i].ClassType);
 				Obj->SetCreateEnemyEffect(Info.StageSpawn[i].CreateEnemyEffect);
 				Obj->SetCreateEnemyOrder(Info.StageSpawn[i].CreateEnemyOrder);
 				Obj->SetEnemyType(Info.StageSpawn[i].EnemyType);
-				PushSpawnEnemy(Obj);
+				Obj->Enable(false);
+				PushSpawnEnemy((CSpawnEffect*)Obj);
 			}
 			Obj->Enable(false);
 			break;
@@ -238,6 +240,19 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
 			m_vecEnemy.push_back(Obj);
 			Obj = nullptr;
+			//Obj->SetStartTimer(1.f);
+
+
+			break;
+		}
+		case Client_Class_Type::Spawn:
+		{
+			Obj = m_pScene->SpawnObject<CSpawnEffect>("SpawnEffect");
+			Obj->SetWorldPos(Info.StageSpawn[i].Pos);
+			Obj->SetClassType(Client_Class_Type::Object);
+			Obj->Enable(false);
+			Obj->SetObjectType(Info.StageSpawn[i].ObjectType);
+			m_ItemSpawn.push_back((CSpawnEffect*)Obj);
 			//Obj->SetStartTimer(1.f);
 
 
@@ -314,8 +329,25 @@ void CStage::Update(float DeltaTime)
 
 		if (m_vecEnemy.size() <= 0)
 		{
-			m_State = Stage_State::Clear;
-			//보물상자 스폰시키기
+			auto iter = m_SpawnEnemy.find(m_EnemyOrder);
+			
+			if (iter == m_SpawnEnemy.end())
+			{
+				//보물상자 스폰시키기
+				m_State = Stage_State::Clear;
+			}
+			else
+			{
+				auto veciter=(*iter).second.begin();
+				auto veciterEnd = (*iter).second.end();
+				for (; veciter != veciterEnd; ++veciter)
+				{
+					(*veciter)->Enable(true);
+					(*veciter)->Spawn();
+				}
+				m_SpawnEnemy.erase(iter);
+				m_EnemyOrder++;
+			}
 		}
 
 
@@ -324,6 +356,13 @@ void CStage::Update(float DeltaTime)
 	case Stage_State::Clear:
 	{
 		//문열기
+		for (int i = 0; i < m_ItemSpawn.size(); ++i)
+		{
+			m_ItemSpawn[i]->Enable(true);
+			m_ItemSpawn[i]->Spawn();
+		}
+		m_ItemSpawn.clear();
+
 		size_t Size = m_Doors.size();
 		for (size_t i = 0; i < Size; i++)
 		{
@@ -384,6 +423,11 @@ void CStage::DeleteObject(CGameObject* obj)
 	}
 }
 
+void CStage::PushEnemy(CGameObject* obj)
+{
+	m_vecEnemy.push_back(obj);
+}
+
 void CStage::PlayerStageMove(Stage_Dir Dir)
 {
 	//같은방향으로
@@ -401,13 +445,13 @@ void CStage::PlayerStageMove(Stage_Dir Dir)
 
 }
 
-void CStage::PushSpawnEnemy(CGameObject* Obj)
+void CStage::PushSpawnEnemy(CSpawnEffect* Obj)
 {
 	auto iter= m_SpawnEnemy.find(Obj->GetCreateEnemyOrder());
 
 	if (iter == m_SpawnEnemy.end())
 	{
-		std::vector<CSharedPtr<CGameObject>> vecCreateEnemy;
+		std::vector<CSharedPtr<CSpawnEffect>> vecCreateEnemy;
 		m_SpawnEnemy.insert(std::make_pair(Obj->GetCreateEnemyOrder(), vecCreateEnemy));
 		iter = m_SpawnEnemy.find(Obj->GetCreateEnemyOrder());
 	}

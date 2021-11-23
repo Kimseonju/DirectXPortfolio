@@ -20,12 +20,18 @@ CShopButton::~CShopButton()
 {
 }
 
+void CShopButton::Active(bool bActive)
+{
+	CButton::Active(bActive);
+	m_ItemInfoWidget->Active(bActive);
+}
+
 void CShopButton::Start()
 {
 	CButton::Start();
 	Vector2 Pos = GetPos();
 	Vector2 Size = m_ItemInfoWidget->GetSize();
-	Pos.x -= Size.x;
+	Pos.x += Size.x;
 	m_ItemInfoWidget->SetPos(Pos);
 	m_ItemInfoWidget->SetCollision(false);
 }

@@ -3,6 +3,7 @@
 #include "../GlobalValue.h"
 #include "Door.h"
 #include <Component/TileMapComponent.h>
+#include "../Object/SpawnEffect.h"
 //Enemy,Object,Tile Door 등 들고있는 클래스
 class CStage
 {
@@ -20,9 +21,10 @@ private:
 	std::string m_Name;
 	Stage_State m_State;
 	int m_EnemyOrder;
-	std::unordered_map<int, std::vector<CSharedPtr<CGameObject>>> m_SpawnEnemy;
+	std::unordered_map<int, std::vector<CSharedPtr<CSpawnEffect>>> m_SpawnEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_vecEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_Object;
+	std::vector<CSharedPtr<CSpawnEffect>> m_ItemSpawn;
 	std::vector<CSharedPtr<CDoor>> m_Doors;
 	class CGameObject* m_TileMap;
 	class CGameObject* m_TileMapObject;
@@ -67,6 +69,7 @@ public:
 
 	void PushObject(class CGameObject* obj);
 	void DeleteObject(class CGameObject* obj);
+	void PushEnemy(class CGameObject* obj);
 	void PlayerStageMove(Stage_Dir Dir);
-	void PushSpawnEnemy(CGameObject* Obj);
+	void PushSpawnEnemy(CSpawnEffect* Obj);
 };
