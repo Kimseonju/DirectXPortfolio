@@ -193,7 +193,7 @@ void CTestMainScene::CreateMaterial()
 
 	m_pScene->GetResource()->CreateMaterial("StageMapMaterial");
 	m_pScene->GetResource()->AddMaterialTexture("StageMapMaterial", "StageMapMaterial",
-		TEXT("Map/MapEffect.png"));
+		TEXT("Map/StageMapEffect.png"));
 	m_pScene->GetResource()->SetMaterialTransparency("StageMapMaterial", true);
 
 
@@ -324,7 +324,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RevolverEffect",
 			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 15.f));
 	}
-
+	zz
 	m_pScene->GetResource()->CreateAnimationSequence2D("RevolverBullet");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("RevolverBullet",
 		"RevolverBullet", TEXT("Weapon/Range/Bullet.png"));

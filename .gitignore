@@ -28,3 +28,5 @@
 !fmod.dll
 !fmod64.dll
 Engine/.vs
+!Engine/GameEngine/Bin
+!Engine/GameEngine/Include
