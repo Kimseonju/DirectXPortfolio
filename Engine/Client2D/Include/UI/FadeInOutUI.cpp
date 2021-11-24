@@ -3,13 +3,19 @@
 #include "UI/Image.h"
 #include "UI/Button.h"
 #include <Device.h>
-#include "../GlobalValue.h"
 #include "../Object/Player.h"
 #include "../BasicStatus.h"
 #include "../Animation2D/LifeWaveAnimation2D.h"
 #include "BossUI.h"
 #include "WeaponUI.h"
-CFadeInOutUI::CFadeInOutUI()
+#include "../Stage/StageManager.h"
+#include <Engine.h>
+#include <Input.h>
+CFadeInOutUI::CFadeInOutUI():
+	m_StageDir(Stage_Dir::END),
+	m_FadeOut(false),
+	m_FadeIn(false),
+	m_StageMove(false)
 {
 }
 
@@ -24,8 +30,8 @@ bool CFadeInOutUI::Init()
 
 	m_FadeImage = CreateWidget<CImage>("FadeImage");
 	m_FadeImage->SetSize(RS.Width, RS.Height);
-	m_FadeImage->SetColorTint(1.f,1.f,1.f, 1.f);
-	m_FadeImage->SetPos(RS.Width,RS.Height);
+	m_FadeImage->SetColorTint(0.f, 0.f, 0.f, 0.f);
+	m_FadeImage->SetPos(0.f,0.f);
 	m_FadeImage->SetCollision(false);
 
 	return true;
@@ -34,6 +40,32 @@ bool CFadeInOutUI::Init()
 void CFadeInOutUI::Update(float DeltaTime)
 {
 	CWidgetWindow::Update(DeltaTime);
+	if (m_FadeOut)
+	{
+		m_Alpha += DeltaTime*2.f;
+		m_FadeImage->SetColorTint(0.f, 0.f, 0.f, m_Alpha);
+		if (m_Alpha >= 1.f)
+		{
+			if (m_StageMove)
+			{
+				CStageManager::GetInst()->NextStage(m_StageDir);
+				m_FadeIn = true;
+				m_FadeOut = false;
+				m_StageMove = false;
+			}
+		}
+	}
+	else if (m_FadeIn)
+	{
+		m_Alpha -= DeltaTime * 2.f;
+		m_FadeImage->SetColorTint(0.f, 0.f, 0.f, m_Alpha);
+		if (m_Alpha <=0.f)
+		{
+			m_FadeIn = false;
+			CInput::GetInst()->SetUpdate(true);
+			
+		}
+	}
 }
 
 void CFadeInOutUI::PostUpdate(float DeltaTime)
@@ -49,6 +81,17 @@ void CFadeInOutUI::Render()
 CFadeInOutUI* CFadeInOutUI::Clone()
 {
 	return new CFadeInOutUI(*this);
+}
+
+void CFadeInOutUI::StageMoveIn(Stage_Dir Dir)
+{
+	m_StageDir = Dir;
+
+	m_Alpha = 0.f;
+
+	m_FadeOut = true;
+	m_StageMove = true;
+	CInput::GetInst()->SetUpdate(false);
 }
 
 void CFadeInOutUI::SetPadeIn()

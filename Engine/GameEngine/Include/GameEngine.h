@@ -165,7 +165,7 @@ struct TransformCBuffer
     Vector3 MeshSize;
     float   HorizontalReverse2DEnable;
     float   VerticalReverse2DEnable;
-    Vector3 Empty;
+    Vector3 Pos;
 };
 
 struct MaterialCBuffer
@@ -429,6 +429,13 @@ struct CameraMove
 
 #pragma pack(push, 1)
 
+struct TorchInfo
+{
+    Vector3	Pos;
+    Vector4	Color;
+    int Enable;
+    Matrix  matWVP;
+};
 struct TileInfo
 {
     Matrix	matWVP;
@@ -437,7 +444,8 @@ struct TileInfo
     Vector4	Color;
     Vector4	EmvColor;
     float	Opacity;
-    Vector3	Empty;
+    Vector2	Pos;
+    float Empty;
 };
 
 enum class Nav_Insert_Type

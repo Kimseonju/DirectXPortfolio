@@ -88,7 +88,7 @@ void CBossSpawnUI::Update(float DeltaTime)
 			m_NickNameAlpha += DeltaTime;
 			m_BossNinkName->SetOpacity(m_NickNameAlpha);
 			CUIManager::GetInst()->GetBossUI()->Enable(true);
-
+			CInput::GetInst()->SetUpdate(false);
 		}
 	}
 	else
@@ -102,6 +102,7 @@ void CBossSpawnUI::Update(float DeltaTime)
 		{
 			if (m_Play)
 			{
+				CInput::GetInst()->SetUpdate(true);
 				Enable(false);
 			}
 				
@@ -117,11 +118,13 @@ void CBossSpawnUI::PostUpdate(float DeltaTime)
 void CBossSpawnUI::PrevRender(float DeltaTime)
 {
 	CWidgetWindow::PrevRender(DeltaTime);
+	if (!IsEnable())
+		return;
 	CCamera* Camera = m_Scene->GetCameraManager()->GetCurrentCamera();
 	if (!Camera->IsCameraMove())
 	{
 		m_Spawn = false;
-		CInput::GetInst()->StartInput();
+		CInput::GetInst()->SetUpdate(true);
 	}
 }
 

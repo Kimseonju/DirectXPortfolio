@@ -25,6 +25,22 @@ CTextObject::~CTextObject()
 {
 }
 
+void CTextObject::Active(bool bActive)
+{
+	CGameObject::Active(bActive);
+	m_Widget->Active(bActive);
+	m_WidgetComponent->Active(bActive);
+	m_RigidBodyComponent->Active(bActive);
+}
+
+void CTextObject::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Widget->Enable(bEnable);
+	m_WidgetComponent->Enable(bEnable);
+	m_RigidBodyComponent->Enable(bEnable);
+}
+
 void CTextObject::Start()
 {
 	CGameObject::Start();
@@ -92,10 +108,18 @@ void CTextObject::Gold()
 	m_Widget->SetColor(1.f, 1.f, 0.f);
 }
 
-void CTextObject::Damage()
+void CTextObject::Damage(bool bCritical)
 {
 	m_RigidBodyComponent->SetForce2D(50.f, 50.f);
 	m_RigidBodyComponent->SetGravity(true);
-	m_Widget->SetColor(1.f, 0.f, 0.f);
+	if (bCritical)
+	{
+		m_Widget->SetColor(1.f, 0.f, 0.f);
+	}
+	else
+	{
+
+		m_Widget->SetColor(1.f, 1.f, 1.f);
+	}
 }
 

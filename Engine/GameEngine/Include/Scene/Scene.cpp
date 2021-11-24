@@ -4,7 +4,7 @@
 #include "CameraManager.h"
 #include "SceneCollision.h"
 #include "Viewport.h"
-
+#include "../Engine.h"
 CScene::CScene()    :
     m_pSceneMode(nullptr),
     m_pSceneResource(nullptr),
@@ -102,22 +102,26 @@ bool CScene::Init()
 
 void CScene::Update(float DeltaTime)
 {
-    auto    iter = m_ObjList.begin();
-    auto    iterEnd = m_ObjList.end();
-
-    for (; iter != iterEnd; ++iter)
+    if (!CEngine::GetInst()->IsObjectPause())
     {
-        if (!(*iter)->IsActive())
+        auto    iter = m_ObjList.begin();
+        auto    iterEnd = m_ObjList.end();
         {
-            continue;
-        }
+            for (; iter != iterEnd; ++iter)
+            {
+                if (!(*iter)->IsActive())
+                {
+                    continue;
+                }
 
-        if ((*iter)->IsEnable())
-        {
-            if (!(*iter)->IsStart())
-                (*iter)->Start();
+                if ((*iter)->IsEnable())
+                {
+                    if (!(*iter)->IsStart())
+                        (*iter)->Start();
 
-            (*iter)->Update(DeltaTime);
+                    (*iter)->Update(DeltaTime);
+                }
+            }
         }
     }
 
@@ -130,26 +134,28 @@ void CScene::Update(float DeltaTime)
 
 void CScene::PostUpdate(float DeltaTime)
 {
-    auto    iter = m_ObjList.begin();
-    auto    iterEnd = m_ObjList.end();
-
-    for (; iter != iterEnd; ++iter)
+    if (!CEngine::GetInst()->IsObjectPause())
     {
-        if (!(*iter)->IsActive())
+        auto    iter = m_ObjList.begin();
+        auto    iterEnd = m_ObjList.end();
+
+        for (; iter != iterEnd; ++iter)
         {
-            continue;
+            if (!(*iter)->IsActive())
+            {
+                continue;
+            }
+
+            if ((*iter)->IsEnable())
+            {
+                if (!(*iter)->IsStart())
+                    (*iter)->Start();
+
+                (*iter)->PostUpdate(DeltaTime);
+            }
+
         }
-
-        if ((*iter)->IsEnable())
-        {
-            if (!(*iter)->IsStart())
-                (*iter)->Start();
-
-            (*iter)->PostUpdate(DeltaTime);
-        }
-
     }
-
     m_pCameraManager->PostUpdate(DeltaTime);
 
     m_pViewport->PostUpdate(DeltaTime);
@@ -157,8 +163,10 @@ void CScene::PostUpdate(float DeltaTime)
 
 void CScene::Collision(float DeltaTime)
 {
-    m_pCollision->Collision(DeltaTime);
-
+    if (!CEngine::GetInst()->IsObjectPause())
+    {
+        m_pCollision->Collision(DeltaTime);
+    }
     /*auto    iter = m_ObjList.begin();
     auto    iterEnd = m_ObjList.end();
 

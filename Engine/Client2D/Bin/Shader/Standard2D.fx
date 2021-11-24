@@ -119,6 +119,8 @@ struct VS_OUTPUT_UV
 {
 	float4  Pos : SV_POSITION;
 	float2  UV : TEXCOORD;
+	float3 Position : TEXCOORD1;
+
 	float4	ProjPos : POSITION;
 };
 
@@ -132,7 +134,7 @@ VS_OUTPUT_UV Standard2DTextureVS(VS_INPUT_UV input)
 	output.ProjPos = mul(float4(Pos, 1.f), g_matWVP);
 	output.Pos = output.ProjPos;
 	output.UV = ComputeAnimation2DUV(input.UV);
-
+	output.Position = input.Pos;
 	if (g_HorizontalReverse2DEnable==1 && g_Animation2DEnable == 1)
 	{
 		int b = 0;
@@ -166,6 +168,19 @@ PS_OUTPUT_SINGLE Standard2DTexturePS(VS_OUTPUT_UV input)
 	result = PaperBurn2D(result, input.UV);
 
 	result = Distortion(result, input.UV, input.ProjPos);
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (g_TorchArrayInput[i].Enable == 0)
+			continue;
+		float3 dist4 = g_TorchArrayInput[0].Pos - g_Pos;
+		float dist = abs(dist4.x) + abs(dist4.y);
+			//distance(g_TorchArrayInput[0].Pos, input.Position);//
+		if (dist < 100.f)
+		{
+			result.rgb *= 1.5f;
+		}
+	}
 
 	output.Color = result;
 

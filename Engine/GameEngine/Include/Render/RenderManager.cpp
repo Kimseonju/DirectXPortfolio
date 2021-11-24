@@ -13,6 +13,7 @@
 #include "../Resource/DistortionCBuffer.h"
 #include "../Resource/PaperBurnCBuffer.h"
 #include "../Scene/Viewport.h"
+#include "../Resource/StructuredBuffer.h"
 
 DEFINITION_SINGLE(CRenderManager)
 
@@ -21,7 +22,8 @@ CRenderManager::CRenderManager()	:
 	m_DistortionCBuffer(nullptr),
 	m_PaperBurnCBuffer(nullptr),
 	m_PaperBurnTimeMax(10.f),
-	m_PaperBurnTime(0.f)
+	m_PaperBurnTime(0.f),
+	m_TouchCount(0)
 {
 	m_RenderSpace = Render_Space::Render2D;
 
@@ -53,6 +55,7 @@ CRenderManager::~CRenderManager()
 	SAFE_DELETE(m_PaperBurnCBuffer);
 
 	SAFE_DELETE_ARRAY(m_pRenderListDistortion);
+	SAFE_DELETE(m_TorchCBuffer);
 
 	for (int i = 0; i < RT2D_End; ++i)
 	{
@@ -112,6 +115,20 @@ bool CRenderManager::Init()
 	m_AlphaBlend = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend");
 	m_UIAlphaBlend = CRenderStateManager::GetInst()->FindRenderState("UIAlphaBlend");
 
+
+	m_TorchCBuffer = new CStructuredBuffer;
+	m_vecTorchInfo.resize(100);
+	for (size_t i = 0; i < m_vecTorchInfo.size(); ++i)
+	{
+		m_vecTorchInfo[i].Enable = 0;
+	}
+	if (!m_TorchCBuffer->Init("TorchBuffer", sizeof(TorchInfo),
+		(unsigned int)m_vecTorchInfo.size(), 40, true, CBT_ALL))
+	{
+		SAFE_DELETE(m_TorchCBuffer);
+	}
+
+
 	return true;
 }
 
@@ -158,7 +175,12 @@ void CRenderManager::SetDefaultTarget()
 
 void CRenderManager::Render(float DeltaTime)
 {
+
+	m_TorchCBuffer->UpdateBuffer(&m_vecTorchInfo[0], sizeof(TorchInfo) * 100);
+	
+	m_TorchCBuffer->SetShader(40, CBT_ALL);
 	m_PostProcessCBuffer->UpdateCBuffer();
+
 
 	// 렌더타겟을 백버퍼에서 우리가 만들어둔 DiffuseTarget으로 교체가 된다.
 	// 깊이버퍼는 nullptr을 넣어주었기 때문에 기존에 사용하던 깊이버퍼가
@@ -209,6 +231,9 @@ void CRenderManager::Render(float DeltaTime)
 
 	m_AlphaBlend->ResetState();
 	m_DepthDisable->ResetState();
+
+
+
 	//Diff로 넘긴것을 셰이더에 넘긴다.
 	m_DiffuseTarget->SetShader(104, TST_PIXEL);
 
@@ -277,6 +302,8 @@ void CRenderManager::Render(float DeltaTime)
 
 	m_DepthDisable->ResetState();
 	m_UIAlphaBlend->ResetState();
+	m_TorchCBuffer->ResetShader(40, CBT_ALL);
+	TouchLightClear();
 }
 
 void CRenderManager::Render2D(float DeltaTime)
@@ -507,6 +534,27 @@ void CRenderManager::AddPrimitiveComponent(CPrimitiveComponent* pPrimitive)
 		{
 		}
 	}
+}
+
+void CRenderManager::AddTouchLight(Vector3 Pos,Matrix matWVP, Vector4 Color, bool bEnable)
+{
+	if (m_TouchCount < 100)
+	{
+		m_vecTorchInfo[m_TouchCount].Pos = Pos;
+		m_vecTorchInfo[m_TouchCount].matWVP = matWVP;
+		m_vecTorchInfo[m_TouchCount].Color = Color;
+		m_vecTorchInfo[m_TouchCount].Enable = bEnable? 1:0;
+		m_TouchCount++;
+	}
+}
+
+void CRenderManager::TouchLightClear()
+{
+	for (int i = 0; i < m_TouchCount; ++i)
+	{
+		m_vecTorchInfo[i].Enable = 0;
+	}
+	m_TouchCount = 0;
 }
 
 bool CRenderManager::Sort2DObject(CPrimitiveComponent* Src,

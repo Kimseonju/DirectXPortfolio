@@ -130,11 +130,11 @@ bool CTestMainScene::Init()
 	CUIManager::GetInst()->Init(m_pScene);
 
 
-	CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
-	pEnemy->SetWorldPos(0.f, 100.f, 0.f);
+	//CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
+	//pEnemy->SetWorldPos(0.f, 100.f, 0.f);
 
 	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
-	//CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
+	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
 	//CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
@@ -854,6 +854,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 		}
 	}
 
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("SpawnEffect", "Spawn", 10);
 
 }
 

@@ -5,6 +5,13 @@
 #include "GoldBullion.h"
 #include "HPFairy.h"
 #include "Player.h"
+#include "../Object/ShortSword.h"
+#include "../Object/MetalBoomerang.h"
+#include "../Object/Item.h"
+#include "../GlobalValue.h"
+#include "../Object/MetalBoomerang.h"
+#include "../Object/Revolver.h"
+#include "../Object/Player.h"
 CBasicTresure::CBasicTresure():
 	m_Open(false)
 {
@@ -70,6 +77,12 @@ void CBasicTresure::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 	AddRelativePos(m_Body->GetMove());
+
+	CPlayer* Player = CGlobalValue::MainPlayer;
+	if (Player)
+	{
+		SetWorldPos(Player->GetWorldPos());
+	}
 }
 
 void CBasicTresure::PostUpdate(float DeltaTime)
@@ -140,6 +153,29 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 				GoldBullion->AddWorldPos(0.f, 100.f, 0.f);
 				GoldBullion->Drop((float)GetRandom(0, 180), 300.f);
 			}
+
+
+			CItem* Item = nullptr;
+			int SelectWeapon = GetRandom(0, Weapons::End - 1);
+
+			std::string str = std::to_string(333);
+			switch (SelectWeapon)
+			{
+			case ShortSword:
+				Item = m_pScene->SpawnObject<CShortSword>("ShortSwordShop" + str);
+				break;
+			case MetalBoomerang:
+				Item = m_pScene->SpawnObject<CMetalBoomerang>("MetalBoomerangShop" + str);
+				break;
+			case Revolver:
+				Item = m_pScene->SpawnObject<CRevolver>("RevolverShop" + str);
+				break;
+			}
+			Item->SetWorldPos(GetWorldPos());
+			Item->AddWorldPos(0.f, 100.f, 0.f);
+			Item->Drop();
+			Item->Enable(true);
+			Item->Drop((float)GetRandom(0, 180), 300.f);
 		//}
 	}
 

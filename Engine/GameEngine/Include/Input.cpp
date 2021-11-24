@@ -182,8 +182,6 @@ bool CInput::Init(HINSTANCE hInst, HWND hWnd)
 
 void CInput::Update(float DeltaTime)
 {
-	if (!m_bUpdate)
-		return;
 	UpdateMouse(DeltaTime);
 
 	switch (m_InputType)

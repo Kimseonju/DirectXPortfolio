@@ -26,6 +26,7 @@ struct VS_OUTPUT_TILEMAP
 	float4	Color : COLOR;
 	float4	EmvColor : COLOR1;
 	float	Opacity : TEXCOORD1;
+	float2	Position : TEXCOORD2;
 };
 
 struct TileInfo
@@ -36,7 +37,8 @@ struct TileInfo
 	float4	Color;
 	float4	EmvColor;
 	float	Opacity;
-	float3	TileInfoEmpty;
+	float2	Pos;
+	float   Empty;
 };
 
 StructuredBuffer<TileInfo>		g_TileArrayInput	: register(t30);
@@ -50,7 +52,7 @@ VS_OUTPUT_TILEMAP TileMapVS(VS_INPUT_TILEMAP input)
 	output.Color = g_TileArrayInput[input.InstanceID].Color;
 	output.EmvColor = g_TileArrayInput[input.InstanceID].EmvColor;
 	output.Opacity = g_TileArrayInput[input.InstanceID].Opacity;
-
+	output.Position = g_TileArrayInput[input.InstanceID].Pos;
 	if (input.UV.x > 0.f)
 		output.UV.x = g_TileArrayInput[input.InstanceID].FrameEnd.x / g_TileImageSize.x;
 
@@ -81,6 +83,25 @@ PS_OUTPUT_SINGLE TileMapPS(VS_OUTPUT_TILEMAP input)
 	result = PaperBurn2D(result, input.UV);
 
 	result = Distortion(result, input.UV, input.ProjPos);
+
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (g_TorchArrayInput[i].Enable == 0)
+			continue;
+		float2 dist4 = g_TorchArrayInput[0].Pos.xy - input.Position;
+		float dist = abs(dist4.x) + abs(dist4.y);
+		//distance(g_TorchArrayInput[0].Pos, input.Position);//
+		if (dist < 50.f)
+		{
+			result.rgb *= 1.3f;
+		}
+		else if (dist < 100.f)
+		{
+			result.rgb *= 1.2f;
+		}
+	}
+
 
 	output.Color = result;
 

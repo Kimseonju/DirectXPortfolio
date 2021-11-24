@@ -24,12 +24,9 @@ CMainDoor::~CMainDoor()
 void CMainDoor::Enable(bool bEnable)
 {
 	CGameObject::Enable(bEnable);
-	if (bEnable)
+	if (m_Open)
 	{
-		if (m_Open)
-		{
-			m_DoorCollider2D->Enable(bEnable);
-		}
+		m_DoorCollider2D->Enable(bEnable);
 	}
 }
 

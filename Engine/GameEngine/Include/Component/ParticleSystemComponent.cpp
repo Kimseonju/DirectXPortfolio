@@ -178,12 +178,13 @@ void CParticleSystemComponent::PrevRender(float DeltaTime)
 
 void CParticleSystemComponent::Render(float DeltaTime)
 {
-    CPrimitiveComponent::Render(DeltaTime);
-
     if (!IsEnable())
     {
         return;
     }
+    CPrimitiveComponent::Render(DeltaTime);
+
+    
     //m_vecBuffer[0]->CopyResource(m_CopyBuffer);
 
     //m_CopyBuffer->CopyData(m_Info);

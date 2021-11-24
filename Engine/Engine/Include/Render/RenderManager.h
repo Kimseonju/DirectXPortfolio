@@ -43,6 +43,10 @@ private:
 	bool		m_PaperBurnInverse;
 	float		m_PaperBurnTimeMax;
 	float		m_PaperBurnTime;
+
+	std::vector<TorchInfo>	m_vecTorchInfo;
+	int m_TouchCount;
+	class CStructuredBuffer* m_TorchCBuffer;
 public:
 
 	void SetMouseWidget(CMouseWidget* Widget)
@@ -77,7 +81,8 @@ private:
 
 public:
 	void AddPrimitiveComponent(class CPrimitiveComponent* pPrimitive);
-
+	void AddTouchLight(Vector3 Pos, Matrix matWVP,Vector4 Color, bool bEnable = true);
+	void TouchLightClear();
 private:
 	static bool Sort2DObject(class CPrimitiveComponent* Src, class CPrimitiveComponent* Dest);
 

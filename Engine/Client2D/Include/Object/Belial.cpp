@@ -437,7 +437,8 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 		m_Collider2D->Enable(true);
 		m_Spawn = true;
 		m_AlphaUpdate = true;
-		CInput::GetInst()->StopInput();
+		CInput::GetInst()->SetUpdate(false);
+		CUIManager::GetInst()->GetBossSpawnUI()->Enable(true);
 	}
 
 }

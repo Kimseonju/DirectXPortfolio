@@ -57,6 +57,7 @@ bool CItem::Init()
 	m_Collider2D->AddCollisionCallbackFunction<CItem>(Collision_State::Begin, this,
 		&CItem::DropCollisionBegin);
 	m_Collider2D->SetExtent(10.f, 10.f);
+
 	m_Sprite->AddChild(m_Collider2D);
 	m_Body->SetGravity(true);
 	m_Body->SetGravityPower(500.f);
@@ -73,7 +74,8 @@ void CItem::Update(float DeltaTime)
 	}
 	else
 		m_UpdateDelay += DeltaTime;
-	
+
+	AddRelativePos(m_Body->GetMove());
 }
 
 void CItem::PostUpdate(float DeltaTime)
@@ -335,12 +337,63 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		m_Body->SetGravity(false);
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
 		StateNoMapItem();
 	}
+}
+
+void CItem::DropCollisionMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
+		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
+	{
+		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
+		float Angle = PlayerPos.GetAngle(ColPos);
+		ColDirVertical(Angle, result.DestCollider);
+	}
+}
+
+void CItem::ColDirVertical(float Angle, CCollider* Col)
+{
+	Vector3 Velocity = GetVelocity();
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2D->GetRelativeScale() / 2.f;
+	Vector3 ColCheckPos = PlayerPos - ColPos;
+
+	Vector3 WorldPos = GetWorldPos() - PlayerPos;
+
+	//¾Æ·¡
+	if (180.f <= Angle && Angle < 360.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+	}
+	//À§
+	else if (0.f < Angle || Angle < 180.f || 360.f <= Angle)
+	{
+		m_Body->StopForceY();
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y -= y;
+		PlayerPos.y = XMove.y;
+	}
+
+	SetWorldPos(PlayerPos + WorldPos);
 }
 
 void CItem::SetHorizontalReverse2DEnable(bool Enable)
@@ -356,6 +409,7 @@ void CItem::SetVerticalReverse2DEnable(bool Enable)
 void CItem::Drop(float Angle, float Power)
 {
 	m_Body->SetForce2D(Angle, Power);
+	m_Body->SetGravity(true);
 	Drop();
 }
 

@@ -101,6 +101,7 @@ bool CMetalBoomerang::Attack(float Angle)
 	pBullet->SetRelativePos(obj->GetWorldPos());
 	pBullet->SetRelativeRotationZ(Angle - 90.f);
 	pBullet->SetCollisionProfile("PlayerAttack");
+	pBullet->AddRelativePos(pBullet->GetAxis(AXIS_Y) * 30.f);
 	return true;
 }
 

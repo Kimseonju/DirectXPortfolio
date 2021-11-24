@@ -1431,7 +1431,7 @@ void CTransform::SetTransform()
 
     m_pCBuffer->SetPivot(m_Pivot);
     m_pCBuffer->SetMeshSize(m_MeshSize);
-
+    m_pCBuffer->SetPos(m_WorldPos);
     m_pCBuffer->UpdateCBuffer();
 }
 

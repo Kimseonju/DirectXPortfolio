@@ -933,6 +933,7 @@ void CTileMapComponent::PrevRender(float DeltaTime)
 				m_vecTileInfo[m_RenderCount].FrameEnd = m_vecTile[Index]->GetFrameEnd();
 				m_vecTileInfo[m_RenderCount].matWVP = m_vecTile[Index]->GetWorldMatrix() * matView * matProj;
 				m_vecTileInfo[m_RenderCount].matWVP.Transpose();
+				m_vecTileInfo[m_RenderCount].Pos = m_vecTile[Index]->GetPos();
 				++m_RenderCount;
 			}
 		}
@@ -1320,8 +1321,6 @@ void CTileMapComponent::SetWorldInfo()
 		SAFE_DELETE(m_WorldBuffer);
 		return;
 	}
-
-	
 
 }
 

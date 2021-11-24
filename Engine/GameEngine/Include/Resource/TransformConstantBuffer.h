@@ -58,6 +58,9 @@ public:
     {
         m_BufferData.VerticalReverse2DEnable = Enable ? 1 : 0;
     }
-
+    void SetPos(Vector3 Pos)
+    {
+        m_BufferData.Pos = Pos;
+    }
 };
 

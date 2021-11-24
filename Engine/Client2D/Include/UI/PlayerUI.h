@@ -14,7 +14,10 @@ class CPlayerUI :
 private:
     
     CSharedPtr<CProgressBar>    m_ProgressBar;
-
+    CSharedPtr<CImage>    m_HPLifeWave;
+    CSharedPtr<CText>     m_HPText;
+    CSharedPtr<CText>     m_HPMiddleText;
+    CSharedPtr<CText>     m_HPMaxText;
     CSharedPtr<CImage>    m_WarningOnHit0;
     CSharedPtr<CImage>    m_WarningOnHit1;
     std::vector<CSharedPtr<CImage>> m_vecDashBack;
@@ -36,5 +39,6 @@ public:
 public:
     void Hit();
     void WeaponChange();
+    void SetHPBar(float Percent);
 };
 

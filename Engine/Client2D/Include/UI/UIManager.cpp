@@ -25,6 +25,9 @@ bool CUIManager::Init(CScene* Scene)
 	m_BossDieUI = m_pScene->GetViewport()->AddWindow<CBossDieUI>("BossDieUI");
 	m_BossUI = m_pScene->GetViewport()->AddWindow<CBossUI>("BossUI");
 	m_ShopUI = m_pScene->GetViewport()->AddWindow<CShopUI>("ShopUI");
+	m_FadeInOutUI = m_pScene->GetViewport()->AddWindow<CFadeInOutUI>("FadeInOutUI");
+	m_StatusUI = m_pScene->GetViewport()->AddWindow<CStatusUI>("StatusUI");
+	m_BossSpawnUI->Enable(false);
 	m_InventoryUI->Enable(false);
 	m_StageMapUI->Enable(false);
 	m_ShopUI->Enable(false);

@@ -4,6 +4,8 @@
 #include "StageManager.h"
 #include "../GlobalValue.h"
 #include "../Object/Player.h"
+#include "../UI/UIManager.h"
+#include "../UI/FadeInOutUI.h"
 CDoor::CDoor() :
 	m_Open(true),
 	m_StartInput(false)
@@ -81,6 +83,7 @@ bool CDoor::Init()
 	m_SpriteBody->AddChild(m_DoorCollider2D);
 	m_SpriteBody->AddChild(m_Particle);
 	m_SpriteBody->AddChild(m_NextStageCollider2D);
+	m_DoorCollider2D->Enable(false);
 	return true;
 }
 
@@ -162,22 +165,22 @@ void CDoor::CollisionBegin_NextStage(const HitResult& result, CCollider* Collide
 		{
 		case Door_Dir::Door_Left:
 		{
-			CStageManager::GetInst()->NextStage(Stage_Dir::LEFT);
+			CUIManager::GetInst()->GetFadeInOutUI()->StageMoveIn(Stage_Dir::LEFT);
 			break;
 		}
 		case Door_Dir::Door_Right:
 		{
-			CStageManager::GetInst()->NextStage(Stage_Dir::RIGHT);
+			CUIManager::GetInst()->GetFadeInOutUI()->StageMoveIn(Stage_Dir::RIGHT);
 			break;
 		}
 		case Door_Dir::Door_Up:
 		{
-			CStageManager::GetInst()->NextStage(Stage_Dir::UP);
+			CUIManager::GetInst()->GetFadeInOutUI()->StageMoveIn(Stage_Dir::UP);
 			break;
 		}
 		case Door_Dir::Door_Down:
 		{
-			CStageManager::GetInst()->NextStage(Stage_Dir::DOWN);
+			CUIManager::GetInst()->GetFadeInOutUI()->StageMoveIn(Stage_Dir::DOWN);
 			break;
 		}
 		}
@@ -219,6 +222,7 @@ void CDoor::PlayerMove()
 		break;
 	}
 	}
+	CGlobalValue::MainPlayer->SetGravity(true);
 }
 
 void CDoor::SetDir(Door_Dir Dir)

@@ -246,12 +246,19 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		int CriticalCheck = GetRandom(0, 100);
+		bool bCritical = false;
+		if (CGlobalValue::MainPlayer->GetStatus().GetCritical() > CriticalCheck)
+		{
+			bCritical = true;
+		}
+		int Damage = CGlobalValue::MainPlayer->GetAttackDamage(bCritical);
+		m_Status->SetHP(m_Status->GetHP() - Damage);
 		m_EnemyInfoWidget->Enable(true);
 		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
-		TextObj->SetText(std::to_string(CGlobalValue::MainPlayer->GetStatus().GetAttackDamage()));
+		TextObj->SetText(std::to_string(Damage));
 		TextObj->SetWorldPos(GetWorldPos());
-		TextObj->Damage();
+		TextObj->Damage(bCritical);
 		if (m_Status->GetHP() <= 0)
 		{
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");

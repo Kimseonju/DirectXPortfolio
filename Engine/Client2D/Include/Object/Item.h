@@ -108,6 +108,8 @@ public:
 public:
 	
 	void DropCollisionBegin(const HitResult& result, CCollider* Collider);
+	void DropCollisionMiddle(const HitResult& result, CCollider* Collider);
+	void ColDirVertical(float Angle, CCollider* Col);
 	void SetHorizontalReverse2DEnable(bool Enable);
 	void SetVerticalReverse2DEnable(bool Enable);
 public:

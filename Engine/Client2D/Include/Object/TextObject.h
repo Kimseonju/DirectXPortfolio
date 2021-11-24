@@ -23,6 +23,8 @@ protected:
 
 	float			m_LifeTime;
 public:
+	virtual void Active(bool bActive);
+	virtual void Enable(bool bEnable);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);
@@ -34,5 +36,5 @@ public:
 public:
 	void SetText(std::string Text);
 	void Gold();
-	void Damage();
+	void Damage(bool bCritical);
 };

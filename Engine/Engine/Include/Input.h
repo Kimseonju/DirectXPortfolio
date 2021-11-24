@@ -58,14 +58,10 @@ private:
     bool                m_bUpdate;
 public:
 
-    void StopInput()
+    void SetUpdate(bool bEnable)
     {
-        m_bUpdate = false;
+        m_bUpdate = bEnable;
     } 
-    void StartInput()
-    {
-        m_bUpdate = true;
-    }
     void SetMouseCollision(bool Collision)
     {
         m_MouseCollision = Collision;

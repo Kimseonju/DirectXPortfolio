@@ -15,7 +15,8 @@ protected:
 protected:
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CAnimation2D* m_Animation2D;
-
+	CSharedPtr<CGameObject> m_Obj;
+	
 public:
 	virtual void Enable(bool bEnable);
 	virtual void Start();
@@ -28,4 +29,5 @@ public:
 public:
 	void Spawn();
 	virtual void AnimationFrameEnd(const std::string& Name);
+	virtual void Animation2DNotify(const std::string& Name);
 };

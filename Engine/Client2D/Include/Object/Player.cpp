@@ -142,6 +142,7 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("MouseWhell", KT_Down, this, &CPlayer::WeaponChange);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InteractionInputKey", KT_Up, this, &CPlayer::InputInteractionInputKey);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("ShopUI", KT_Up, this, &CPlayer::ShopUIOnOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("StatusUI", KT_Up, this, &CPlayer::StatusUIOnOff);
 	//마우스회전용
 	
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -304,6 +305,11 @@ void CPlayer::Animation2DNotify(const std::string& Name)
 	
 }
 
+void CPlayer::SetGravity(bool bGravity)
+{
+	m_Body->SetGravity(bGravity);
+}
+
 void CPlayer::SetStatus(const std::string& Name)
 {
 	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
@@ -439,6 +445,84 @@ void CPlayer::ShopUIOnOff(float DeltaTime)
 	{
 		CUIManager::GetInst()->GetShopUI()->Enable(true);
 		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
+	}
+}
+void CPlayer::StatusUIOnOff(float DeltaTime)
+{
+	if (CUIManager::GetInst()->GetStatusUI()->IsEnable())
+	{
+		CUIManager::GetInst()->GetStatusUI()->Enable(false);
+		CGlobalValue::MainMouse->SetState(Mouse_State::World);
+	}
+	else
+	{
+		CUIManager::GetInst()->GetStatusUI()->Enable(true);
+		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
+	}
+}
+int CPlayer::GetDamage()
+{
+	if (m_Weapon)
+	{
+		return m_Weapon->GetDamage()+ m_Status.GetDamage();
+	}
+	return 0;
+}
+int CPlayer::GetDamageMax()
+{
+	if (m_Weapon)
+	{
+		return m_Weapon->GetDamageMax() + m_Status.GetDamageMax();
+	}
+	return 0;
+}
+int CPlayer::GetArmor()
+{
+	return m_Status.GetArmor();
+}
+int CPlayer::GetCritical()
+{
+	return m_Status.GetCritical();
+}
+float CPlayer::GetMoveSpeed()
+{
+	return m_Status.GetMoveSpeed();
+}
+float CPlayer::GetAttackSpeed()
+{
+	if (m_Weapon)
+	{
+		return m_Weapon->GetAttackSpeed();
+	}
+	return 0.f;
+}
+float CPlayer::GetReloadSpeed()
+{
+	if (m_Weapon)
+	{
+		return m_Weapon->GetReloadSpeed();
+	}
+	return 0.f;
+}
+
+int CPlayer::GetAttackDamage(bool Critical)
+{
+	int Damage = m_Status.GetDamage();
+	int DamageMax = m_Status.GetDamageMax();
+	if (m_Weapon)
+	{
+		Damage += m_Weapon->GetDamage();
+
+		DamageMax += m_Weapon->GetDamageMax();
+	}
+	int CriticalCheck = GetRandom(0, 100);
+	if (m_Status.GetCritical() < CriticalCheck)
+	{
+		return GetRandom(Damage, DamageMax);
+	}
+	else
+	{
+		return GetRandom(Damage, DamageMax);
 	}
 }
 void CPlayer::AnimationFrameEnd(const std::string& Name)

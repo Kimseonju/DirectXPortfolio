@@ -7,6 +7,8 @@
 #include "BossDieUI.h"
 #include "BossUI.h"
 #include "ShopUI.h"
+#include "FadeInOutUI.h"
+#include "StatusUI.h"
 class CUIManager
 {
 
@@ -44,6 +46,15 @@ public:
 	{
 		return m_ShopUI;
 	}
+
+	CFadeInOutUI* GetFadeInOutUI()
+	{
+		return m_FadeInOutUI;
+	}
+	CStatusUI* GetStatusUI()
+	{
+		return m_StatusUI;
+	}
 private:
 	CSharedPtr<CPlayerUI> m_PlayerUI;
 	CSharedPtr<CInventory> m_InventoryUI;
@@ -52,6 +63,8 @@ private:
 	CSharedPtr<CBossDieUI> m_BossDieUI;
 	CSharedPtr<CBossUI> m_BossUI;
 	CSharedPtr<CShopUI> m_ShopUI;
+	CSharedPtr<CFadeInOutUI> m_FadeInOutUI;
+	CSharedPtr<CStatusUI> m_StatusUI;
 	CScene* m_pScene;
 
 

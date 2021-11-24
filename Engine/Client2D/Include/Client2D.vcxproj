@@ -292,6 +292,7 @@
     <ClCompile Include="UI\ShopInfoWidget.cpp" />
     <ClCompile Include="UI\ShopUI.cpp" />
     <ClCompile Include="UI\StageMap.cpp" />
+    <ClCompile Include="UI\StatusUI.cpp" />
     <ClCompile Include="UI\TextWidget.cpp" />
     <ClCompile Include="UI\TitleWidget.cpp" />
     <ClCompile Include="UI\UIManager.cpp" />
@@ -424,6 +425,7 @@
     <ClInclude Include="UI\ShopInfoWidget.h" />
     <ClInclude Include="UI\ShopUI.h" />
     <ClInclude Include="UI\StageMap.h" />
+    <ClInclude Include="UI\StatusUI.h" />
     <ClInclude Include="UI\TextWidget.h" />
     <ClInclude Include="UI\TitleWidget.h" />
     <ClInclude Include="UI\UIManager.h" />

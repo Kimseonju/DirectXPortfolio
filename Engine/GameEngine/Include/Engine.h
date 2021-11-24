@@ -19,6 +19,8 @@ private:
 	float		m_AccTime;
 	CSharedPtr<CMouseWidget>	m_MouseWidget;
 	bool		m_Start;
+
+	bool m_ObjectPause;
 public:
 
 	void SetResolution(int Width, int Height)
@@ -32,7 +34,14 @@ public:
 		m_TimeScale = TimeScale;
 	}
 
-
+	void SetObjectPause(bool bPause)
+	{
+		m_ObjectPause = bPause;
+	}
+	bool IsObjectPause()
+	{
+		return m_ObjectPause;
+	}
 	static bool IsLoop()
 	{
 		return m_Loop;

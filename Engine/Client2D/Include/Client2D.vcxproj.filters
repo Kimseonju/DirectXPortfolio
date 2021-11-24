@@ -103,9 +103,6 @@
     <Filter Include="03. Animation2D\FSM">
       <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Door">
-      <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
     </Filter>
@@ -135,9 +132,6 @@
     </Filter>
     <Filter Include="UI\UI\WidgetWindow\BossUI">
       <UniqueIdentifier>{1ae272e4-6f06-4dce-992a-fbe32ec698fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI\UI\WidgetWindow\PlayerUI">
-      <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\ObjectUI">
       <UniqueIdentifier>{87ba674e-780e-493e-97b7-fa4a6b9fc787}</UniqueIdentifier>
@@ -216,6 +210,21 @@
     </Filter>
     <Filter Include="02. Object\EffectAndParticle\Spawn">
       <UniqueIdentifier>{ba978d17-ae9a-42cf-b5c5-3c01e6e45247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject\Door">
+      <UniqueIdentifier>{71d15b00-50d9-4ea1-9e41-39415266a9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject\Gold">
+      <UniqueIdentifier>{75cf7d41-0a05-41c1-8249-09d4e4c03b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject\Tresure">
+      <UniqueIdentifier>{8c37fcec-8bc1-492a-a915-f1ecd493925c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\StatusUI">
+      <UniqueIdentifier>{a0059c80-9c59-4652-abf5-522e18eca128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\PlayerUI">
+      <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +451,7 @@
       <Filter>02. Object\Enemy\SmallSkel</Filter>
     </ClCompile>
     <ClCompile Include="Stage\Door.cpp">
-      <Filter>02. Object\Door</Filter>
+      <Filter>02. Object\MapObject\Door</Filter>
     </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Component</Filter>
@@ -457,7 +466,7 @@
       <Filter>02. Object\ObjectUI</Filter>
     </ClCompile>
     <ClCompile Include="Object\MainDoor.cpp">
-      <Filter>02. Object\Door</Filter>
+      <Filter>02. Object\MapObject\Door</Filter>
     </ClCompile>
     <ClCompile Include="UI\BossSpawnUI.cpp">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
@@ -502,18 +511,6 @@
       <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
     </ClCompile>
     <ClCompile Include="Object\HPFairy.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BasicTresure.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\BossTresure.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Gold.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\GoldBullion.cpp">
       <Filter>02. Object\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="Object\PlayerInteractionCollision.cpp">
@@ -624,8 +621,23 @@
     <ClCompile Include="Object\PlayerFSM.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Gold.cpp">
+      <Filter>02. Object\MapObject\Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GoldBullion.cpp">
+      <Filter>02. Object\MapObject\Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BasicTresure.cpp">
+      <Filter>02. Object\MapObject\Tresure</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossTresure.cpp">
+      <Filter>02. Object\MapObject\Tresure</Filter>
+    </ClCompile>
     <ClCompile Include="Object\SpawnEffect.cpp">
-      <Filter>02. Object\EffectAndParticle</Filter>
+      <Filter>02. Object\EffectAndParticle\Spawn</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\StatusUI.cpp">
+      <Filter>UI\UI\WidgetWindow\StatusUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -849,7 +861,7 @@
       <Filter>03. Animation2D\FSM</Filter>
     </ClInclude>
     <ClInclude Include="Stage\Door.h">
-      <Filter>02. Object\Door</Filter>
+      <Filter>02. Object\MapObject\Door</Filter>
     </ClInclude>
     <ClInclude Include="MoveComponent.h">
       <Filter>Component</Filter>
@@ -864,7 +876,7 @@
       <Filter>02. Object\ObjectUI</Filter>
     </ClInclude>
     <ClInclude Include="Object\MainDoor.h">
-      <Filter>02. Object\Door</Filter>
+      <Filter>02. Object\MapObject\Door</Filter>
     </ClInclude>
     <ClInclude Include="UI\BossSpawnUI.h">
       <Filter>UI\UI\WidgetWindow\BossUI</Filter>
@@ -909,18 +921,6 @@
       <Filter>02. Object\Enemy\Boss\Belial\Die</Filter>
     </ClInclude>
     <ClInclude Include="Object\HPFairy.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BasicTresure.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\BossTresure.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Gold.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\GoldBullion.h">
       <Filter>02. Object\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="Object\PlayerInteractionCollision.h">
@@ -1016,8 +1016,23 @@
     <ClInclude Include="Object\PlayerAttack.h">
       <Filter>02. Object\EffectAndParticle\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Gold.h">
+      <Filter>02. Object\MapObject\Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GoldBullion.h">
+      <Filter>02. Object\MapObject\Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BasicTresure.h">
+      <Filter>02. Object\MapObject\Tresure</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossTresure.h">
+      <Filter>02. Object\MapObject\Tresure</Filter>
+    </ClInclude>
     <ClInclude Include="Object\SpawnEffect.h">
-      <Filter>02. Object\EffectAndParticle</Filter>
+      <Filter>02. Object\EffectAndParticle\Spawn</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\StatusUI.h">
+      <Filter>UI\UI\WidgetWindow\StatusUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

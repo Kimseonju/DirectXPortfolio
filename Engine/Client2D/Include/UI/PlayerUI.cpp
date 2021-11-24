@@ -38,9 +38,8 @@ bool CPlayerUI::Init()
 	image->SetTexture("PlayerLifeBack", TEXT("UI/PlayerLifeBack.png"));
 	image->SetPos(50.f, 600.f);
 	image->SetCollision(false);
-
 	m_ProgressBar = CreateWidget<CProgressBar>("PlayerHPBar");
-	m_ProgressBar->SetSize(180.f, 64.f);
+	m_ProgressBar->SetSize(200.f, 64.f);
 	m_ProgressBar->SetPos(140.f, 600.f);
 	m_ProgressBar->SetTexture("LifeBar", TEXT("UI/LifeBar.png"));
 	m_ProgressBar->SetColorTint(234.f / 255.f, 71.f / 255.f, 71.f / 255.f, 1.f);
@@ -52,17 +51,44 @@ bool CPlayerUI::Init()
 	image->SetTexture("PlayerLifeBase", TEXT("UI/PlayerLifeBase.png"));
 	image->SetPos(50.f, 600.f);
 	image->SetCollision(false);
+	image->SetZOrder(1.f);
 
-	float hp = (float)CGlobalValue::MainPlayer->GetStatus().GetHP();
-	float hpmax= (float)CGlobalValue::MainPlayer->GetStatus().GetHPMax();
-	m_ProgressBar->SetPercent(hp/hpmax);
 
-	image= CreateWidget<CImage>("LifeWave");
-	image->SetSize(16.f, 40.f);
-	image->CreateAnimation2D<CLifeWaveAnimation2D>();
-	image->SetColorTint(234.f / 255.f, 71.f / 255.f, 71.f / 255.f,1.f);
-	image->SetPos(140.f+(m_ProgressBar->GetSize().x * (hp / hpmax)), 612.f);
-	image->SetCollision(false);
+	m_HPLifeWave = CreateWidget<CImage>("LifeWave");
+	m_HPLifeWave->SetSize(16.f, 40.f);
+	m_HPLifeWave->CreateAnimation2D<CLifeWaveAnimation2D>();
+	m_HPLifeWave->SetColorTint(234.f / 255.f, 71.f / 255.f, 71.f / 255.f,1.f);
+	m_HPLifeWave->SetPos(140.f+(m_ProgressBar->GetSize().x ), 612.f);
+	m_HPLifeWave->SetCollision(false);
+
+
+	m_HPText = CreateWidget<CText>("HPText");
+	m_HPText->SetPos(150.f, 580.f);
+	m_HPText->SetFontSize(30.f);
+	m_HPText->SetCollision(false);
+	m_HPText->SetText(TEXT("11"));
+	m_HPText->SetZOrder(2);
+	m_HPText->SetAlignH(TEXT_ALIGN_H::Center);
+	m_HPText->SetAlignV(TEXT_ALIGN_V::Middle);
+
+	m_HPMiddleText = CreateWidget<CText>("HPMiddleText");
+	m_HPMiddleText->SetPos(190.f, 580.f);
+	m_HPMiddleText->SetFontSize(30.f);
+	m_HPMiddleText->SetText(TEXT("/"));
+	m_HPMiddleText->SetCollision(false);
+	m_HPMiddleText->SetZOrder(2);
+	m_HPMiddleText->SetAlignH(TEXT_ALIGN_H::Center);
+	m_HPMiddleText->SetAlignV(TEXT_ALIGN_V::Middle);
+
+
+	m_HPMaxText = CreateWidget<CText>("HPMaxText");
+	m_HPMaxText->SetPos(230.f, 580.f);
+	m_HPMaxText->SetFontSize(30.f);
+	m_HPMaxText->SetCollision(false);
+	m_HPMaxText->SetText(TEXT("11"));
+	m_HPMaxText->SetZOrder(2);
+	m_HPMaxText->SetAlignH(TEXT_ALIGN_H::Center);
+	m_HPMaxText->SetAlignV(TEXT_ALIGN_V::Middle);
 
 	CPlayer* Player=CGlobalValue::MainPlayer;
 	int DashMax=Player->GetStatus().GetDashMax();
@@ -104,8 +130,9 @@ bool CPlayerUI::Init()
 		image = CreateWidget<CImage>("DashBack" + str);
 		image->SetPos(50.f + (DashMax-1) * 36.f, 560.f);
 		image->SetSize(44.f, 32.f);
-		image->SetTexture("DashCountBase_01", TEXT("UI/DashCountBase_01.png"));
+		image->SetTexture("DashCountBase_1", TEXT("UI/DashCountBase_1.png"));
 		image->SetCollision(false);
+
 		image = CreateWidget<CImage>("DashCount" + str);
 		image->SetPos(56.f + (DashMax-1) * 36.f, 568.f);
 		image->SetSize(36.f, 16.f);
@@ -156,6 +183,18 @@ void CPlayerUI::Update(float DeltaTime)
 	}
 
 	m_HitTime -= DeltaTime;
+	int hp = (float)CGlobalValue::MainPlayer->GetStatus().GetHP();
+	int hpmax = (float)CGlobalValue::MainPlayer->GetStatus().GetHPMax();
+	float Percentt = (float)hp / (float)hpmax;
+
+	std::wstring str;
+	str = std::to_wstring(hp);
+	m_HPText->SetText(str.c_str());
+
+	str = std::to_wstring(hpmax);
+	m_HPMaxText->SetText(str.c_str());
+
+	SetHPBar(Percentt);
 }
 
 void CPlayerUI::PostUpdate(float DeltaTime)
@@ -181,5 +220,20 @@ void CPlayerUI::Hit()
 void CPlayerUI::WeaponChange()
 {
 	m_PlayerWeaponUI->WeaponChange();
+}
+
+void CPlayerUI::SetHPBar(float Percent)
+{
+	m_ProgressBar->SetPercent(Percent);
+	m_HPLifeWave->SetPos(140.f + (m_ProgressBar->GetSize().x * Percent), 612.f);
+	float LifeWave = 1.f - Percent;
+	if (LifeWave >= 0.2f)
+	{
+		m_HPLifeWave->SetSize(16.f, 40.f);
+	}
+	else
+	{
+		m_HPLifeWave->SetSize(16.f*(LifeWave*5.f), 40.f);
+	}
 }
 

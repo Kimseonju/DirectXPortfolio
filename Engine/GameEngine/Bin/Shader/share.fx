@@ -20,7 +20,7 @@ cbuffer Transform : register(b0)
 	float3  g_vMeshSize;
 	float   g_HorizontalReverse2DEnable;
 	float   g_VerticalReverse2DEnable;
-	float3  g_TransformEmpty;
+	float3  g_Pos;
 };
 
 cbuffer Material : register(b1)
@@ -79,6 +79,16 @@ cbuffer Animation2D : register(b6)
 	int		g_Animation2DType;
 	float3	g_vAnimation2DEmpty;
 };
+struct TorchLight
+{
+	float3	Pos;
+	int Enable;
+	float4	Color;
+	matrix  g_matWVP;
+};
+
+StructuredBuffer<TorchLight>		g_TorchArrayInput	: register(t40);
+
 
 SamplerState    g_PointSmp  : register(s0);
 SamplerState    g_LinearSmp  : register(s1);
@@ -464,7 +474,6 @@ PS_OUTPUT_SINGLE FullScreenPS(VS_OUTPUT_NULLBUFFER input)
 		BaseColor += BlurColor;
 		BaseColor /= 9.f;
 	}
-
 	output.Color = BaseColor;
 
 	return output;

@@ -50,6 +50,7 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("MouseWhell", DIK_MOUSEWHEEL);
     CInput::GetInst()->CreateKey("InteractionInputKey", 'F');
     CInput::GetInst()->CreateKey("ShopUI", 'R');
+    CInput::GetInst()->CreateKey("StatusUI", 'T');
   
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');
@@ -113,9 +114,22 @@ bool CClientManager::Init()
    CCollisionManager::GetInst()->SetProfileChannelState("Enemy", Collision_Channel::Player,
        Collision_Interaction::Block);
 
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Player,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
    CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::PlayerAttack,
        Collision_Interaction::Block);
    CCollisionManager::GetInst()->SetProfileChannelState("PlayerAttack", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Tile_Nopass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_Nopass", Collision_Channel::Item,
+       Collision_Interaction::Block);
+
+   CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Tile_pass,
+       Collision_Interaction::Block);
+   CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Item,
        Collision_Interaction::Block);
 
    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::InteractionInputKey,

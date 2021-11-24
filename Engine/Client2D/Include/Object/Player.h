@@ -63,7 +63,6 @@ private:
 	float m_DustCount;
 protected:
 public:
-
 	void StageMove()
 	{
 		m_StageMove = true;
@@ -114,6 +113,7 @@ public:
 	virtual CPlayer* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 public:
+	void SetGravity(bool bGravity);
 	void SetStatus(const std::string& Name);
 public:
 	void LeftMove(float DeltaTime);
@@ -127,6 +127,18 @@ public:
 	void WeaponChange(float DeltaTime);
 	void InputInteractionInputKey(float DeltaTime);
 	void ShopUIOnOff(float DeltaTime);
+	void StatusUIOnOff(float DeltaTime);
+public:
+//status 가져오기
+	int GetDamage();
+	int GetDamageMax();
+	int GetArmor();
+	int GetCritical();
+	float GetMoveSpeed();
+	float GetAttackSpeed();
+	float GetReloadSpeed();
+	int GetAttackDamage(bool Critical);
+
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);

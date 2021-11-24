@@ -81,26 +81,25 @@ CSpawnEffect* CSpawnEffect::Clone()
 
 void CSpawnEffect::Spawn()
 {
-	CGameObject* Obj = nullptr;
 	if (m_ClassType == Client_Class_Type::Enemy)
 	{
 		switch (m_EnemyType)
 		{
 		case Client_Enemy_Type::SmallSkel_Sword:
-			Obj = m_pScene->SpawnObject<CSmallSkel>("CSmallSkelSword");
+			m_Obj = m_pScene->SpawnObject<CSmallSkel>("CSmallSkelSword");
 
 			break;
 		case Client_Enemy_Type::SmallSkel_Bow:
-			Obj = m_pScene->SpawnObject<CSmallSkel_Bow>("SmallSkel_Bow");
+			m_Obj = m_pScene->SpawnObject<CSmallSkel_Bow>("SmallSkel_Bow");
 			break;
 		case Client_Enemy_Type::Ghost:
-			Obj = m_pScene->SpawnObject<CGhost>("Ghost");
+			m_Obj = m_pScene->SpawnObject<CGhost>("Ghost");
 			break;
 		case Client_Enemy_Type::Banshee:
-			Obj = m_pScene->SpawnObject<CBanshee>("Banshee");
+			m_Obj = m_pScene->SpawnObject<CBanshee>("Banshee");
 			break;
 		case Client_Enemy_Type::Giant_Red:
-			Obj = m_pScene->SpawnObject<CGiant_Red>("Giant_Red");
+			m_Obj = m_pScene->SpawnObject<CGiant_Red>("Giant_Red");
 			break;
 		case Client_Enemy_Type::Minotaurs:
 			break;
@@ -112,7 +111,7 @@ void CSpawnEffect::Spawn()
 		CStage* Stage = CStageManager::GetInst()->GetCurStage();
 		if (Stage)
 		{
-			Stage->PushEnemy(Obj);
+			Stage->PushEnemy(m_Obj);
 		}
 	}
 	else if (m_ClassType == Client_Class_Type::Object)
@@ -120,28 +119,38 @@ void CSpawnEffect::Spawn()
 		switch (m_ObjectType)
 		{
 		case Client_Object_Type::TresureBox:
-			Obj = m_pScene->SpawnObject<CBasicTresure>("BasicTresure");
+			m_Obj = m_pScene->SpawnObject<CBasicTresure>("BasicTresure");
 			break;
 		case Client_Object_Type::BossTresureBox:
-			Obj = m_pScene->SpawnObject<CBossTresure>("BossTresure");
+			m_Obj = m_pScene->SpawnObject<CBossTresure>("BossTresure");
 
 			break;
 		}
 		CStage* Stage = CStageManager::GetInst()->GetCurStage();
 		if (Stage)
 		{
-			Stage->PushObject(Obj);
+			Stage->PushObject(m_Obj);
 		}
 	}
-	if (Obj)
-		Obj->SetWorldPos(GetWorldPos());
 }
 
 void CSpawnEffect::AnimationFrameEnd(const std::string& Name)
 {
 
 	//몬스터나 기타등등 스폰시키기
-	
+
 	Active(false);
+}
+
+void CSpawnEffect::Animation2DNotify(const std::string& Name)
+{
+	if (Name == "Spawn")
+	{
+		if (m_Obj)
+		{
+			Vector3 Pos = GetWorldPos();
+			m_Obj->SetWorldPos(GetWorldPos());
+		}
+	}
 }
 
