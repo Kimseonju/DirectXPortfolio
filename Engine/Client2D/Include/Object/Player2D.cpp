@@ -1,7 +1,6 @@
 
 #include "Player2D.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "../Animation2D/Animation2D_FSM.h"
@@ -182,20 +181,6 @@ void CPlayer2D::Update(float DeltaTime)
 		{
 			m_ChildFireTime += DeltaTime;
 
-			if (m_ChildFireTime >= m_ChildFireTimeMax)
-			{
-				m_ChildFireTime -= m_ChildFireTimeMax;
-
-				CBullet* pLeftBullet = m_pScene->SpawnObject<CBullet>("Bullet");
-
-				pLeftBullet->SetRelativePos(m_LeftMuzzle->GetWorldPos());
-				pLeftBullet->SetRelativeRotation(GetWorldRotation());
-
-				CBullet* pRightBullet = m_pScene->SpawnObject<CBullet>("Bullet");
-
-				pRightBullet->SetRelativePos(m_RightMuzzle->GetWorldPos());
-				pRightBullet->SetRelativeRotation(GetWorldRotation());
-			}
 		}
 	}
 }
@@ -224,12 +209,6 @@ void CPlayer2D::Animation2DNotify(const std::string& Name)
 {
 	if (Name == "Attack")
 	{
-		CBullet* pBullet = m_pScene->SpawnObject<CBullet>("Bullet");
-
-		pBullet->SetRelativePos(m_Muzzle->GetWorldPos());
-		pBullet->SetRelativeRotation(GetWorldRotation());
-		pBullet->SetCollisionProfile("PlayerAttack");
-
 		//CEngine::GetInst()->AddDebugLog("Player Attack");
 	}
 }
@@ -265,14 +244,6 @@ void CPlayer2D::Triple(float DeltaTime)
 
 	for (int i = 0; i < 3; ++i)
 	{
-		CBullet* pBullet = m_pScene->SpawnObject<CBullet>("Bullet");
-
-		pBullet->SetRelativePos(m_Muzzle->GetWorldPos());
-		pBullet->SetRelativeRotation(GetWorldRotation());
-		pBullet->SetRelativeRotationZ(Angle);
-		pBullet->SetCollisionProfile("PlayerAttack");
-
-		Angle += 30.f;
 	}
 }
 

@@ -1,6 +1,5 @@
 #include "Ghost.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
@@ -89,6 +88,7 @@ void CGhost::Animation2DNotify(const std::string& Name)
 	m_GhostAttack = false;
 
 	CEnemyAttack* pEnemyAttack = m_pScene->SpawnObject<CEnemyAttack>("CollisionEnemyAttack");
+	pEnemyAttack->SetDamage(m_Status->GetAttackDamage());
 	pEnemyAttack->SetWorldPos(GetWorldPos());
 	}
 }

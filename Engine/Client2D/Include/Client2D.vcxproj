@@ -192,7 +192,6 @@
     <ClCompile Include="Object\BossDieParticle.cpp" />
     <ClCompile Include="Object\BossTorchLight.cpp" />
     <ClCompile Include="Object\BossTresure.cpp" />
-    <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
     <ClCompile Include="Object\CollisionObject.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
@@ -284,6 +283,7 @@
     <ClCompile Include="UI\ItemInfoWidget.cpp" />
     <ClCompile Include="UI\LoadingUI.cpp" />
     <ClCompile Include="UI\MainHUDWidget.cpp" />
+    <ClCompile Include="UI\MiniMap.cpp" />
     <ClCompile Include="UI\PlayerUI.cpp" />
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp" />
     <ClCompile Include="UI\PlayerWorldWidget.cpp" />
@@ -329,7 +329,6 @@
     <ClInclude Include="Object\BossDieParticle.h" />
     <ClInclude Include="Object\BossTorchLight.h" />
     <ClInclude Include="Object\BossTresure.h" />
-    <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Cloud.h" />
     <ClInclude Include="Object\CollisionObject.h" />
     <ClInclude Include="Object\DoorEffect.h" />
@@ -417,6 +416,7 @@
     <ClInclude Include="UI\ItemInfoWidget.h" />
     <ClInclude Include="UI\LoadingUI.h" />
     <ClInclude Include="UI\MainHUDWidget.h" />
+    <ClInclude Include="UI\MiniMap.h" />
     <ClInclude Include="UI\PlayerUI.h" />
     <ClInclude Include="UI\PlayerWorldInfoWidget.h" />
     <ClInclude Include="UI\PlayerWorldWidget.h" />

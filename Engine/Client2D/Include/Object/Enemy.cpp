@@ -1,7 +1,6 @@
 
 #include "Enemy.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
@@ -21,7 +20,8 @@ CEnemy::CEnemy() :
 	m_State(Enemy_State::Idle),
 	m_WallCol(false),
 	m_StartGravity(false),
-	m_Status(nullptr)
+	m_Status(nullptr),
+	m_EnemyHit(0.f)
 {
 }
 
@@ -155,8 +155,16 @@ void CEnemy::Update(float DeltaTime)
 
 	m_EnemyInfoWidget->SetHPBar((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
 	
-
-
+	CMaterial* Material=m_Sprite->GetMaterial(0);
+	if (m_EnemyHit > 0.f)
+	{
+		Material->SetBaseColor(1.f, 0.f, 0.f, 1.f);
+		m_EnemyHit -= DeltaTime;
+	}
+	else
+	{
+		Material->SetBaseColor(1.f, 1.f, 1.f, 1.f);
+	}
 	//if (m_Weapon->IsAttack())
 	//{
 	//	return;
@@ -246,6 +254,7 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
+		m_EnemyHit = 0.3f;
 		int CriticalCheck = GetRandom(0, 100);
 		bool bCritical = false;
 		if (CGlobalValue::MainPlayer->GetStatus().GetCritical() > CriticalCheck)

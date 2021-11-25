@@ -199,10 +199,15 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->SetProfileChannelState("NextStage", Collision_Channel::Player,
         Collision_Interaction::Block);
 
+    CCollisionManager::GetInst()->SetProfileChannelState("Player", Collision_Channel::Item,
+        Collision_Interaction::Block);
+
+    CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Player,
+        Collision_Interaction::Block);
     //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
     //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
-    //CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
-    CSceneManager::GetInst()->SetSceneMode<CTestMainScene>();
+    CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
+    //CSceneManager::GetInst()->SetSceneMode<CTestMainScene>();
 
     CreateMouse();
 

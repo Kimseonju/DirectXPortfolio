@@ -5,7 +5,8 @@ DEFINITION_SINGLE(CSceneManager)
 
 CSceneManager::CSceneManager()  :
     m_pNextScene(nullptr),
-    m_pScene(nullptr)
+    m_pScene(nullptr),
+    m_SceneChange(true)
 {
 }
 
@@ -89,15 +90,18 @@ void CSceneManager::SetNextScene(CScene* Scene)
 
 bool CSceneManager::ChangeScene()
 {
-    if (m_pNextScene)
-    {
-        SAFE_DELETE(m_pScene);
+        if (m_pNextScene)
+        {
+            if (m_SceneChange)
+            {
+                SAFE_DELETE(m_pScene);
 
-        m_pScene = m_pNextScene;
-        m_pNextScene = nullptr;
+                m_pScene = m_pNextScene;
+                m_pNextScene = nullptr;
+                m_pScene->Start();
 
-        return true;
-    }
-
+                return true;
+            }
+        }
     return false;
 }

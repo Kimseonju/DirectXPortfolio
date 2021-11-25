@@ -46,7 +46,7 @@ bool CTorchLight::Init()
 	CMaterial* Material= m_SpriteBlend->GetMaterial(0);
 	
 	Material->AddTexture("torchEffect", TEXT("object/torch/torchEffect6.png"));
-	Material->SetBaseColor(227.f /255.f, 79.f / 255.f, 64.f / 255.f, 100.f / 255.f);
+	Material->SetBaseColor(227.f /255.f, 79.f / 255.f, 64.f / 255.f, 140.f / 255.f);
 	Material->SetTransparency(true);
 	
 	//Material->AddTexture("TorchLightt", TEXT("object/torch/torchEffect.png"));

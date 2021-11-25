@@ -1,7 +1,6 @@
 
 #include "EnemyAttack.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
@@ -12,7 +11,8 @@
 #include "Player.h"
 CEnemyAttack::CEnemyAttack() :
 	m_AttackTime(0.f),
-	m_AttackTimeMax(0.5f)
+	m_AttackTimeMax(0.5f),
+	m_Damage(1)
 {
 }
 
@@ -81,4 +81,12 @@ void CEnemyAttack::Render(float DeltaTime)
 CEnemyAttack* CEnemyAttack::Clone()
 {
 	return new CEnemyAttack(*this);
+}
+
+void CEnemyAttack::CollisionBegin(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		CGlobalValue::MainPlayer->EnemyHit(m_Damage);
+	}
 }

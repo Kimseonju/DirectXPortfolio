@@ -7,14 +7,6 @@ CThreadNavigation::CThreadNavigation()
 
 CThreadNavigation::~CThreadNavigation()
 {
-	SetLoop(false);
-
-	if (m_hExitEvent)
-	{
-		WaitForSingleObject(m_hExitEvent, INFINITE);
-		CloseHandle(m_hExitEvent);
-	}
-
 	/*while (!m_WorkQueue.Empty())
 	{
 		NavWorkInfo* Info = nullptr;

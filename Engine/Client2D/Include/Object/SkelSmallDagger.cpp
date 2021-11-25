@@ -1,7 +1,6 @@
 
 #include "SkelSmallDagger.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
@@ -84,6 +83,7 @@ void CSkelSmallDagger::Animation2DNotify(const std::string& Name)
 	if (Name == "Attack")
 	{
 		CEnemyAttack* pEnemyAttack = m_pScene->SpawnObject<CEnemyAttack>("CollisionEnemyAttack");
+		pEnemyAttack->SetDamage(m_Status->GetAttackDamage());
 		pEnemyAttack->SetWorldPos(GetWorldPos());
 	}
 }

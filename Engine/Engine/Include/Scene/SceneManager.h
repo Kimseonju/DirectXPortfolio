@@ -13,7 +13,11 @@ public:
     {
         return m_pScene;
     }
-
+    CScene* GetNextScene()  const
+    {
+        return m_pNextScene;
+    }
+    bool m_SceneChange;
 public:
     bool Init();
     bool Update(float DeltaTime);
@@ -37,7 +41,13 @@ public:
         return m_pNextScene->SetSceneMode<T>();
     }
 
-    
+    void SetChange(bool bChange)
+    {
+        if (m_pNextScene)
+        {
+            m_SceneChange = bChange;
+        }
+    }
     DECLARE_SINGLE(CSceneManager)
 };
 

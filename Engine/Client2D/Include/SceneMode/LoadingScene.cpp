@@ -16,7 +16,7 @@ CLoadingScene::~CLoadingScene()
 
 bool CLoadingScene::Init()
 {
-	CLoadingUI* Widget = m_pScene->GetViewport()->AddWindow<CLoadingUI>("Loading");
+	m_Widget = m_pScene->GetViewport()->AddWindow<CLoadingUI>("Loading");
 
 	// 로딩용 스레드를 생성한다.
 	m_Thread = CThreadManager::GetInst()->CreateThread<CLoadingThread>("LoadingThread");
@@ -25,4 +25,9 @@ bool CLoadingScene::Init()
 	m_Thread->Start();
 
 	return true;
+}
+
+void CLoadingScene::Update(float DeltaTime)
+{
+	m_Widget->SetPercent(m_Thread->GetPercent());
 }

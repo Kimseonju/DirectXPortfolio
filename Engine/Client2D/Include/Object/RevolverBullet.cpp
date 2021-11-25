@@ -34,15 +34,14 @@ bool CRevolverBullet::Init()
     m_Sprite2 = CreateSceneComponent<CSpriteComponent>("Sprite2");
 
     SetRootComponent(m_Sprite);
+    m_Sprite->AddChild(m_ColliderBox2D);
+    m_Sprite->AddChild(m_Sprite2);
 
     m_Sprite->SetRelativeScale(0.f, 0.f, 0.f);
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-    m_Sprite->AddChild(m_ColliderBox2D);
 
-
-    m_Sprite->AddChild(m_Sprite2);
-    m_Sprite2->SetRelativeScale(35.f, 7.f, 1.f);
     m_Sprite2->SetPivot(0.5f, 0.5f, 0.f);
+    m_Sprite2->SetRelativeScale(35.f, 7.f, 1.f);
     m_Sprite2->CreateAnimation2D<CAnimation2D>();
     CAnimation2D* Animation2D = m_Sprite2->GetAnimation2D();
     Animation2D->AddAnimationSequence2D("RevolverBullet", false);
@@ -50,9 +49,6 @@ bool CRevolverBullet::Init()
 
     m_ColliderBox2D->SetExtent(3.f, 6.f);
     m_ColliderBox2D->SetCollisionProfile("PlayerAttack");
-
-    //m_Body->SetCollisionProfile("Monster");
-
 
     m_ColliderBox2D->AddCollisionCallbackFunction<CRevolverBullet>(Collision_State::Begin, this,
         &CRevolverBullet::CollisionBegin);

@@ -43,6 +43,7 @@ CGameObject* CScene::FindObject(const std::string& Name)
 
 void CScene::Start()
 {
+    m_pSceneMode->Start();
     m_StartScene = true;
 
     auto    iter = m_ObjList.begin();

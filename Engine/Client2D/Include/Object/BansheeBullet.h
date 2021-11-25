@@ -20,6 +20,7 @@ protected:
     CSharedPtr<CColliderBox2D> m_ColliderBox2D;
     class CAnimation2D* m_Animation2D;
     float       m_Distance;
+    int         m_Damage;
 public:
 
 public:

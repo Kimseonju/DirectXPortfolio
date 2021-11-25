@@ -4,6 +4,10 @@
 #include <Scene/SceneResource.h>
 #include <Resource/Texture.h>
 #include "../ObjectStatusManager.h"
+#include "../Stage/StageManager.h"
+#include "../Stage/Stage.h"
+#include "../UI/UIManager.h"
+#include "../UI/Inventory.h"
 CItem::CItem() :
 	m_ItemImage(nullptr),
 	m_Type(ITEM_TYPE::End),
@@ -344,7 +348,12 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
-		StateNoMapItem();
+		if (CUIManager::GetInst()->GetInventory()->AddInventoryItem(this))
+		{
+			StateNoMapItem();
+			CStage* CurStage = CStageManager::GetInst()->GetCurStage();
+			CurStage->DeleteObject(this);
+		}
 	}
 }
 
@@ -424,5 +433,6 @@ void CItem::StateNoMapItem()
 	m_MapDrop = false;
 	m_Body->SetGravity(false);
 	m_Collider2D->Enable(false);
+	SetWorldPos(0.f, 0.f, 0.f);
 	Enable(false);
 }

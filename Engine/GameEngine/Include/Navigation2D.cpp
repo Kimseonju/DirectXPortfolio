@@ -60,7 +60,7 @@ bool CNavigation2D::FindPath(const Vector3& Start, const Vector3& Goal,
 
 		// 주변 8방향 노드를 얻어온다.
 		// 아래 함수는 길을 찾았을 경우 경로를 만들어주고 true를 반환한다.
-		if (FindNode(StartInfo, GoalInfo, Goal, vecPath))
+		if (FindNode(Node, GoalInfo, Goal, vecPath))
 			break;
 
 		// 아직 길을 찾아야 한다면 열린목록에 들어가 있는 노드들을 정렬해주도록 한다.
@@ -75,7 +75,7 @@ bool CNavigation2D::FindPath(const Vector3& Start, const Vector3& Goal,
 		m_InfoManager->vecUse[i]->Clear();
 	}
 
-	return true;
+	return !vecPath.empty();
 }
 
 bool CNavigation2D::FindNode(NavInfo* Node, NavInfo* GoalNode,
@@ -214,7 +214,6 @@ bool CNavigation2D::FindNode(NavInfo* Node, NavInfo* GoalNode,
 		}
 
 		// 도착했는지 판단하고 아니라면 열린목록을 지정해준다.
-
 		if (Neighbor[i] == GoalNode)
 		{
 			// 기존 경로를 제거한다.

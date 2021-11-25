@@ -1,7 +1,6 @@
 
 #include "Player.h"
 #include "Input.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 #include "Engine.h"
@@ -160,6 +159,7 @@ bool CPlayer::Init()
 	m_BodyFSM.CreateState("Move", this, &CPlayer::BodyMoveStay, &CPlayer::BodyMoveStart);
 	m_BodyFSM.CreateState("Jump", this, &CPlayer::BodyJumpStay, &CPlayer::BodyJumpStart);
 	m_BodyFSM.ChangeState("Idle");
+	SetGravity(true);
 	return true;
 }
 
@@ -241,6 +241,15 @@ void CPlayer::Update(float DeltaTime)
 	else
 	{
 		m_DustCount = 0.f;
+	}
+	CMaterial* Material = m_Sprite->GetMaterial(0);
+	if (m_Status.GetGracePeriod())
+	{
+		Material->SetBaseColor(1.f, 1.f, 1.f, 0.5f);
+	}
+	else
+	{
+		Material->SetBaseColor(1.f, 1.f, 1.f, 1.f);
 	}
 	AddRelativePos(m_Body->GetMove());       
 }
@@ -525,17 +534,20 @@ int CPlayer::GetAttackDamage(bool Critical)
 		return GetRandom(Damage, DamageMax);
 	}
 }
+void CPlayer::EnemyHit(int Damage)
+{
+	if (!m_Status.GetGracePeriod())
+	{
+		m_Status.SubHP(Damage);
+		CUIManager::GetInst()->GetPlayerUI()->Hit();
+	}
+}
 void CPlayer::AnimationFrameEnd(const std::string& Name)
 {
 }
 
 void CPlayer::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::EnemyAttack)
-	{
-
-		CUIManager::GetInst()->GetPlayerUI()->Hit();
-	}
 }
 
 void CPlayer::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)

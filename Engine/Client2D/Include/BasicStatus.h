@@ -64,6 +64,9 @@ public:
 	{
 		m_Magazine--;
 	}
+	virtual void SubHP(int HP);
+
+
 	void SetHP(int HP);
 	void SetHPMax(int HP);
 	void SetDash(int Dash);

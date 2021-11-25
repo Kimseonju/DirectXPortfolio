@@ -6,8 +6,10 @@
 #include "Weapon.h"
 #include "ObjectDieEffectObject.h"
 #include "BansheeBulletFX.h"
+#include "Player.h"
 CBansheeBullet::CBansheeBullet():
-    m_Distance(200.f)
+    m_Distance(200.f),
+    m_Damage(5)
 {
 }
 
@@ -35,24 +37,22 @@ bool CBansheeBullet::Init()
     m_Sprite2 = CreateSceneComponent<CSpriteComponent>("Sprite2");
 
     SetRootComponent(m_Sprite);
+    m_Sprite->AddChild(m_ColliderBox2D);
+    m_Sprite->AddChild(m_Sprite2);
 
     m_Sprite->SetRelativeScale(0.f, 0.f, 1.f);
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-    m_Sprite->AddChild(m_ColliderBox2D);
 
-
-    m_Sprite->AddChild(m_Sprite2);
     m_Sprite2->SetRelativeScale(13.f, 16.f, 1.f);
     m_Sprite2->SetPivot(0.5f, 0.5f, 0.f);
+
     m_Sprite2->CreateAnimation2D<CAnimation2D>();
     m_Animation2D = m_Sprite2->GetAnimation2D();
     m_Animation2D->AddAnimationSequence2D("BansheeBullet");
 
     m_ColliderBox2D->SetExtent(4.f, 4.f);
     m_ColliderBox2D->SetCollisionProfile("EnemyAttack");
-
-    //m_Body->SetCollisionProfile("Monster");
-
+    
 
     m_ColliderBox2D->AddCollisionCallbackFunction<CBansheeBullet>(Collision_State::Begin, this,
         &CBansheeBullet::CollisionBegin);
@@ -104,6 +104,9 @@ void CBansheeBullet::CollisionBegin(const HitResult& result, CCollider* Collider
         CGameObject* FX = m_pScene->SpawnObject<CBansheeBulletFX>("BansheeBulletFX");
         FX->SetWorldPos(GetWorldPos());
         Active(false);
+
+
+        CGlobalValue::MainPlayer->EnemyHit(m_Damage);
     }
 
 }

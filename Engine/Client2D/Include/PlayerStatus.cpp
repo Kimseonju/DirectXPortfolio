@@ -1,8 +1,8 @@
 #include "PlayerStatus.h"
-
 CPlayerStatus::CPlayerStatus():
 	m_DashCount(0),
-	m_DashCountMax(2.f)
+	m_DashCountMax(2.f),
+	m_GracePeriod(0.f)
 {
 }
 
@@ -32,6 +32,10 @@ void CPlayerStatus::Init()
 
 void CPlayerStatus::Update(float DeltaTime)
 {
+	if (m_GracePeriod > 0.f)
+	{
+		m_GracePeriod -= DeltaTime;
+	}
 	if (m_Dash < m_DashMax)
 	{
 		m_DashCount += DeltaTime;
@@ -41,4 +45,14 @@ void CPlayerStatus::Update(float DeltaTime)
 			m_Dash++;
 		}
 	}
+}
+
+void CPlayerStatus::SubHP(int HP)
+{
+	m_GracePeriod = 0.5f;
+	m_HP -= HP;
+	if (m_HP < 0)
+		m_HP = 0;
+
+	
 }

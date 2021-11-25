@@ -195,12 +195,7 @@ void CEngine::RunNoLoop()
 
 void CEngine::Logic()
 {
-	if (!m_Start)
-	{
-		m_Start = true;
-
-		//CNavigationManager::GetInst()->CreateNavigation();
-	}
+	
 
 	m_pTimer->Update();
 
@@ -214,9 +209,14 @@ void CEngine::Logic()
 		sprintf_s(FPSLog, "FPS : %.5f", m_pTimer->GetFPS());
 		m_DebugLogWindow->AddLog(FPSLog);
 	}
-
 	float	DeltaTime = m_pTimer->GetDeltaTime() * m_TimeScale;
 	m_AccTime += DeltaTime;
+	if (!m_Start)
+	{
+		m_AccTime = 0.f;
+		DeltaTime = 0.f;
+		m_Start = true;
+	}
 
 	m_GlobalCBuffer->SetAccTime(m_AccTime);
 	m_GlobalCBuffer->SetDeltaTime(DeltaTime);

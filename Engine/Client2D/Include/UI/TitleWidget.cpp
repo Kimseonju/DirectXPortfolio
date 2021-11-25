@@ -5,6 +5,7 @@
 #include <Device.h>
 #include "../SceneMode/TestMainScene.h"
 #include "Scene/SceneManager.h"
+#include "../SceneMode/StartScene.h"
 CTitleWidget::CTitleWidget():
 	m_Cloud(nullptr),
 	m_BackCloud(nullptr)
@@ -107,9 +108,7 @@ CTitleWidget* CTitleWidget::Clone()
 
 void CTitleWidget::StartButtonClick()
 {
-	CSceneManager::GetInst()->CreateNextScene();
-
-	CSceneManager::GetInst()->SetSceneMode<CTestMainScene>(false);
+	CSceneManager::GetInst()->SetChange(true);
 }
 
 void CTitleWidget::ExitButtonClick()

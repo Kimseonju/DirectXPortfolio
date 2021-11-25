@@ -20,7 +20,7 @@ private:
 	bool m_Attacking;
 	class CBelial* m_Belial;
 	bool m_AttackMove;
-	class CAnimation2D_FSM* m_Animation2D;
+	class CAnimation2D* m_Animation2D;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -38,11 +38,8 @@ public:
 	void SetHorizontalReverse2DEnable(bool Enable);
 	CMaterial* GetMaterial(int Index=0);
 	void StopAnimation();
-public:
-	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
 
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
-	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
 };
 

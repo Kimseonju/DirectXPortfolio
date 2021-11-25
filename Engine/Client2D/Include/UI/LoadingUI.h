@@ -16,8 +16,17 @@ protected:
 
 private:
     CSharedPtr<CProgressBar>    m_LoadingBar;
+    CSharedPtr<CImage>    m_LoadingImage0;
+    CSharedPtr<CImage>    m_LoadingImage1;
+    CSharedPtr<CImage>    m_LoadingImage2;
+    int m_ImageNum;
+    float m_ImageCount;
     float   m_LoadingPercent;
-
+public:
+    void SetPercent(float Percent)
+    {
+        m_LoadingBar->SetPercent(Percent);
+    }
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);

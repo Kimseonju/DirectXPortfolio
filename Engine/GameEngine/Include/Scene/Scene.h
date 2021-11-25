@@ -119,8 +119,8 @@ public:
 
         m_pSceneMode->m_pScene = this;
 
-        if (!m_pSceneMode->Init())
-            return false;
+        //if (!m_pSceneMode->Init())
+        //    return false;
 
         return true;
     }

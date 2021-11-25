@@ -138,7 +138,8 @@ public:
 	float GetAttackSpeed();
 	float GetReloadSpeed();
 	int GetAttackDamage(bool Critical);
-
+public:
+	void EnemyHit(int Damage);
 public:
 	void AnimationFrameEnd(const std::string& Name);
 	void CollisionBegin(const HitResult& result, CCollider* Collider);

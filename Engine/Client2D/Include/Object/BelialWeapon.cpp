@@ -200,6 +200,10 @@ void CBelialWeapon::CollisionBegin(const HitResult& result, CCollider* Collider)
 		SpriteMtrl->AddTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 		SpriteMtrl->SetTexture("BelialWeapon", TEXT("boss/Belial/Sword/default.png"));
 	}
+	else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		CGlobalValue::MainPlayer->EnemyHit(4);
+	}
 }
 
 void CBelialWeapon::CollisionMiddle(const HitResult& result, CCollider* Collider)

@@ -30,6 +30,7 @@ public:
     virtual CBelialLaserHead* Clone();
 
 public:
+    void LaserCollisionSetting();
     void SetHorizontalReverse2DEnable(bool Enable);
 public:
     void CollisionBegin(const HitResult& result, CCollider* Collider);

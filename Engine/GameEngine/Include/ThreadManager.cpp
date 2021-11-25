@@ -14,6 +14,7 @@ CThreadManager::~CThreadManager()
 
 		for (; iter != iterEnd; ++iter)
 		{
+			iter->second->DestroyThread();
 			SAFE_DELETE(iter->second);
 		}
 

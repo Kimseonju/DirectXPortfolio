@@ -24,7 +24,12 @@ protected:
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	float m_AttackTimeMax;
 	float m_AttackTime;
-
+	int   m_Damage;
+public:
+	void SetDamage(int Damage)
+	{
+		m_Damage = Damage;
+	}
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -33,4 +38,5 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CEnemyAttack* Clone();
+	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
 };

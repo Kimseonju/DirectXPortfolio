@@ -2,19 +2,17 @@
 
 #include "GameEngine.h"
 
-
 class CThread
 {
 	friend class CThreadManager;
-
 
 protected:
 	CThread();
 	virtual ~CThread() = 0;
 
 private:
-	HANDLE  m_hThread;
-	HANDLE  m_hStart;
+	HANDLE	m_hThread;
+	HANDLE	m_hStart;
 	bool	m_Loop;
 
 public:
@@ -28,6 +26,8 @@ public:
 	{
 		m_Loop = Loop;
 	}
+
+	void DestroyThread();
 
 public:
 	static unsigned int __stdcall ThreadFunc(void* Arg);

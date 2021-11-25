@@ -16,7 +16,6 @@ protected:
 
 protected:
     CSharedPtr<CSpriteComponent> m_Sprite;
-    CSharedPtr<CColliderBox2D> m_Collider2D;
     class CAnimation2D* m_Animation2D;
 public:
 
@@ -31,8 +30,5 @@ public:
 
 public:
     void SetHorizontalReverse2DEnable(bool Enable);
-public:
-    void CollisionBegin(const HitResult& result, CCollider* Collider);
-    void CollisionEnd(const HitResult& result, CCollider* Collider);
 };
 

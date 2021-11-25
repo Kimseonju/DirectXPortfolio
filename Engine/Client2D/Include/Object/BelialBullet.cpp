@@ -4,6 +4,7 @@
 #include "Scene/Scene.h"
 #include "../GlobalValue.h"
 #include "BelialBulletEffect.h"
+#include "Player.h"
 CBelialBullet::CBelialBullet() :
     m_Distance(500.f)   
 {
@@ -91,6 +92,7 @@ void CBelialBullet::CollisionBegin(const HitResult& result, CCollider* Collider)
         //여기에효과
         CGameObject* Obj=m_pScene->SpawnObject<CBelialBulletEffect>("BulletFX");
         Obj->SetWorldPos(GetWorldPos());
+        CGlobalValue::MainPlayer->EnemyHit(4);
         Active(false);
     }
     //if(result.DestObject==CGl)

@@ -54,11 +54,7 @@ void CNavigationManager::SetTileInfo()
 	//	Name += (i + 1);
 	//
 	//	CThreadNavigation2D* Thread = CThreadManager::GetInst()->CreateThread<CThreadNavigation2D>(Name);
-	//	if (!Thread)
-	//	{
-	//		//Áßº¹(ObjectTileµé¾î¿È)
-	//		return;
-	//	}
+	//
 	//	Thread->SetNavigation(m_Navigation);
 	//	Thread->CreateNavigationInfo(TileMap);
 	//
@@ -90,6 +86,7 @@ bool CNavigationManager::FindPath(const Vector3& Start, const Vector3& Goal,
 
 	return true;
 }
+
 void CNavigationManager::Update(float DeltaTime)
 {
 	while (!m_NavMsgQueue.Empty())

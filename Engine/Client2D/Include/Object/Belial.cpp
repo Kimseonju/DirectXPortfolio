@@ -20,7 +20,7 @@
 #include "../ObjectStatusManager.h"
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
-	m_AttackTimerMax(5.f),
+	m_AttackTimerMax(3.f),
 	m_Attacking(false),
 	m_Pattern(Belial_Pattern::End),
 	m_LeftHand(nullptr),
@@ -38,7 +38,8 @@ CBelial::CBelial() :
 	m_PatternStop(false),
 	m_EffectEnd(false),
 	m_EffectEndTimer(0.f),
-	m_EffectEndStart(false)
+	m_EffectEndStart(false),
+	m_SpawnEnd(false)
 	
 {
 	SetStatus("Belial");
@@ -92,15 +93,16 @@ bool CBelial::Init()
 	m_RootComponent->AddChild(m_Collider2D);
 	m_RootComponent->AddChild(m_BackSprite);
 	m_RootComponent->AddChild(m_BackParticle);
-	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Sprite->CreateAnimation2D<CAnimation2D>();
 	m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 	m_Sprite->SetPivot(0.6f, 0.3f, 0.f);
 
 	m_Collider2D->SetPivot(0.6f, 0.3f, 0.f);
 
-	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
-	m_Animation2D->SetIdleAnimation2D("BelialHead_Idle");
-	m_Animation2D->SetAttackAnimation2D("BelialHead_Attack", false);
+	m_Animation2D = (CAnimation2D*)m_Sprite->GetAnimation2D();
+	m_Animation2D->AddAnimationSequence2D("BelialHead_Idle");
+	m_Animation2D->AddAnimationSequence2D("BelialHead_Attack", false);
+	m_Animation2D->SetFrameEndFunction<CBelial>(this, &CBelial::AnimationFrameEnd);
 	CMaterial* Material = m_Sprite->GetMaterial(0);
 	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
 	Material->SetOpacity(1.f);
@@ -110,7 +112,7 @@ bool CBelial::Init()
 	m_BackSprite->CreateAnimation2D < CAnimation2D_FSM>();
 	m_BackSprite->SetRender2DType(Render_Type_2D::RT2D_Back1);
 	m_BackAnimation2D = (CAnimation2D_FSM*)m_BackSprite->GetAnimation2D();
-	m_BackAnimation2D->SetIdleAnimation2D("Belial_Circle");
+	m_BackAnimation2D->AddAnimationSequence2D("Belial_Circle");
 	Material = m_BackSprite->GetMaterial(0);
 	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
 	Material->SetOpacity(1.f);
@@ -178,7 +180,8 @@ void CBelial::Update(float DeltaTime)
 	}
 	else
 	{
-		PatternUpdate(DeltaTime);
+		if(m_SpawnEnd)
+			PatternUpdate(DeltaTime);
 	}
 	
 }
@@ -252,19 +255,19 @@ void CBelial::AttackSword(float DeltaTime)
 
 void CBelial::AttackBullet(float DeltaTime)
 {
-	m_Animation2D->ChangeAttackAnimation2D();
+	m_Animation2D->ChangeAnimation("BelialHead_Attack");
 	m_Sprite->SetWorldScale(70.f, 128.f, 0.f);
 	m_PatternTimer += DeltaTime;
 	if (m_PatternTimer > 5.f)
 	{
 		m_PatternTimer = 0.f;
 		m_Attacking = false;
-		m_Animation2D->ChangeIdleAnimation2D();
+		m_Animation2D->ChangeAnimation("BelialHead_Idle");
 		m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 		m_BulletAngle = 0.f;
 		return;
 	}
-	if (m_Animation2D->GetFrameEnd())
+	else if (m_Animation2D->GetFrameEnd())
 	{
 		m_BulletFireCount += DeltaTime;
 		if (m_BulletFireCount > 0.3f)
@@ -290,8 +293,16 @@ void CBelial::AttackLaser(float DeltaTime)
 	{
 		m_RightHand->Attack();
 	}
-	m_Attacking = false;
 	m_PatternTimer = 0.f;
+	m_Attacking = false;
+	m_LaserCount++;
+	m_AttackTimer = 2.f;
+	if (m_LaserCount > 2)
+	{
+		m_LaserCount = 0;
+		m_PatternTimer = 0.f;
+		m_AttackTimer = 0.f;
+	}
 }
 
 void CBelial::EffectEndUpdate(float DeltaTime)
@@ -326,6 +337,7 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 		Camera->CameraCurrentMoveStop();
 		Camera->CameraCurrentShakeStop();
+		m_SpawnEnd = true;
 		Active(false);
 	}
 }
@@ -417,7 +429,10 @@ void CBelial::PatternUpdate(float DeltaTime)
 	{
 		m_AttackTimer -= m_AttackTimerMax;
 		m_Attacking = true;
-		m_Pattern = (Belial_Pattern)GetRandom(0, (int)Belial_Pattern::End - 1);
+		if (m_LaserCount != 0)
+			m_Pattern = Belial_Pattern::Laser;
+		else
+			m_Pattern = (Belial_Pattern)GetRandom(0, (int)Belial_Pattern::End - 1);
 		//m_Pattern = Belial_Pattern::Sword;
 		m_AttackTimer = 0.f;
 		m_SwordSpawn = false;
@@ -445,6 +460,7 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 
 void CBelial::AnimationFrameEnd(const std::string& Name)
 {
+	int a = 0;
 }
 
 void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)

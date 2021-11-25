@@ -28,6 +28,8 @@ bool CStageMap::Init()
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
 	int Size = CStageManager::GetInst()->GetMapSize();
 
+
+
 	SetZOrder(UI_ZOrder::MapUI);
 	for (int x= 0; x < Size; ++x)
 	{
@@ -42,6 +44,7 @@ bool CStageMap::Init()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
 			Base->SetCollision(false);
+			Base->SetZOrder(1);
 			switch (Info[x][y].StageType)
 			{
 			case StageType::Base:
@@ -70,6 +73,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Up])
@@ -83,6 +87,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Right])
@@ -98,6 +103,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Down])
@@ -112,6 +118,7 @@ bool CStageMap::Init()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 		}
@@ -129,6 +136,7 @@ bool CStageMap::Init()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
 			Base->SetCollision(false);
+			Base->SetZOrder(1);
 			switch (Info[x][y].StageType)
 			{
 			case StageType::Base:
@@ -210,12 +218,17 @@ bool CStageMap::Init()
 	m_PosX = CreateWidget<CText>("PosX");
 	m_PosX->SetPos(100.f, 100.f);
 	m_PosX->SetCollision(false);
+	m_PosX->SetZOrder(1);
+
 	m_PosY = CreateWidget<CText>("PosY");
 	m_PosY->SetPos(200.f, 100.f);
 	m_PosY->SetCollision(false);
+	m_PosY->SetZOrder(1);
+
 	m_Name1 = CreateWidget<CText>("Name");
 	m_Name1->SetPos(300.f, 100.f);
 	m_Name1->SetCollision(false);
+	m_Name1->SetZOrder(1);
 
 
 	m_MapBase1_0 = CreateWidget<CImage>("MapBase1_0");
@@ -224,6 +237,7 @@ bool CStageMap::Init()
 	m_MapBase1_0->SetTexture("MapBase1_0", TEXT("UI/map/MapBase1_0.png"));
 	m_MapBase1_0->SetSize(320.f*4, 32.f*4);
 	m_MapBase1_0->SetCollision(false);
+	m_MapBase1_0->SetZOrder(1);
 
 	m_MapBase1_1 = CreateWidget<CImage>("MapBase1_1");
 			   
@@ -232,10 +246,16 @@ bool CStageMap::Init()
 	m_MapBase1_1->SetTexture("MapBase1_1", TEXT("UI/map/MapBase1_1.png"));
 	m_MapBase1_1->SetSize(260.f * 4, 132.f * 4);
 	m_MapBase1_1->SetCollision(false);
+	m_MapBase1_1->SetZOrder(1);
 
 
 
-
+	CImage* Base = CreateWidget<CImage>("Base11");
+	Base->SetPos(0.f, 0.f);
+	Base->SetColorTint(0.f, 0.f, 0.f, 0.3f);
+	Base->SetSize(1280.f, 720.f);
+	Base->SetCollision(false);
+	Base->SetZOrder(0);
 
 	return true;
 }
@@ -294,6 +314,7 @@ void CStageMap::StageUpdate()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f * 4.f, 24.f * 4.f);
 			Base->SetCollision(false);
+			Base->SetZOrder(1);
 			switch (Info[x][y].StageType)
 			{
 			case StageType::Base:
@@ -322,6 +343,7 @@ void CStageMap::StageUpdate()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Up])
@@ -335,6 +357,7 @@ void CStageMap::StageUpdate()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Right])
@@ -350,6 +373,7 @@ void CStageMap::StageUpdate()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f * 4.f, 10.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 			if (!Info[x][y].Wall[(int)WallDir::Down])
@@ -364,6 +388,7 @@ void CStageMap::StageUpdate()
 				Arrow->SetTexture("Room", TEXT("object/door/openEffect.png"));
 				Arrow->SetSize(10.f, 10.f * 4.f);
 				Arrow->SetCollision(false);
+				Arrow->SetZOrder(1);
 				m_MapArrow.push_back(Arrow);
 			}
 		}

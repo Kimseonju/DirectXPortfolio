@@ -22,8 +22,8 @@ private:
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CEngineFSM<CEnemy> m_EnemyFSM;
 	CBasicStatus* m_Status;
-	class CAnimation2D_FSM* m_Animation2D;
-	class CAnimation2D_FSM* m_BackAnimation2D;
+	class CAnimation2D* m_Animation2D;
+	class CAnimation2D* m_BackAnimation2D;
 	bool m_Attacking;
 	Belial_Pattern m_Pattern;
 	float m_PatternTimer;
@@ -43,12 +43,16 @@ private:
 	float m_HandAlpha;
 	bool  m_AlphaUpdate;
 	bool m_PatternStop;
+
+	int m_LaserCount;
 	
 	//기본위치
 	Vector3 m_BasicWorldPos;
 	bool m_EffectEndStart;
 	bool m_EffectEnd;
 	float m_EffectEndTimer;
+
+	bool m_SpawnEnd;
 public:
 	void EffectEnd()
 	{

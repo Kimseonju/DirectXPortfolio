@@ -111,14 +111,10 @@ void CAnimation2D::Update(float DeltaTime)
 
 			if (m_CurrentSequence->Loop)
 				m_Frame = 0;
-
 			else
 			{
-				m_Frame = (int)m_CurrentSequence->Sequence->m_vecAnimFrame.size() - 1;
-				if (!m_FrameEndFunction)
-				{
-					m_End = true;
-				}
+				m_Frame = (int)m_CurrentSequence->Sequence->m_vecAnimFrame.size()-1;
+				m_End = true;
 			}
 				
 
@@ -286,6 +282,8 @@ void CAnimation2D::ChangeAnimation(const std::string& Name)
 	Sequence2DInfo* pInfo = FindSequence(Name);
 
 	if (!pInfo)
+		return;
+	if (m_CurrentSequence == pInfo)
 		return;
 
 

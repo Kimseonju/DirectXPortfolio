@@ -45,7 +45,6 @@ void CThreadNavigation2D::Run()
 
 	m_Navigation->FindPath(Info.Start, Info.Goal, m_vecResult);
 
-	//Info.CallbackComponent->Nav
 	CNavigationManager::GetInst()->AddMessage(Info.CallbackComponent,
 		m_vecResult);
 }

@@ -43,11 +43,11 @@ bool CMetalBoomerangBullet::Init()
     m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 
     SetRootComponent(m_Sprite);
+    m_Sprite->AddChild(m_Collider2DCircle);
 
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-    m_Sprite->AddChild(m_Collider2DCircle);
-    m_Sprite->CreateAnimation2D<CAnimation2D>();
     m_Sprite->SetRelativeScale(37.f, 37.f, 0.f);
+    m_Sprite->CreateAnimation2D<CAnimation2D>();
     CAnimation2D* Animation2D = m_Sprite->GetAnimation2D();
     Animation2D->AddAnimationSequence2D("MetalBoomerangBullet");
     m_Collider2DCircle->SetRadius(sqrtf(18.f*18.f));
@@ -66,7 +66,6 @@ void CMetalBoomerangBullet::Update(float DeltaTime)
 
     if (m_Comeback)
     {
-
         float Force = m_Force * DeltaTime;
         m_Force -= 500.f * DeltaTime;
         AddRelativePos(GetAxis(AXIS_Y) * Force);
@@ -149,22 +148,6 @@ void CMetalBoomerangBullet::CollisionBegin(const HitResult& result, CCollider* C
         }
     }
 
-    //if(result.DestObject==CGl)
-    //Active(false);
-    //
-    //m_Collision = true;
-
-    // 이펙트를 생성한다.
-    //CFlameEffect* pParticle = m_pScene->SpawnObject<CFlameEffect>("FlameEffect",
-    //    GetWorldPos());
-    //
-    //pParticle->SetRelativePos(result.DestObject->GetWorldPos());
-    //
-    //CParticleSystemComponent* ParticleCom = (CParticleSystemComponent*)pParticle->FindSceneComponent("Particle");
-
-    //ParticleCom->SetMoveDir(-1.f, 0.f, 0.f);
-
-    // 이펙트 사운드를 생성한다.
 }
 
 void CMetalBoomerangBullet::CollisionEnd(const HitResult& result, CCollider* Collider)

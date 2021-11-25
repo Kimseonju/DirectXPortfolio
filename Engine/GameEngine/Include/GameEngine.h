@@ -447,7 +447,15 @@ struct TileInfo
     Vector2	Pos;
     float Empty;
 };
-
+struct MiniMapInfo
+{
+    Matrix	matWVP;
+    Vector4	Color;
+    Vector4	EmvColor;
+    float	Opacity;
+    Vector2	Pos;
+    float Empty;
+};
 enum class Nav_Insert_Type
 {
     None,

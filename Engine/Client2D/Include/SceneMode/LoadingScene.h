@@ -10,8 +10,10 @@ protected:
 	virtual ~CLoadingScene();
 
 private:
+	class CLoadingUI* m_Widget;
 	class CLoadingThread* m_Thread;
 public:
 	virtual bool Init();
+	virtual void Update(float DeltaTime);
 };
 

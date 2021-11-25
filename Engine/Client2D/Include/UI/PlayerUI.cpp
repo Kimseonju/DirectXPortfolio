@@ -231,9 +231,13 @@ void CPlayerUI::SetHPBar(float Percent)
 	{
 		m_HPLifeWave->SetSize(16.f, 40.f);
 	}
-	else
+	else if (LifeWave < 0.2f)
 	{
 		m_HPLifeWave->SetSize(16.f*(LifeWave*5.f), 40.f);
+	}
+	if (LifeWave >= 0.8f)
+	{
+		m_HPLifeWave->SetSize(16.f * ((1.f-LifeWave) * 5.f), 40.f);
 	}
 }
 

@@ -6,6 +6,7 @@
 #include "Weapon.h"
 #include "ObjectDieEffectObject.h"
 #include "Giant_RedBulletFX.h"
+#include "Player.h"
 CGiant_RedBullet::CGiant_RedBullet()
 
 {
@@ -35,13 +36,13 @@ bool CGiant_RedBullet::Init()
     m_Sprite2 = CreateSceneComponent<CSpriteComponent>("Sprite2");
 
     SetRootComponent(m_Sprite);
+    m_Sprite->AddChild(m_Sprite2);
 
     m_Sprite->SetRelativeScale(0.f, 0.f, 0.f);
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
     m_Sprite->AddChild(m_ColliderBox2D);
 
 
-    m_Sprite->AddChild(m_Sprite2);
     m_Sprite2->SetRelativeScale(14.f, 14.f, 1.f);
     m_Sprite2->SetPivot(0.5f, 0.5f, 0.f);
     m_Sprite2->CreateAnimation2D<CAnimation2D>();
@@ -50,9 +51,6 @@ bool CGiant_RedBullet::Init()
 
     m_ColliderBox2D->SetExtent(5.f, 5.f);
     m_ColliderBox2D->SetCollisionProfile("EnemyAttack");
-
-    //m_Body->SetCollisionProfile("Monster");
-
 
     m_ColliderBox2D->AddCollisionCallbackFunction<CGiant_RedBullet>(Collision_State::Begin, this,
         &CGiant_RedBullet::CollisionBegin);
@@ -99,6 +97,13 @@ void CGiant_RedBullet::CollisionBegin(const HitResult& result, CCollider* Collid
     else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
     {
         //플레이어타격!
+        CGameObject* FX = m_pScene->SpawnObject<CGiant_RedBulletFX>("Giant_RedBulletFX");
+        FX->SetWorldPos(GetWorldPos());
+        Enable(false);
+        m_ColliderBox2D->Enable(false);
+        m_Sprite2->Enable(false);
+
+        CGlobalValue::MainPlayer->EnemyHit(4);
 
     }
 

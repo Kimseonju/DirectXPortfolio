@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Navigation.h"
+
 enum Neighbor_Dir
 {
 	ND_Top,
@@ -12,7 +14,6 @@ enum Neighbor_Dir
 	ND_LeftTop,
 	ND_End
 };
-
 
 class CNavigation2D :
 	public CNavigation
@@ -53,6 +54,5 @@ private:
 
 private:
 	static bool SortOpenList(NavInfo* Src, NavInfo* Dest);
-
 };
 

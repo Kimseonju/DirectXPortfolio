@@ -29,16 +29,17 @@ bool CBelialLaserHead::Init()
     CGameObject::Init();
 
     m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
+    m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default2);
     m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 
     SetRootComponent(m_Sprite);
+    m_Sprite->AddChild(m_Collider2D);
     m_Sprite->CreateAnimation2D<CAnimation2D>();
     m_Animation2D = m_Sprite->GetAnimation2D();
     m_Animation2D->AddAnimationSequence2D("Belial_LaserHead", false);
     m_Sprite->SetRelativeScale(27.f, 44.f, 1.f);
     m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
-    m_Sprite->AddChild(m_Collider2D);
 
     m_Collider2D->SetExtent(13.f, 22.f);
     m_Collider2D->SetCollisionProfile("EnemyAttack");
@@ -77,6 +78,19 @@ void CBelialLaserHead::Render(float DeltaTime)
 CBelialLaserHead* CBelialLaserHead::Clone()
 {
     return new CBelialLaserHead(*this);
+}
+
+void CBelialLaserHead::LaserCollisionSetting()
+{
+    if (m_Sprite->GetHorizontalReverse2DEnable())
+    {
+        m_Collider2D->AddWorldPos(-224.f, 0.f, 0.f);
+    }
+    else
+    {
+        m_Collider2D->AddWorldPos(224.f, 0.f, 0.f);
+    }
+    m_Collider2D->SetExtent(224.f, 22.f);
 }
 
 void CBelialLaserHead::SetHorizontalReverse2DEnable(bool Enable)

@@ -5,6 +5,7 @@
 #include "../GlobalValue.h"
 #include "Weapon.h"
 #include "ObjectDieEffectObject.h"
+#include "Player.h"
 CEnemyArrow::CEnemyArrow()
 {
 }
@@ -95,6 +96,7 @@ void CEnemyArrow::CollisionBegin(const HitResult& result, CCollider* Collider)
     else if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
     {
         //플레이어타격!
+        CGlobalValue::MainPlayer->EnemyHit(4);
 
     }
 

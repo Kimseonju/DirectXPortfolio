@@ -226,6 +226,12 @@
     <Filter Include="UI\UI\WidgetWindow\PlayerUI">
       <UniqueIdentifier>{f232ab07-03f0-4df8-afda-de30f2d9fa1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\UI\WidgetWindow\Map">
+      <UniqueIdentifier>{c8f1479d-6883-4166-8942-d65a0d76e997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\WidgetWindow\Map\MiniMap">
+      <UniqueIdentifier>{ef4c5ab1-9b9d-48c4-a33f-008f0b0e8872}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -315,9 +321,6 @@
     <ClCompile Include="Object\ShortSwordEffectObject.cpp">
       <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Bullet.cpp">
-      <Filter>02. Object\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Object\MetalBoomerang.cpp">
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClCompile>
@@ -365,9 +368,6 @@
     </ClCompile>
     <ClCompile Include="UI\InventoryButton.cpp">
       <Filter>UI\UI\Widget</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\StageMap.cpp">
-      <Filter>UI\UI\WidgetWindow</Filter>
     </ClCompile>
     <ClCompile Include="SceneMode\LoadingScene.cpp">
       <Filter>01. SceneMode</Filter>
@@ -639,6 +639,12 @@
     <ClCompile Include="UI\StatusUI.cpp">
       <Filter>UI\UI\WidgetWindow\StatusUI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\StageMap.cpp">
+      <Filter>UI\UI\WidgetWindow\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MiniMap.cpp">
+      <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -728,9 +734,6 @@
     <ClInclude Include="Object\ShortSwordEffectObject.h">
       <Filter>02. Object\EffectAndParticle\ShortSwordEffect</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Bullet.h">
-      <Filter>02. Object\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="Object\MetalBoomerang.h">
       <Filter>02. Object\Item\Weapon\MetalBoomerang</Filter>
     </ClInclude>
@@ -778,9 +781,6 @@
     </ClInclude>
     <ClInclude Include="UI\InventoryButton.h">
       <Filter>UI\UI\Widget</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\StageMap.h">
-      <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
     <ClInclude Include="SceneMode\LoadingScene.h">
       <Filter>01. SceneMode</Filter>
@@ -1033,6 +1033,12 @@
     </ClInclude>
     <ClInclude Include="UI\StatusUI.h">
       <Filter>UI\UI\WidgetWindow\StatusUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\StageMap.h">
+      <Filter>UI\UI\WidgetWindow\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MiniMap.h">
+      <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
