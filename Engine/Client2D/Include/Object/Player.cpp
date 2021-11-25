@@ -368,7 +368,7 @@ void CPlayer::Attack(float DeltaTime)
 			if (m_Weapon->Attack(angle))
 			{
 				m_OneAttack = !m_OneAttack;
-				m_Camera->AddCameraShake(3.f, 3.f, 0.3f);
+				m_Camera->AddCameraShake(1.f, 1.f, 0.3f);
 			}
 		}
 	}

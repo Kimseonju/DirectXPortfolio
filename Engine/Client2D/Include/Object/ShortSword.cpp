@@ -94,10 +94,10 @@ bool CShortSword::Attack(float Angle)
 	CPlayerAttack* pPlayerAttack = m_pScene->SpawnObject<CPlayerAttack>("CollisionPlayerAttack");
 	pPlayerAttack->SetWorldPos(GetWorldPos());
 	pPlayerAttack->SetRelativeRotationZ(Angle - 90.f);
-	pPlayerAttack->AddRelativePos(pPlayerAttack->GetAxis(AXIS_Y) * 30.f);
+	pPlayerAttack->AddRelativePos(pPlayerAttack->GetAxis(AXIS_Y) * 10.f);
 	obj->SetRelativeRotationZ(Angle);
 	Vector3 Axis = Vector3::AxisY(Angle - 90.f);
-	obj->AddRelativePos(Axis * 50.f);
+	obj->AddRelativePos(Axis * 10.f);
 	return true;
 
 }

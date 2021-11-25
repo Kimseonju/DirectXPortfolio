@@ -169,18 +169,18 @@ PS_OUTPUT_SINGLE Standard2DTexturePS(VS_OUTPUT_UV input)
 
 	result = Distortion(result, input.UV, input.ProjPos);
 
-	for (int i = 0; i < 100; ++i)
-	{
-		if (g_TorchArrayInput[i].Enable == 0)
-			continue;
-		float3 dist4 = g_TorchArrayInput[0].Pos - g_Pos;
-		float dist = abs(dist4.x) + abs(dist4.y);
-			//distance(g_TorchArrayInput[0].Pos, input.Position);//
-		if (dist < 100.f)
-		{
-			result.rgb *= 1.5f;
-		}
-	}
+	//for (int i = 0; i < 100; ++i)
+	//{
+	//	if (g_TorchArrayInput[i].Enable == 0)
+	//		continue;
+	//	float3 dist4 = g_TorchArrayInput[0].Pos - g_Pos;
+	//	float dist = abs(dist4.x) + abs(dist4.y);
+	//		//distance(g_TorchArrayInput[0].Pos, input.Position);//
+	//	if (dist < 100.f)
+	//	{
+	//		result.rgb *= 1.5f;
+	//	}
+	//}
 
 	output.Color = result;
 

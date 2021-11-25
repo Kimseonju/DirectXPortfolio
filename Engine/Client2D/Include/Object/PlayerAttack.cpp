@@ -40,11 +40,11 @@ bool CPlayerAttack::Init()
 
 	SetRootComponent(m_Sprite);
 
-	m_Sprite->SetRelativeScale(70.f, 30.f, 1.f);
+	m_Sprite->SetRelativeScale(0.f, 0.f, 1.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
-	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Collider2D->SetExtent(15.f, 15.f);
 	m_Collider2D->SetCollisionProfile("PlayerAttack");
 
 	m_Sprite->AddChild(m_Collider2D);

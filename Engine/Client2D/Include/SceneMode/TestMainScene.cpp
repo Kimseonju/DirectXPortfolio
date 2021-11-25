@@ -121,7 +121,8 @@ bool CTestMainScene::Init()
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 	
 	CStageManager::GetInst()->Init();
@@ -133,8 +134,8 @@ bool CTestMainScene::Init()
 	//CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
 	//pEnemy->SetWorldPos(0.f, 100.f, 0.f);
 
-	CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
-	CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
+	//CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
+	//CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
 	//CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
 	//벨리알테스트용
 	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");

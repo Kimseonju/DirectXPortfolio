@@ -78,11 +78,11 @@ void CBasicTresure::Update(float DeltaTime)
 	CGameObject::Update(DeltaTime);
 	AddRelativePos(m_Body->GetMove());
 
-	CPlayer* Player = CGlobalValue::MainPlayer;
-	if (Player)
-	{
-		SetWorldPos(Player->GetWorldPos());
-	}
+	//CPlayer* Player = CGlobalValue::MainPlayer;
+	//if (Player)
+	//{
+	//	SetWorldPos(Player->GetWorldPos());
+	//}
 }
 
 void CBasicTresure::PostUpdate(float DeltaTime)

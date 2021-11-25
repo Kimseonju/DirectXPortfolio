@@ -92,14 +92,6 @@ PS_OUTPUT_SINGLE TileMapPS(VS_OUTPUT_TILEMAP input)
 		float2 dist4 = g_TorchArrayInput[0].Pos.xy - input.Position;
 		float dist = abs(dist4.x) + abs(dist4.y);
 		//distance(g_TorchArrayInput[0].Pos, input.Position);//
-		if (dist < 50.f)
-		{
-			result.rgb *= 1.3f;
-		}
-		else if (dist < 100.f)
-		{
-			result.rgb *= 1.2f;
-		}
 	}
 
 

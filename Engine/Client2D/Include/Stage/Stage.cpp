@@ -15,6 +15,7 @@
 #include "../Object/Giant_Red.h"
 #include "../Object/ShopNPC.h"
 #include "../Object/SpawnEffect.h"
+#include "../Object/TorchLight.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -149,9 +150,9 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			}
 			case Client_Object_Type::Torch:
 			{
-				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
-				m_Object.push_back(NPC);
-				Obj = NPC;
+				CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
+				m_Object.push_back(TorchLight);
+				Obj = TorchLight;
 
 				break;
 			}
