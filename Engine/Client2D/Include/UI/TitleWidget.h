@@ -1,6 +1,8 @@
 #pragma once
 
 #include "UI/WidgetWindow.h"
+#include <UI/Text.h>
+#include <UI/Image.h>
 
 class CTitleWidget :
     public CWidgetWindow
@@ -8,8 +10,8 @@ class CTitleWidget :
     friend class CViewport;
 
 protected:
-    class CImage* m_Cloud;
-    class CImage* m_BackCloud;
+    CSharedPtr<CImage> m_Cloud;
+    CSharedPtr<CImage> m_BackCloud;
 
 protected:
     CTitleWidget();

@@ -416,6 +416,11 @@ struct TileMapCBuffer
     int		TileEndY;
     Vector2	TileSize;
 };
+struct MiniMapCBuffer
+{
+    Vector2	Size;
+    Vector2	Empty;
+};
 struct CameraShake
 {
     Vector2 Pos;
@@ -447,7 +452,15 @@ struct TileInfo
     Vector2	Pos;
     float Empty;
 };
-
+struct MiniMapInfo
+{
+    Matrix	matWVP;
+    Vector4	Color;
+    Vector4	EmvColor;
+    float	Opacity;
+    Vector2	Pos;
+    float Enable;
+};
 enum class Nav_Insert_Type
 {
     None,

@@ -13,6 +13,7 @@ CUIManager::~CUIManager()
 {
 }
 
+
 bool CUIManager::Init(CScene* Scene)
 {
 	if (m_pScene)
@@ -27,6 +28,7 @@ bool CUIManager::Init(CScene* Scene)
 	m_ShopUI = m_pScene->GetViewport()->AddWindow<CShopUI>("ShopUI");
 	m_FadeInOutUI = m_pScene->GetViewport()->AddWindow<CFadeInOutUI>("FadeInOutUI");
 	m_StatusUI = m_pScene->GetViewport()->AddWindow<CStatusUI>("StatusUI");
+	m_MiniMapUI = m_pScene->GetViewport()->AddWindow<CMiniMap>("MiniMapUI");
 	m_BossSpawnUI->Enable(false);
 	m_InventoryUI->Enable(false);
 	m_StageMapUI->Enable(false);

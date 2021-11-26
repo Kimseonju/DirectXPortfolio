@@ -33,6 +33,10 @@ protected:
 	bool	m_EditorMode;
 
 public:
+	std::vector<CTile*>& GetvecTile()
+	{
+		return m_vecTile;
+	}
 	void SetFrameMax(int x, int y);
 	void SetTileDefaultFrame(int x, int y);
 	void SetTileFrame(int TileIndex, int x, int y);

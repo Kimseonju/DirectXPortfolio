@@ -11,11 +11,13 @@ class CInventory :
 
 protected:
 
-    CImage* m_InventoryBaseImage;
-    CImage* m_AccBaseImage;
-    CImage* m_WeaponSelect_Left;
-    CImage* m_WeaponSelect_Right;
-    CText* m_CoinText;
+    CSharedPtr<CImage>    m_InventoryBaseImage;
+    CSharedPtr<CImage>    m_AccBaseImage;
+    CSharedPtr<CImage>    m_WeaponSelect_Left;
+    CSharedPtr<CImage>    m_WeaponSelect_Right;
+    CSharedPtr<CText>    m_CoinText;
+    CSharedPtr<CText>    m_Name1;
+    CSharedPtr<CText>    m_WeaponMagazineMiddle2;
     Select_Weapon m_Current;
     std::vector<CInventoryButton*> m_Weapon;
     std::vector<CInventoryButton*> m_Accs;

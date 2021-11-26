@@ -17,7 +17,7 @@
 #include "NumberShader.h"
 #include "MouseShader.h"
 #include "TileMapShader.h"
-
+#include "MiniMapShader.h"
 
 DEFINITION_SINGLE(CShaderManager)
 
@@ -95,6 +95,8 @@ bool CShaderManager::Init()
     if (!CreateShader<CTileMapShader>("TileMapShader"))
         return false;
 
+    if (!CreateShader<CMiniMapShader>("MiniMapShader"))
+        return false;
     // 상수버퍼를 만들어준다.
     CreateConstantBuffer("TransformCBuffer", sizeof(TransformCBuffer), 0, CBT_ALL);
     CreateConstantBuffer("MaterialCBuffer", sizeof(MaterialCBuffer), 1, CBT_PIXEL);
@@ -108,8 +110,9 @@ bool CShaderManager::Init()
     CreateConstantBuffer("UITransformCBuffer", sizeof(TransformUICBuffer), 10, CBT_ALL);
     CreateConstantBuffer("UIColorTintCBuffer", sizeof(UIColorTintCBuffer), 11, CBT_PIXEL);
     CreateConstantBuffer("ProgressBarCBuffer", sizeof(ProgressBarCBuffer), 12, CBT_VERTEX);
-    CreateConstantBuffer("NumberCBuffer", sizeof(NumberCBuffer), 13, CBT_VERTEX);
+    //CreateConstantBuffer("NumberCBuffer", sizeof(NumberCBuffer), 13, CBT_VERTEX);
     CreateConstantBuffer("TileMapCBuffer", sizeof(TileMapCBuffer), 10, CBT_VERTEX);
+    CreateConstantBuffer("MiniMapCBuffer", sizeof(MiniMapCBuffer), 13, CBT_VERTEX);
 
 
 

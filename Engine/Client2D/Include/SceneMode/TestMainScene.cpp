@@ -165,8 +165,8 @@ void CTestMainScene::Start()
 	CGlobalValue::MainPlayer = pPlayer;
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
-
 	CUIManager::GetInst()->Init(m_pScene);
+
 	CStage1MapEffect* Stage1MapEffect = m_pScene->SpawnObject<CStage1MapEffect>("Stage1MapEffect");
 	Stage1MapEffect->SetWorldPos(400.f, 200.f, 0.f);
 }

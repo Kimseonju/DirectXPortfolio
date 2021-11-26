@@ -1,6 +1,5 @@
 
 #include "Teemo.h"
-#include "Bullet.h"
 #include "Scene/Scene.h"
 #include "Resource/Material.h"
 

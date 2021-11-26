@@ -17,6 +17,13 @@ CBossTresure::~CBossTresure()
 {
 }
 
+void CBossTresure::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Sprite->Enable(bEnable);
+	m_Collider2D->Enable(bEnable);
+}
+
 void CBossTresure::Start()
 {
 	CGameObject::Start();

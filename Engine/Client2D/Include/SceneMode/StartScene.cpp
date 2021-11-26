@@ -123,8 +123,8 @@ bool CStartScene::Init()
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
 
 	return true;

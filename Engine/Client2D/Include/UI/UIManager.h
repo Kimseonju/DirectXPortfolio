@@ -9,6 +9,7 @@
 #include "ShopUI.h"
 #include "FadeInOutUI.h"
 #include "StatusUI.h"
+#include "MiniMap.h"
 class CUIManager
 {
 
@@ -55,6 +56,10 @@ public:
 	{
 		return m_StatusUI;
 	}
+	CMiniMap* GetMiniMapUI()
+	{
+		return m_MiniMapUI;
+	}
 private:
 	CSharedPtr<CPlayerUI> m_PlayerUI;
 	CSharedPtr<CInventory> m_InventoryUI;
@@ -65,6 +70,7 @@ private:
 	CSharedPtr<CShopUI> m_ShopUI;
 	CSharedPtr<CFadeInOutUI> m_FadeInOutUI;
 	CSharedPtr<CStatusUI> m_StatusUI;
+	CSharedPtr<CMiniMap> m_MiniMapUI;
 	CScene* m_pScene;
 
 

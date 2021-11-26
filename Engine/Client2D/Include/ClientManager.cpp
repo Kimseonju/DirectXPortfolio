@@ -12,6 +12,7 @@
 #include "UI/MouseWidget.h"
 #include "Resource/ResourceManager.h"
 #include "SceneMode/LoadingScene.h"
+#include "SceneMode/EndingScene.h"
 
 DEFINITION_SINGLE(CClientManager)
 
@@ -204,11 +205,9 @@ bool CClientManager::Init()
 
     CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Player,
         Collision_Interaction::Block);
-    //CSceneManager::GetInst()->SetSceneMode<CStartScene>();
-    //CSceneManager::GetInst()->SetSceneMode<CMainScene>();
     CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
-    //CSceneManager::GetInst()->SetSceneMode<CTestMainScene>();
-
+    //CSceneManager::GetInst()->SetSceneMode<CEndingScene>();
+    
     CreateMouse();
 
     return true;

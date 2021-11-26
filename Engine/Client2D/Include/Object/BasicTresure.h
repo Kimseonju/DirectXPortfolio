@@ -27,6 +27,7 @@ protected:
 public:
 
 public:
+	virtual void Enable(bool bEnable);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

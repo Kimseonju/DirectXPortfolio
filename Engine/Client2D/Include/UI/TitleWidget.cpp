@@ -1,11 +1,10 @@
 
 #include "TitleWidget.h"
-#include "UI/Image.h"
-#include "UI/Button.h"
 #include <Device.h>
 #include "../SceneMode/TestMainScene.h"
 #include "Scene/SceneManager.h"
 #include "../SceneMode/StartScene.h"
+#include <UI/Button.h>
 CTitleWidget::CTitleWidget():
 	m_Cloud(nullptr),
 	m_BackCloud(nullptr)

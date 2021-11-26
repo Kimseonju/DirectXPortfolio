@@ -35,6 +35,11 @@ private:
 	class CScene* m_pScene;
 	int m_DoorDir;
 public:
+	std::vector<CTile*>& GetvecTile()
+	{
+		return m_TileMapComponent->GetvecTile();
+	}
+
 	std::string GetName() const
 	{
 		return m_Name;
@@ -52,7 +57,8 @@ public:
 	void SetTileMap(class CGameObject* TileMap)
 	{
 		m_TileMap = TileMap;
-	}void SetTileMapObject(class CGameObject* TileMapObject)
+	}
+	void SetTileMapObject(class CGameObject* TileMapObject)
 	{
 		m_TileMapObject = TileMapObject;
 	}

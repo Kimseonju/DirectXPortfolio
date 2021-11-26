@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UI/WidgetWindow.h"
+#include "UI/Image.h"
 
 class CRestaurantUI :
     public CWidgetWindow
@@ -8,17 +9,17 @@ class CRestaurantUI :
     friend class CViewport;
 
 protected:
-    class CImage* m_BackGround;
-    class CImage* m_Label;
-    class CImage* m_RestaurantTable;
-    class CImage* m_AltarGaugeBase;
-    class CImage* m_AltarGaugeIcon;
-    class CImage* m_BaseTable;
-    class CImage* m_FoodSelectBase;
+    CSharedPtr<CImage>    m_BackGround;
+    CSharedPtr<CImage>    m_Label;
+    CSharedPtr<CImage>    m_RestaurantTable;
+    CSharedPtr<CImage>    m_AltarGaugeBase;
+    CSharedPtr<CImage>    m_AltarGaugeIcon;
+    CSharedPtr<CImage>    m_BaseTable;
+    CSharedPtr<CImage>    m_FoodSelectBase;
 protected:
     CRestaurantUI();
     virtual ~CRestaurantUI();
-public:\
+public:
 public:
     virtual bool Init();
     virtual void Update(float DeltaTime);

@@ -232,6 +232,15 @@
     <Filter Include="UI\UI\WidgetWindow\Map\MiniMap">
       <UniqueIdentifier>{ef4c5ab1-9b9d-48c4-a33f-008f0b0e8872}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\MapObject\Torch">
+      <UniqueIdentifier>{5e31c50d-2107-47bb-bed1-d164c9680502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EndingObject">
+      <UniqueIdentifier>{84980256-a039-4f38-bc78-ec5572e4f3e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\EndingUI">
+      <UniqueIdentifier>{8fa0ecae-92a9-4e38-b637-cfb6487a798c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -516,12 +525,6 @@
     <ClCompile Include="Object\PlayerInteractionCollision.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Object\BossTorchLight.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\TorchLight.cpp">
-      <Filter>02. Object\MapObject</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RestaurantNPC.cpp">
       <Filter>02. Object\NPC</Filter>
     </ClCompile>
@@ -644,6 +647,36 @@
     </ClCompile>
     <ClCompile Include="UI\MiniMap.cpp">
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossTorchLight.cpp">
+      <Filter>02. Object\MapObject\Torch</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TorchLight.cpp">
+      <Filter>02. Object\MapObject\Torch</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingTerrain.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingPlayer.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingHorse.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingMountain.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingCloud.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EndingCamera.cpp">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\EndingUI.cpp">
+      <Filter>UI\EndingUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MiniMapWidget.cpp">
+      <Filter>UI\UI\Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -926,12 +959,6 @@
     <ClInclude Include="Object\PlayerInteractionCollision.h">
       <Filter>02. Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Object\BossTorchLight.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\TorchLight.h">
-      <Filter>02. Object\MapObject</Filter>
-    </ClInclude>
     <ClInclude Include="Object\RestaurantNPC.h">
       <Filter>02. Object\NPC</Filter>
     </ClInclude>
@@ -1039,6 +1066,36 @@
     </ClInclude>
     <ClInclude Include="UI\MiniMap.h">
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossTorchLight.h">
+      <Filter>02. Object\MapObject\Torch</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TorchLight.h">
+      <Filter>02. Object\MapObject\Torch</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingTerrain.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingHorse.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingPlayer.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingMountain.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingCloud.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EndingCamera.h">
+      <Filter>02. Object\EndingObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\EndingUI.h">
+      <Filter>UI\EndingUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MiniMapWidget.h">
+      <Filter>UI\UI\Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

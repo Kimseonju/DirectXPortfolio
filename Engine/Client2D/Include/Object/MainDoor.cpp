@@ -4,6 +4,8 @@
 #include "../Stage/StageManager.h"
 #include "../UI/UIManager.h"
 #include "../UI/StageMap.h"
+#include <Scene/SceneManager.h>
+#include "../SceneMode/EndingScene.h"
 CMainDoor::CMainDoor():
 	m_DoorCollider2D(nullptr),
 	m_Open(false)
@@ -126,7 +128,11 @@ void CMainDoor::CollisionBegin(const HitResult& result, CCollider* Collider)
 	{
 		if (CStageManager::GetInst()->IsBossStage())
 		{
-			//¿£µù
+
+			CScene* Scene = CSceneManager::GetInst()->CreateScene();
+			Scene->SetSceneMode<CEndingScene>();
+			CSceneManager::GetInst()->SetNextScene(Scene);
+			CSceneManager::GetInst()->SetChange(true);
 		}
 		else
 		{

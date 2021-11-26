@@ -196,6 +196,12 @@
     <ClCompile Include="Object\CollisionObject.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
+    <ClCompile Include="Object\EndingCamera.cpp" />
+    <ClCompile Include="Object\EndingCloud.cpp" />
+    <ClCompile Include="Object\EndingHorse.cpp" />
+    <ClCompile Include="Object\EndingMountain.cpp" />
+    <ClCompile Include="Object\EndingPlayer.cpp" />
+    <ClCompile Include="Object\EndingTerrain.cpp" />
     <ClCompile Include="Object\Enemy.cpp" />
     <ClCompile Include="Object\EnemyArrow.cpp" />
     <ClCompile Include="Object\EnemyAttack.cpp" />
@@ -276,6 +282,7 @@
     <ClCompile Include="UI\BossDieUI.cpp" />
     <ClCompile Include="UI\BossSpawnUI.cpp" />
     <ClCompile Include="UI\BossUI.cpp" />
+    <ClCompile Include="UI\EndingUI.cpp" />
     <ClCompile Include="UI\EnemyWorldInfoWidget.cpp" />
     <ClCompile Include="UI\FadeInOutUI.cpp" />
     <ClCompile Include="UI\Inventory.cpp" />
@@ -284,6 +291,7 @@
     <ClCompile Include="UI\LoadingUI.cpp" />
     <ClCompile Include="UI\MainHUDWidget.cpp" />
     <ClCompile Include="UI\MiniMap.cpp" />
+    <ClCompile Include="UI\MiniMapWidget.cpp" />
     <ClCompile Include="UI\PlayerUI.cpp" />
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp" />
     <ClCompile Include="UI\PlayerWorldWidget.cpp" />
@@ -333,6 +341,12 @@
     <ClInclude Include="Object\CollisionObject.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
+    <ClInclude Include="Object\EndingCamera.h" />
+    <ClInclude Include="Object\EndingCloud.h" />
+    <ClInclude Include="Object\EndingHorse.h" />
+    <ClInclude Include="Object\EndingMountain.h" />
+    <ClInclude Include="Object\EndingPlayer.h" />
+    <ClInclude Include="Object\EndingTerrain.h" />
     <ClInclude Include="Object\Enemy.h" />
     <ClInclude Include="Object\EnemyArrow.h" />
     <ClInclude Include="Object\EnemyAttack.h" />
@@ -409,6 +423,7 @@
     <ClInclude Include="UI\BossDieUI.h" />
     <ClInclude Include="UI\BossSpawnUI.h" />
     <ClInclude Include="UI\BossUI.h" />
+    <ClInclude Include="UI\EndingUI.h" />
     <ClInclude Include="UI\EnemyWorldInfoWidget.h" />
     <ClInclude Include="UI\FadeInOutUI.h" />
     <ClInclude Include="UI\Inventory.h" />
@@ -417,6 +432,7 @@
     <ClInclude Include="UI\LoadingUI.h" />
     <ClInclude Include="UI\MainHUDWidget.h" />
     <ClInclude Include="UI\MiniMap.h" />
+    <ClInclude Include="UI\MiniMapWidget.h" />
     <ClInclude Include="UI\PlayerUI.h" />
     <ClInclude Include="UI\PlayerWorldInfoWidget.h" />
     <ClInclude Include="UI\PlayerWorldWidget.h" />

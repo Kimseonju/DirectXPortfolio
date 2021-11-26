@@ -68,7 +68,7 @@ bool CDoor::Init()
 	m_Animation2D->AddAnimationSequence2D("DoorClose", false);
 	m_Animation2D->AddAnimationSequence2D("DoorIdle", true);
 
-	m_NextStageCollider2D->SetCollisionProfile("NextStage");
+	m_NextStageCollider2D->SetCollisionProfile("Tile_Nopass");
 	m_NextStageCollider2D->AddCollisionCallbackFunction<CDoor>(Collision_State::Begin, this,
 		&CDoor::CollisionBegin_NextStage);
 	m_NextStageCollider2D->SetExtent(33.f, 5.f);
@@ -199,25 +199,25 @@ void CDoor::PlayerMove()
 	{
 	case Door_Dir::Door_Left:
 	{
-		Pos.x += 40.f;
+		Pos.x += 60.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	}
 	case Door_Dir::Door_Right:
 	{
-		Pos.x -= 40.f;
+		Pos.x -= 60.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	}
 	case Door_Dir::Door_Up:
 	{
-		Pos.y -= 40.f;
+		Pos.y -= 60.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	}
 	case Door_Dir::Door_Down:
 	{
-		Pos.y += 40.f;
+		Pos.y += 60.f;
 		CGlobalValue::MainPlayer->SetWorldPos(Pos);
 		break;
 	}

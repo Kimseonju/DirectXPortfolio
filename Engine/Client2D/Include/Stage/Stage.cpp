@@ -40,6 +40,7 @@ void CStage::Enable(bool Enable)
 {
 	m_Enable = Enable;
 	m_TileMapComponent->Enable(m_Enable);
+
 	m_TileObjectMapComponent->Enable(m_Enable);
 
 	for (size_t i = 0; i < m_vecEnemy.size(); ++i)
@@ -78,7 +79,6 @@ void CStage::Active(bool bActive)
 		m_vecEnemy.clear();
 		m_Object.clear();
 		m_Doors.clear();
-
 	}
 }
 

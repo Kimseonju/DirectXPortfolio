@@ -13,8 +13,8 @@ class CShopInfoWidget :
 
 protected:
 
-    CText* m_ItemName;
-    CText* m_ItemPrice;
+    CSharedPtr<CText>    m_ItemName;
+    CSharedPtr<CText>    m_ItemPrice;
 
 public:
     CShopInfoWidget();

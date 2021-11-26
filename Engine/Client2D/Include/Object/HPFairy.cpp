@@ -14,6 +14,14 @@ CHPFairy::~CHPFairy()
 {
 }
 
+void CHPFairy::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Sprite->Enable(bEnable);
+	m_Collider2D->Enable(bEnable);
+	m_Animation2D->Enable(bEnable);
+}
+
 void CHPFairy::Start()
 {
 	CGameObject::Start();

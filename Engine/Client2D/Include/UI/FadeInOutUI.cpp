@@ -11,6 +11,8 @@
 #include "../Stage/StageManager.h"
 #include <Engine.h>
 #include <Input.h>
+#include "UIManager.h"
+#include "MiniMap.h"
 CFadeInOutUI::CFadeInOutUI():
 	m_StageDir(Stage_Dir::END),
 	m_FadeOut(false),
@@ -52,6 +54,7 @@ void CFadeInOutUI::Update(float DeltaTime)
 				m_FadeIn = true;
 				m_FadeOut = false;
 				m_StageMove = false;
+				CUIManager::GetInst()->GetMiniMapUI()->TileUpdate();
 			}
 		}
 	}

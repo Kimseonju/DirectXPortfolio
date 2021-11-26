@@ -1,7 +1,5 @@
 
 #include "RestaurantUI.h"
-#include "UI/Image.h"
-#include "UI/Button.h"
 #include <Device.h>
 #include "../Stage/Stage.h"
 #include "../Stage/StageManager.h"

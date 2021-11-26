@@ -84,17 +84,6 @@ PS_OUTPUT_SINGLE TileMapPS(VS_OUTPUT_TILEMAP input)
 
 	result = Distortion(result, input.UV, input.ProjPos);
 
-
-	for (int i = 0; i < 100; ++i)
-	{
-		if (g_TorchArrayInput[i].Enable == 0)
-			continue;
-		float2 dist4 = g_TorchArrayInput[0].Pos.xy - input.Position;
-		float dist = abs(dist4.x) + abs(dist4.y);
-		//distance(g_TorchArrayInput[0].Pos, input.Position);//
-	}
-
-
 	output.Color = result;
 
 	return output;
