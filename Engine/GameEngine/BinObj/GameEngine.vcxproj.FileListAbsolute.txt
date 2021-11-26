@@ -8,3 +8,4 @@ D:\DirectXPortfolio1\Engine\GameEngine\Bin\Particle.cso
 D:\DirectXPortfolio1\Engine\GameEngine\Bin\Standard2D.cso
 D:\DirectXPortfolio1\Engine\GameEngine\Bin\TileMap.cso
 D:\DirectXPortfolio1\Engine\GameEngine\Bin\UI.cso
+D:\DirectXPortfolio1\Engine\GameEngine\Bin\MiniMap.cso

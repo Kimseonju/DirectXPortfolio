@@ -84,7 +84,7 @@ void CImage::PostUpdate(float DeltaTime)
 
 void CImage::Render()
 {
-	CWidget::Render();
+ 	CWidget::Render();
 	if (!IsEnable())
 	{
 		return;

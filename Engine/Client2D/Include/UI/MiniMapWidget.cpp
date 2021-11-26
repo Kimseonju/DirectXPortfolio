@@ -50,14 +50,14 @@ bool CMiniMapWidget::Init()
 	m_CBuffer->SetSize(1.f, 1.f);
 	m_MapBuffer = new CStructuredBuffer;
 
-	if (!m_MapBuffer->Init("TileMapBuffer", sizeof(MiniMapInfo),
+	if (!m_MapBuffer->Init("MiniMapBuffer", sizeof(MiniMapInfo),
 		(unsigned int)3000, 31, true, CBT_VERTEX))
 	{
 		SAFE_DELETE(m_MapBuffer);
 		return false;
 	}
-	SetMesh("TextureRect");
-	m_Shader = CShaderManager::GetInst()->FindShader("UIImageShader");
+	m_Shader = CShaderManager::GetInst()->FindShader("MiniMapShader");
+	SetPos(200.f, 200.f);
 	return true;
 }
 
@@ -74,11 +74,10 @@ void CMiniMapWidget::Update(float DeltaTime)
 		{
 			int FrameX = vecTile[i]->GetFrameX();
 			int FrameY = vecTile[i]->GetFrameY();
-			if (FrameX / 16 == 12 && FrameY / 16 == 1)
+			if (FrameX / 16 == 1 && FrameY / 16 == 1)
 				continue;
 			Vector2 Pos = vecTile[i]->GetPos();
-			Pos /= 2.f;
-			CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoTile(Pos, Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+			PushMiniMapInfoTile(Pos, Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
 		}
 	}
 }
@@ -93,20 +92,17 @@ void CMiniMapWidget::Render()
 {
 
 	CWidget::Render();
-	m_MapBuffer->UpdateBuffer(&m_vecMiniMapWidgetInfo[0], sizeof(MiniMapInfo) * m_TileCount + m_ObjectCount + m_EnemyCount);
+	m_MapBuffer->UpdateBuffer(&m_vecMiniMapWidgetInfo[0], sizeof(MiniMapInfo) * (m_TileCount + m_ObjectCount + m_EnemyCount));
 
 	if (!IsEnable())
 		return;
 	m_MapBuffer->SetShader(31, CBT_VERTEX);
 	m_CBuffer->UpdateCBuffer();
-	if (!m_vecMaterialSlot.empty())
-		m_vecMaterialSlot[0]->SetMaterial();
 
-	m_MiniMapMesh->RenderInstancing((unsigned int)10);
+	m_Mesh->RenderInstancing((unsigned int)(m_TileCount + m_ObjectCount + m_EnemyCount));
+	//m_MiniMapMesh->RenderInstancing((unsigned int)(m_TileCount + m_ObjectCount + m_EnemyCount));
 
 	m_MapBuffer->ResetShader(31, CBT_VERTEX);
-	if (!m_vecMaterialSlot.empty())
-		m_vecMaterialSlot[0]->ResetMaterial();
 
 	ObjectClear();
 }
@@ -122,14 +118,17 @@ void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 Emv
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
+	Pos.x += GetPos().x;
+	Pos.y += GetPos().y;
+	RenderPos /= 4.f;
 	RenderPos -= m_Pivot * m_Size;
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
-
-	matScale.Scaling(m_Size.x, m_Size.y, 1.f);
+	
+	matScale.Scaling(4.f, 4.f, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
-	matTranslation.Translation(RenderPos.x, RenderPos.y, m_WorldZ);
+	matTranslation.Translation(RenderPos.x, RenderPos.y, 0.f);
 
 	matWorld = matScale * matRot * matTranslation;
 
@@ -143,25 +142,6 @@ void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 Emv
 
 	Info.matWVP = matWorld * matProj;
 	Info.Color = Color;
-	if (m_TileCount < 100.f)
-	{
-		Info.Color = Vector4(1.f, 0.f, 0.f, 1.f);
-	}
-	else if (m_TileCount < 300.f)
-	{
-
-		Info.Color = Vector4(0.f, 1.f, 0.f, 1.f);
-	}
-	else if (m_TileCount < 1500.f)
-	{
-
-		Info.Color = Vector4(0.f, 0.f, 1.f, 1.f);
-	}
-	else 
-	{
-
-		Info.Color = Vector4(1.f, 1.f, 1.f, 1.f);
-	}
 	Info.EmvColor = EmvColor;
 	Info.Opacity = Opacity;
 	Info.Enable = 1;
@@ -176,10 +156,13 @@ void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector4 Color, Vector4 E
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
+	Pos.x += GetPos().x;
+	Pos.y += GetPos().y;
+	RenderPos /= 4.f;
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
 
-	matScale.Scaling(1.f, 1.f, 1.f);
+	matScale.Scaling(3.f, 3.f, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
 	matTranslation.Translation(RenderPos.x, RenderPos.y, m_WorldZ);
@@ -211,6 +194,9 @@ void CMiniMapWidget::PushMiniMapInfoEnemy(Vector2 Pos, Vector4 Color, Vector4 Em
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
+	Pos.x += GetPos().x;
+	Pos.y += GetPos().y;
+	RenderPos /= 4.f;
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
 
@@ -258,29 +244,4 @@ void CMiniMapWidget::Clear()
 	m_TileCount = 0;
 	m_EnemyCount = 0;
 	m_ObjectCount = 0;
-}
-
-void CMiniMapWidget::SetMesh(const std::string& Name)
-{
-	m_MiniMapMesh = (CSpriteMesh*)m_Scene->GetResource()->FindMesh(Name);
-
-	Vector3 Min = m_MiniMapMesh->GetMin();
-	Vector3 Max = m_MiniMapMesh->GetMax();
-
-	m_vecMaterialSlot.clear();
-	const std::vector<CSharedPtr<CMaterial>>* pMaterialSlots =
-		m_MiniMapMesh->GetMaterialSlots();
-
-	auto    iter = pMaterialSlots->begin();
-	auto    iterEnd = pMaterialSlots->end();
-
-	for (; iter != iterEnd; ++iter)
-	{
-		CMaterial* pClone = (*iter)->Clone();
-		pClone->SetShader("MiniMapShader");
-		pClone->SetScene(m_Scene);
-		m_vecMaterialSlot.push_back(pClone);
-
-		SAFE_RELEASE(pClone);
-	}
 }

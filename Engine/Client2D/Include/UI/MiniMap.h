@@ -25,6 +25,5 @@ public:
     void PushMiniMapInfoEnemy(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity);
     void ObjectClear();
     void Clear();
-    void SetMesh(const std::string& Name);
 };
 

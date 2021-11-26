@@ -67,7 +67,7 @@ bool CLoadingUI::Init()
 
 void CLoadingUI::Update(float DeltaTime)
 {
-	CWidgetWindow::Update(DeltaTime);
+ 	CWidgetWindow::Update(DeltaTime);
 	if (m_ImageNum == 0)
 	{
 		m_ImageCount += DeltaTime;

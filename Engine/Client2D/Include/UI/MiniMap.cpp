@@ -13,6 +13,7 @@ CMiniMap::~CMiniMap()
 
 void CMiniMap::TileUpdate()
 {
+	m_MiniMapWidget->TileUpdate();
 }
 
 bool CMiniMap::Init()
@@ -73,10 +74,4 @@ void CMiniMap::Clear()
 {
 
 	m_MiniMapWidget->Clear();
-}
-
-void CMiniMap::SetMesh(const std::string& Name)
-{
-
-	m_MiniMapWidget->SetMesh(Name);
 }

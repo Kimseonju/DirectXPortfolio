@@ -694,7 +694,7 @@ void CMaterial::SetShader(const std::string& Name)
 void CMaterial::SetMaterial()
 {
 	m_pCBuffer->SetBaseColor(m_BaseColor);
-	m_pCBuffer->SetEmissiveColor(m_EmissiveColor);
+ 	m_pCBuffer->SetEmissiveColor(m_EmissiveColor);
 	m_pCBuffer->SetOpacity(m_Opacity);
 	
 	m_pCBuffer->UpdateCBuffer();

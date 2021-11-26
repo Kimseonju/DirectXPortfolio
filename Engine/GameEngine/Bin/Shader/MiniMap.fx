@@ -1,5 +1,5 @@
 
-#include "Share.fx"
+#include "UI.fx"
 
 cbuffer MiniMapCBuffer : register(b13)
 {
@@ -39,7 +39,8 @@ VS_OUTPUT_MINIMAP  MiniMapVS(VS_INPUT_MINIMAP input)
 {
 	VS_OUTPUT_MINIMAP	output = (VS_OUTPUT_MINIMAP)0;
 
-	output.ProjPos = mul(float4(input.Pos, 1.f), g_MiniMapArrayInput[input.InstanceID].matWVP);
+	//output.ProjPos = mul(g_MiniMapArrayInput[input.InstanceID].matWVP,float4(input.Pos, 1.f));
+	output.ProjPos = mul(g_MiniMapArrayInput[input.InstanceID].matWVP,float4(input.Pos, 1.f));
 	output.Pos = output.ProjPos;
 	output.Color = g_MiniMapArrayInput[input.InstanceID].Color;
 	output.EmvColor = g_MiniMapArrayInput[input.InstanceID].EmvColor;
@@ -55,11 +56,7 @@ PS_OUTPUT_SINGLE MiniMapPS(VS_OUTPUT_MINIMAP input)
 
 	float4  BaseColor = input.Color;
 
-	float4	result = (float4)0.f;
-
-	result.rgb = BaseColor.rgb * input.Color.rgb * input.Color.a;
-	result.a = BaseColor.a * input.Opacity;
-	output.Color = result;
+	output.Color = BaseColor;
 
 	return output;
 }
