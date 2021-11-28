@@ -20,6 +20,7 @@ private:
     void CreateMaterial();
     void CreateAnimationSequence2D();
     void CreateParticle();
+    void CreateSound();
 public:
 
     CScene* GetNextScene()
