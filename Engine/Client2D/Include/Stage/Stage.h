@@ -35,11 +35,20 @@ private:
 	class CScene* m_pScene;
 	int m_DoorDir;
 public:
+	CTileMapComponent* GetTileComonent()
+	{
+		return m_TileMapComponent;
+	}
+
 	std::vector<CTile*>& GetvecTile()
 	{
 		return m_TileMapComponent->GetvecTile();
 	}
 
+	std::vector<CTile*>& GetvecObjectTile()
+	{
+		return m_TileObjectMapComponent->GetvecTile();
+	}
 	std::string GetName() const
 	{
 		return m_Name;

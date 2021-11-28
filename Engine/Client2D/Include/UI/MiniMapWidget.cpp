@@ -15,6 +15,7 @@
 #include "../Stage/StageManager.h"
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
+#include <Scene/CameraManager.h>
 CMiniMapWidget::CMiniMapWidget() :
 	m_TileCount(0),
 	m_ObjectCount(0),
@@ -57,28 +58,55 @@ bool CMiniMapWidget::Init()
 		return false;
 	}
 	m_Shader = CShaderManager::GetInst()->FindShader("MiniMapShader");
-	SetPos(200.f, 200.f);
 	return true;
 }
 
 void CMiniMapWidget::Update(float DeltaTime)
 {
 	CWidget::Update(DeltaTime);
+	Vector2 MaxPos = Vector2(0.f, 0.f);
 	if (!m_TileMapUpdate)
 	{
 		Clear();
 		m_TileMapUpdate = true;
 		CStage* Stage = CStageManager::GetInst()->GetCurStage();
+		CTileMapComponent* Component=Stage->GetTileComonent();
+		int CountX=Component->GetTileCountX();
+		int CountY=Component->GetTileCountY();
+		CountX *= 4;
+		CountY *= 4;
+		MaxPos = Vector2((float)CountX, (float)CountY);
+		CCamera* Camera = m_Scene->GetCameraManager()->GetCurrentCamera();
+		Vector2 VRS = Camera->GetVRS();
+		VRS -= MaxPos;
+		VRS -= 50.f;
+		SetPos(VRS);
+
 		std::vector<CTile*> vecTile = Stage->GetvecTile();
 		for (int i = 0; i < vecTile.size(); ++i)
 		{
-			int FrameX = vecTile[i]->GetFrameX();
-			int FrameY = vecTile[i]->GetFrameY();
-			if (FrameX / 16 == 1 && FrameY / 16 == 1)
+			int FrameX = vecTile[i]->GetFrameX()/16;
+			int FrameY = vecTile[i]->GetFrameY()/16;
+			if ((FrameX  <= 4 && FrameY  <= 2) || (FrameX==7 && FrameY==8) || (FrameX == 7 && FrameY == 8) || (FrameX == 7 && FrameY == 9)
+				|| (FrameX == 8 && FrameY == 8) || (FrameX == 8 && FrameY == 9) || (FrameX == 9 && FrameY == 8) || (FrameX == 9 && FrameY == 9))
 				continue;
 			Vector2 Pos = vecTile[i]->GetPos();
-			PushMiniMapInfoTile(Pos, Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+			PushMiniMapInfoTile(Pos, Vector2(4.f, 4.f), Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f),  Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+
 		}
+		vecTile = Stage->GetvecObjectTile();
+		for (int i = 0; i < vecTile.size(); ++i)
+		{
+			int FrameX = vecTile[i]->GetFrameX() / 16;
+			int FrameY = vecTile[i]->GetFrameY() / 16;
+			if (FrameX >= 6 && FrameX <= 9 && FrameY <= 1)
+			{
+				Vector2 Pos = vecTile[i]->GetPos(); 
+				PushMiniMapInfoTile(Pos, Vector2(4.f, 4.f), Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+			}
+		}
+
+
 	}
 }
 
@@ -112,7 +140,7 @@ CMiniMapWidget* CMiniMapWidget::Clone()
 	return new CMiniMapWidget(*this);
 }
 
-void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 	Matrix	matScale, matRot, matTranslation, matWorld;
@@ -121,11 +149,12 @@ void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 Emv
 	Pos.x += GetPos().x;
 	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
-	RenderPos -= m_Pivot * m_Size;
+	RenderPos += GetPos();
+	
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
 	
-	matScale.Scaling(4.f, 4.f, 1.f);
+	matScale.Scaling(Size.x, Size.y, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
 	matTranslation.Translation(RenderPos.x, RenderPos.y, 0.f);
@@ -150,7 +179,7 @@ void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 Emv
 	m_TileCount++;
 }
 
-void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 	Matrix	matScale, matRot, matTranslation, matWorld;
@@ -159,10 +188,12 @@ void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector4 Color, Vector4 E
 	Pos.x += GetPos().x;
 	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
+	RenderPos += GetPos();
+	RenderPos -= Vector2(0.5f, 0.5f) * Size;
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
 
-	matScale.Scaling(3.f, 3.f, 1.f);
+	matScale.Scaling(Size.x, Size.y, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
 	matTranslation.Translation(RenderPos.x, RenderPos.y, m_WorldZ);
@@ -187,7 +218,7 @@ void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector4 Color, Vector4 E
 	m_ObjectCount++;
 
 }
-void CMiniMapWidget::PushMiniMapInfoEnemy(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoEnemy(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 
@@ -197,10 +228,12 @@ void CMiniMapWidget::PushMiniMapInfoEnemy(Vector2 Pos, Vector4 Color, Vector4 Em
 	Pos.x += GetPos().x;
 	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
+	RenderPos += GetPos();
+	RenderPos -= Vector2(0.5f, 0.5f) * Size;
 	if (m_Owner)
 		RenderPos += m_Owner->GetPos();
 
-	matScale.Scaling(5.f, 3.f, 1.f);
+	matScale.Scaling(Size.x, Size.y, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
 	matTranslation.Translation(RenderPos.x, RenderPos.y, m_WorldZ);

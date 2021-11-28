@@ -13,6 +13,8 @@
 #include "ProgressBarObject.h"
 #include "../ObjectStatusManager.h"
 #include "TextObject.h"
+#include "../UI/UIManager.h"
+#include "../UI/MiniMap.h"
 CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
@@ -183,6 +185,13 @@ void CEnemy::Collision(float DeltaTime)
 	CGameObject::Collision(DeltaTime);
 	if (m_StartTimer > 0.f)
 		return;
+}
+
+void CEnemy::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 4.f), Vector4(1.f,0.f,0.f,1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+
 }
 
 void CEnemy::Render(float DeltaTime)

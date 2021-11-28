@@ -48,6 +48,16 @@ void CFadeInOutUI::Update(float DeltaTime)
 		m_FadeImage->SetColorTint(0.f, 0.f, 0.f, m_Alpha);
 		if (m_Alpha >= 1.f)
 		{
+			if (m_StageBoss)
+			{
+
+				CStageManager::GetInst()->CreateBossStage();
+				CUIManager::GetInst()->GetStageMap()->StageUpdate();
+				CUIManager::GetInst()->GetMiniMapUI()->TileUpdate();
+				m_FadeIn = true;
+				m_FadeOut = false;
+				m_StageBoss = false;
+			}
 			if (m_StageMove)
 			{
 				CStageManager::GetInst()->NextStage(m_StageDir);
@@ -94,6 +104,15 @@ void CFadeInOutUI::StageMoveIn(Stage_Dir Dir)
 
 	m_FadeOut = true;
 	m_StageMove = true;
+	CInput::GetInst()->SetUpdate(false);
+}
+
+void CFadeInOutUI::StageBossIn()
+{
+	m_Alpha = 0.f;
+
+	m_FadeOut = true;
+	m_StageBoss = true;
 	CInput::GetInst()->SetUpdate(false);
 }
 

@@ -3,6 +3,7 @@
 #include "KeyboardUIObject.h"
 #include "Player.h"
 #include "../UI/UIManager.h"
+#include "../UI/MiniMap.h"
 CShopNPC::CShopNPC()
 {
 }
@@ -90,6 +91,13 @@ void CShopNPC::PostUpdate(float DeltaTime)
 void CShopNPC::Collision(float DeltaTime)
 {
 	CGameObject::Collision(DeltaTime);
+}
+
+void CShopNPC::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 4.f), Vector4(0.f / 255.f, 0.f / 255.f, 255.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+
 }
 
 void CShopNPC::Render(float DeltaTime)

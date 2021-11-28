@@ -14,6 +14,8 @@
 #include "../Object/Player.h"
 #include "../Stage/StageManager.h"
 #include "../Stage/Stage.h"
+#include "../UI/UIManager.h"
+#include "../UI/MiniMap.h"
 CBasicTresure::CBasicTresure():
 	m_Open(false)
 {
@@ -102,6 +104,13 @@ void CBasicTresure::PostUpdate(float DeltaTime)
 void CBasicTresure::Collision(float DeltaTime)
 {
 	CGameObject::Collision(DeltaTime);
+}
+
+void CBasicTresure::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 4.f), Vector4(0.f / 255.f, 0.f / 255.f, 255.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+
 }
 
 void CBasicTresure::Render(float DeltaTime)

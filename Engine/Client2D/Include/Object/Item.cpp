@@ -54,6 +54,7 @@ bool CItem::Init()
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 
 	SetRootComponent(m_Sprite);
+	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->AddChild(m_Body);
 
 	m_Sprite->SetRelativeScale(38.f, 14.f, 1.f);
@@ -66,7 +67,6 @@ bool CItem::Init()
 	m_Body->SetGravity(true);
 	m_Body->SetGravityPower(500.f);
 	//m_Sprite->SetRelativeRotationZ(30.f);
-	m_Sprite->SetPivot(0.f, 0.5f, 0.f);
 	return true;
 }
 
@@ -433,6 +433,7 @@ void CItem::StateNoMapItem()
 	m_MapDrop = false;
 	m_Body->SetGravity(false);
 	m_Collider2D->Enable(false);
+	m_Sprite->SetPivot(0.f, 0.5f, 0.f);
 	SetWorldPos(0.f, 0.f, 0.f);
 	Enable(false);
 }

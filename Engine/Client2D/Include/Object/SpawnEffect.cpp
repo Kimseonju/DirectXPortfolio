@@ -112,6 +112,7 @@ void CSpawnEffect::Spawn()
 		if (Stage)
 		{
 			Stage->PushEnemy(m_Obj);
+			m_Obj->SetWorldPos(2000.f, 2000.f, 0.f);
 		}
 	}
 	else if (m_ClassType == Client_Class_Type::Object)
@@ -129,9 +130,12 @@ void CSpawnEffect::Spawn()
 		CStage* Stage = CStageManager::GetInst()->GetCurStage();
 		if (Stage)
 		{
+			
 			Stage->PushObject(m_Obj);
+			m_Obj->SetWorldPos(2000.f, 2000.f, 0.f);
 		}
 	}
+
 }
 
 void CSpawnEffect::AnimationFrameEnd(const std::string& Name)

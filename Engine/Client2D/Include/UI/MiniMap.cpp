@@ -20,8 +20,6 @@ bool CMiniMap::Init()
 {
 	CWidgetWindow::Init();
 	m_MiniMapWidget = CreateWidget<CMiniMapWidget>("MiniMapWidget");
-	m_MiniMapWidget->SetPos(100.f, 100.f);
-	m_MiniMapWidget->SetSize(200.f, 200.f);
 	return true;
 }
 
@@ -49,20 +47,20 @@ CMiniMap* CMiniMap::Clone()
 	return new CMiniMap(*this);
 }
 
-void CMiniMap::PushMiniMapInfoTile(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMap::PushMiniMapInfoTile(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
-	m_MiniMapWidget->PushMiniMapInfoTile(Pos, Color, EmvColor, Opacity);
+	m_MiniMapWidget->PushMiniMapInfoTile(Pos, Size, Color, EmvColor, Opacity);
 }
 
-void CMiniMap::PushMiniMapInfoObject(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMap::PushMiniMapInfoObject(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
 
-	m_MiniMapWidget->PushMiniMapInfoObject(Pos, Color, EmvColor, Opacity);
+	m_MiniMapWidget->PushMiniMapInfoObject(Pos, Size, Color, EmvColor, Opacity);
 }
-void CMiniMap::PushMiniMapInfoEnemy(Vector2 Pos, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMap::PushMiniMapInfoEnemy(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
 {
 
-	m_MiniMapWidget->PushMiniMapInfoEnemy(Pos, Color, EmvColor, Opacity);
+	m_MiniMapWidget->PushMiniMapInfoEnemy(Pos, Size, Color, EmvColor, Opacity);
 }
 
 void CMiniMap::ObjectClear()

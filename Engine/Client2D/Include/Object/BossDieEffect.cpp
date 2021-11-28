@@ -3,7 +3,7 @@
 #include "BossDieParticle.h"
 #include "Belial.h"
 CBossDieEffect::CBossDieEffect() :
-	m_SpawnCountMax(10.f),
+	m_SpawnCountMax(6.f),
 	m_SpawnCount(0.f)
 {
 }

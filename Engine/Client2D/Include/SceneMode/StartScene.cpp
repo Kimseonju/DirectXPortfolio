@@ -965,3 +965,12 @@ void CStartScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleMoveEnable("BossBackParticle", true);
 	m_pScene->GetResource()->SetParticle2D("BossBackParticle", true);
 }
+
+void CStartScene::CreateSound()
+{
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BansheeAttack",
+		"Enemy/high_pitch_scream_gverb.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "belial_laugh",
+		"belial/belial_laugh.wav");
+}

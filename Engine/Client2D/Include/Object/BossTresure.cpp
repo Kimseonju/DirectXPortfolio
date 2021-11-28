@@ -1,6 +1,8 @@
 #include "BossTresure.h"
 #include <Input.h>
 #include "KeyboardUIObject.h"
+#include "../UI/UIManager.h"
+#include "../UI/MiniMap.h"
 CBossTresure::CBossTresure() :
 	m_Open(false)
 {
@@ -83,6 +85,13 @@ void CBossTresure::PostUpdate(float DeltaTime)
 void CBossTresure::Collision(float DeltaTime)
 {
 	CGameObject::Collision(DeltaTime);
+}
+
+void CBossTresure::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 4.f), Vector4(0.f / 255.f, 0.f / 255.f, 255.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+
 }
 
 void CBossTresure::Render(float DeltaTime)

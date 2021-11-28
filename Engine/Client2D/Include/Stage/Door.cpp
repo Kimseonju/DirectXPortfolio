@@ -114,6 +114,34 @@ void CDoor::Collision(float DeltaTime)
 	CGameObject::Collision(DeltaTime);
 }
 
+void CDoor::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	switch (m_DoorDir)
+	{
+	case Door_Dir::Door_Left:
+	{	
+		CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 16.f), Vector4(0.f / 255.f, 255.f / 255.f, 0.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+		break;
+	}
+	case Door_Dir::Door_Right:
+	{
+		CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 16.f), Vector4(0.f / 255.f, 255.f / 255.f, 0.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+		break;
+	}
+	case Door_Dir::Door_Up:
+	{
+		CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(16.f, 4.f), Vector4(0.f / 255.f, 255.f / 255.f, 0.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+		break;
+	}
+	case Door_Dir::Door_Down:
+	{
+		CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(16.f, 4.f), Vector4(0.f / 255.f, 255.f / 255.f, 0.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+		break;
+	}
+	}
+}
+
 void CDoor::Render(float DeltaTime)
 {
 	CGameObject::Render(DeltaTime);

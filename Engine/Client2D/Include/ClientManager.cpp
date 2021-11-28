@@ -168,7 +168,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->SetProfileChannelState("Tile_pass", Collision_Channel::Object,
         Collision_Interaction::Block);
     CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::Object,
-        Collision_Interaction::Block);
+        Collision_Interaction::Ignore);
 
     CCollisionManager::GetInst()->SetProfileChannelState("Object", Collision_Channel::InteractionInputKey,
         Collision_Interaction::Block);

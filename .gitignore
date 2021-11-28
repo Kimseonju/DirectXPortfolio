@@ -16,15 +16,7 @@
 *.ilk
 *.pdb
 *.res
-*.mp3
-*.wav
-*.png
-*.bmp
-*.psd
-*.jpg
-*.dds
-*.tga
-*.jpeg
+*.ipdb
 !fmod.dll
 !fmod64.dll
 Engine/.vs

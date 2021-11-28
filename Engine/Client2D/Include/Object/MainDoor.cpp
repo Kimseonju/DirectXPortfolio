@@ -50,7 +50,7 @@ bool CMainDoor::Init()
 	m_DoorCollider2D = CreateSceneComponent<CColliderBox2D>("DoorCollider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	SetRootComponent(m_Sprite);
-
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Back1);
 	m_Sprite->CreateAnimation2D<CAnimation2D>();
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Animation2D = m_Sprite->GetAnimation2D();
@@ -136,8 +136,7 @@ void CMainDoor::CollisionBegin(const HitResult& result, CCollider* Collider)
 		}
 		else
 		{
-			CStageManager::GetInst()->CreateBossStage();
-			CUIManager::GetInst()->GetStageMap()->StageUpdate();
+			CUIManager::GetInst()->GetFadeInOutUI()->StageBossIn();
 		}
 	}
 }

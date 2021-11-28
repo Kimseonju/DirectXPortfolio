@@ -20,6 +20,7 @@ private:
     bool m_FadeOut;
     bool m_FadeIn;
     bool m_StageMove;
+    bool m_StageBoss;
 protected:
     CFadeInOutUI();
     virtual ~CFadeInOutUI();
@@ -31,6 +32,7 @@ public:
     virtual CFadeInOutUI* Clone();
 public:
     void StageMoveIn(Stage_Dir Dir);
+    void StageBossIn();
 
     void SetPadeIn();
     void SetPadeOut();
