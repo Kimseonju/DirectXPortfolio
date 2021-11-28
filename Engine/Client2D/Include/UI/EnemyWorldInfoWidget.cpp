@@ -21,9 +21,9 @@ bool CEnemyWorldInfoWidget::Init()
 
 	m_HPBar->SetPos(0.f, 0.f);
 	m_HPBar->SetSize(70.f, 20.f);
-	m_HPBar->SetTexture("HPBar", TEXT("HPBar.png"));
-	m_HPBar->SetCollision(false);
-
+	
+	m_HPBar->SetBackTint(0.f, 0.f, 0.f, 1.f);
+	m_HPBar->SetBaseTint(1.f, 0.f, 0.f, 1.f);
 	return true;
 }
 

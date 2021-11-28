@@ -151,20 +151,6 @@ void CStartScene::CreateMaterial()
 
 
 	//MainScene용도
-	m_pScene->GetResource()->CreateMaterial("PlayerChild");
-	m_pScene->GetResource()->AddMaterialTexture("PlayerChild", "PlayerChild",
-		TEXT("Teemo.jpg"));
-
-	m_pScene->GetResource()->CreateMaterial("Snow");
-	m_pScene->GetResource()->AddMaterialTexture("Snow", "Snow",
-		TEXT("Particle/Bubbles50px.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("Snow", true);
-	//m_pScene->GetResource()->SetMaterialOpacity("DefaultMaterial", 0.3f);
-
-	m_pScene->GetResource()->CreateMaterial("Flame");
-	m_pScene->GetResource()->AddMaterialTexture("Flame", "Flame",
-		TEXT("Particle/particle_00.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("Flame", true);
 
 
 	m_pScene->GetResource()->CreateMaterial("StageMapMaterial");
@@ -192,8 +178,8 @@ void CStartScene::CreateMaterial()
 	m_pScene->GetResource()->SetMaterialTransparency("BossBackParticle", true);
 	//임시
 	m_pScene->GetResource()->CreateMaterial("MainMap");
-	m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
-		TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
+	//m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
+	//	TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
 	m_pScene->GetResource()->SetMaterialTransparency("MainMap", true);
 	m_pScene->GetResource()->SetMaterialShader("MainMap", "TileMapShader");
 
@@ -791,15 +777,15 @@ void CStartScene::CreateAnimationSequence2D()
 			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
-		"Restaurant", TEXT("NPC/restaurant.png"));
-	for (int i = 0; i < 6; ++i)
-	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
-			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
-	}
-
+	//m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
+	//m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
+	//	"Restaurant", TEXT("NPC/restaurant.png"));
+	//for (int i = 0; i < 6; ++i)
+	//{
+	//	m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
+	//		Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
+	//}
+	//
 	/*
 	UI
 	*/
@@ -812,14 +798,14 @@ void CStartScene::CreateAnimationSequence2D()
 			Vector2(i * 4.f, 0), Vector2((i + 1) * 4.f, 10.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("RestaurantTable",
-		"RestaurantTable", TEXT("UI/restaurant/RestaurantTable.png"));
-	for (int i = 0; i < 3; ++i)
-	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
-			Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
-	}
+	//m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
+	//m_pScene->GetResource()->SetAnimationSequence2DTexture("RestaurantTable",
+	//	"RestaurantTable", TEXT("UI/restaurant/RestaurantTable.png"));
+	//for (int i = 0; i < 3; ++i)
+	//{
+	//	m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
+	//		Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
+	//}
 
 	/*기타*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("SpawnEffect");
@@ -841,47 +827,6 @@ void CStartScene::CreateAnimationSequence2D()
 
 void CStartScene::CreateParticle()
 {
-	CMaterial* SnowMaterial = m_pScene->GetResource()->FindMaterial("Snow");
-
-	m_pScene->GetResource()->CreateParticle("TestParticle");
-	m_pScene->GetResource()->SetParticleMaterial("TestParticle", SnowMaterial);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("TestParticle", 1000);
-	m_pScene->GetResource()->SetParticleStartColor("TestParticle", 0.68627f, 0.8745f, 0.89411f, 0.8f);
-	m_pScene->GetResource()->SetParticleEndColor("TestParticle", 0.68627f, 0.8745f, 0.89411f, 0.f);
-	m_pScene->GetResource()->SetParticleStartScale("TestParticle", 100.f, 100.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("TestParticle", 20.f, 20.f, 1.f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("TestParticle", 2.f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("TestParticle", 4.f);
-	m_pScene->GetResource()->SetParticleRange("TestParticle", 100.f, 0.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("TestParticle", 100.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("TestParticle", 200.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("TestParticle", true);
-	m_pScene->GetResource()->SetParticle2D("TestParticle", true);
-	m_pScene->GetResource()->SetParticleMoveDir("TestParticle", 0.f, 1.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveAngle("TestParticle", 0.f, 0.f, 90.f);
-
-	CMaterial* FlameMaterial = m_pScene->GetResource()->FindMaterial("Flame");
-
-	m_pScene->GetResource()->CreateParticle("FlameParticle");
-	m_pScene->GetResource()->SetParticleMaterial("FlameParticle", FlameMaterial);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("FlameParticle", 500);
-	m_pScene->GetResource()->SetParticleStartColor("FlameParticle", 0.94901f, 0.490019f, 0.04705f, 0.8f);
-	m_pScene->GetResource()->SetParticleEndColor("FlameParticle", 0.94901f, 0.490019f, 0.04705f, 0.f);
-	m_pScene->GetResource()->SetParticleStartScale("FlameParticle", 20.f, 20.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("FlameParticle", 10.f, 10.f, 1.f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 10.5f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 10.8f);
-	m_pScene->GetResource()->SetParticleRange("FlameParticle", 0.f, 0.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("FlameParticle", 600.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("FlameParticle", 800.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("FlameParticle", true);
-	m_pScene->GetResource()->SetParticle2D("FlameParticle", true);
-	m_pScene->GetResource()->SetParticleMoveDir("FlameParticle", 0.f, 1.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveAngle("FlameParticle", 0.f, 0.f, 90.f);
-
-
 	CMaterial* StageMapMaterial = m_pScene->GetResource()->FindMaterial("StageMapMaterial");
 
 	m_pScene->GetResource()->CreateParticle("StageMapParticle");

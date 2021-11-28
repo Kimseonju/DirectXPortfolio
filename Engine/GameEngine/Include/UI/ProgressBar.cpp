@@ -319,3 +319,18 @@ void CProgressBar::SetBackTint(const Vector4& Color)
 {
 	m_BackInfo.Tint = Color;
 }
+
+void CProgressBar::SetBaseTint(float r, float g, float b, float a)
+{
+	m_BarInfo.Tint = Vector4(r, g, b, a);
+}
+
+void CProgressBar::SetBaseTint(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	m_BarInfo.Tint = Vector4(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
+}
+
+void CProgressBar::SetBaseTint(const Vector4& Color)
+{
+	m_BarInfo.Tint = Color;
+}

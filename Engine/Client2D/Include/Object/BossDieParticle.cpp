@@ -35,8 +35,6 @@ bool CBossDieParticle::Init()
 
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetWorldScale(0.f, 0.f, 0.f);
-	CMaterial* SpriteMtrl =m_Sprite->GetMaterial(0);
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 	m_Sprite->AddChild(m_Particle);
 
 	m_Particle->SetParticle("BossDieParticle");

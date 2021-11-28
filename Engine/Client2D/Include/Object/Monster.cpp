@@ -55,7 +55,6 @@ bool CMonster::Init()
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
-	SpriteMtrl->AddTexture("PlayerTex", TEXT("teemo.png"));
 
 	//m_Sprite->CreateAnimation2D<CPlayerAnimation2D>();
 
