@@ -93,7 +93,7 @@ bool CPlayerUI::Init()
 	CPlayer* Player=CGlobalValue::MainPlayer;
 	int DashMax=Player->GetStatus().GetDashMax();
 	{
-		//앞뒤는 미리 만들기 대쉬는 최소 3임
+		//앞뒤는 미리 만들기 대쉬는 최소 2이상
 
 		image = CreateWidget<CImage>("DashBack0");
 		image->SetPos(50.f, 560.f);
@@ -101,24 +101,24 @@ bool CPlayerUI::Init()
 		image->SetTexture("PlayerUIDashBack", TEXT("UI/DashCountBase_0.png"));
 		image->SetCollision(false);
 		image = CreateWidget<CImage>("DashCount0");
-		image->SetPos(56.f, 568.f);
+		image->SetPos(58.f, 568.f);
 		image->SetSize(36.f, 16.f);
 		image->SetTexture("PlayerUIDashCount", TEXT("UI/DashCount.png"));
 		image->SetCollision(false);
 		image->SetZOrder(1);
 		m_vecDashCount.push_back(image);
 
-		for (int i = 1; i < DashMax-1; ++i)
+		for (int i = 0; i < DashMax-2; ++i)
 		{
 			std::string str = std::to_string(i);
 			image = CreateWidget<CImage>("DashBack"+ str);
-			image->SetPos(50.f +i* 36.f, 560.f);
+			image->SetPos(94.f +i* 36.f, 560.f);
 			image->SetSize(36.f, 32.f);
 			image->SetTexture("PlayerUIDashBack2", TEXT("UI/DashBase.png"));
 			image->SetCollision(false);
 
 			image = CreateWidget<CImage>("DashCount"+ str);
-			image->SetPos(56.f + i * 36.f, 568.f);
+			image->SetPos(94.f + i * 36.f, 568.f);
 			image->SetSize(36.f, 16.f);
 			image->SetTexture("PlayerUIDashCount", TEXT("UI/DashCount.png"));
 			image->SetCollision(false);
@@ -127,14 +127,14 @@ bool CPlayerUI::Init()
 		}
 
 		std::string str = std::to_string(DashMax);
-		image = CreateWidget<CImage>("DashBack" + str);
-		image->SetPos(50.f + (DashMax-1) * 36.f, 560.f);
-		image->SetSize(44.f, 32.f);
-		image->SetTexture("DashCountBase_1", TEXT("UI/DashCountBase_1.png"));
-		image->SetCollision(false);
+		CImage* aimage = CreateWidget<CImage>("DashEnd" + str);
+		aimage->SetPos(94.f + (DashMax-2) * 36.f, 560.f);
+		aimage->SetSize(44.f, 32.f);
+		aimage->SetTexture("DashCountBase_1", TEXT("UI/DashCountBase_1.png"));
+		aimage->SetCollision(false);
 
 		image = CreateWidget<CImage>("DashCount" + str);
-		image->SetPos(56.f + (DashMax-1) * 36.f, 568.f);
+		image->SetPos(94.f + (DashMax-2) * 36.f, 568.f);
 		image->SetSize(36.f, 16.f);
 		image->SetTexture("PlayerUIDashCount", TEXT("UI/DashCount.png"));
 		image->SetCollision(false);

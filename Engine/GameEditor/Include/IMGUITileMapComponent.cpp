@@ -62,13 +62,13 @@ bool CIMGUITileMapComponent::Init()
 
 	Scene->GetResource()->CreateMaterial("MainMap");
 	Scene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
-		TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
+		TEXT("Map/CandleOn1.png"));
 	Scene->GetResource()->SetMaterialTransparency("MainMap", true);
 	Scene->GetResource()->SetMaterialShader("MainMap", "TileMapShader");
 
 	Scene->GetResource()->CreateMaterial("MainMapRect");
 	Scene->GetResource()->AddMaterialTexture("MainMapRect", "MainMapRect",
-		TEXT("Floors.png"));
+		TEXT("Map/CandleOn1.png"));
 	Scene->GetResource()->SetMaterialTransparency("MainMapRect", true);
 	Scene->GetResource()->SetMaterialShader("MainMapRect", "TileMapShader");
 
@@ -536,7 +536,7 @@ void CIMGUITileMapComponent::CreateTileMapInfo()
 	m_TileImage = m_Owner->AddWidget<CIMGUIImage>("##TileImage", 100.f, 100.f);
 	m_TileImage->SetStartUV(0.f, 0.f);
 	m_TileImage->SetEndUV(1.f, 1.f);
-	m_TileImage->SetTexture("DefaultImageSlot", TEXT("DefaultSlot.png"));
+	m_TileImage->SetTexture("CandleOn1", TEXT("Map/CandleOn1.png"));
 
 	SameLine = m_Owner->AddWidget<CIMGUISameLine>("SameLine");
 	m_vecWidget.push_back(m_TileImage);
@@ -657,7 +657,7 @@ void CIMGUITileMapComponent::CreateTileButton()
 
 	TileObjectMap->SetFrameMax(m_ImageFrameMaxX, m_ImageFrameMaxY);
 	//ºó°ø°£ ¼±ÅÃ
-	TileObjectMap->SetTileDefaultFrame(3, 0);
+	TileObjectMap->SetTileDefaultFrame(3, 1);
 
 	if (m_TileTexture)
 	{

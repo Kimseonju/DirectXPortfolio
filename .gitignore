@@ -19,6 +19,15 @@
 *.ipdb
 
 
+*.mp3
+*.wav
+*.png
+*.bmp
+*.psd
+*.jpg
+*.dds
+*.tga
+*.jpeg
 
 !fmod.dll
 !fmod64.dll

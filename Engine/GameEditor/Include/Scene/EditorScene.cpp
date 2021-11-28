@@ -417,7 +417,6 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
 	}
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("ObjectDieEffect", "CreateEffect", 5);
 
 	/*
 	Door
@@ -548,7 +547,6 @@ void CEditorScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyDaggerAttack",
 			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 30.f));
 	}
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyDaggerAttack", "Attack", 7);
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyDaggerIdle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("SmallEnemyDaggerIdle",
@@ -578,7 +576,6 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
 	}
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 2);
 
 
 
@@ -603,7 +600,6 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 20.f));
 	}
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("GhostAttack", "Attack", 2);
 	/*
 	Banshee
 	*/
@@ -625,8 +621,6 @@ void CEditorScene::CreateAnimationSequence2D()
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BansheeAttack",
 			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 22.f));
 	}
-
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("BansheeAttack", "Attack", 5);
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("BansheeBullet");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("BansheeBullet",
@@ -668,7 +662,6 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 59.f, 0), Vector2((i + 1) * 59.f, 41.f));
 	}
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("Giant_RedAttack", "Attack", 4);
 
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Giant_RedBullet");
@@ -734,9 +727,6 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
 	}
 	//Notify설정할부분
-	//m_pScene->GetResource()->AddAnimationSequence2DNotify("PlayerAttack", "Attack", 8);
-
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("BelialHand_Attack", "BelialHandAttack", 7);
 	/*Back*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Circle");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("Belial_Circle",
@@ -868,14 +858,7 @@ void CEditorScene::CreateAnimationSequence2D()
 			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
 	}
 
-	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
-	m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
-		"Restaurant", TEXT("NPC/restaurant.png"));
-	for (int i = 0; i < 6; ++i)
-	{
-		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
-			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
-	}
+	
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("InDungeonShop");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("InDungeonShop",
