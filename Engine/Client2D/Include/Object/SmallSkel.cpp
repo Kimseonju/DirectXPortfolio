@@ -48,7 +48,6 @@ bool CSmallSkel::Init()
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
 	m_WeaponArm->SetDirPos(Vector3(10.f, 0.f, 0.f));
-	m_Status->SetMoveSpeed(50.f);
 	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 
 	return true;
@@ -114,6 +113,28 @@ void CSmallSkel::CollisionAttackRangeBegin(const HitResult& result, CCollider* C
 	}
 }
 
+void CSmallSkel::CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		Vector3 DestPos = result.DestObject->GetWorldPos();
+		Vector3 Pos = GetWorldPos();
+		Pos = Pos - DestPos;
+		float Dir;
+		if (m_Dir == Object_Dir::Left)
+		{
+			Dir = 270.f;
+		}
+		else
+		{
+			Dir = 90.f;
+		}
+		//¿ÞÂÊ ¿À¸¥ÂÊ
+		m_State = Enemy_State::Attack;
+		m_Weapon->Attack(Dir);
+	}
+}
+
 void CSmallSkel::AnimationFrameEnd(const std::string& Name)
 {
 }
@@ -126,6 +147,6 @@ void CSmallSkel::DropGold()
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 }

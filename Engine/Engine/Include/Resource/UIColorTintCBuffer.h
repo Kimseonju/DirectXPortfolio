@@ -29,5 +29,9 @@ public:
 	{
 		m_BufferData.Tint = Color;
 	}
+	Vector4 GetColorTint()
+	{
+		return m_BufferData.Tint;
+	}
 };
 

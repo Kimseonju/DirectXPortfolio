@@ -1,4 +1,6 @@
 #include "ObjectDieEffectObject.h"
+#include <Scene/Scene.h>
+#include <Scene/SceneResource.h>
 CObjectDieEffectObject::CObjectDieEffectObject()
 {
 }
@@ -21,11 +23,12 @@ bool CObjectDieEffectObject::Init()
 	if (!CEffectObject::Init())
 		return false;
 
-	m_Sprite->SetRelativeScale(Vector3(28.f, 40.f, 1.f));
+	m_Sprite->SetRelativeScale(Vector3(40.f, 40.f, 1.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
 	m_Animation2D->SetIdleAnimation2D("ObjectDieEffect", false);
 	m_Animation2D->SetFrameEndFunction< CObjectDieEffectObject>(this, &CEffectObject::AnimationFrameEnd);
+	m_pScene->GetResource()->FindSound("EnemyDie")->Play();
 	return true;
 }
 

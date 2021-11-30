@@ -8,6 +8,7 @@
 #include "../BasicStatus.h"
 #include "ShortSwordEffectObject.h"
 #include "PlayerAttack.h"
+#include <Scene/SceneResource.h>
 CShortSword::CShortSword() 
 {
 	SetItemTexture("ShortSword", TEXT("Weapon/Melee/ShortSword.png"));
@@ -89,6 +90,8 @@ bool CShortSword::Attack(float Angle)
 	{
 		obj->SetWorldPos(m_Owner->GetWorldPos());
 	}
+	m_pScene->GetResource()->FindSound("SwordAttack")->Play();
+
 
 	CPlayerAttack* pPlayerAttack = m_pScene->SpawnObject<CPlayerAttack>("CollisionPlayerAttack");
 	pPlayerAttack->SetWorldPos(GetWorldPos());

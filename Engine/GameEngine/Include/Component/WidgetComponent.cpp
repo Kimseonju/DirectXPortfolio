@@ -59,7 +59,13 @@ void CWidgetComponent::Update(float DeltaTime)
 void CWidgetComponent::PostUpdate(float DeltaTime)
 {
 	CPrimitiveComponent::PostUpdate(DeltaTime);
+	m_WidgetWindow->PostUpdate(DeltaTime);
 
+}
+
+void CWidgetComponent::PrevRender(float DeltaTime)
+{
+	CPrimitiveComponent::PrevRender(DeltaTime);
 	if (m_WidgetWindow)
 	{
 		if (m_Space == WidgetComponent_Space::Space2D)
@@ -86,14 +92,14 @@ void CWidgetComponent::PostUpdate(float DeltaTime)
 				CameraPos.y = Camera->GetMax().y;
 			}
 
-			Vector2	CameraZoomSize=Camera->GetCameraZoomSize();
+			Vector2	CameraZoomSize = Camera->GetCameraZoomSize();
 			float Zoom = Camera->GetCameraZoom();
 			Vector2 VRS = Camera->GetVRS();
 			Vector2 Size = { VRS.x / 2.f, VRS.y / 2.f };
 			Size.x = Size.x / Zoom - Size.x;
 			Size.y = Size.y / Zoom - Size.y;
 
-			CameraPos += (VRS+ Size) / 2.f;
+			CameraPos += (VRS + Size) / 2.f;
 
 			WidgetPos -= CameraPos;
 			WidgetPos /= CameraZoomSize;
@@ -106,7 +112,7 @@ void CWidgetComponent::PostUpdate(float DeltaTime)
 		{
 		}
 
-		m_WidgetWindow->PostUpdate(DeltaTime);
+		m_WidgetWindow->PrevRender(DeltaTime);
 	}
 }
 

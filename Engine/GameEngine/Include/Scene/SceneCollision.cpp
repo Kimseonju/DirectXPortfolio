@@ -5,7 +5,7 @@
 #include "../Render/RenderManager.h"
 #include "CollisionSection.h"
 #include "../Input.h"
-
+#include "../UI/WidgetWindow.h"
 CSceneCollision::CSceneCollision()	:
 	m_Section2D(nullptr),
 	m_Section3D(nullptr),
@@ -342,7 +342,6 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 
 	auto iterUI = m_vecWidget.begin();
 	auto iterUIEnd = m_vecWidget.end();
-
 	//UI충돌체크
 	for (; iterUI != iterUIEnd; ++iterUI)
 	{
@@ -353,6 +352,12 @@ void CSceneCollision::CollisionMouse(float DeltaTime)
 		if (!(*iterUI)->IsEnable())
 		{
 			continue;
+		}
+		//UI만 충돌시킬것 Component가있다는것은 월드꺼임
+		if ((*iterUI)->GetOwner())
+		{
+			if((*iterUI)->GetOwner()->GetWidgetComponent())
+				continue;
 		}
 		Vector2 Pos = (*iterUI)->GetPos();
 		Vector2 Size = (*iterUI)->GetSize();

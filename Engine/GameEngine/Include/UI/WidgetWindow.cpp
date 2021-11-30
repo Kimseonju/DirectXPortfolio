@@ -83,7 +83,21 @@ void CWidgetWindow::PostUpdate(float DeltaTime)
 
 void CWidgetWindow::PrevRender(float DeltaTime)
 {
-	CWidget::PrevRender(DeltaTime);
+	auto	iter = m_vecWidget.begin();
+	auto	iterEnd = m_vecWidget.end();
+
+	for (; iter != iterEnd; )
+	{
+		if (!(*iter)->IsActive())
+		{
+			iter = m_vecWidget.erase(iter);
+			iterEnd = m_vecWidget.end();
+			continue;
+		}
+
+		(*iter)->PrevRender(DeltaTime);
+		++iter;
+	}
 }
 
 void CWidgetWindow::Render()

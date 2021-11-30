@@ -25,6 +25,9 @@ protected:
 	CSharedPtr<CParticleSystemComponent> m_Particle;
 	float m_LifeTime;
 	class CBelial* m_Belial;
+	float m_SoundTimer;
+	float m_SoundTimerMax;
+	bool m_Effect;
 public:
 	void SetBelial(class CBelial* Belial)
 	{

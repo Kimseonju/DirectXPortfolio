@@ -8,7 +8,8 @@ CSound::CSound() :
 	m_System(nullptr),
 	m_Sound(nullptr),
 	m_Group(nullptr),
-	m_Channel(nullptr)
+	m_Channel(nullptr),
+	m_Volumn(1.f)
 {
 }
 
@@ -48,9 +49,44 @@ bool CSound::LoadSound(FMOD::System* System, FMOD::ChannelGroup* Group,
 	return true;
 }
 
+void CSound::Update(float DeltaTime)
+{
+	if (m_Channel)
+	{
+		if (m_Play)
+		{
+			m_Volumn += DeltaTime;
+			if (m_Volumn > 1.f)
+				m_Volumn = 1.f;
+		}
+		else
+		{
+			m_Volumn -= DeltaTime;
+			if (m_Volumn < 0.f)
+				m_Volumn = 0.f;
+		}
+		m_Channel->setVolume(m_Volumn);
+	}
+}
+
 void CSound::Play()
 {
-	m_System->playSound(m_Sound, m_Group, false, &m_Channel);
+	if (m_Channel)
+	{
+		if (m_Loop)
+		{
+			Resume();
+		}
+		else
+		{
+			m_System->playSound(m_Sound, m_Group, false, &m_Channel);
+
+		}
+	}
+	else
+	{
+		m_System->playSound(m_Sound, m_Group, false, &m_Channel);
+	}
 	m_Play = true;
 }
 
@@ -75,13 +111,13 @@ void CSound::Pause()
 {
 	if (!m_Channel)
 		return;
-
-	bool	Playing = false;
-
-	m_Channel->isPlaying(&Playing);
-
-	if (Playing)
-		m_Channel->setPaused(true);
+	
+	//bool	Playing = false;
+	//
+	//m_Channel->isPlaying(&Playing);
+	//
+	//if (Playing)
+	//	m_Channel->setPaused(true);
 
 	m_Play = false;
 }
@@ -91,12 +127,12 @@ void CSound::Resume()
 	if (!m_Channel)
 		return;
 
-	bool	Playing = false;
-
-	m_Channel->isPlaying(&Playing);
-
-	if (!Playing)
-		m_Channel->setPaused(false);
+	//bool	Playing = false;
+	//
+	//m_Channel->isPlaying(&Playing);
+	//
+	////if (!Playing)
+	//m_Channel->setPaused(false);
 
 	m_Play = true;
 }

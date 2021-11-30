@@ -5,6 +5,9 @@
 #include "Resource/Material.h"
 #include "Engine.h"
 #include "EffectObject.h"
+#include <Resource/ResourceManager.h>
+#include <Resource/Sound.h>
+#include <Scene/SceneResource.h>
 CWeapon::CWeapon() :
 	m_PlayAttacking(false),
 	m_WeaponType(Weapon_Type::Melee),
@@ -54,16 +57,21 @@ void CWeapon::Update(float DeltaTime)
 				m_Reload = false;
 				m_ReloadEffect = true;
 				m_Status->Reload();
+				m_pScene->GetResource()->FindSound("Reload2")->Play();
 				//사운드재생
 			}
 
 		}
+		else
+		{
+			if (IsMagazine() && GetMagazine() == 0)
+			{
+				Reload();
+			}
+		}
 		m_CurrentAttackDelay += DeltaTime;
 
-		if (IsMagazine() && GetMagazine() == 0)
-		{
-			Reload();
-		}
+		
 
 		if (m_WeaponType == Weapon_Type::Range)
 		{
@@ -146,6 +154,10 @@ void CWeapon::Dash(CPlayer* player)
 void CWeapon::Reload()
 {
 	m_Reload = true;
+
+	//사운드재생
+
+	m_pScene->GetResource()->FindSound("Reload")->Play();
 }
 
 void CWeapon::GetHit()

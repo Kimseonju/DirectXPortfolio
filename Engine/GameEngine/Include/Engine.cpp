@@ -26,7 +26,7 @@ bool CEngine::m_Loop = true;
 CEngine::CEngine()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(154089);
+	//_CrtSetBreakAlloc(6218);
 
 	m_pTimer = nullptr;
 	m_TimeScale = 1.f;
@@ -34,6 +34,7 @@ CEngine::CEngine()
 	m_OnLogFPS = false;
 	m_GlobalCBuffer = nullptr;
 	m_Start = false;
+	m_CollisionRender = true;
 }
 
 CEngine::~CEngine()
@@ -201,8 +202,6 @@ void CEngine::Logic()
 
 	CDevice::GetInst()->Update();
 
-	CResourceManager::GetInst()->Update();
-
 	if (m_DebugLogWindow && m_OnLogFPS && m_pTimer->IsFPS())
 	{
 		char	FPSLog[256] = {};
@@ -210,6 +209,8 @@ void CEngine::Logic()
 		m_DebugLogWindow->AddLog(FPSLog);
 	}
 	float	DeltaTime = m_pTimer->GetDeltaTime() * m_TimeScale;
+	CResourceManager::GetInst()->Update(DeltaTime);
+
 	m_AccTime += DeltaTime;
 	if (!m_Start)
 	{
@@ -270,6 +271,8 @@ bool CEngine::PostUpdate(float DeltaTime)
 	if (m_MouseWidget)
 		m_MouseWidget->PostUpdate(DeltaTime);
 
+	if (m_MouseWidget)
+		m_MouseWidget->PrevRender(DeltaTime);
 	return CSceneManager::GetInst()->PostUpdate(DeltaTime);
 }
 

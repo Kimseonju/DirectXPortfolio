@@ -3,6 +3,7 @@
 #include "KeyboardUIObject.h"
 #include "../UI/UIManager.h"
 #include "../UI/MiniMap.h"
+#include <Scene/SceneResource.h>
 CBossTresure::CBossTresure() :
 	m_Open(false)
 {
@@ -134,6 +135,7 @@ void CBossTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 			Material->SetTexture("BossTresureOpened", TEXT("NPC/BossTresureOpened.png"));
 			//°ñµåµå¶ø
 
+			m_pScene->GetResource()->FindSound("BossTresureBox")->Play();
 
 
 		}

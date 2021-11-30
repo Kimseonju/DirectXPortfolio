@@ -11,6 +11,8 @@
 #include "../Object/BasicTresure.h"
 #include "../Object/BossTresure.h"
 #include "../Stage/StageManager.h"
+#include <Scene/Scene.h>
+#include <Scene/SceneResource.h>
 CSpawnEffect::CSpawnEffect()
 {
 }
@@ -113,6 +115,7 @@ void CSpawnEffect::Spawn()
 		{
 			Stage->PushEnemy(m_Obj);
 			m_Obj->SetWorldPos(2000.f, 2000.f, 0.f);
+			m_pScene->GetResource()->FindSound("SpawnEnemy")->Play();
 		}
 	}
 	else if (m_ClassType == Client_Class_Type::Object)

@@ -10,6 +10,7 @@
 #include "../Object/EndingCamera.h"
 #include "../UI/EndingUI.h"
 #include "Scene/Viewport.h"
+#include <Input.h>
 CEndingScene::CEndingScene()
 {
 }
@@ -24,15 +25,30 @@ bool CEndingScene::Init()
 	CreateAnimationSequence2D();
 	CreateParticle();
 
+	m_pScene->GetResource()->LoadSound("BGM", true, "Town",
+		"bgm/0.Town.wav");
+
+	m_pScene->GetResource()->FindSound("Town")->Play();
+
 	CEndingCloud* EndingCloud = m_pScene->SpawnObject<CEndingCloud>("EndingCloud");
 	CEndingMountain* EndingMountain = m_pScene->SpawnObject<CEndingMountain>("EndingMountain");
+	EndingMountain->SetWorldPos(-640.f, 70.f, 0.f);
+	CEndingMountain* EndingMountain2 = m_pScene->SpawnObject<CEndingMountain>("EndingMountain2");
+	EndingMountain2->SetWorldPos(-320.f, 70.f, 0.f);
+
+	CEndingMountain* EndingMountain3 = m_pScene->SpawnObject<CEndingMountain>("EndingMountain3");
+	EndingMountain3->SetWorldPos(0.f, 70.f, 0.f);
 	CEndingPlayer* EndingPlayer = m_pScene->SpawnObject<CEndingPlayer>("EndingPlayer");
 	CEndingHorse* EndingHorse = m_pScene->SpawnObject<CEndingHorse>("EndingHorse");
 	CEndingTerrain* EndingTerrain = m_pScene->SpawnObject<CEndingTerrain>("EndingTerrain");
+	EndingTerrain->SetWorldPos(-170.f, -155.f, 0.f);
+	EndingTerrain = m_pScene->SpawnObject<CEndingTerrain>("EndingTerrain2");
+	EndingTerrain->SetWorldPos(-650.f, -155.f, 0.f);
 	CEndingCamera* EndingCamera = m_pScene->SpawnObject<CEndingCamera>("EndingCamera");
 
 
 	CEndingUI* Widget = m_pScene->GetViewport()->AddWindow<CEndingUI>("EndingUI");
+	CInput::GetInst()->ClearCallback();
 	return true;
 }
 

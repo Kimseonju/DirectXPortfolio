@@ -4,6 +4,7 @@
 #include <Engine.h>
 #include <Component/Camera.h>
 #include <Scene/CameraManager.h>
+#include <Scene/SceneResource.h>
 CBossDieEffectStart::CBossDieEffectStart()
 {
 }
@@ -42,6 +43,7 @@ bool CBossDieEffectStart::Init()
 	//		Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
 	//}
 
+	m_pScene->GetResource()->FindSound("EnemyDie")->Play();
 	return true;
 }
 

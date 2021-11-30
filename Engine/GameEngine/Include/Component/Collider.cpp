@@ -4,7 +4,7 @@
 #include "../Scene/SceneCollision.h"
 #include "../CollisionManager.h"
 #include "../Resource/ColliderConstantBuffer.h"
-
+#include "../Engine.h"
 CCollider::CCollider()
 {
 	m_SceneComponentType = SceneComponent_Type::Primitive;
@@ -254,19 +254,19 @@ void CCollider::Render(float DeltaTime)
 	CPrimitiveComponent::Render(DeltaTime);
 	if (!IsEnable())
 		return;
-	if (m_DebugRender)
+	if (CEngine::GetInst()->GetCollisionRender())
 	{
 		CPrimitiveComponent::Render(DeltaTime);
 	
 		if (m_PrevCollisionList.empty())
 			m_CBuffer->SetColor(Vector4(0.f, 1.f, 0.f, 1.f));
-	
+
 		else
 			m_CBuffer->SetColor(Vector4(1.f, 0.f, 0.f, 1.f));
-	
+
 		if (m_MouseCollision)
 			m_CBuffer->SetColor(Vector4(1.f, 0.f, 0.f, 1.f));
-	
+		
 		m_CBuffer->UpdateCBuffer();
 	
 		m_DebugShader->SetShader();

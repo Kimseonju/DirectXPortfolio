@@ -35,6 +35,11 @@ protected:
 	bool		m_Blind;
 	bool		m_bCollision;
 public:
+	class CWidgetWindow* GetOwner()
+	{
+		return m_Owner;
+	}
+
 	bool IsCollision() const;
 	bool IsBlind() const
 	{
@@ -126,6 +131,11 @@ public:
 	void SetColorTint(const Vector4& Color)
 	{
 		m_TintCBuffer->SetTint(Color);
+	}
+
+	Vector4 GetColorTint()
+	{
+		return m_TintCBuffer->GetColorTint();
 	}
 	void SetAnimation2DEnable(bool Enable);
 public:

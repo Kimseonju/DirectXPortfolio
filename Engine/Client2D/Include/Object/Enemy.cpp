@@ -15,6 +15,7 @@
 #include "TextObject.h"
 #include "../UI/UIManager.h"
 #include "../UI/MiniMap.h"
+#include <Scene/SceneResource.h>
 CEnemy::CEnemy() :
 	m_ChildFire(false),
 	m_ChildFireTime(0.f),
@@ -72,8 +73,6 @@ bool CEnemy::Init()
 	//
 
 	//테스트용 
-	m_Status->SetHP(1);
-	m_Status->SetHPMax(1);
 
 
 	SetRootComponent(m_Sprite);
@@ -97,6 +96,8 @@ bool CEnemy::Init()
 	m_Collider2D->SetCollisionProfile("Enemy");
 	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Begin, this,
 		&CEnemy::CollisionBegin);
+	m_Collider2D->AddCollisionCallbackFunction<CEnemy>(Collision_State::Middle, this,
+		&CEnemy::CollisionAttackRangeMiddle);
 
 	m_Collider2DHorizon->SetCollisionProfile("TileCheckCollsion");
 	m_Collider2DVertical->SetCollisionProfile("TileCheckCollsion");
@@ -119,10 +120,8 @@ bool CEnemy::Init()
 	m_WeaponArm->SetRelativePos(0.f, 0.f, 0.f);
 	PushObjectChild(m_WeaponArm);
 
-	m_Status->SetMoveSpeed(200.f);
 	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
-	m_Status->SetHP(30);
-	m_Status->SetHPMax(30);
+	m_Body->SetGravity(300.f);
 
 
 	m_EnemyFSM.CreateState("Find", this, &CEnemy::FindStay, &CEnemy::FindStart, &CEnemy::FindEnd);
@@ -259,6 +258,11 @@ void CEnemy::CollisionAttackRangeBegin(const HitResult& result, CCollider* Colli
 
 }
 
+void CEnemy::CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider)
+{
+	
+}
+
 void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
@@ -287,6 +291,11 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 				m_Weapon->Active(false);
 			}
 			DropGold();
+		}
+		else
+		{
+
+			m_pScene->GetResource()->FindSound("Hit_Enemy")->Play();
 		}
 
 	}
@@ -343,7 +352,7 @@ void CEnemy::CollisionVerticalBegin(const HitResult& result, CCollider* Collider
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirVertical(Angle, result.DestCollider);
+		ColTilePassDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
@@ -364,7 +373,7 @@ void CEnemy::CollisionVerticalMiddle(const HitResult& result, CCollider* Collide
 		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
-		ColDirVertical(Angle, result.DestCollider);
+		ColTilePassDirVertical(Angle, result.DestCollider);
 		m_WallCol = true;
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
@@ -454,6 +463,30 @@ void CEnemy::ColDirVertical(float Angle, CCollider* Col)
 		PlayerPos.y = XMove.y;
 	}
 
+	SetWorldPos(PlayerPos);
+}
+
+void CEnemy::ColTilePassDirVertical(float Angle, CCollider* Col)
+{
+	Vector3 ColPos = Col->GetWorldPos();
+	Vector3 ColScale = Col->GetRelativeScale() / 2.f;
+	Vector3 PlayerPos = GetWorldPos();
+	Vector3 PlayerScale = m_Collider2DVertical->GetRelativeScale() / 2.f;
+
+	//왼쪽
+
+	//아래
+	if (180.f <= Angle && Angle < 360.f)
+	{
+		m_Body->StopForceY();
+		m_Body->StopForceX();
+		m_Body->SetGravity(false);
+		m_Body->SetJump(false);
+		float y = (PlayerScale.y + ColScale.y);
+		Vector3 XMove = ColPos;
+		XMove.y += y;
+		PlayerPos.y = XMove.y;
+	}
 	SetWorldPos(PlayerPos);
 }
 

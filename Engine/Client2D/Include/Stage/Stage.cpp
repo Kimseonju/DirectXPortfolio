@@ -16,11 +16,13 @@
 #include "../Object/ShopNPC.h"
 #include "../Object/SpawnEffect.h"
 #include "../Object/TorchLight.h"
+#include "../Object/BossTorchLight.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
 	m_DoorDir(-1),
-	m_EnemyOrder(1)
+	m_EnemyOrder(1),
+	m_Type(StageType::End)
 {
 }
 
@@ -88,6 +90,7 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 	{
 		return;
 	}
+	m_Type = Type;
 	m_Name = Info.Name;
 	m_DoorDir = num;
 	m_TileMap =Info.TileMap;
@@ -158,9 +161,9 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 			}
 			case Client_Object_Type::BossTorch:
 			{
-				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
-				m_Object.push_back(NPC);
-				Obj = NPC;
+				CBossTorchLight* TorchLight = m_pScene->SpawnObject<CBossTorchLight>("BossTorchLight");
+				m_Object.push_back(TorchLight);
+				Obj = TorchLight;
 
 				break;
 			}

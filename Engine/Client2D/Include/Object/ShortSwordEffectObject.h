@@ -20,8 +20,6 @@ public:
 	virtual void Collision(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CShortSwordEffectObject* Clone();
-	virtual void Animation2DNotify(const std::string& Name);
 
-public:
 };
 

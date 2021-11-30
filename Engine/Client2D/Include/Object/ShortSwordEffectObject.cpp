@@ -1,4 +1,6 @@
 #include "ShortSwordEffectObject.h"
+#include <Resource/ResourceManager.h>
+#include <Scene/Scene.h>
 CShortSwordEffectObject::CShortSwordEffectObject()
 {
 }
@@ -27,7 +29,6 @@ bool CShortSwordEffectObject::Init()
 	m_Animation2D->SetIdleAnimation2D("ShortSwordEffect", false);
 	m_Animation2D->SetSequencePlayRate("ShortSwordEffect",4.f);
 	m_Animation2D->SetFrameEndFunction<CShortSwordEffectObject>(this, &CEffectObject::AnimationFrameEnd);
-
 	return true;
 }
 
@@ -54,8 +55,4 @@ void CShortSwordEffectObject::Render(float DeltaTime)
 CShortSwordEffectObject* CShortSwordEffectObject::Clone()
 {
 	return new CShortSwordEffectObject(*this);
-}
-
-void CShortSwordEffectObject::Animation2DNotify(const std::string& Name)
-{
 }

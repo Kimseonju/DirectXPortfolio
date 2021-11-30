@@ -8,6 +8,7 @@
 #include "../Stage/Stage.h"
 #include "../UI/UIManager.h"
 #include "../UI/Inventory.h"
+#include <Scene/SceneResource.h>
 CItem::CItem() :
 	m_ItemImage(nullptr),
 	m_Type(ITEM_TYPE::End),
@@ -351,6 +352,7 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 		if (CUIManager::GetInst()->GetInventory()->AddInventoryItem(this))
 		{
 			StateNoMapItem();
+			m_pScene->GetResource()->FindSound("GetItem")->Play();
 			CStage* CurStage = CStageManager::GetInst()->GetCurStage();
 			CurStage->DeleteObject(this);
 		}

@@ -1,6 +1,6 @@
 Object,Banshee
-HP,40
-HPMAX,40
+HP,100
+HPMAX,100
 Dash,0
 DashMax,0
 AttackSpeed,5

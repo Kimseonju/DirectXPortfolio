@@ -2,9 +2,8 @@
 #include <Scene/Scene.h>
 #include "BossDieParticle.h"
 #include "Belial.h"
-CBossDieEffect::CBossDieEffect() :
-	m_SpawnCountMax(6.f),
-	m_SpawnCount(0.f)
+#include <Scene/SceneResource.h>
+CBossDieEffect::CBossDieEffect()
 {
 }
 
@@ -32,7 +31,7 @@ bool CBossDieEffect::Init()
 	m_Animation2D->SetIdleAnimation2D("ObjectDieEffect", false);
 	m_Animation2D->SetFrameEndFunction<CBossDieEffect>(this, &CEffectObject::AnimationFrameEnd);
 	m_Animation2D->SetSequencePlayRate("ObjectDieEffect", 2.f);
-	
+
 	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Particle);
 
 	return true;
@@ -41,8 +40,8 @@ bool CBossDieEffect::Init()
 void CBossDieEffect::Update(float DeltaTime)
 {
 	CEffectObject::Update(DeltaTime);
-
 }
+
 
 void CBossDieEffect::PostUpdate(float DeltaTime)
 {
@@ -66,22 +65,6 @@ CBossDieEffect* CBossDieEffect::Clone()
 
 void CBossDieEffect::Animation2DNotify(const std::string& Name)
 {
-	if (Name == "CreateEffect")
-	{
-
-		if (m_SpawnCount == m_SpawnCountMax)
-		{
-			m_Belial->EffectEnd();
-			return;
-		}
-			
-		CBossDieEffect* Obj=m_pScene->SpawnObject<CBossDieEffect>("BossDieEffect");
-		Obj->SetWorldRotation(GetWorldRotation());
-		Obj->SetWorldPos(GetWorldPos());
-		Obj->AddRelativePos(Obj->GetAxis(AXIS_Y) * 10.f);
-		Obj->SetSpawnCount(m_SpawnCount + 1);
-		Obj->SetBelial(m_Belial);
-	}
 }
 
 void CBossDieEffect::AnimationFrameEnd(const std::string& Name)

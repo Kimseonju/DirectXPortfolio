@@ -44,7 +44,6 @@ bool CSmallSkel_Bow::Init()
 	m_Weapon = m_pScene->SpawnObject<CSmallSkelBow>("SmallSkelBow");
 	m_Weapon->SetRelativePos(0.f, 0.f, 0.f);
 	m_WeaponArm->PushObjectChild(m_Weapon);
-	m_Status->SetMoveSpeed(50.f);
 	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 
 	return true;
@@ -95,6 +94,10 @@ void CSmallSkel_Bow::CollisionAttackRangeBegin(const HitResult& result, CCollide
 	}
 }
 
+void CSmallSkel_Bow::CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider)
+{
+}
+
 void CSmallSkel_Bow::AnimationFrameEnd(const std::string& Name)
 {
 }
@@ -107,6 +110,6 @@ void CSmallSkel_Bow::DropGold()
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 }

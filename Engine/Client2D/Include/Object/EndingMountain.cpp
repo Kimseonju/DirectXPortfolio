@@ -32,7 +32,6 @@ bool CEndingMountain::Init()
 
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetWorldScale(320.f, 142.f, 0.f);
-	m_Sprite->AddWorldPos(0.f, 70.f, 0.f);
 	CMaterial* Material = m_Sprite->GetMaterial(0);
 	Material->AddTexture("TownBG_Day", TEXT("Map/TownBG_Day.png"));
 	Material->SetBaseColor(1.5f, 1.5f, 1.5f, 1.f);
@@ -42,6 +41,13 @@ bool CEndingMountain::Init()
 void CEndingMountain::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+	Vector3 Pos = GetWorldPos();
+	Pos.x += 6.f * DeltaTime;
+	if (Pos.x >= 320.f)
+	{
+		Pos.x -= 960.f;
+	}
+	SetWorldPos(Pos);
 }
 
 void CEndingMountain::PostUpdate(float DeltaTime)

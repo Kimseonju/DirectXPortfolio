@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "../Stage/StageManager.h"
 #include "../Stage/Stage.h"
+#include <Scene/SceneResource.h>
 CGoldBullion::CGoldBullion() :
 	m_Open(false),
 	m_WallCol(false)
@@ -66,7 +67,7 @@ bool CGoldBullion::Init()
 	m_Collider2DVertical->SetExtent(1.f, 4.5f);
 	m_Collider2DHorizon->SetExtent(10.f, 1.f);
 	m_Body->SetGravity(true);
-
+	m_Body->SetGravityPower(100.f);
 
 	CStage* Stage = CStageManager::GetInst()->GetCurStage();
 	Stage->PushObject(this);
@@ -129,6 +130,7 @@ void CGoldBullion::CollisionHorizonBegin(const HitResult& result, CCollider* Col
 		TextObj->SetText(std::to_string(100)+"G");
 		TextObj->SetWorldPos(GetWorldPos());
 		TextObj->Gold();
+		m_pScene->GetResource()->FindSound("GetGold")->Play();
 		Active(false);
 	}
 
@@ -158,7 +160,8 @@ void CGoldBullion::CollisionVerticalBegin(const HitResult& result, CCollider* Co
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass
 		|| result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector3 PlayerPos3 = GetWorldPos() - GetVelocity();
+		Vector2 PlayerPos = Vector2(PlayerPos3.x, PlayerPos3.y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirVertical(Angle, result.DestCollider);
@@ -169,6 +172,12 @@ void CGoldBullion::CollisionVerticalBegin(const HitResult& result, CCollider* Co
 	{
 		//플레이어의 골드를 증가시켜주고 사운드 재생
 		CPlayer* Player = CGlobalValue::MainPlayer;
+		Player->AddCoin(100);
+		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
+		TextObj->SetText(std::to_string(100) + "G");
+		TextObj->SetWorldPos(GetWorldPos());
+		TextObj->Gold();
+		m_pScene->GetResource()->FindSound("GetGold")->Play();
 		Active(false);
 	}
 }
@@ -178,7 +187,8 @@ void CGoldBullion::CollisionVerticalMiddle(const HitResult& result, CCollider* C
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass ||
 		result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector3 PlayerPos3 = GetWorldPos() - GetVelocity();
+		Vector2 PlayerPos = Vector2(PlayerPos3.x, PlayerPos3.y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 
 

@@ -37,7 +37,7 @@ public:
 	}
 public:
 	bool Init();
-	void Update();
+	void Update(float DeltaTime);
 
 public:
 	bool CreateMesh(Mesh_Type Type, const std::string& Name, void* pVertices, int VtxCount, int VtxSize, D3D11_USAGE VtxUsage, D3D11_PRIMITIVE_TOPOLOGY Primitive,

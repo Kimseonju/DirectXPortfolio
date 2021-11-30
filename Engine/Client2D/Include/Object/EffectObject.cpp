@@ -27,7 +27,7 @@ bool CEffectObject::Init()
 
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	SetRootComponent(m_Sprite);
-	m_Sprite->CreateAnimation2D< CAnimation2D_FSM>();
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 	return true;
 }

@@ -3,6 +3,7 @@
 #include "BelialWeaponCharge.h"
 #include "Player.h"
 #include "../GlobalValue.h"
+#include <Scene/SceneResource.h>
 CBelialWeapon::CBelialWeapon() :
 	m_Belial(nullptr),
 	m_TextureUpdate(false),
@@ -63,6 +64,7 @@ bool CBelialWeapon::Init()
 	m_Sprite->AddChild(m_Collider2D);
 
 	m_Collider2D->Enable(false);
+	m_pScene->GetResource()->FindSound("BelialWeapon")->Play();
 	return true;
 }
 
@@ -95,7 +97,7 @@ void CBelialWeapon::Update(float DeltaTime)
 	}
 	if (m_Attacking)
 	{
-		AddRelativePos(m_TargetMove * 100.f * DeltaTime);
+		AddRelativePos(m_TargetMove * 300.f * DeltaTime);
 	}
 
 	if (!m_Attacking && m_StartAttack)

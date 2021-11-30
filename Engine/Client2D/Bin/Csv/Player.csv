@@ -1,6 +1,6 @@
 Object,Player
-HP,30
-HPMAX,30
+HP,200
+HPMAX,200
 Dash,4
 DashMax,4
 AttackSpeed,0

@@ -87,8 +87,7 @@ void CMiniMapWidget::Update(float DeltaTime)
 		{
 			int FrameX = vecTile[i]->GetFrameX()/16;
 			int FrameY = vecTile[i]->GetFrameY()/16;
-			if ((FrameX  <= 4 && FrameY  <= 2) || (FrameX==7 && FrameY==8) || (FrameX == 7 && FrameY == 8) || (FrameX == 7 && FrameY == 9)
-				|| (FrameX == 8 && FrameY == 8) || (FrameX == 8 && FrameY == 9) || (FrameX == 9 && FrameY == 8) || (FrameX == 9 && FrameY == 9))
+			if (FrameX  <= 3 && FrameY  <= 4)
 				continue;
 			Vector2 Pos = vecTile[i]->GetPos();
 			PushMiniMapInfoTile(Pos, Vector2(4.f, 4.f), Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f),  Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
@@ -99,7 +98,7 @@ void CMiniMapWidget::Update(float DeltaTime)
 		{
 			int FrameX = vecTile[i]->GetFrameX() / 16;
 			int FrameY = vecTile[i]->GetFrameY() / 16;
-			if (FrameX >= 6 && FrameX <= 9 && FrameY <= 1)
+			if (FrameX == 3 && FrameY ==0)
 			{
 				Vector2 Pos = vecTile[i]->GetPos(); 
 				PushMiniMapInfoTile(Pos, Vector2(4.f, 4.f), Vector4(140.f / 255.f, 140.f / 255.f, 140.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);

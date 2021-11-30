@@ -20,6 +20,7 @@ protected:
     bool    m_Up;
     bool    m_UpItem;
     CInventoryButton* m_ClickInventoryButton;
+    bool    m_ClickDownSound;
 public:
     void SetState(Mouse_State State)
     {
@@ -28,6 +29,10 @@ public:
     Mouse_State GetState() const
     {
         return m_State;
+    }
+    void SetScene(CScene* Scene)
+    {
+        m_Scene = Scene;
     }
 public:
     virtual bool Init();

@@ -1,6 +1,8 @@
 #include "BasicMouse.h"
 #include <Input.h>
 #include "InventoryButton.h"
+#include <Scene/SceneResource.h>
+#include <Scene/Scene.h>
 CBasicMouse::CBasicMouse():
 	m_State(Mouse_State::World),
 	m_ClickInventoryButton(nullptr),
@@ -8,7 +10,8 @@ CBasicMouse::CBasicMouse():
 	m_Down(false),
 	m_Push(false),
 	m_Up(false),
-	m_UpItem(false)
+	m_UpItem(false),
+	m_ClickDownSound(false)
 {
 }
 
@@ -106,18 +109,25 @@ void CBasicMouse::InventoryClick(CInventoryButton* Button)
 {
 	m_Item = Button->GetItem();
 	m_ClickInventoryButton = Button;
+	if (!m_ClickDownSound)
+	{
+		m_ClickDownSound = true;
+		m_Scene->GetResource()->FindSound("ItemInputInventory")->Play();
+	}
 }
 
 void CBasicMouse::InventoryMove(CInventoryButton* Button)
 {
 	if ((m_UpItem||m_Up) && m_Item)
 	{
+		m_ClickDownSound = false;
 		if (Button->GetButtonState() == InventoryButton_State::NotItem)
 		{
 			ClearItem();
 		}
 		else if (Button->GetItem() == nullptr)
 		{
+			m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 			switch (m_Item->GetType())
 			{
 			case ITEM_TYPE::Weapon_One_Hand:

@@ -19,10 +19,17 @@ private:
 	float		m_AccTime;
 	CSharedPtr<CMouseWidget>	m_MouseWidget;
 	bool		m_Start;
-
+	bool		m_CollisionRender;
 	bool m_ObjectPause;
 public:
-
+	bool GetCollisionRender() const
+	{
+		return m_CollisionRender;
+	}
+	void SetCollisionRender(bool CollisionRender)
+	{
+		m_CollisionRender = CollisionRender;
+	}
 	void SetResolution(int Width, int Height)
 	{
 		m_RS.Width = Width;

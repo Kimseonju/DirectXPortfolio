@@ -17,6 +17,7 @@
 #include "PlayerInteractionCollision.h"
 #include "../ObjectStatusManager.h"
 #include "../UI/PlayerWorldWidget.h"
+#include <Scene/SceneResource.h>
 CPlayer::CPlayer() :
 	m_OneAttack(false),
 	m_Weapon(nullptr),
@@ -25,7 +26,8 @@ CPlayer::CPlayer() :
 	m_Dir(Object_Dir::Left),
 	m_WallCol(false),
 	m_Coin(100000),
-	m_DustCount(0.f)
+	m_DustCount(0.f),
+	m_MoveSound(0.f)
 {
 	SetStatus("Player");
 }
@@ -60,7 +62,6 @@ void CPlayer::Start()
 bool CPlayer::Init()
 {
 	CGameObject::Init();
-	m_Status.Init();
 	
 
 
@@ -128,6 +129,9 @@ bool CPlayer::Init()
 	m_Animation2D->SetIdleAnimation2D("PlayerIdle");
 	m_Animation2D->SetMoveAnimation2D("PlayerRun");
 	m_Animation2D->SetJumpAnimation2D("PlayerJump");
+	m_Animation2D->SetSequencePlayRate("PlayerIdle", 2.f);
+	m_Animation2D->SetSequencePlayRate("PlayerRun", 2.f);
+	m_Animation2D->SetSequencePlayRate("PlayerJump", 2.f);
 
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Left", KT_Push, this, &CPlayer::LeftMove);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("Right", KT_Push, this, &CPlayer::RightMove);
@@ -167,9 +171,6 @@ void CPlayer::Update(float DeltaTime)
 	m_WallCol = false;
 	m_StageMove = false;
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
-	Vector3 Pos = m_WeaponArm->GetWorldPos();
-	Vector2 Pos2 = Vector2(Pos.x, Pos.y);
-	Vector3 Posss = GetWorldPos();
 	//플레이어가 왼쪽
 	if (GetWorldPos().x > MousePos.x)
 	{
@@ -235,6 +236,7 @@ void CPlayer::Update(float DeltaTime)
 	if (m_State == ePlayerState::Move)
 	{
 		m_DustCount += DeltaTime;
+		m_MoveSound += DeltaTime;
 	}
 	else
 	{
@@ -396,6 +398,9 @@ void CPlayer::Dash(float DeltaTime)
 	{
 		return;
 	}
+
+	m_pScene->GetResource()->FindSound("Dash")->Play();
+	
 	m_Status.Dash();
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
 	Vector3 Pos = GetWorldPos();
@@ -415,6 +420,7 @@ void CPlayer::InventoryOnOff(float DeltaTime)
 	}
 	else
 	{
+		m_pScene->GetResource()->FindSound("OpenInventory")->Play();
 		CUIManager::GetInst()->GetInventory()->Enable(true);
 		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
 	}
@@ -547,6 +553,7 @@ void CPlayer::EnemyHit(int Damage)
 	{
 		m_Status.SubHP(Damage);
 		CUIManager::GetInst()->GetPlayerUI()->Hit();
+		m_pScene->GetResource()->FindSound("PlayerHit")->Play();
 	}
 }
 void CPlayer::AnimationFrameEnd(const std::string& Name)
@@ -775,7 +782,7 @@ void CPlayer::ColDirHorizon(float Angle, CCollider* Col)
 		SetWorldPos(PlayerPos);
 
 	}
-
+	m_Camera->PostUpdate(0.f);
 }
 
 void CPlayer::ColDirVertical(float Angle, CCollider* Col)
@@ -810,6 +817,7 @@ void CPlayer::ColDirVertical(float Angle, CCollider* Col)
 	}
 
 	SetWorldPos(PlayerPos);
+	m_Camera->PostUpdate(0.f);
 }
 
 void CPlayer::ColTilePassDirVertical(float Angle, CCollider* Col)
@@ -834,6 +842,7 @@ void CPlayer::ColTilePassDirVertical(float Angle, CCollider* Col)
 		PlayerPos.y = XMove.y;
 	}
 	SetWorldPos(PlayerPos);
+	m_Camera->PostUpdate(0.f);
 
 }
 

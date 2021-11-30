@@ -21,6 +21,7 @@ private:
 	std::string m_Name;
 	Stage_State m_State;
 	int m_EnemyOrder;
+	StageType m_Type;
 	std::unordered_map<int, std::vector<CSharedPtr<CSpawnEffect>>> m_SpawnEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_vecEnemy;
 	std::vector<CSharedPtr<CGameObject>> m_Object;
@@ -35,6 +36,10 @@ private:
 	class CScene* m_pScene;
 	int m_DoorDir;
 public:
+	StageType GetStageType()
+	{
+		return m_Type;
+	}
 	CTileMapComponent* GetTileComonent()
 	{
 		return m_TileMapComponent;

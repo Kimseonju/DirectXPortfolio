@@ -15,6 +15,7 @@
 #include "../Object/Revolver.h"
 #include "../Object/Player.h"
 #include "UIManager.h"
+#include <Scene/SceneResource.h>
 CShopUI::CShopUI()
 
 {
@@ -204,6 +205,7 @@ void CShopUI::ShopButtonClick()
 				if (Inventory->AddInventoryItem((*iter).Item))
 				{
 					//추가성공
+					m_Scene->GetResource()->FindSound("GetItem")->Play();
 					(*iter).Active(false);
 					iter=m_ShopItemInfo.erase(iter);
 					return;

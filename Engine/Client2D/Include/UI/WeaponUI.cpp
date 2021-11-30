@@ -11,6 +11,8 @@
 #include "../Object/Item.h"
 #include "../Object/Weapon.h"
 #include "../BasicStatus.h"
+#include <Scene/SceneResource.h>
+
 CWeaponUI::CWeaponUI() :
 	m_WeaponUIBase1(nullptr),
 	m_WeaponUIBase2(nullptr),
@@ -340,6 +342,7 @@ void CWeaponUI::WeaponChange()
 	if (!m_FinishChange)
 		return;
 	m_MoveRatio = 0.f;
+	m_Scene->GetResource()->FindSound("PlayerWeaponSwap")->Play();
 
 	if (m_SelectWeapon == Select_Weapon::Left)
 	{

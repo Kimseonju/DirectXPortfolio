@@ -44,6 +44,7 @@
 #include "../Object/TorchLight.h"
 #include "../Object/ShopNPC.h"
 #include "../ObjectStatusManager.h"
+#include "../UI/BasicMouse.h"
 CTestMainScene::CTestMainScene() :
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
@@ -63,6 +64,9 @@ bool CTestMainScene::Init()
 	CreateMaterial();
 	CreateAnimationSequence2D();
 	CreateParticle();
+	CreateSound();
+
+	CGlobalValue::MainMouse->SetScene(m_pScene);
 	//CObjectStatusManager::GetInst()->LoadStatus("Player", TEXT("Player.csv"));
 	//CObjectStatusManager::GetInst()->LoadStatus("Revolver", TEXT("Revolver.csv"));
 	//CObjectStatusManager::GetInst()->LoadStatus("ShortSword", TEXT("ShortSword.csv"));
@@ -262,10 +266,12 @@ void CTestMainScene::CreateAnimationSequence2D()
 	*/
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorClose");
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("DoorClose", "DoorSound", 4);
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("DoorOpen", "DoorSound", 4);
 
 
 	//MainMapDoor
@@ -506,4 +512,125 @@ void CTestMainScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleRange("BossBackParticle", 1.f, 1.f, 0.f);
 	m_pScene->GetResource()->SetParticleMoveEnable("BossBackParticle", true);
 	m_pScene->GetResource()->SetParticle2D("BossBackParticle", true);
+}
+
+void CTestMainScene::CreateSound()
+{
+
+#pragma region BGMSound
+	m_pScene->GetResource()->LoadSound("BGM", true, "Town",
+		"bgm/0.Town.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Boss",
+		"bgm/1.JailBoss.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Fleld",
+		"bgm/1.JailField.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Shop",
+		"bgm/Shop.wav");
+
+	m_pScene->GetResource()->LoadSound("BGM", true, "title",
+		"bgm/title.wav");
+#pragma endregion
+
+#pragma region BossSoud
+	m_pScene->GetResource()->LoadSound("Enemy", false, "belial_laugh",
+		"enemy/belial/belial_laugh.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BelialLaser",
+		"enemy/belial/Laser.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BelialBullet",
+		"enemy/belial/BelialBullet.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BelialWeapon",
+		"enemy/belial/BelialWeapon.wav");
+#pragma endregion
+
+
+#pragma region EnemySound
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BatDie",
+		"enemy/Bat/BatDie.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BansheeAttack",
+		"enemy/Banshee/high_pitch_scream_gverb.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelArrowDie",
+		"enemy/skells/bow_crossbow_arrow_draw_stretch1_03.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelBowAttack",
+		"enemy/skells/etc-sound0034_Bow.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack1",
+		"enemy/skells/swish-1.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack2",
+		"enemy/skells/swish-5.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack2",
+		"enemy/skells/swish-6.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "Hit_Enemy",
+		"enemy/Effect/Hit_Enemy.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "EnemyDie",
+		"enemy/Effect/EnemyDie.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SpawnEnemy",
+		"enemy/Effect/SpawnEnemy.wav");
+#pragma endregion
+
+#pragma region PlayerSound
+	m_pScene->GetResource()->LoadSound("Player", false, "Dash",
+		"player/dash.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "Get_Fairy",
+		"player/Get_Fairy.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerHit",
+		"player/Hit_Player.wav");
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerJumping",
+		"player/Jumping.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerWeaponSwap",
+		"player/swap.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth1",
+		"player/step_lth1.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth2",
+		"player/step_lth2.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth3",
+		"player/step_lth3.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth4",
+		"player/step_lth4.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "SwordAttack",
+		"weapon/Melee/generalAttack.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "SwordAttack2",
+		"weapon/Melee/swing1.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "MetalBoomerangAttack",
+		"weapon/Range/MetalBoomerang.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "RevolverAttack",
+		"weapon/Range/RevolverFire.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "Reload",
+		"weapon/Range/Reload.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "Reload2",
+		"weapon/Range/Reload2.wav");
+#pragma endregion
+
+	m_pScene->GetResource()->LoadSound("UI", false, "GetItem",
+		"object/GetItem.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "OpenInventory",
+		"object/OpenInventory.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "ItemInputInventory",
+		"object/ItemInputInventory.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "ItemOutInventory",
+		"object/ItemOutInventory.wav");
+
+	m_pScene->GetResource()->LoadSound("Object", false, "GetGold",
+		"object/GetGold.wav");
+
+	m_pScene->GetResource()->LoadSound("Object", false, "TresureBoxOpen",
+		"object/TresureBoxOpen.wav");
+
+	m_pScene->GetResource()->LoadSound("Object", false, "DoorOnOff",
+		"object/DoorOnOff.wav");
+
+	m_pScene->GetResource()->LoadSound("Object", false, "BossTresureBox",
+		"object/BossTresureBox.wav");
+
 }

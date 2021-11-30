@@ -102,13 +102,17 @@ void CWidget::Update(float DeltaTime)
 
 void CWidget::PostUpdate(float DeltaTime)
 {
+}
+
+void CWidget::PrevRender(float DeltaTime)
+{
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	m_RenderPos = m_Pos;
 	m_RenderPos -= m_Pivot * m_Size;
 	if (m_Owner)
 		m_RenderPos += m_Owner->GetPos();
-	
+
 	matScale.Scaling(m_Size.x, m_Size.y, 1.f);
 	matRot.Rotation(0.f, 0.f, m_Rotation);
 
@@ -150,11 +154,6 @@ void CWidget::PostUpdate(float DeltaTime)
 		matProj = CSceneManager::GetInst()->GetScene()->GetViewport()->GetCamera()->GetProjMatrix();
 
 	m_TransformCBuffer->SetWVP(matWorld * matProj);
-
-}
-
-void CWidget::PrevRender(float DeltaTime)
-{
 }
 
 void CWidget::Render()

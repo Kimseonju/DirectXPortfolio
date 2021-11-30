@@ -188,6 +188,7 @@
     <ClCompile Include="Object\BelialWeaponCharge.cpp" />
     <ClCompile Include="Object\BelialWeaponHit.cpp" />
     <ClCompile Include="Object\BossDieEffect.cpp" />
+    <ClCompile Include="Object\BossDieEffectLast.cpp" />
     <ClCompile Include="Object\BossDieEffectStart.cpp" />
     <ClCompile Include="Object\BossDieParticle.cpp" />
     <ClCompile Include="Object\BossTorchLight.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Object\BelialWeaponCharge.h" />
     <ClInclude Include="Object\BelialWeaponHit.h" />
     <ClInclude Include="Object\BossDieEffect.h" />
+    <ClInclude Include="Object\BossDieEffectLast.h" />
     <ClInclude Include="Object\BossDieEffectStart.h" />
     <ClInclude Include="Object\BossDieParticle.h" />
     <ClInclude Include="Object\BossTorchLight.h" />

@@ -6,6 +6,7 @@
 #include "../Object/Player.h"
 #include "../UI/UIManager.h"
 #include "../UI/FadeInOutUI.h"
+#include <Scene/SceneResource.h>
 CDoor::CDoor() :
 	m_Open(true),
 	m_StartInput(false)
@@ -28,8 +29,11 @@ CDoor::~CDoor()
 void CDoor::Enable(bool bEnable)
 {
 	CGameObject::Enable(bEnable);
-
-	m_DoorCollider2D->Enable(bEnable);
+	if (m_Open)
+	{
+		if(!bEnable)
+			m_DoorCollider2D->Enable(bEnable);
+	}
 	m_NextStageCollider2D->Enable(bEnable);
 	m_Sprite->Enable(bEnable);
 	m_Particle->Enable(bEnable);
@@ -98,7 +102,6 @@ void CDoor::Update(float DeltaTime)
 		}
 		else
 		{
-
 			m_Sprite->Enable(false);
 		}
 	}
@@ -154,6 +157,10 @@ CDoor* CDoor::Clone()
 
 void CDoor::Animation2DNotify(const std::string& Name)
 {
+	if (Name == "DoorSound")
+	{
+		m_pScene->GetResource()->FindSound("DoorOnOff")->Play();
+	}
 }
 
 void CDoor::DoorOpenClose(bool Open)
@@ -162,6 +169,7 @@ void CDoor::DoorOpenClose(bool Open)
 	{
 		m_StartInput = true;
 		m_Open = Open;
+
 		if (m_Open)
 		{
 			m_Sprite->Enable(true);

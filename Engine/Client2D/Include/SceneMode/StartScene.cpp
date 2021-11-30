@@ -13,6 +13,7 @@
 #include "../Stage/StageManager.h"
 #include <Scene/SceneManager.h>
 #include "TestMainScene.h"
+#include <Resource/ResourceManager.h>
 CStartScene::CStartScene()
 {
 }
@@ -26,6 +27,7 @@ bool CStartScene::Init()
 	CreateMaterial();
 	CreateAnimationSequence2D();
 	CreateParticle();
+	CreateSound();
 
 	CObjectStatusManager::GetInst()->LoadStatus("Player", TEXT("Player.csv"));
 	CObjectStatusManager::GetInst()->LoadStatus("Revolver", TEXT("Revolver.csv"));
@@ -98,40 +100,39 @@ bool CStartScene::Init()
 
 	CStageManager::GetInst()->SetScene(m_NextScene);
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD2.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR.txt"));
-
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD3.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRU.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRUD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLU.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapR.txt"));
+
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLU4.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUR2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLURD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapR2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD2.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRU.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRUD.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapURD3.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BossMapLR3.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Boss.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_LR.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLRT.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
+	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
-
+	
 	return true;
 }
 
 void CStartScene::Start()
 {
+	m_pScene->GetResource()->FindSound("title")->Play();
 	CSceneManager::GetInst()->SetNextScene(m_NextScene);
 	CSceneManager::GetInst()->SetChange(false);
 
@@ -913,9 +914,118 @@ void CStartScene::CreateParticle()
 
 void CStartScene::CreateSound()
 {
-	m_pScene->GetResource()->LoadSound("Enemy", false, "BansheeAttack",
-		"Enemy/high_pitch_scream_gverb.wav");
+	CResourceManager::GetInst()->CreateSoundChannelGroup("Enemy");
+	CResourceManager::GetInst()->CreateSoundChannelGroup("Player");
+	CResourceManager::GetInst()->CreateSoundChannelGroup("PlayerAttack");
+	CResourceManager::GetInst()->CreateSoundChannelGroup("Object");
 
+#pragma region BGMSound
+	m_pScene->GetResource()->LoadSound("BGM", true, "Town",
+		"bgm/0.Town.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Boss",
+		"bgm/1.JailBoss.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Fleld",
+		"bgm/1.JailField.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Shop",
+		"bgm/Shop.wav");
+
+	m_pScene->GetResource()->LoadSound("BGM", true, "title",
+		"bgm/title.wav");
+#pragma endregion
+
+#pragma region BossSoud
 	m_pScene->GetResource()->LoadSound("Enemy", false, "belial_laugh",
-		"belial/belial_laugh.wav");
+		"enemy/belial/belial_laugh.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "iceball",
+		"enemy/belial/iceball.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "random5",
+		"enemy/belial/random5.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "slimeball",
+		"enemy/belial/slimeball.wav");
+#pragma endregion
+
+
+#pragma region EnemySound
+	m_pScene->GetResource()->LoadSound("Enemy", false, "BatDie",
+		"enemy/Bat/BatDie.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "Hit_Monster",
+		"enemy/Bat/Hit_Monster.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelArrowDie",
+		"enemy/skells/bow_crossbow_arrow_draw_stretch1_03.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelBowAttack",
+		"enemy/skells/etc-sound0034_Bow.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack1",
+		"enemy/skells/swish-1.wav");
+
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack2",
+		"enemy/skells/swish-5.wav");
+	m_pScene->GetResource()->LoadSound("Enemy", false, "SkelSwordAttack2",
+		"enemy/skells/swish-6.wav");
+
+#pragma endregion
+
+#pragma region PlayerSound
+	m_pScene->GetResource()->LoadSound("Player", false, "Dash",
+		"player/Dash.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerHit",
+		"player/Hit_Player.wav");
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerJumping",
+		"player/Jumping.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "PlayerWeaponSwap",
+		"player/swap.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth1",
+		"player/step_lth1.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth2",
+		"player/step_lth2.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth3",
+		"player/step_lth3.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "step_lth4",
+		"player/step_lth4.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "SwordAttack",
+		"weapon/Melee/generalAttack.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "SwordAttack2",
+		"weapon/Melee/swing1.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "MetalBoomerangAttack",
+		"weapon/Range/MetalBoomerang.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "RevolverAttack",
+		"weapon/Range/RevolverFire.wav");
+
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "Reload",
+		"weapon/Range/Reload.wav");
+	m_pScene->GetResource()->LoadSound("PlayerAttack", false, "Reload2",
+		"weapon/Range/Reload2.wav");
+#pragma endregion
+
+	m_pScene->GetResource()->LoadSound("UI", false, "Equip",
+		"player/Equip.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "GetItem",
+		"player/GetItem.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "OpenInventory",
+		"player/OpenInventory.wav");
+	m_pScene->GetResource()->LoadSound("UI", false, "PickUpItem",
+		"player/PickUpItem.wav");
+
+
+
+	m_pScene->GetResource()->LoadSound("Object", false, "GetCoin",
+		"object/GetCoin.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "TresureBoxOpen",
+		"object/TresureBoxOpen.wav");
+
+	m_pScene->GetResource()->LoadSound("Player", false, "DoorOnOff",
+		"object/DoorOnOff.wav");
+	m_pScene->GetResource()->LoadSound("Player", false, "BossTresureBox",
+		"object/BossTresureBox.wav");
+
 }

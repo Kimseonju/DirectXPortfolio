@@ -192,6 +192,7 @@ void CScene::Collision(float DeltaTime)
     }*/
 }
 
+
 void CScene::Render(float DeltaTime)
 {
     auto    iter = m_ObjList.begin();

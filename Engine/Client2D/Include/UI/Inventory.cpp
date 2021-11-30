@@ -268,14 +268,3 @@ bool CInventory::AddInventoryItem(CItem* Item)
 	return false;
 
 }
-
-void CInventory::StartButtonClick()
-{
-	MessageBox(0, TEXT("시작버튼"), TEXT("시작버튼"), MB_OK);
-}
-
-void CInventory::ExitButtonClick()
-{
-	MessageBox(0, TEXT("종료버튼"), TEXT("종료버튼"), MB_OK);
-}
-

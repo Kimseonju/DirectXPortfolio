@@ -61,6 +61,7 @@ private:
 	int m_Coin;
 	bool m_StageMove;
 	float m_DustCount;
+	float m_MoveSound;
 protected:
 public:
 	void StageMove()

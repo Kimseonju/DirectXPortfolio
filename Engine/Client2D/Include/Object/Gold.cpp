@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "../Stage/StageManager.h"
 #include "../Stage/Stage.h"
+#include <Scene/SceneResource.h>
 
 CGold::CGold() :
 	m_Open(false),
@@ -78,6 +79,7 @@ bool CGold::Init()
 
 	CStage* Stage=CStageManager::GetInst()->GetCurStage();
 	Stage->PushObject(this);
+	m_Body->SetGravityPower(100.f);
 	return true;
 }
 
@@ -120,7 +122,8 @@ void CGold::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass
 		|| result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector3 PlayerPos3 = GetWorldPos() - GetVelocity();
+		Vector2 PlayerPos = Vector2(PlayerPos3.x, PlayerPos3.y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirHorizon(Angle, result.DestCollider);
@@ -135,6 +138,8 @@ void CGold::CollisionHorizonBegin(const HitResult& result, CCollider* Collider)
 		TextObj->SetText(std::to_string(10)+ "G");
 		TextObj->SetWorldPos(GetWorldPos());
 		TextObj->Gold();
+
+		m_pScene->GetResource()->FindSound("GetGold")->Play();
 		Active(false);
 	}
 
@@ -145,7 +150,8 @@ void CGold::CollisionHorizonMiddle(const HitResult& result, CCollider* Collider)
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_pass
 		|| result.DestCollider->GetProfile()->Channel == Collision_Channel::Tile_Nopass)
 	{
-		Vector2 PlayerPos = Vector2(GetWorldPos().x, GetWorldPos().y);
+		Vector3 PlayerPos3 = GetWorldPos() - GetVelocity();
+		Vector2 PlayerPos = Vector2(PlayerPos3.x, PlayerPos3.y);
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirHorizon(Angle, result.DestCollider);
@@ -175,6 +181,13 @@ void CGold::CollisionVerticalBegin(const HitResult& result, CCollider* Collider)
 	{
 		//플레이어의 골드를 증가시켜주고 사운드 재생
 		CPlayer* Player = CGlobalValue::MainPlayer;
+		Player->AddCoin(10);
+		CTextObject* TextObj = m_pScene->SpawnObject<CTextObject>("TextObject");
+		TextObj->SetText(std::to_string(10) + "G");
+		TextObj->SetWorldPos(GetWorldPos());
+		TextObj->Gold();
+
+		m_pScene->GetResource()->FindSound("GetGold")->Play();
 		Active(false);
 	}
 }

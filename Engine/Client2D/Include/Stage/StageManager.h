@@ -3,6 +3,7 @@
 #include "../GlobalValue.h"
 #include "Door.h"
 #include "Stage.h"
+#include "Resource/Sound.h"
 
 class CStageManager
 {
@@ -20,6 +21,11 @@ private:
 	Vector2 m_RestaurantPos;
 
 	Vector2 m_CurPos;
+
+
+	CSound*	m_BGMSound[(int)StageType::Boss+1];
+
+
 	//시작점,끝점
 	std::unordered_map<int, std::vector<StageObjectsInfo>>m_vecMainDoorStageSpawnInfo;
 	int m_StartEndCount;
@@ -79,7 +85,6 @@ public:
 	bool CreateStage_Special(); 
 	
 	void ReleaseStage();
-
 	void LoadStage(FILE* pFile, const char* Name);
 	void AllLoadStage(const TCHAR* FileName);
 	void PushMainDoorStageSpawnInfo(int Door, StageObjectsInfo Info);
@@ -93,6 +98,12 @@ public:
 	StageObjectsInfo GetBossStageSpawnInfo(int Door);
 	StageObjectsInfo GetShopStageSpawnInfo(int Door);
 	StageObjectsInfo GetRestaurantStageSpawnInfo(int Door);
+
+public:
+
+	void BGMSoundUpdate(StageType Type);
+	void BGMBossSoundPlay();
+	void BGMSoundPause();
 	DECLARE_SINGLE(CStageManager)
 
 };

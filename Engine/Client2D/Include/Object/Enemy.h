@@ -64,6 +64,7 @@ public:
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider);
 	virtual void CollisionBegin(const HitResult& result, CCollider* Collider);
 	virtual void CollisionHorizonBegin(const HitResult& result, CCollider* Collider);
 	virtual void CollisionHorizonMiddle(const HitResult& result, CCollider* Collider);
@@ -74,6 +75,7 @@ public:
 	//Ãæµ¹
 	virtual void ColDirHorizon(float Angle, CCollider* Col);
 	virtual void ColDirVertical(float Angle, CCollider* Col);
+	virtual void ColTilePassDirVertical(float Angle, CCollider* Col);
 public:
 	virtual void FindStart() {}
 	virtual void FindStay() {}

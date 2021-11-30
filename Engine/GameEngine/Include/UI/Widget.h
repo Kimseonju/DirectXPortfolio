@@ -35,6 +35,11 @@ protected:
 	bool		m_Blind;
 	bool		m_bCollision;
 public:
+	class CWidgetWindow* GetOwner()
+	{
+		return m_Owner;
+	}
+
 	bool IsCollision() const;
 	bool IsBlind() const
 	{

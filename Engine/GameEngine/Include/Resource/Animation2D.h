@@ -24,6 +24,7 @@ class CAnimation2D :
 {
 	friend class CSpriteComponent;
 	friend class CMouseWidget;
+	friend class CImage;
 protected:
 	CAnimation2D();
 	CAnimation2D(const CAnimation2D& anim);

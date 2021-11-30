@@ -108,7 +108,7 @@ void CBanshee::DropGold()
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 	DropCount = GetRandom(0, 3);
 	for (int i = 0; i < DropCount; ++i)
@@ -116,6 +116,6 @@ void CBanshee::DropGold()
 		CGoldBullion* Gold = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 }

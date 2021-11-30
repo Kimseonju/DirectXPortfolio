@@ -15,13 +15,14 @@ protected:
     CSharedPtr<CImage>    m_MapBase1_0;
     CSharedPtr<CImage>    m_MapBase1_1;
     CSharedPtr<CImage>    m_BackCloud;
-    CSharedPtr<CText>    m_PosX;
-    CSharedPtr<CText>    m_PosY;
-    CSharedPtr<CText>    m_Name1;
     CSharedPtr<CText>    m_WeaponMagazineMiddle2;
 
+    CSharedPtr<CImage>    m_CurMapImage;
     class CStage* m_Stage;
     bool m_StageUpdate;
+    float m_CurMapTimer;
+    float m_CurMapTimerMax;
+    bool m_CurMapEnable;
 protected:
     CStageMap();
     virtual ~CStageMap();

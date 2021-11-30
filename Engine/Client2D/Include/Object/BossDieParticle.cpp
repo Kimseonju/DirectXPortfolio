@@ -1,9 +1,13 @@
 
 #include "BossDieParticle.h"
 #include <Input.h>
-#include "BossDieEffect.h"
+#include "BossDieEffectLast.h"
 #include <Scene/Scene.h>
-CBossDieParticle::CBossDieParticle()
+#include <Scene/SceneResource.h>
+CBossDieParticle::CBossDieParticle():
+	m_SoundTimer(0.f),
+	m_SoundTimerMax(0.2f),
+	m_Effect(false)
 {
 }
 
@@ -62,15 +66,17 @@ void CBossDieParticle::Update(float DeltaTime)
 	m_LifeTime += DeltaTime;
 	if (m_LifeTime > 5.f)
 	{
-		for (int i = 0; i < 8; ++i)
-		{
-			CBossDieEffect* Effect = m_pScene->SpawnObject<CBossDieEffect>("BossDieEffect");
-			Effect->SetWorldPos(GetWorldPos());
-			Effect->SetWorldRotationZ(45.f * i);
-			Effect->SetBelial(m_Belial);
-
-		}
+		m_Effect = true;
+		CBossDieEffectLast* Effect = m_pScene->SpawnObject<CBossDieEffectLast>("BossDieEffect");
+		Effect->SetWorldPos(GetWorldPos());
+		Effect->SetBelial(m_Belial);
 		Active(false);
+	}
+	m_SoundTimer += DeltaTime;
+	if (m_SoundTimer >= m_SoundTimerMax)
+	{
+		m_SoundTimer -= m_SoundTimerMax;
+		m_pScene->GetResource()->FindSound("EnemyDie")->Play();
 	}
 }
 

@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "MetalBoomerangEffectObject.h"
 #include "MetalBoomerangBullet.h"
-
+#include <Scene/SceneResource.h>
 CMetalBoomerang::CMetalBoomerang()
 {
 	SetItemTexture("MetalBoomerang", TEXT("Weapon/Range/MetalBoomerang.png"));
@@ -89,6 +89,8 @@ bool CMetalBoomerang::Attack(float Angle)
 	}
 
 	Enable(false);
+	
+	m_pScene->GetResource()->FindSound("MetalBoomerangAttack")->Play();
 
 	CMetalBoomerangEffectObject* obj = m_pScene->SpawnObject<CMetalBoomerangEffectObject>("MetalBoomerangEffectObject");
 

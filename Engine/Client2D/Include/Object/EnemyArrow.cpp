@@ -44,7 +44,7 @@ bool CEnemyArrow::Init()
     m_Sprite2->SetRelativeScale(13.f, 5.f, 1.f);
     m_Sprite2->SetPivot(0.5f, 0.5f, 0.f);
     CMaterial* Material = m_Sprite2->GetMaterial(0);
-    Material->AddTexture("Arrow", TEXT("Weapon/Range/Arrow.png"));
+    Material->AddTexture("Arrow", TEXT("Weapon/Range/Arrow00.png"));
 
     m_ColliderBox2D->SetExtent(2.f, 6.f);
     m_ColliderBox2D->SetCollisionProfile("EnemyAttack");

@@ -41,8 +41,5 @@ public:
     CItem* GetInventoryWeapon(int Index)const;
     void WeaponChange();
     bool AddInventoryItem(CItem* Item);
-private:
-    void StartButtonClick();
-    void ExitButtonClick();
 };
 

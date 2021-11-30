@@ -31,7 +31,7 @@ protected:
 	CTileMapCBuffer* m_CBuffer;
 	int		m_RenderCount;
 	bool	m_EditorMode;
-
+	bool	m_TileTypePrint;
 public:
 	std::vector<CTile*>& GetvecTile()
 	{
@@ -52,6 +52,10 @@ public:
 		m_EditorMode = Mode;
 	}
 
+	void SetTileTypePrint(bool Print)
+	{
+		m_TileTypePrint = Print;
+	}
 
 public:
 	virtual class CMesh* GetMesh()  const;

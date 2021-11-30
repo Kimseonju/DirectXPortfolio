@@ -14,6 +14,7 @@
 #include "TextObject.h"
 #include "Gold.h"
 #include "GoldBullion.h"
+#include <Scene/SceneResource.h>
 CGiant_Red::CGiant_Red() :
 	m_PlayerFind(false),
 	m_AttackTimer(0.f),
@@ -142,7 +143,11 @@ void CGiant_Red::CollisionBegin(const HitResult& result, CCollider* Collider)
 			DropGold();
 
 		}
+		else
+		{
 
+			m_pScene->GetResource()->FindSound("Hit_Enemy")->Play();
+		}
 	}
 }
 
@@ -165,7 +170,7 @@ void CGiant_Red::DropGold()
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 	DropCount = GetRandom(0, 3);
 	for (int i = 0; i < DropCount; ++i)
@@ -173,6 +178,6 @@ void CGiant_Red::DropGold()
 		CGoldBullion* Gold = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 }

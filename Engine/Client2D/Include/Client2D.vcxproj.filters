@@ -507,9 +507,6 @@
     <ClCompile Include="Object\BossDieEffectStart.cpp">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Object\BossDieEffect.cpp">
-      <Filter>02. Object\EffectAndParticle\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="Object\BossDieParticle.cpp">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClCompile>
@@ -677,6 +674,12 @@
     </ClCompile>
     <ClCompile Include="UI\MiniMapWidget.cpp">
       <Filter>UI\UI\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossDieEffectLast.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BossDieEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -941,9 +944,6 @@
     <ClInclude Include="Object\BossDieEffectStart.h">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Object\BossDieEffect.h">
-      <Filter>02. Object\EffectAndParticle\Boss</Filter>
-    </ClInclude>
     <ClInclude Include="Object\BossDieParticle.h">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClInclude>
@@ -1096,6 +1096,12 @@
     </ClInclude>
     <ClInclude Include="UI\MiniMapWidget.h">
       <Filter>UI\UI\Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossDieEffectLast.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BossDieEffect.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

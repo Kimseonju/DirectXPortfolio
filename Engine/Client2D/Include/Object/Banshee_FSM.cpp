@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 #include "BansheeBullet.h"
+#include <Scene/SceneResource.h>
 
 void CBanshee::FindStay()
 {
@@ -78,8 +79,7 @@ void CBanshee::MoveStay()
 void CBanshee::AttackStart()
 {
 	m_Animation2D->ChangeAttackAnimation2D();
-	//사운드 재생
-	//총알생성
+	m_pScene->GetResource()->FindSound("BansheeAttack")->Play();
 	for (int i = 0; i < 12; ++i)
 	{
 		float Angle = 30.f * (float)i;

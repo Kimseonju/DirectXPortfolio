@@ -44,7 +44,6 @@ bool CGhost::Init()
 	m_Animation2D->SetMoveAnimation2D("GhostMove");
 	m_Animation2D->SetAttackAnimation2D("GhostAttack", false);
 	m_Animation2D->ChangeIdleAnimation2D();
-	m_Status->SetMoveSpeed(50.f);
 	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
 	m_Body->SetGravityNo();
 	return true;
@@ -115,6 +114,28 @@ void CGhost::CollisionAttackRangeBegin(const HitResult& result, CCollider* Colli
 	}
 }
 
+void CGhost::CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider)
+{
+	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+	{
+		Vector3 DestPos = result.DestObject->GetWorldPos();
+		Vector3 Pos = GetWorldPos();
+		Pos = Pos - DestPos;
+		float Dir;
+		if (m_Dir == Object_Dir::Left)
+		{
+			Dir = 270.f;
+		}
+		else
+		{
+			Dir = 90.f;
+		}
+		//¿ÞÂÊ ¿À¸¥ÂÊ
+		m_GhostAttack = true;
+		m_State = Enemy_State::Attack;
+	}
+}
+
 void CGhost::DropGold()
 {
 	int DropCount = GetRandom(0, 4);
@@ -123,7 +144,7 @@ void CGhost::DropGold()
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
-		Gold->Drop((float)GetRandom(0, 180), 300.f);
+		Gold->Drop((float)GetRandom(0, 180), 50.f);
 	}
 }
 

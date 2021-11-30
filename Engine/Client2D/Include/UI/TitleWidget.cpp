@@ -5,6 +5,8 @@
 #include "Scene/SceneManager.h"
 #include "../SceneMode/StartScene.h"
 #include <UI/Button.h>
+#include <Scene/Scene.h>
+#include <Scene/SceneResource.h>
 CTitleWidget::CTitleWidget():
 	m_Cloud(nullptr),
 	m_BackCloud(nullptr)
@@ -107,6 +109,7 @@ CTitleWidget* CTitleWidget::Clone()
 
 void CTitleWidget::StartButtonClick()
 {
+	m_Scene->GetResource()->FindSound("title")->Stop();
 	CSceneManager::GetInst()->SetChange(true);
 }
 

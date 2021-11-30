@@ -33,7 +33,7 @@ void CSmallSkel::FindStay()
 	{
 		m_EnemyFSM.ChangeState("Move");
 		m_Animation2D->ChangeMoveAnimation2D();
-		SetWorldScale(21.f, 20.f, 0.f);
+		SetWorldScale(16.f, 20.f, 0.f);
 	}
 
 }
@@ -41,7 +41,7 @@ void CSmallSkel::FindStay()
 void CSmallSkel::MoveStart()
 {
 	m_Animation2D->ChangeMoveAnimation2D();
-	SetWorldScale(21.f, 20.f, 0.f);
+	SetWorldScale(16.f, 20.f, 0.f);
 }
 
 void CSmallSkel::MoveStay()

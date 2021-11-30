@@ -15,6 +15,7 @@
 #include "../UI/BasicMouse.h"
 #include "../UI/UIManager.h"
 #include "PlayerDustEffect.h"
+#include <Scene/SceneResource.h>
 
 
 
@@ -62,6 +63,15 @@ void CPlayer::BodyMoveStay()
 			Effect->SetHorizontalReverse2DEnable(false);
 		}
 	}
+		//°È±â»ç¿îµå
+	if (m_MoveSound >= 0.3f)
+	{
+		m_MoveSound -= 0.3f;
+		std::string str = "step_lth";
+		str += std::to_string(GetRandom(1, 4));
+		m_pScene->GetResource()->FindSound(str)->Play();
+	}
+	
 	if (m_RootComponent->GetVelocity().y != 0.f)
 	{
 		m_BodyFSM.ChangeState("Jump");

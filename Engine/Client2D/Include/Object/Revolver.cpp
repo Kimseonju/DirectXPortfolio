@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "RevolverEffectObject.h"
 #include "RevolverBullet.h"
+#include <Scene/SceneResource.h>
 CRevolver::CRevolver()
 {
 	m_WeaponType = Weapon_Type::Range;
@@ -97,6 +98,7 @@ bool CRevolver::Attack(float Angle)
 	{
 		m_Rebound = 30.f;
 	}
+	m_pScene->GetResource()->FindSound("RevolverAttack")->Play();
 	CRevolverEffectObject* obj = m_pScene->SpawnObject<CRevolverEffectObject>("ShortSwordEffectObject");
 
 	obj->SetWorldPos(GetWorldPos());

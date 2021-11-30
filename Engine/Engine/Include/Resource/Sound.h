@@ -19,7 +19,7 @@ private:
     FMOD::Channel* m_Channel;
     bool        m_Play;
     bool        m_Loop;
-
+    float       m_Volumn;
 public:
     void SetScene(class CScene* Scene)
     {
@@ -40,6 +40,7 @@ public:
     bool LoadSound(FMOD::System* System, FMOD::ChannelGroup* Group,
         bool Loop, const std::string& Name, const char* FileName,
         const std::string& PathName = SOUND_PATH);
+    void Update(float DeltaTime);
     void Play();
     void Stop();
     void Pause();

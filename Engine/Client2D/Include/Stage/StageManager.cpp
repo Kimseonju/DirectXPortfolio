@@ -3,9 +3,11 @@
 #include <PathManager.h>
 #include <Component/TileMapComponent.h>
 #include "../Object/Player.h"
+#include <Resource/ResourceManager.h>
+#include <Scene/SceneResource.h>
 CStageManager::CStageManager():
 	m_pScene(nullptr),
-	m_MapSize(3),
+	m_MapSize(4),
 	m_MapCount(0),
 	m_BossStage(false)
 {
@@ -37,6 +39,22 @@ void CStageManager::Init()
 	CreateDungeon();
 
 	m_CurPos = m_StartPos;
+	
+	CSound* Sound = m_pScene->GetResource()->FindSound("Town");
+	m_BGMSound[(int)StageType::None] = Sound;
+	Sound = m_pScene->GetResource()->FindSound("Fleld");
+	m_BGMSound[(int)StageType::Base] = Sound;
+	m_BGMSound[(int)StageType::Start] = Sound;
+	m_BGMSound[(int)StageType::Start] = Sound;
+	m_BGMSound[(int)StageType::End] = Sound;
+
+	Sound = m_pScene->GetResource()->FindSound("Shop");
+	m_BGMSound[(int)StageType::Shop] = Sound;
+
+	Sound = m_pScene->GetResource()->FindSound("Boss");
+	m_BGMSound[(int)StageType::Boss] = Sound;
+
+
 }
 
 void CStageManager::Start()
@@ -46,8 +64,15 @@ void CStageManager::Start()
 
 void CStageManager::Update(float DeltaTime)
 {
-	if(m_SelectStage)
+	if (m_SelectStage)
+	{
 		m_SelectStage->Update(DeltaTime);
+		//배경음 관리
+		
+
+		
+	}
+
 }
 
 void CStageManager::CreateBossStage()
@@ -219,8 +244,8 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 		m_SelectStage = m_vecStage[x][y];
 		m_SelectStage->PlayerStageMove(Dir);
 		m_SelectStage->Enable(true);
+		BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
 		return;
-
 	}
 	//첫방문
 	CStage* Stage = new CStage;
@@ -268,6 +293,7 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	m_vecStage[x][y] = Stage;
 	Stage->Enable(true);
 	m_SelectStage = Stage;
+	BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
 	
 	
 }
@@ -464,6 +490,13 @@ bool CStageManager::CreateStage_Special()
 
 	return true;
 }
+
+void CStageManager::ReleaseStage()
+{
+
+
+}
+
 
 void CStageManager::LoadStage(FILE* pFile, const char* Name)
 {
@@ -736,7 +769,7 @@ StageObjectsInfo CStageManager::GetMainDoorStageSpawnInfo(int Door)
 	{
 		return Temp;
 	}
-	std::vector<StageObjectsInfo> Info = iter->second;
+	std::vector<StageObjectsInfo>& Info = iter->second;
 
 	int SelectCount = 0;
 	int UseCount = Info[0].UseCount;
@@ -871,5 +904,44 @@ StageObjectsInfo CStageManager::GetRestaurantStageSpawnInfo(int Door)
 
 	return Info[SelectCount];
 }
+
+void CStageManager::BGMSoundUpdate(StageType Type)
+{
+	BGMSoundPause();
+	if (m_BossStage)
+	{
+		return;
+	}
+	switch (Type)
+	{
+	case StageType::Base:
+	case StageType::Start:
+	case StageType::End:
+		m_BGMSound[(int)Type]->Play();
+		break;
+	case StageType::Shop:
+		m_BGMSound[(int)Type]->Play();
+		break;
+	case StageType::Boss:
+		break;
+
+	}
+}
+void CStageManager::BGMBossSoundPlay()
+{
+	BGMSoundPause();
+	m_BGMSound[(int)StageType::Boss]->Play();
+
+}
+void CStageManager::BGMSoundPause()
+{
+	int Size = (int)StageType::Boss + 1;
+	for (int i = 0; i < Size; ++i)
+	{
+		if(m_BGMSound[i])
+			m_BGMSound[i]->Pause();
+	}
+}
+
 
 DEFINITION_SINGLE(CStageManager)

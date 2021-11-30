@@ -45,9 +45,11 @@ bool CEnemyAttack::Init()
 	//m_Sprite->SetRelativeRotationZ(30.f);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
-	m_Collider2D->SetExtent(50.f, 50.f);
+	m_Collider2D->SetExtent(20.f, 20.f);
 	m_Collider2D->SetCollisionProfile("EnemyAttack");
 
+	m_Collider2D->AddCollisionCallbackFunction<CEnemyAttack>(Collision_State::Begin, this,
+		&CEnemyAttack::CollisionBegin);
 	m_Sprite->AddChild(m_Collider2D);
 
 	return true;

@@ -24,6 +24,7 @@ public:
 
 public:
 	virtual void CollisionAttackRangeBegin(const HitResult& result, CCollider* Collider);
+	virtual void CollisionAttackRangeMiddle(const HitResult& result, CCollider* Collider);
 
 public:
 	virtual void AnimationFrameEnd(const std::string& Name);

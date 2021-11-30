@@ -11,9 +11,6 @@ protected:
 	virtual ~CBossDieEffect();
 
 protected:
-	int m_SpawnCount;
-	int m_SpawnCountMax;
-	class CBelial* m_Belial;
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -24,15 +21,6 @@ public:
 	virtual CBossDieEffect* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
 
-public:
-	void SetBelial(class CBelial* Belial)
-	{
-		m_Belial = Belial;
-	}
-	void SetSpawnCount(int Count)
-	{
-		m_SpawnCount = Count;
-	}
 public:
 	void AnimationFrameEnd(const std::string& Name);
 };

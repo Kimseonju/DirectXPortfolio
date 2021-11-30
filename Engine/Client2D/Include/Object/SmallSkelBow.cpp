@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "EnemyArrow.h"
 #include "../Animation2D/Animation2D_FSM.h"
+#include <Scene/SceneResource.h>
 CSmallSkelBow::CSmallSkelBow() :
 	m_AttackAngle(0.f)
 {
@@ -82,6 +83,7 @@ void CSmallSkelBow::Animation2DNotify(const std::string& Name)
 {
 	if (Name == "Attack")
 	{
+		m_pScene->GetResource()->FindSound("SkelBowAttack")->Play();
 		CEnemyArrow* EnemyArrow = m_pScene->SpawnObject<CEnemyArrow>("EnemyArrow");
 		EnemyArrow->SetWorldPos(GetWorldPos());
 		EnemyArrow->SetWorldRotationZ(m_AttackAngle);

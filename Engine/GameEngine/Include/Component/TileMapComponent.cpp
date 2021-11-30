@@ -18,7 +18,8 @@ CTileMapComponent::CTileMapComponent() :
 	m_FrameMaxX(1),
 	m_FrameMaxY(1),
 	m_RenderCount(0),
-	m_EditorMode(true)
+	m_EditorMode(true),
+	m_TileTypePrint(true)
 {
 	m_PrimitiveType = PrimitiveComponent_Type::Primitive2D;
 	SetRender2DType(RT2D_MAP);
@@ -914,17 +915,20 @@ void CTileMapComponent::PrevRender(float DeltaTime)
 			{
 				if (m_EditorMode)
 				{
-					switch (m_vecTile[Index]->GetTileType())
+					if (m_TileTypePrint)
 					{
-					case Tile_Type::None:
-						m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 1.f, 0.f, 1.f);
-						break;
-					case Tile_Type::Wall:
-						m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
-						break;
-					case Tile_Type::Crossed_Wall:
-						m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
-						break;
+						switch (m_vecTile[Index]->GetTileType())
+						{
+						case Tile_Type::None:
+							m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 1.f, 0.f, 1.f);
+							break;
+						case Tile_Type::Wall:
+							m_vecTileInfo[m_RenderCount].Color = Vector4(1.f, 0.f, 0.f, 1.f);
+							break;
+						case Tile_Type::Crossed_Wall:
+							m_vecTileInfo[m_RenderCount].Color = Vector4(0.f, 0.f, 1.f, 1.f);
+							break;
+						}
 					}
 				}
 

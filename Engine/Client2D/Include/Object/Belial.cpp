@@ -18,6 +18,7 @@
 #include "BelialDeadHead.h"
 #include "BelialDeadMouth.h"
 #include "../ObjectStatusManager.h"
+#include <Scene/SceneResource.h>
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
 	m_AttackTimerMax(3.f),
@@ -25,7 +26,7 @@ CBelial::CBelial() :
 	m_Pattern(Belial_Pattern::End),
 	m_LeftHand(nullptr),
 	m_RightHand(nullptr),
-	m_PatternTimer(0.f),
+	m_PatternTimer(0.f),\
 	m_SwordSpawnTimerMax(0.2f),
 	m_SwordSpawnTimer(0.f),
 	m_SwordSpawn(false),
@@ -39,7 +40,10 @@ CBelial::CBelial() :
 	m_EffectEnd(false),
 	m_EffectEndTimer(0.f),
 	m_EffectEndStart(false),
-	m_SpawnEnd(false)
+	m_SpawnEnd(false),
+	m_LaserCountMax(2),
+	m_HitTimer(0.f),
+	m_BulletFireCountMax(0.2f)
 	
 {
 	SetStatus("Belial");
@@ -183,7 +187,18 @@ void CBelial::Update(float DeltaTime)
 		if(m_SpawnEnd)
 			PatternUpdate(DeltaTime);
 	}
-	
+	m_HitTimer -= DeltaTime;
+
+	CMaterial* Material = m_Sprite->GetMaterial(0);
+	if (m_HitTimer > 0.f)
+	{
+		Material->SetBaseColor(1.f, 0.f, 0.f, m_Alpha);
+	}
+	else
+	{
+		m_HitTimer = 0.f;
+		Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
+	}
 }
 
 void CBelial::PostUpdate(float DeltaTime)
@@ -270,15 +285,16 @@ void CBelial::AttackBullet(float DeltaTime)
 	else if (m_Animation2D->GetFrameEnd())
 	{
 		m_BulletFireCount += DeltaTime;
-		if (m_BulletFireCount > 0.3f)
+		if (m_BulletFireCount > m_BulletFireCountMax)
 		{
-			m_BulletFireCount -= 0.3f;
+			m_BulletFireCount -= m_BulletFireCountMax;
 			for (int i = 0; i < 4; ++i)
 			{
 				CBelialBullet* Bullet = m_pScene->SpawnObject<CBelialBullet>("BelialBullet");
 				Bullet->SetWorldRotationZ(m_BulletAngle + i * 90.f);
 				Bullet->SetWorldPos(GetWorldPos());
 			}
+			m_pScene->GetResource()->FindSound("BelialBullet")->Play();
 		}
 
 		m_BulletAngle += DeltaTime*90.f;
@@ -297,7 +313,7 @@ void CBelial::AttackLaser(float DeltaTime)
 	m_Attacking = false;
 	m_LaserCount++;
 	m_AttackTimer = 2.f;
-	if (m_LaserCount > 2)
+	if (m_LaserCount > m_LaserCountMax)
 	{
 		m_LaserCount = 0;
 		m_PatternTimer = 0.f;
@@ -337,7 +353,6 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 		CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 		Camera->CameraCurrentMoveStop();
 		Camera->CameraCurrentShakeStop();
-		m_SpawnEnd = true;
 		Active(false);
 	}
 }
@@ -357,6 +372,7 @@ void CBelial::AlphaUpdate(float DeltaTime)
 				Camera->AddCameraMove2D(Vector2(GetWorldPos().x, GetWorldPos().y), 5.f);
 				CUIManager::GetInst()->GetBossSpawnUI()->Spawn();
 				m_AlphaUpdate = false;
+				m_SpawnEnd = true;
 			}
 		}
 		CMaterial* Material = m_Sprite->GetMaterial(0);
@@ -432,7 +448,13 @@ void CBelial::PatternUpdate(float DeltaTime)
 		if (m_LaserCount != 0)
 			m_Pattern = Belial_Pattern::Laser;
 		else
+		{
 			m_Pattern = (Belial_Pattern)GetRandom(0, (int)Belial_Pattern::End - 1);
+			if (m_Pattern == Belial_Pattern::Laser)
+			{
+				m_LaserCountMax = GetRandom(1, 2);
+			}
+		}
 		//m_Pattern = Belial_Pattern::Sword;
 		m_AttackTimer = 0.f;
 		m_SwordSpawn = false;
@@ -448,6 +470,8 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
+		m_pScene->GetResource()->FindSound("belial_laugh")->Play();
+		m_pScene->GetResource()->FindSound("Boss")->Play();
 		m_SpawnColliderBox2D->Enable(false);
 		m_Collider2D->Enable(true);
 		m_Spawn = true;
@@ -469,7 +493,7 @@ void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 	{
 		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
 		CUIManager::GetInst()->GetBossUI()->SetProgressBarPercent((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
-
+		
 		if (m_Status->GetHP() < 0.f)
 		{
 			m_PatternStop = true;
@@ -478,8 +502,22 @@ void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 			Obj->SetBelial(this);
 			CEngine::GetInst()->SetTimeScale(0.5f);
 			CUIManager::GetInst()->GetBossDieUI()->Enable(true);
+			m_pScene->GetResource()->FindSound("Boss")->Stop();
 		
 		}
+		else
+		{
+			m_HitTimer += 0.2f;
+			m_pScene->GetResource()->FindSound("Hit_Enemy")->Play();
+			if (m_Status->GetHP() < 30.f)
+			{
+				m_AttackTimerMax = 2.5f;
+				m_SwordSpawnTimerMax = 0.15f;
+				m_BulletFireCountMax = 0.1f;
+			}
+		}
+
+
 	}
 }
 

@@ -111,13 +111,14 @@ public:
     bool SetControlKey(const std::string& Name, bool State);
     bool SetAltKey(const std::string& Name, bool State);
     bool SetShiftKey(const std::string& Name, bool State);
-
+public:
+    void CallbackClear();
 private:
     KeyInfo* FindKeyInfo(const std::string& Name);
 
     //WindowKey->DirectKey
     unsigned char ConvertKey(unsigned char Key);
-
+    
 public:
     template <typename T>
     void AddKeyCallback(const std::string& Name, Key_Type Type, T* pObj, void(T::* pFunc)(float))

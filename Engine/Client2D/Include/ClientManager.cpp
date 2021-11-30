@@ -206,6 +206,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Player,
         Collision_Interaction::Block);
     CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
+    CEngine::GetInst()->SetCollisionRender(false);
     //CSceneManager::GetInst()->SetSceneMode<CEndingScene>();
     
     CreateMouse();

@@ -7,6 +7,7 @@
 #include "EffectObject.h"
 #include "EnemyAttack.h"
 #include "../Animation2D/Animation2D_FSM.h"
+#include <Scene/SceneResource.h>
 CSkelSmallDagger::CSkelSmallDagger() 
 {
 	Enable(true);
@@ -82,6 +83,7 @@ void CSkelSmallDagger::Animation2DNotify(const std::string& Name)
 {
 	if (Name == "Attack")
 	{
+		m_pScene->GetResource()->FindSound("SkelSwordAttack1")->Play();
 		CEnemyAttack* pEnemyAttack = m_pScene->SpawnObject<CEnemyAttack>("CollisionEnemyAttack");
 		pEnemyAttack->SetDamage(m_Status->GetAttackDamage());
 		pEnemyAttack->SetWorldPos(GetWorldPos());

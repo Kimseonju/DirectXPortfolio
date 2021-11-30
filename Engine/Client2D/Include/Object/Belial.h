@@ -37,6 +37,7 @@ private:
 
 	float m_BulletAngle;
 	float m_BulletFireCount;
+	float m_BulletFireCountMax;
 
 	bool m_Spawn;
 	float m_Alpha;
@@ -45,6 +46,7 @@ private:
 	bool m_PatternStop;
 
 	int m_LaserCount;
+	int m_LaserCountMax;
 	
 	//기본위치
 	Vector3 m_BasicWorldPos;
@@ -53,6 +55,7 @@ private:
 	float m_EffectEndTimer;
 
 	bool m_SpawnEnd;
+	float m_HitTimer;
 public:
 	void EffectEnd()
 	{

@@ -11,6 +11,7 @@
 #include "ProgressBarObject.h"
 #include "BelialLaserBody.h"
 #include "BelialLaserHead.h"
+#include <Scene/SceneResource.h>
 CBelialHand::CBelialHand() :
 	m_Belial(nullptr),
 	m_Attacking(false)
@@ -133,6 +134,7 @@ void CBelialHand::Animation2DNotify(const std::string& Name)
 
 		}
 		m_AttackMove = false;
+		m_pScene->GetResource()->FindSound("BelialLaser")->Play();
 	}
 }
 

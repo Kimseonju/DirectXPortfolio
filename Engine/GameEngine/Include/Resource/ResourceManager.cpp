@@ -349,9 +349,17 @@ bool CResourceManager::Init()
 	return true;
 }
 
-void CResourceManager::Update()
+void CResourceManager::Update(float DeltaTime)
 {
 	m_System->update();
+
+	auto    iter = m_mapSound.begin();
+	auto    iterEnd = m_mapSound.end();
+
+	for (; iter != iterEnd; ++iter)
+	{
+		iter->second->Update(DeltaTime);
+	}
 }
 
 bool CResourceManager::CreateMesh(Mesh_Type Type, const std::string& Name, void* pVertices, int VtxCount, int VtxSize, D3D11_USAGE VtxUsage,
@@ -1563,7 +1571,10 @@ bool CResourceManager::LoadSound(const std::string& GroupName, bool Loop, const 
 	FMOD::ChannelGroup* Group = FindSoundChannelGroup(GroupName);
 
 	if (!Group)
+	{
+		SAFE_RELEASE(Sound);
 		return false;
+	}
 
 	if (!Sound->LoadSound(m_System, Group, Loop, Name, FileName, PathName))
 	{

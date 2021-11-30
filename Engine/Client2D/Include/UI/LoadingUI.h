@@ -25,7 +25,7 @@ private:
 public:
     void SetPercent(float Percent)
     {
-        m_LoadingBar->SetPercent(Percent);
+        //m_LoadingBar->SetPercent(Percent);
     }
 public:
     virtual bool Init();

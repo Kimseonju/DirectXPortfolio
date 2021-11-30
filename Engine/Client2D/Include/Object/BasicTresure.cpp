@@ -16,6 +16,7 @@
 #include "../Stage/Stage.h"
 #include "../UI/UIManager.h"
 #include "../UI/MiniMap.h"
+#include <Scene/SceneResource.h>
 CBasicTresure::CBasicTresure():
 	m_Open(false)
 {
@@ -144,8 +145,8 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
-		//if (!m_Open)
-		//{
+		if (!m_Open)
+		{
 			m_Open = true;
 			m_KeyUIObject->Enable(false);
 			CStage* CurStage=CStageManager::GetInst()->GetCurStage();
@@ -153,25 +154,23 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 			Material->AddTexture("BossTresureOpened", TEXT("NPC/BossTresureOpened.png"));
 			Material->SetTexture("BossTresureOpened", TEXT("NPC/BossTresureOpened.png"));
 
-			CHPFairy* HPFairy = m_pScene->SpawnObject<CHPFairy>("HPFairy");
-			HPFairy->SetWorldPos(GetWorldPos());
-			HPFairy->AddWorldPos(0.f, 100.f, 0.f);
-			CurStage->PushObject(HPFairy);
+			//CHPFairy* HPFairy = m_pScene->SpawnObject<CHPFairy>("HPFairy");
+			//HPFairy->SetWorldPos(GetWorldPos());
+			//HPFairy->AddWorldPos(0.f, 100.f, 0.f);
+			//CurStage->PushObject(HPFairy);
 			//°ñµåµå¶ø
 			for (int i = 0; i < 5; ++i)
 			{
 				CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 				Gold->SetWorldPos(GetWorldPos());
-				Gold->AddWorldPos(0.f, 100.f, 0.f);
-				Gold->Drop((float)GetRandom(0, 180), 300.f);
+				Gold->Drop((float)GetRandom(0, 180), 50.f);
 				CurStage->PushObject(Gold);
 			}
 			for (int i = 0; i < 5; ++i)
 			{
 				CGoldBullion* GoldBullion = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
 				GoldBullion->SetWorldPos(GetWorldPos());
-				GoldBullion->AddWorldPos(0.f, 100.f, 0.f);
-				GoldBullion->Drop((float)GetRandom(0, 180), 300.f);
+				GoldBullion->Drop((float)GetRandom(0, 180), 50.f);
 				CurStage->PushObject(GoldBullion);
 			}
 
@@ -193,12 +192,12 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 				break;
 			}
 			Item->SetWorldPos(GetWorldPos());
-			Item->AddWorldPos(0.f, 100.f, 0.f);
 			Item->Drop();
 			Item->Enable(true);
-			Item->Drop((float)GetRandom(0, 180), 300.f);
+			Item->Drop((float)GetRandom(0, 180), 50.f);
 			CurStage->PushObject(Item);
-		//}
+			m_pScene->GetResource()->FindSound("TresureBoxOpen")->Play();
+		}
 	}
 
 }

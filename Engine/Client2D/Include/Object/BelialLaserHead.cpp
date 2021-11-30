@@ -4,6 +4,7 @@
 #include "Scene/Scene.h"
 #include "../GlobalValue.h"
 #include "BelialBulletEffect.h"
+#include "Player.h"
 CBelialLaserHead::CBelialLaserHead() 
 {
 }
@@ -103,7 +104,10 @@ void CBelialLaserHead::SetHorizontalReverse2DEnable(bool Enable)
 
 void CBelialLaserHead::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
-
+    if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
+    {
+        CGlobalValue::MainPlayer->EnemyHit(4);
+    }
 }
 
 void CBelialLaserHead::CollisionEnd(const HitResult& result, CCollider* Collider)
