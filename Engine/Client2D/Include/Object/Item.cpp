@@ -395,7 +395,7 @@ void CItem::ColDirVertical(float Angle, CCollider* Col)
 		PlayerPos.y = XMove.y;
 	}
 	//À§
-	else if (0.f < Angle || Angle < 180.f || 360.f <= Angle)
+	else if (0.f <= Angle && Angle < 180.f)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);

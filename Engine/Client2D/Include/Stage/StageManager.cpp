@@ -5,13 +5,15 @@
 #include "../Object/Player.h"
 #include <Resource/ResourceManager.h>
 #include <Scene/SceneResource.h>
-CStageManager::CStageManager():
+CStageManager::CStageManager() :
 	m_pScene(nullptr),
 	m_MapSize(4),
 	m_MapCount(0),
-	m_BossStage(false)
+	m_BossStage(false),
+	m_SelectStage(nullptr),
+	m_BGMSound(),
+	m_StartEndCount(0)
 {
-
 }
 CStageManager::~CStageManager()
 {
@@ -471,14 +473,14 @@ bool CStageManager::CreateStage_Special()
 
 	for (int i = 0; i < vecStagePos.size(); i++)
 	{
-		m_vecStageInfo[vecStagePos[i].x][vecStagePos[i].y].StageType = StageType::None;
+		m_vecStageInfo[(int)vecStagePos[i].x][(int)vecStagePos[i].y].StageType = StageType::None;
 		for (int dir = 0; dir < 4; dir++)
 		{
-			if (!m_vecStageInfo[vecStagePos[i].x][vecStagePos[i].y].Wall[dir])
+			if (!m_vecStageInfo[(int)vecStagePos[i].x][(int)vecStagePos[i].y].Wall[dir])
 			{
 
-				int nextX = vecStagePos[i].x + dir_x[dir];
-				int nextY = vecStagePos[i].y + dir_y[dir];
+				int nextX = (int)vecStagePos[i].x + dir_x[dir];
+				int nextY = (int)vecStagePos[i].y + dir_y[dir];
 				m_vecStageInfo[nextX][nextY].Wall[(dir + 2) % 4] = true; 
 			}
 		}
@@ -779,7 +781,7 @@ StageObjectsInfo CStageManager::GetMainDoorStageSpawnInfo(int Door)
 	{
 		if (UseCount > Info[i].UseCount)
 		{
-			SelectCount = i;
+			SelectCount = (int)i;
 			UseCount = Info[i].UseCount;
 		}
 	}
@@ -808,7 +810,7 @@ StageObjectsInfo CStageManager::GetStageSpawnInfo(int Door)
 	{
 		if (UseCount > Info[i].UseCount)
 		{
-			SelectCount = i;
+			SelectCount = (int)i;
 			UseCount = Info[i].UseCount;
 		}
 	}
@@ -837,7 +839,7 @@ StageObjectsInfo CStageManager::GetBossStageSpawnInfo(int Door)
 	{
 		if (UseCount > Info[i].UseCount)
 		{
-			SelectCount = i;
+			SelectCount = (int)i;
 			UseCount = Info[i].UseCount;
 		}
 	}
@@ -866,7 +868,7 @@ StageObjectsInfo CStageManager::GetShopStageSpawnInfo(int Door)
 	{
 		if (UseCount > Info[i].UseCount)
 		{
-			SelectCount = i;
+			SelectCount = (int)i;
 			UseCount = Info[i].UseCount;
 		}
 	}
@@ -895,7 +897,7 @@ StageObjectsInfo CStageManager::GetRestaurantStageSpawnInfo(int Door)
 	{
 		if (UseCount > Info[i].UseCount)
 		{
-			SelectCount = i;
+			SelectCount = (int)i;
 			UseCount = Info[i].UseCount;
 		}
 	}

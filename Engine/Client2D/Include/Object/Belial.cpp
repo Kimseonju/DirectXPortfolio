@@ -49,16 +49,6 @@ CBelial::CBelial() :
 	SetStatus("Belial");
 }
 
-CBelial::CBelial(const CBelial& obj) :
-	CGameObject(obj)
-{
-	m_AttackTimer = obj.m_AttackTimer;
-	m_AttackTimerMax = obj.m_AttackTimerMax;
-	m_Attacking = obj.m_Attacking;
-	m_Pattern = obj.m_Pattern;
-	m_LeftHand = nullptr;
-	m_RightHand = nullptr;
-}
 
 CBelial::~CBelial()
 {
@@ -136,8 +126,8 @@ bool CBelial::Init()
 	m_BackParticle->SetAnimation2DCount(8);
 	m_BackParticle->SetRender2DType(Render_Type_2D::RT2D_Back1);
 	Vector2 Size;
-	Size.x = m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
-	Size.y = m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
+	Size.x = (float)m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
+	Size.y = (float)m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
 	m_BackParticle->SetAnimation2DSize(Size);
 	m_BackParticle->SetAnimation2DPlayRate(0.1f);
 

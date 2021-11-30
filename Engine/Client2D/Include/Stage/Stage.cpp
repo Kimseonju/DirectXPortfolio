@@ -22,7 +22,10 @@ CStage::CStage() :
 	m_State(Stage_State::Idle),
 	m_DoorDir(-1),
 	m_EnemyOrder(1),
-	m_Type(StageType::End)
+	m_Type(StageType::End),
+	m_TileMap(nullptr),
+	m_TileMapObject(nullptr),
+	m_pScene(nullptr)
 {
 }
 

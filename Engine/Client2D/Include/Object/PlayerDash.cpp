@@ -9,7 +9,8 @@ CPlayerDash::CPlayerDash() :
 	m_Fire(false),
 	m_FireTime(0.f),
 	m_FireTimeMax(0.2f),
-	m_Dir(Object_Dir::End)
+	m_Dir(Object_Dir::End),
+	m_Animation2D(nullptr)
 {
 }
 
@@ -44,6 +45,7 @@ bool CPlayerDash::Init()
 	m_Sprite->SetWorldScale(19.f, 22.f, 0.f);
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->AddTexture("DashTexture", TEXT("Effect/Dash/Shadow/base_player_jump_shadow.png"));
+	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, 0.8f);
 	return true;
 }
 

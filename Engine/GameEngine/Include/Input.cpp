@@ -57,14 +57,14 @@ Vector2 CInput::GetMouse2DWorldPos() const
 	VRS.y=(float)RS.Height * ResolutionRatio.y;
 	Vector2 Size = { VRS.x / 2.f, VRS.y / 2.f };
 
-	double MouseRel_x;
-	double MouseRel_y;
+	float MouseRel_x;
+	float MouseRel_y;
 	MouseRel_x = m_MousePos.x / (float)VRS.x;
 	MouseRel_y = m_MousePos.y / (float)VRS.y;
 	
 	//¹ÝÁö¸§
-	double ZoomSize_x;
-	double ZoomSize_y;
+	float ZoomSize_x;
+	float ZoomSize_y;
 	ZoomSize_x = Size.x / Zoom ;
 	ZoomSize_y = Size.y / Zoom ;
 	Vector2 MousePos;

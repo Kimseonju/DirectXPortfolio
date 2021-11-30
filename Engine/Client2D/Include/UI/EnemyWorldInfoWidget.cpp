@@ -13,6 +13,12 @@ CEnemyWorldInfoWidget::~CEnemyWorldInfoWidget()
 {
 }
 
+void CEnemyWorldInfoWidget::Active(bool bActive)
+{
+	CWidgetWindow::Active(bActive);
+	m_HPBar->Active(bActive);
+}
+
 bool CEnemyWorldInfoWidget::Init()
 {
 	CWidgetWindow::Init();

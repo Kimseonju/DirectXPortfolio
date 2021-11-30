@@ -13,7 +13,8 @@
 #include "../Stage/StageManager.h"
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
-CSpawnEffect::CSpawnEffect()
+CSpawnEffect::CSpawnEffect() :
+	m_Animation2D(nullptr)
 {
 }
 

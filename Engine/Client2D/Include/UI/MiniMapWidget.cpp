@@ -19,8 +19,10 @@
 CMiniMapWidget::CMiniMapWidget() :
 	m_TileCount(0),
 	m_ObjectCount(0),
-	m_EnemyCount(0)
-
+	m_EnemyCount(0),
+	m_TileMapUpdate(false),
+	m_MapBuffer(nullptr),
+	m_CBuffer(nullptr)
 {
 }
 
@@ -139,14 +141,12 @@ CMiniMapWidget* CMiniMapWidget::Clone()
 	return new CMiniMapWidget(*this);
 }
 
-void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoTile(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
-	Pos.x += GetPos().x;
-	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
 	RenderPos += GetPos();
 	
@@ -178,14 +178,12 @@ void CMiniMapWidget::PushMiniMapInfoTile(Vector2 Pos, Vector2 Size, Vector4 Colo
 	m_TileCount++;
 }
 
-void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoObject(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
-	Pos.x += GetPos().x;
-	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
 	RenderPos += GetPos();
 	RenderPos -= Vector2(0.5f, 0.5f) * Size;
@@ -217,15 +215,13 @@ void CMiniMapWidget::PushMiniMapInfoObject(Vector2 Pos, Vector2 Size, Vector4 Co
 	m_ObjectCount++;
 
 }
-void CMiniMapWidget::PushMiniMapInfoEnemy(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity)
+void CMiniMapWidget::PushMiniMapInfoEnemy(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity)
 {
 	MiniMapInfo Info;
 
 	Matrix	matScale, matRot, matTranslation, matWorld;
 
 	Vector2 RenderPos = Pos;
-	Pos.x += GetPos().x;
-	Pos.y += GetPos().y;
 	RenderPos /= 4.f;
 	RenderPos += GetPos();
 	RenderPos -= Vector2(0.5f, 0.5f) * Size;

@@ -5,6 +5,7 @@
 #include "../GlobalValue.h"
 #include <Scene/SceneResource.h>
 CBelialWeapon::CBelialWeapon() :
+	m_Animation2D(nullptr),
 	m_Belial(nullptr),
 	m_TextureUpdate(false),
 	m_Charge(nullptr),
@@ -19,6 +20,10 @@ CBelialWeapon::CBelialWeapon() :
 CBelialWeapon::CBelialWeapon(const CBelialWeapon& obj) :
 	CGameObject(obj)
 {
+	m_AttackTimer = 0.f;
+	m_AttackTimerMax = 1.f;
+	m_AcitveTime = 0.f;
+	m_Animation2D = nullptr;
 	m_Attacking = obj.m_Attacking;
 	m_TextureUpdate = obj.m_TextureUpdate;
 	m_Belial = nullptr;

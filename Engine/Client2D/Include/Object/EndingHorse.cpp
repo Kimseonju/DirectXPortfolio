@@ -3,7 +3,8 @@
 #include "KeyboardUIObject.h"
 #include "Player.h"
 #include "../UI/UIManager.h"
-CEndingHorse::CEndingHorse()
+CEndingHorse::CEndingHorse():
+	m_Animation2D(nullptr)
 {
 }
 

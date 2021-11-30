@@ -14,7 +14,8 @@
 #include <Scene/SceneManager.h>
 #include "TestMainScene.h"
 #include <Resource/ResourceManager.h>
-CStartScene::CStartScene()
+CStartScene::CStartScene():
+	m_NextScene(nullptr)
 {
 }
 

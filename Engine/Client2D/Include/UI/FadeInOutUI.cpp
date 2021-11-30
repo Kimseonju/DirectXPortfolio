@@ -17,7 +17,9 @@ CFadeInOutUI::CFadeInOutUI():
 	m_StageDir(Stage_Dir::END),
 	m_FadeOut(false),
 	m_FadeIn(false),
-	m_StageMove(false)
+	m_StageMove(false),
+	m_Alpha(0.f),
+	m_StageBoss(false)
 {
 }
 
@@ -31,7 +33,7 @@ bool CFadeInOutUI::Init()
 	Resolution RS = CDevice::GetInst()->GetResolution();
 
 	m_FadeImage = CreateWidget<CImage>("FadeImage");
-	m_FadeImage->SetSize(RS.Width, RS.Height);
+	m_FadeImage->SetSize((float)RS.Width, (float)RS.Height);
 	m_FadeImage->SetColorTint(0.f, 0.f, 0.f, 0.f);
 	m_FadeImage->SetPos(0.f,0.f);
 	m_FadeImage->SetCollision(false);

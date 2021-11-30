@@ -13,17 +13,17 @@ class CItemInfoWidget :
 
 protected:
 
-    CImage* m_Base;
-    CImage* m_ItemImageBase;
-    CImage* m_ItemImage;
-    CText* m_AttackDamageText;
-    CText* m_AttackSpeedText;
-    CText* m_ItemName;
-    CText* m_AttackDamage;
-    CText* m_AttackSpeed;
-    CText* m_ItemRank;
-    CText* m_ItemType;
-    CText* m_ItemText;
+    CSharedPtr<CImage> m_Base;
+    CSharedPtr<CImage> m_ItemImageBase;
+    CSharedPtr<CImage> m_ItemImage;
+    CSharedPtr<CText> m_AttackDamageText;
+    CSharedPtr<CText> m_AttackSpeedText;
+    CSharedPtr<CText> m_ItemName;
+    CSharedPtr<CText> m_AttackDamage;
+    CSharedPtr<CText> m_AttackSpeed;
+    CSharedPtr<CText> m_ItemRank;
+    CSharedPtr<CText> m_ItemType;
+    CSharedPtr<CText> m_ItemText;
 
 protected:
     CItemInfoWidget();

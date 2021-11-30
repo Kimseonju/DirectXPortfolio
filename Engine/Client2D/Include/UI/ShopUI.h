@@ -36,7 +36,7 @@ class CShopUI :
 
 protected:
 
-    CImage* m_BaseImage;
+    CSharedPtr<CImage> m_BaseImage;
     std::vector<ShopItemInfo> m_ShopItemInfo;
 protected:
     CShopUI();

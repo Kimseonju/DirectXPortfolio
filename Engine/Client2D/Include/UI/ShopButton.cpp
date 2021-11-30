@@ -7,8 +7,6 @@
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
 #include <Scene/Viewport.h>
-#include "UI/Image.h"
-#include "UI/Text.h"
 #include "../UI/ShopInfoWidget.h"
 CShopButton::CShopButton() :
 	m_ItemInfoWidget(nullptr),

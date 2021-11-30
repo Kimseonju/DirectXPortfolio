@@ -11,6 +11,7 @@ CBelialDeadMouth::CBelialDeadMouth() :
 CBelialDeadMouth::CBelialDeadMouth(const CBelialDeadMouth& obj) :
 	CGameObject(obj)
 {
+	m_RotationTimer = obj.m_RotationTimer;
 }
 
 CBelialDeadMouth::~CBelialDeadMouth()

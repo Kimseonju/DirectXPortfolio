@@ -13,7 +13,11 @@ CWeapon::CWeapon() :
 	m_WeaponType(Weapon_Type::Melee),
 	m_Rebound(0.f),
 	m_Dir(Object_Dir::Right),
-	m_ReloadEffect(false)
+	m_ReloadEffect(false),
+	m_Animation2D(nullptr),
+	m_CurrentAttackDelay(0.f),
+	m_CurrentReloadDelay(0.f),
+	m_Reload(false)
 {
 	Enable(false);
 }

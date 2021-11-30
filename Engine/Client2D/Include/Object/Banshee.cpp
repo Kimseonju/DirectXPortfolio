@@ -21,6 +21,8 @@ CBanshee::CBanshee() :
 CBanshee::CBanshee(const CBanshee& obj) :
 	CEnemy(obj)
 {
+	m_AttackTimer = obj.m_AttackTimer;
+	m_AttackTimerMax = obj.m_AttackTimerMax;
 }
 
 CBanshee::~CBanshee()

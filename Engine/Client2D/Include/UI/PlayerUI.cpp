@@ -14,7 +14,8 @@ CPlayerUI::CPlayerUI() :
 	m_BossUI(nullptr),
 	m_WarningOnHit0(nullptr),
 	m_WarningOnHit1(nullptr),
-	m_HitTime(0.f)
+	m_HitTime(0.f),
+	m_PlayerWeaponUI(nullptr)
 {
 }
 
@@ -51,7 +52,7 @@ bool CPlayerUI::Init()
 	image->SetTexture("PlayerLifeBase", TEXT("UI/PlayerLifeBase.png"));
 	image->SetPos(50.f, 600.f);
 	image->SetCollision(false);
-	image->SetZOrder(1.f);
+	image->SetZOrder(1);
 
 
 	m_HPLifeWave = CreateWidget<CImage>("LifeWave");
@@ -183,8 +184,8 @@ void CPlayerUI::Update(float DeltaTime)
 	}
 
 	m_HitTime -= DeltaTime;
-	int hp = (float)CGlobalValue::MainPlayer->GetStatus().GetHP();
-	int hpmax = (float)CGlobalValue::MainPlayer->GetStatus().GetHPMax();
+	int hp = CGlobalValue::MainPlayer->GetStatus().GetHP();
+	int hpmax = CGlobalValue::MainPlayer->GetStatus().GetHPMax();
 	float Percentt = (float)hp / (float)hpmax;
 
 	std::wstring str;

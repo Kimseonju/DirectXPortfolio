@@ -5,13 +5,15 @@
 #include <Component/Camera.h>
 #include <Scene/CameraManager.h>
 #include <Scene/SceneResource.h>
-CBossDieEffectStart::CBossDieEffectStart()
+CBossDieEffectStart::CBossDieEffectStart():
+	m_Belial(nullptr)
 {
 }
 
 CBossDieEffectStart::CBossDieEffectStart(const CBossDieEffectStart& obj) :
 	CEffectObject(obj)
 {
+	m_Belial = obj.m_Belial;
 }
 
 CBossDieEffectStart::~CBossDieEffectStart()

@@ -7,7 +7,8 @@
 #include "ObjectDieEffectObject.h"
 #include "Giant_RedBulletFX.h"
 #include "Player.h"
-CGiant_RedBullet::CGiant_RedBullet()
+CGiant_RedBullet::CGiant_RedBullet():
+    m_Animation2D(nullptr)
 
 {
 }

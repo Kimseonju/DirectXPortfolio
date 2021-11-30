@@ -5,7 +5,7 @@
 CLoadingUI::CLoadingUI():
 	m_LoadingPercent(1.f),
 	m_ImageCount(0.f),
-	m_ImageNum(0.f)
+	m_ImageNum(0)
 {
 }
 

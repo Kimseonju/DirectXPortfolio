@@ -5,10 +5,12 @@
 #include <Scene/SceneResource.h>
 #include "BossDieEffect.h"
 CBossDieEffectLast::CBossDieEffectLast() :
-	m_SpawnCountMax(6.f),
-	m_SpawnCount(0.f),
+	m_SpawnCountMax(6),
+	m_SpawnCount(0),
 	m_SpawnTimerMax(0.2f),
-	m_SpawnTimer(0.f)
+	m_SpawnTimer(0.f),
+	m_Belial(nullptr)
+
 
 {
 }
@@ -16,7 +18,11 @@ CBossDieEffectLast::CBossDieEffectLast() :
 CBossDieEffectLast::CBossDieEffectLast(const CBossDieEffectLast& obj) :
 	CEffectObject(obj)
 {
-
+	m_SpawnCountMax = obj.m_SpawnCountMax;
+	m_SpawnCount = obj.m_SpawnCount;
+	m_SpawnTimerMax = obj.m_SpawnTimerMax;
+	m_SpawnTimer = obj.m_SpawnTimer;
+	m_Belial = obj.m_Belial;
 }
 
 CBossDieEffectLast::~CBossDieEffectLast()
@@ -62,7 +68,7 @@ void CBossDieEffectLast::Update(float DeltaTime)
 			CBossDieEffect* Effect = m_pScene->SpawnObject<CBossDieEffect>("BossDieEffect");
 			Effect->SetWorldPos(GetWorldPos());
 			Effect->SetWorldRotationZ(45.f * i);
-			Effect->AddRelativePos(Effect->GetAxis(AXIS_Y) * 10.f * m_SpawnCount);
+			Effect->AddRelativePos(Effect->GetAxis(AXIS_Y) * 10.f * (float)m_SpawnCount);
 
 		}
 		m_pScene->GetResource()->FindSound("EnemyDie")->Play();

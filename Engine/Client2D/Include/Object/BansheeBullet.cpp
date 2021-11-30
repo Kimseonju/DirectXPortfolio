@@ -9,7 +9,8 @@
 #include "Player.h"
 CBansheeBullet::CBansheeBullet():
     m_Distance(200.f),
-    m_Damage(5)
+    m_Damage(5),
+    m_Animation2D(nullptr)
 {
 }
 

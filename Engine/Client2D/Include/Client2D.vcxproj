@@ -168,7 +168,6 @@
     <ClCompile Include="ClientManager.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="ObjectStatusManager.cpp" />
     <ClCompile Include="Object\BackGround_Tree.cpp" />
     <ClCompile Include="Object\Banshee.cpp" />
@@ -194,7 +193,6 @@
     <ClCompile Include="Object\BossTorchLight.cpp" />
     <ClCompile Include="Object\BossTresure.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
-    <ClCompile Include="Object\CollisionObject.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
     <ClCompile Include="Object\EndingCamera.cpp" />
@@ -315,7 +313,6 @@
     <ClInclude Include="BasicStatus.h" />
     <ClInclude Include="ClientManager.h" />
     <ClInclude Include="GlobalValue.h" />
-    <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="ObjectStatusManager.h" />
     <ClInclude Include="Object\BackGround_Tree.h" />
     <ClInclude Include="Object\Banshee.h" />
@@ -340,7 +337,6 @@
     <ClInclude Include="Object\BossTorchLight.h" />
     <ClInclude Include="Object\BossTresure.h" />
     <ClInclude Include="Object\Cloud.h" />
-    <ClInclude Include="Object\CollisionObject.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
     <ClInclude Include="Object\EndingCamera.h" />

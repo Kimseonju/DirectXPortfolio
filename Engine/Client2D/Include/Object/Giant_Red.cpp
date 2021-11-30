@@ -28,6 +28,9 @@ CGiant_Red::CGiant_Red() :
 CGiant_Red::CGiant_Red(const CGiant_Red& obj) :
 	CEnemy(obj)
 {
+	m_AttackTimer = obj.m_AttackTimer;
+	m_AttackTimerMax = obj.m_AttackTimerMax;
+
 }
 
 CGiant_Red::~CGiant_Red()

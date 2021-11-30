@@ -9,7 +9,10 @@
 #include "../Animation2D/LifeWaveAnimation2D.h"
 #include "BossUI.h"
 #include "WeaponUI.h"
-CStatusUI::CStatusUI()
+CStatusUI::CStatusUI():
+	m_BossUI(nullptr),
+	m_PlayerWeaponUI(nullptr),
+	m_HitTime(0.f)
 {
 }
 

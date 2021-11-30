@@ -7,7 +7,9 @@
 CBossDieParticle::CBossDieParticle():
 	m_SoundTimer(0.f),
 	m_SoundTimerMax(0.2f),
-	m_Effect(false)
+	m_Effect(false),
+	m_LifeTime(0.f),
+	m_Belial(nullptr)
 {
 }
 
@@ -49,8 +51,8 @@ bool CBossDieParticle::Init()
 	m_Particle->SetAnimation2DEnable(true);
 	m_Particle->SetAnimation2DCount(12);
 	Vector2 Size;
-	Size.x = m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
-	Size.y = m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
+	Size.x = (float)m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
+	Size.y = (float)m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
 	m_Particle->SetAnimation2DSize(Size);
 	m_Particle->SetAnimation2DPlayRate(0.05f);
 	m_Particle->SetRender2DType(Render_Type_2D::RT2D_Particle);

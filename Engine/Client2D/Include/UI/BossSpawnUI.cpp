@@ -23,6 +23,8 @@ CBossSpawnUI::CBossSpawnUI() :
 CBossSpawnUI::CBossSpawnUI(const CBossSpawnUI& widget) :
 	CWidgetWindow(widget)
 {
+	m_Alpha = widget.m_Alpha;
+	m_NickNameAlpha = widget.m_NickNameAlpha;
 }
 
 CBossSpawnUI::~CBossSpawnUI()

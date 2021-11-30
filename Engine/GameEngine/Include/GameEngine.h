@@ -163,8 +163,8 @@ struct TransformCBuffer
     Vector3 Pivot;
     int     Animation2DEnable;
     Vector3 MeshSize;
-    float   HorizontalReverse2DEnable;
-    float   VerticalReverse2DEnable;
+    int   HorizontalReverse2DEnable;
+    int   VerticalReverse2DEnable;
     Vector3 Pos;
 };
 

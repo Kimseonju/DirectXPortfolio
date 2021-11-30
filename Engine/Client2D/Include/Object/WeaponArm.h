@@ -42,7 +42,7 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 
 public:
-	void SetDirPos(Vector3 Pos)
+	void SetDirPos(const Vector3& Pos)
 	{
 		m_DirPos = Pos;
 	}

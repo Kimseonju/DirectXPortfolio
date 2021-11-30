@@ -11,13 +11,17 @@
 #include "Player.h"
 #include "../UI/TextWidget.h"
 CTextObject::CTextObject():
-	m_LifeTime(1.f)
+	m_LifeTime(1.f),
+	m_Widget(nullptr)
 {
 }
 
 CTextObject::CTextObject(const CTextObject& obj) :
 	CGameObject(obj)
 {
+	m_Widget = obj.m_Widget;
+	m_LifeTime = obj.m_LifeTime;
+
 }
 
 CTextObject::~CTextObject()

@@ -4,7 +4,8 @@
 #include "Player.h"
 #include "../UI/UIManager.h"
 #include "../UI/MiniMap.h"
-CShopNPC::CShopNPC()
+CShopNPC::CShopNPC() :
+	m_KeyUIObject(nullptr)
 {
 }
 

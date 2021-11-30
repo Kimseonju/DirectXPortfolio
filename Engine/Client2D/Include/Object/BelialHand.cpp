@@ -14,13 +14,17 @@
 #include <Scene/SceneResource.h>
 CBelialHand::CBelialHand() :
 	m_Belial(nullptr),
-	m_Attacking(false)
+	m_Attacking(false),
+	m_AttackMove(false),
+	m_Animation2D(nullptr)
+
 {
 }
 
 CBelialHand::CBelialHand(const CBelialHand& obj) :
 	CGameObject(obj)
 {
+	m_Animation2D = nullptr;
 	m_Belial = nullptr;
 	m_Attacking = false;
 }

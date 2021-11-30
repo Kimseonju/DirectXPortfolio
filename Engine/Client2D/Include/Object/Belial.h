@@ -8,7 +8,6 @@ class CBelial :
 
 protected:
 	CBelial();
-	CBelial(const CBelial& obj);
 	virtual ~CBelial();
 private:
 	std::vector<class CBelialWeapon*> m_BelialWeapon;

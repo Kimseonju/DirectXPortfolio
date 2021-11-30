@@ -14,13 +14,7 @@
 #include <Scene/SceneResource.h>
 
 CWeaponUI::CWeaponUI() :
-	m_WeaponUIBase1(nullptr),
-	m_WeaponUIBase2(nullptr),
-	m_WeaponImage1(nullptr),
-	m_WeaponImage2(nullptr),
-	m_FinishChange(true),
-	m_MoveRatio(0.f)
-
+	m_SelectWeapon(Select_Weapon::Left)
 {
 }
 
@@ -240,6 +234,15 @@ void CWeaponUI::Update(float DeltaTime)
 			}
 			Change = false;
 		}
+		else
+		{
+			m_WeaponImage1->SetZOrder(4);
+			m_WeaponMagazine1->SetZOrder(4);
+			m_WeaponMagazineMiddle1->SetZOrder(4);
+			m_WeaponMagazineMax1->SetZOrder(4);
+			m_WeaponUIBase1->SetZOrder(3);
+			m_WeaponUIProgressBar1->SetZOrder(3);
+		}
 		if (UIBasePos2 != m_WaltPos)
 		{
 			UIBasePos2 = UIBasePos2.Lerp2DMax(UIBasePos2, m_WaltPos, m_MoveRatio);
@@ -253,6 +256,15 @@ void CWeaponUI::Update(float DeltaTime)
 				m_WeaponUIProgressBar2->SetZOrder(1);
 			}
 			Change = false;
+		}
+		else
+		{
+			m_WeaponImage2->SetZOrder(2);
+			m_WeaponMagazine2->SetZOrder(2);
+			m_WeaponMagazineMiddle2->SetZOrder(2);
+			m_WeaponMagazineMax2->SetZOrder(2);
+			m_WeaponUIBase2->SetZOrder(1);
+			m_WeaponUIProgressBar2->SetZOrder(1);
 		}
 	}
 	else if (m_SelectWeapon == Select_Weapon::Right)
@@ -271,6 +283,15 @@ void CWeaponUI::Update(float DeltaTime)
 			}
 			Change = false;
 		}
+		else
+		{
+			m_WeaponImage1->SetZOrder(2);
+			m_WeaponMagazine1->SetZOrder(2);
+			m_WeaponMagazineMiddle1->SetZOrder(2);
+			m_WeaponMagazineMax1->SetZOrder(2);
+			m_WeaponUIBase1->SetZOrder(1);
+			m_WeaponUIProgressBar1->SetZOrder(1);
+		}
 		if (UIBasePos2 != m_SelectPos)
 		{
 			UIBasePos2 = UIBasePos2.Lerp2DMax(UIBasePos2, m_SelectPos, m_MoveRatio);
@@ -284,6 +305,18 @@ void CWeaponUI::Update(float DeltaTime)
 				m_WeaponUIProgressBar2->SetZOrder(3);
 			}
 			Change = false;
+		}
+		else
+		{
+			if (m_MoveRatio > 0.5f)
+			{
+				m_WeaponImage2->SetZOrder(4);
+				m_WeaponMagazine2->SetZOrder(4);
+				m_WeaponMagazineMiddle2->SetZOrder(4);
+				m_WeaponMagazineMax2->SetZOrder(4);
+				m_WeaponUIBase2->SetZOrder(3);
+				m_WeaponUIProgressBar2->SetZOrder(3);
+			}
 		}
 	}
 	m_MoveRatio += (DeltaTime*2.f);

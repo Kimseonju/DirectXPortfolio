@@ -1,6 +1,8 @@
 #pragma once
 #include <UI/Button.h>
 #include "../GlobalValue.h"
+#include "UI/Image.h"
+#include "UI/Text.h"
 //Inventory가 들고있음
 class CItem;
 class CImage;
@@ -17,10 +19,10 @@ protected:
 	virtual ~CShopButton();
 
 protected:
+	CSharedPtr<CImage> m_TextBase;
+	CSharedPtr<CText> m_ItemName;
+	CSharedPtr<CImage> m_CoinImage;
 	CItem* m_Item;
-	CImage*  m_TextBase;
-	CText* m_ItemName;
-	CImage* m_CoinImage;
 	class CItemInfoWidget* m_ItemInfoWidget;
 public:
 	virtual void Active(bool bActive);

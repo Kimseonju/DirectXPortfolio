@@ -3,7 +3,8 @@
 #include "KeyboardUIObject.h"
 #include "Player.h"
 #include "../UI/UIManager.h"
-CEndingPlayer::CEndingPlayer()
+CEndingPlayer::CEndingPlayer() :
+	m_Animation2D(nullptr)
 {
 }
 

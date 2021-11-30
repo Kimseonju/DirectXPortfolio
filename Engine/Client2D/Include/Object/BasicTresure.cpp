@@ -18,7 +18,8 @@
 #include "../UI/MiniMap.h"
 #include <Scene/SceneResource.h>
 CBasicTresure::CBasicTresure():
-	m_Open(false)
+	m_Open(false),
+	m_KeyUIObject(nullptr)
 {
 }
 

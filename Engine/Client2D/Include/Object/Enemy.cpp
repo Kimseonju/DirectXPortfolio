@@ -22,9 +22,14 @@ CEnemy::CEnemy() :
 	m_ChildFireTimeMax(0.2f),
 	m_State(Enemy_State::Idle),
 	m_WallCol(false),
-	m_StartGravity(false),
 	m_Status(nullptr),
-	m_EnemyHit(0.f)
+	m_EnemyHit(0.f),
+	m_EnemyInfoWidget(nullptr),
+	m_Animation2D(nullptr),
+	m_Weapon(nullptr),
+	m_WeaponArm(nullptr),
+	m_OneAttack(false),
+	m_Dir(Object_Dir::Left)
 {
 }
 
@@ -68,6 +73,7 @@ bool CEnemy::Init()
 	m_EnemyInfoWidgetComponent = CreateSceneComponent<CWidgetComponent>("InfoWidget");
 	m_EnemyInfoWidgetComponent->SetWorldPos(0.f, 0.f, 0.f);
 	m_EnemyInfoWidget = m_EnemyInfoWidgetComponent->CreateWidget<CEnemyWorldInfoWidget>("EnemyWorldInfoWidget");
+	
 	//m_EnemyInfoWidget->Enable(false);
 	m_EnemyInfoWidgetComponent->SetRelativePos(-90.f, -60.f, 0.f);
 	//
@@ -121,7 +127,7 @@ bool CEnemy::Init()
 	PushObjectChild(m_WeaponArm);
 
 	m_Body->SetMoveSpeed(m_Status->GetMoveSpeed());
-	m_Body->SetGravity(300.f);
+	m_Body->SetGravity(true);
 
 
 	m_EnemyFSM.CreateState("Find", this, &CEnemy::FindStay, &CEnemy::FindStart, &CEnemy::FindEnd);
@@ -286,6 +292,8 @@ void CEnemy::CollisionBegin(const HitResult& result, CCollider* Collider)
 			CObjectDieEffectObject* Effect = m_pScene->SpawnObject<CObjectDieEffectObject>("DieEffect");
 			Effect->SetWorldPos(GetWorldPos());
 			Active(false);
+			m_EnemyInfoWidget->Active(false);
+
 			if (m_Weapon)
 			{
 				m_Weapon->Active(false);
@@ -454,7 +462,7 @@ void CEnemy::ColDirVertical(float Angle, CCollider* Col)
 		PlayerPos.y = XMove.y;
 	}
 	//À§
-	else if (0.f < Angle || Angle < 180.f || 360.f <= Angle)
+	else if (0.f <= Angle && Angle < 180.f)
 	{
 		m_Body->StopForceY();
 		float y = (PlayerScale.y + ColScale.y);

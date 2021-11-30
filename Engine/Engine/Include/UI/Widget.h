@@ -132,11 +132,6 @@ public:
 	{
 		m_TintCBuffer->SetTint(Color);
 	}
-
-	Vector4 GetColorTint()
-	{
-		return m_TintCBuffer->GetColorTint();
-	}
 	void SetAnimation2DEnable(bool Enable);
 public:
 	virtual void Start();

@@ -5,7 +5,8 @@
 #include "../UI/MiniMap.h"
 #include <Scene/SceneResource.h>
 CBossTresure::CBossTresure() :
-	m_Open(false)
+	m_Open(false),
+	m_KeyUIObject(nullptr)
 {
 }
 

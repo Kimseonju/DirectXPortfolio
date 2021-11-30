@@ -2,18 +2,7 @@
 #include "ItemInfoWidget.h"
 #include "UI/Image.h"
 #include "UI/Text.h"
-CItemInfoWidget::CItemInfoWidget() :
-	m_Base(nullptr),
-	m_ItemImageBase(nullptr),
-	m_ItemImage(nullptr),
-	m_ItemName(nullptr),
-	m_AttackDamageText(nullptr),
-	m_AttackDamage(nullptr),
-	m_AttackSpeedText(nullptr),
-	m_AttackSpeed(nullptr),
-	m_ItemRank(nullptr),
-	m_ItemType(nullptr),
-	m_ItemText(nullptr)
+CItemInfoWidget::CItemInfoWidget()
 {
 }
 

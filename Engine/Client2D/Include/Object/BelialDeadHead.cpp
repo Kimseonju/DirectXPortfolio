@@ -11,6 +11,7 @@ CBelialDeadHead::CBelialDeadHead() :
 CBelialDeadHead::CBelialDeadHead(const CBelialDeadHead& obj) :
 	CGameObject(obj)
 {
+	m_RotationTimer = obj.m_RotationTimer;
 }
 
 CBelialDeadHead::~CBelialDeadHead()

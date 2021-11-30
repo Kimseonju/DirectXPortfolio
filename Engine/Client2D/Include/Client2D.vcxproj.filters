@@ -103,9 +103,6 @@
     <Filter Include="03. Animation2D\FSM">
       <UniqueIdentifier>{2ec79c2b-b9c9-4c10-815d-a6b51fb16d85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{6b172fc5-c6ff-4a15-955f-e39759af2bdb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{45001236-4da5-4d2b-ab0a-77395daf7b28}</UniqueIdentifier>
     </Filter>
@@ -288,9 +285,6 @@
     <ClCompile Include="Object\BackGround_Tree.cpp">
       <Filter>02. Object\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="Object\CollisionObject.cpp">
-      <Filter>02. Object\임시오브젝트</Filter>
-    </ClCompile>
     <ClCompile Include="Object\EffectObject.cpp">
       <Filter>02. Object\EffectAndParticle</Filter>
     </ClCompile>
@@ -461,9 +455,6 @@
     </ClCompile>
     <ClCompile Include="Stage\Door.cpp">
       <Filter>02. Object\MapObject\Door</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveComponent.cpp">
-      <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="UI\WeaponUI.cpp">
       <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>
@@ -728,9 +719,6 @@
     <ClInclude Include="Object\BackGround_Tree.h">
       <Filter>02. Object\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="Object\CollisionObject.h">
-      <Filter>02. Object\임시오브젝트</Filter>
-    </ClInclude>
     <ClInclude Include="Object\EffectObject.h">
       <Filter>02. Object\EffectAndParticle</Filter>
     </ClInclude>
@@ -898,9 +886,6 @@
     </ClInclude>
     <ClInclude Include="Stage\Door.h">
       <Filter>02. Object\MapObject\Door</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveComponent.h">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="UI\WeaponUI.h">
       <Filter>UI\UI\WidgetWindow\PlayerUI</Filter>

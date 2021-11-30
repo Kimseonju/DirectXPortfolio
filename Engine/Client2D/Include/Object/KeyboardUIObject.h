@@ -28,5 +28,5 @@ public:
 	virtual CKeyboardUIObject* Clone();
 
 public:
-	void SetKey(std::string Key);
+	void SetKey(const std::string& Key);
 };

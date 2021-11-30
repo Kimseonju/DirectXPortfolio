@@ -2,7 +2,8 @@
 #include <Input.h>
 #include "KeyboardUIObject.h"
 #include "Player.h"
-CRestaurantNPC::CRestaurantNPC()
+CRestaurantNPC::CRestaurantNPC():
+	m_KeyUIObject(nullptr)
 {
 }
 

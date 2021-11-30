@@ -18,7 +18,7 @@ CCamera::CCamera()
 	m_CameraZoom = 1.f;
 	m_MinX = (float)INT_MIN;
 	m_MinY = (float)INT_MIN;
-
+	m_RS = { 0,0 };
 	m_MaxX = (float)INT_MAX;
 	m_MaxY = (float)INT_MAX;
 	m_ShakeTime = 0.f;
@@ -37,6 +37,15 @@ CCamera::CCamera(const CCamera& com) :
 	m_matProj = com.m_matProj;
 	m_CameraLeft = com.m_CameraLeft;
 	m_CameraBottom = com.m_CameraBottom;
+	m_RS = com.m_RS;
+	m_MinX = com.m_MinX;
+	m_MinY = com.m_MinY;
+	m_MaxX = com.m_MaxX;
+	m_MaxY = com.m_MaxY;
+	m_ShakeTime = com.m_ShakeTime;
+	m_MoveTime = com.m_MoveTime;
+	m_CameraMove = com.m_CameraMove;
+	m_CameraMoveEnd = com.m_CameraMoveEnd;
 }
 
 CCamera::~CCamera()

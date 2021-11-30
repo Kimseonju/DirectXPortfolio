@@ -1,8 +1,8 @@
 
 #include "MiniMap.h"
 #include "MiniMapWidget.h"
-CMiniMap::CMiniMap()
-
+CMiniMap::CMiniMap():
+	m_MiniMapWidget(nullptr)
 {
 }
 

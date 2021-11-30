@@ -22,8 +22,6 @@ protected:
 
 protected:
 	CAnimation2D_FSM* m_Animation2D;
-	
-protected:
 	float m_CurrentAttackDelay; 
 	float m_CurrentReloadDelay;
 	bool m_Reload;

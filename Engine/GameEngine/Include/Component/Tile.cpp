@@ -197,8 +197,8 @@ void CTile::Load(FILE* pFile)
 	fread(&m_IndexX, sizeof(int), 1, pFile);
 	fread(&m_IndexY, sizeof(int), 1, pFile);
 	fread(&m_Index, sizeof(int), 1, pFile);
-	m_FrameX = m_FrameStart.x;
-	m_FrameY = m_FrameStart.y;
+	m_FrameX = (int)m_FrameStart.x;
+	m_FrameY = (int)m_FrameStart.y;
 
 	int num = 0;
 	fread(&num, sizeof(int), 1, pFile);

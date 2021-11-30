@@ -5,7 +5,8 @@
 #include "../GlobalValue.h"
 #include "BelialBulletEffect.h"
 #include "Player.h"
-CBelialLaserHead::CBelialLaserHead() 
+CBelialLaserHead::CBelialLaserHead() :
+    m_Animation2D(nullptr)
 {
 }
 

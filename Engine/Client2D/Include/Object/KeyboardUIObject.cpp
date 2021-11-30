@@ -75,7 +75,7 @@ CKeyboardUIObject* CKeyboardUIObject::Clone()
 	return new CKeyboardUIObject(*this);
 }
 
-void CKeyboardUIObject::SetKey(std::string Key)
+void CKeyboardUIObject::SetKey(const std::string& Key)
 {
 	CMaterial* Material = m_Sprite->GetMaterial(0);
 	std::string Text = "UI/key/Keyboard_" + Key + ".png";

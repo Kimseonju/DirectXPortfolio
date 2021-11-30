@@ -21,6 +21,7 @@ CEnemyAttack::CEnemyAttack(const CEnemyAttack& obj) :
 {
 	m_AttackTime = 0.f;
 	m_AttackTimeMax = 0.5f;
+	m_Damage = 1;
 }
 
 CEnemyAttack::~CEnemyAttack()

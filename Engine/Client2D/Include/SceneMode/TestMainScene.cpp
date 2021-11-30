@@ -20,7 +20,6 @@
 #include "Render/RenderManager.h"
 #include "../UI/MainHUDWidget.h"
 #include "Scene/Viewport.h"
-#include "../Object/CollisionObject.h"
 #include "../Object/SmallSkel.h"
 #include "../GlobalValue.h"
 #include "../Object/Stage1MapEffect.h"

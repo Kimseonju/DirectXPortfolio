@@ -19,6 +19,7 @@ CBossDieUI::CBossDieUI() :
 CBossDieUI::CBossDieUI(const CBossDieUI& widget) :
 	CWidgetWindow(widget)
 {
+	m_Alpha = widget.m_Alpha;
 }
 
 CBossDieUI::~CBossDieUI()

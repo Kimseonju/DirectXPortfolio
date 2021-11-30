@@ -35,9 +35,9 @@ public:
     virtual void Render();
     virtual CMiniMapWidget* Clone();
 public:
-    void PushMiniMapInfoTile(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity);
-    void PushMiniMapInfoObject(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity);
-    void PushMiniMapInfoEnemy(Vector2 Pos, Vector2 Size, Vector4 Color, Vector4 EmvColor, float Opacity);
+    void PushMiniMapInfoTile(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity);
+    void PushMiniMapInfoObject(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity);
+    void PushMiniMapInfoEnemy(const Vector2& Pos, const Vector2& Size, const Vector4& Color, const Vector4& EmvColor, float Opacity);
     void ObjectClear();
     void Clear();
 };

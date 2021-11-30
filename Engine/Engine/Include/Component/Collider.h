@@ -86,7 +86,7 @@ public:
 		m_vecSectionIndex.push_back(Index);
 	}
 
-	void SetHitResult(HitResult result)
+	void SetHitResult(const HitResult result)
 	{
 		m_HitResult = result;
 	}

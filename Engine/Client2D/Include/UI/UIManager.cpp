@@ -5,7 +5,8 @@
 
 DEFINITION_SINGLE(CUIManager)
 
-CUIManager::CUIManager()
+CUIManager::CUIManager():
+	m_pScene(nullptr)
 {
 }
 
@@ -34,6 +35,7 @@ bool CUIManager::Init(CScene* Scene)
 	m_StageMapUI->Enable(false);
 	m_ShopUI->Enable(false);
 	m_BossUI->Enable(false);
+	m_StatusUI->Enable(false);
 	//m_BossDieUI->Enable(false);
 
 	return true;

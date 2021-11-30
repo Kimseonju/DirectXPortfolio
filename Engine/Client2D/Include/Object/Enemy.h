@@ -39,7 +39,6 @@ protected:
 	bool m_OneAttack;
 	Object_Dir m_Dir;
 	bool m_WallCol;
-	bool m_StartGravity;
 	float m_EnemyHit;
 protected:
 	bool    m_ChildFire;
