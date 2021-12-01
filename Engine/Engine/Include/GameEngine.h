@@ -387,6 +387,9 @@ struct TransformUICBuffer
     int	TextureEnable;
     int	Animation2D;
     Vector2	Size;
+    int	UIHorizontalReverse2DEnable;
+    int	UIVerticalReverse2DEnable;
+    Vector2	Empty;
 };
 
 struct UIColorTintCBuffer

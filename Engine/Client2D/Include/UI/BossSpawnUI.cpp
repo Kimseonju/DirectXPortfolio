@@ -40,7 +40,7 @@ bool CBossSpawnUI::Init()
 	m_BossUpImage = CreateWidget<CImage>("BossUpImage");
 	m_BossUpImage->SetSize(1280.f, 200.f);
 	m_BossUpImage->SetColorTint(0.f, 0.f, 0.f, 0.f);
-	m_BossUpImage->SetPos(0.f, 520.f);
+	m_BossUpImage->SetPos(0.f, 570.f);
 	m_BossUpImage->SetCollision(false);
 
 
@@ -54,7 +54,7 @@ bool CBossSpawnUI::Init()
 	m_BossName = CreateWidget<CText>("BossName");
 	m_BossName->SetText(TEXT("º§¸®¾Ë"));
 	m_BossName->SetFontSize(25.f);
-	m_BossName->SetColor(0.f, 0.f, 0.f);
+	m_BossName->SetColor(1.f, 1.f, 1.f);
 	m_BossName->SetPos(50.f, 170.f);
 	m_BossName->SetCollision(false);
 	m_BossName->SetOpacity(0.f);
@@ -66,7 +66,7 @@ bool CBossSpawnUI::Init()
 	m_BossNinkName->SetSize(300.f, 100.f);
 	m_BossNinkName->SetColorTint(1.f, 1.f, 1.f, 0.f);
 	m_BossNinkName->SetFontSize(20.f);
-	m_BossNinkName->SetColor(0.f, 0.f, 0.f);
+	m_BossNinkName->SetColor(1.f, 1.f, 1.f);
 	m_BossNinkName->SetPos(60.f, 200.f);
 	m_BossNinkName->SetCollision(false);
 	m_BossNinkName->SetOpacity(0.f);

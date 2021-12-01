@@ -69,6 +69,11 @@ Vector2 CWidget::GetPos() const
 	return Pos;
 }
 
+void CWidget::SetUIHorizontalReverse2DEnable(bool Enable)
+{
+	m_TransformCBuffer->SetUIHorizontalReverse2DEnable(Enable);
+}
+
 void CWidget::SetAnimation2DEnable(bool Enable)
 {
 	m_TransformCBuffer->SetAnimation2DEnable(Enable);

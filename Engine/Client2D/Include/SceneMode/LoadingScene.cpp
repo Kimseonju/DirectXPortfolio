@@ -4,6 +4,7 @@
 #include "Scene/Viewport.h"
 #include "LoadingThread.h"
 #include "ThreadManager.h"
+#include "Scene/SceneResource.h"
 
 CLoadingScene::CLoadingScene():
 	m_Thread(nullptr)
@@ -24,6 +25,9 @@ bool CLoadingScene::Init()
 	m_Thread->SetLoop(false);
 	m_Thread->Start();
 
+	m_pScene->GetResource()->LoadSound("BGM", false, "Loading",
+		"Loading.mp3");
+	m_pScene->GetResource()->FindSound("Loading")->Play();
 	return true;
 }
 

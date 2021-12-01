@@ -18,8 +18,8 @@ cbuffer Transform : register(b0)
 	float3  g_vPivot;
 	int		g_Animation2DEnable;
 	float3  g_vMeshSize;
-	int   g_HorizontalReverse2DEnable;
-	int   g_VerticalReverse2DEnable;
+	float   g_HorizontalReverse2DEnable;
+	float   g_VerticalReverse2DEnable;
 	float3  g_Pos;
 };
 

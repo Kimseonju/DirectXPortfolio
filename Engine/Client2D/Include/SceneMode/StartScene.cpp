@@ -115,6 +115,7 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUR.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapURD3.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BossMapLR3.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Boss.txt"));

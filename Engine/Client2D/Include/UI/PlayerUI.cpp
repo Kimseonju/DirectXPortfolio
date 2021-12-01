@@ -131,9 +131,9 @@ bool CPlayerUI::Init()
 		CImage* aimage = CreateWidget<CImage>("DashEnd" + str);
 		aimage->SetPos(94.f + (DashMax-2) * 36.f, 560.f);
 		aimage->SetSize(44.f, 32.f);
-		aimage->SetTexture("DashCountBase_1", TEXT("UI/DashCountBase_1.png"));
+		aimage->SetTexture("PlayerUIDashBack", TEXT("UI/DashCountBase_0.png"));
 		aimage->SetCollision(false);
-
+		aimage->SetUIHorizontalReverse2DEnable(true);
 		image = CreateWidget<CImage>("DashCount" + str);
 		image->SetPos(94.f + (DashMax-2) * 36.f, 568.f);
 		image->SetSize(36.f, 16.f);

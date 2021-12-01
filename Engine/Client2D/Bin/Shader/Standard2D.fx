@@ -80,16 +80,16 @@ float2 ComputeAnimation2DUV(float2 UV)
 
 VS_OUTPUT_COLOR Standard2DColorVS(VS_INPUT_COLOR input)
 {
-    VS_OUTPUT_COLOR output = (VS_OUTPUT_COLOR)0;
+	VS_OUTPUT_COLOR output = (VS_OUTPUT_COLOR)0;
 
-    float3  Pos = input.Pos - g_vPivot * g_vMeshSize;
+	float3  Pos = input.Pos - g_vPivot * g_vMeshSize;
 
-    // output.Pos 의 x, y, z 에는 input.Pos의 x, y, z 가 들어가고 w에는 1.f 이 들어가게 된다.
+	// output.Pos 의 x, y, z 에는 input.Pos의 x, y, z 가 들어가고 w에는 1.f 이 들어가게 된다.
 	float4	Color = input.Color * g_vMtrlBaseColor + g_vMtrlEmissiveColor;
 
 	output.Color = Color;
 
-    return output;
+	return output;
 }
 
 
@@ -101,8 +101,8 @@ VS_OUTPUT_COLOR Standard2DColorVS(VS_INPUT_COLOR input)
 PS_OUTPUT_SINGLE Standard2DColorPS(VS_OUTPUT_COLOR input)
 {
 	PS_OUTPUT_SINGLE    output = (PS_OUTPUT_SINGLE)0;
-							//색 변경				색 발산
-	output.Color = input.Color* g_vMtrlBaseColor + g_vMtrlEmissiveColor;
+	//색 변경				색 발산
+	output.Color = input.Color * g_vMtrlBaseColor + g_vMtrlEmissiveColor;
 
 	return output;
 }
@@ -135,11 +135,11 @@ VS_OUTPUT_UV Standard2DTextureVS(VS_INPUT_UV input)
 	output.Pos = output.ProjPos;
 	output.UV = ComputeAnimation2DUV(input.UV);
 	output.Position = input.Pos;
-	if (g_HorizontalReverse2DEnable==1 && g_Animation2DEnable == 1)
+	if (g_HorizontalReverse2DEnable == 1 && g_Animation2DEnable == 1)
 	{
 		int b = 0;
 	}
-	else if (g_HorizontalReverse2DEnable == 1 )
+	else if (g_HorizontalReverse2DEnable == 1)
 	{
 		output.UV.x = 1 - output.UV.x;
 	}
@@ -163,7 +163,7 @@ PS_OUTPUT_SINGLE Standard2DTexturePS(VS_OUTPUT_UV input)
 	float4	result = (float4)0.f;
 
 	result.rgb = BaseColor.rgb * g_vMtrlBaseColor.rgb + EmissiveColor.rgb * g_vMtrlEmissiveColor.rgb;
-	result.a = BaseColor.a * g_MtrlOpacity* g_vMtrlBaseColor.a;
+	result.a = BaseColor.a * g_MtrlOpacity * g_vMtrlBaseColor.a;
 
 	result = PaperBurn2D(result, input.UV);
 

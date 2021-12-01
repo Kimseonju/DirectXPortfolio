@@ -72,7 +72,7 @@ void CPrimitiveComponent::SetMaterial(int SlotIndex, CMaterial* pMaterial)
 
 void CPrimitiveComponent::SetMaterial(int SlotIndex, const std::string& Name)
 {
-    m_vecMaterialSlot[SlotIndex] = m_pScene->GetResource()->FindMaterial(Name);
+    m_vecMaterialSlot[SlotIndex] = m_pScene->GetResource()->FindMaterial(Name)->Clone();
 }
 
 void CPrimitiveComponent::AddMaterial(CMaterial* pMaterial)

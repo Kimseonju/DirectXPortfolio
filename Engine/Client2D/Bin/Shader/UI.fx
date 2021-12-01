@@ -7,6 +7,9 @@ cbuffer UITransformCBuffer : register(b10)
 	int		g_UITextureEnable;
 	int		g_UIAnimation2DEnable;
 	float2	g_UISize;
+	int   g_UIHorizontalReverse2DEnable;
+	int   g_UIVerticalReverse2DEnable;
+	float2	g_UITransformEmpty;
 };
 
 cbuffer UIColorTintCBuffer : register(b11)
@@ -43,7 +46,6 @@ struct VS_OUTPUT_UI
 #define	Animation2DAtlas	0
 #define	Animation2DFrame	1
 #define	Animation2DArray	2
-
 float2 ComputeUIAnimation2DUV(float2 UV)
 {
 	if (g_UIAnimation2DEnable == 0)
@@ -54,21 +56,31 @@ float2 ComputeUIAnimation2DUV(float2 UV)
 		return UV;
 
 	float2	ResultUV;
-
-	if (UV.x <= 0.f)
-		ResultUV.x = g_vAnimation2DStartUV.x;
-
+	if (g_UIHorizontalReverse2DEnable == 1)
+	{
+		if (UV.x <= 0.f)
+			ResultUV.x = g_vAnimation2DEndUV.x;
+		else
+			ResultUV.x = g_vAnimation2DStartUV.x;
+		if (UV.y <= 0.f)
+			ResultUV.y = g_vAnimation2DStartUV.y;
+		else
+			ResultUV.y = g_vAnimation2DEndUV.y;
+	}
 	else
-		ResultUV.x = g_vAnimation2DEndUV.x;
-
-	if (UV.y <= 0.f)
-		ResultUV.y = g_vAnimation2DStartUV.y;
-
-	else
-		ResultUV.y = g_vAnimation2DEndUV.y;
-
+	{
+		if (UV.x <= 0.f)
+			ResultUV.x = g_vAnimation2DStartUV.x;
+		else
+			ResultUV.x = g_vAnimation2DEndUV.x;
+		if (UV.y <= 0.f)
+			ResultUV.y = g_vAnimation2DStartUV.y;
+		else
+			ResultUV.y = g_vAnimation2DEndUV.y;
+	}
 	return ResultUV;
 }
+
 VS_OUTPUT_UI UIMainVS(VS_INPUT_UI input)
 {
 	VS_OUTPUT_UI	output = (VS_OUTPUT_UI)0;
@@ -76,6 +88,14 @@ VS_OUTPUT_UI UIMainVS(VS_INPUT_UI input)
 	output.Pos = mul(float4(input.Pos, 1.f), g_matUIWVP);
 	output.UV = ComputeUIAnimation2DUV(input.UV);
 
+	if (g_UIHorizontalReverse2DEnable == 1)
+	{
+		output.UV.x = 1 - output.UV.x;
+	}
+	if (g_UIVerticalReverse2DEnable == 1)
+	{
+		output.UV.y = 1 - output.UV.y;
+	}
 	return output;
 }
 

@@ -89,8 +89,11 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Force.y = -200.f;
 			if (m_DashEffectTime <= 0.f)
 			{
-				m_DashEffectTime += 0.015f;
-				m_DashEffect = true;
+				if (!m_DashEffect)
+				{
+					m_DashEffectTime += 0.05f;
+					m_DashEffect = true;
+				}
 			}
 			m_DashEffectTime -= DeltaTime;
 			moveDir += m_Force * DeltaTime;

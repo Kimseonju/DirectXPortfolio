@@ -132,6 +132,7 @@ public:
 	{
 		m_TintCBuffer->SetTint(Color);
 	}
+	void SetUIHorizontalReverse2DEnable(bool Enable);
 	void SetAnimation2DEnable(bool Enable);
 public:
 	virtual void Start();

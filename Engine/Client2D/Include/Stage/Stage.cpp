@@ -193,30 +193,30 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 				{
 				case Client_Enemy_Type::SmallSkel_Sword:
 					Obj = m_pScene->SpawnObject<CSmallSkel>("CreateObject"+ str);
-					Obj->SetStartTimer(1.f);
+					Obj->SetStartTimer(0.5f);
 					m_vecEnemy.push_back(Obj);
 					break;
 				case Client_Enemy_Type::SmallSkel_Bow:
 					Obj = m_pScene->SpawnObject<CSmallSkel_Bow>("CreateObject" + str);
-					Obj->SetStartTimer(1.f);
+					Obj->SetStartTimer(0.5f);
 					m_vecEnemy.push_back(Obj);
 					break;
 
 				case Client_Enemy_Type::Ghost:
 					Obj = m_pScene->SpawnObject<CGhost>("CreateObject" + str);
-					Obj->SetStartTimer(1.f);
+					Obj->SetStartTimer(0.5f);
 					m_vecEnemy.push_back(Obj);
 					break;
 
 				case Client_Enemy_Type::Banshee:
 					Obj = m_pScene->SpawnObject<CBanshee>("CreateObject" + str);
-					Obj->SetStartTimer(1.f);
+					Obj->SetStartTimer(0.5f);
 					m_vecEnemy.push_back(Obj);
 					break;
 
 				case Client_Enemy_Type::Giant_Red:
 					Obj = m_pScene->SpawnObject<CGiant_Red>("CreateObject" + str);
-					Obj->SetStartTimer(1.f);
+					Obj->SetStartTimer(0.5f);
 					m_vecEnemy.push_back(Obj);
 					break;
 				case Client_Enemy_Type::End:

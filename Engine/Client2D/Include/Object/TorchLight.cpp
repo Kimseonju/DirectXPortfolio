@@ -48,9 +48,10 @@ bool CTorchLight::Init()
 	Material->AddTexture("torchEffect", TEXT("object/torch/torchEffect6.png"));
 	//º¸½º¿ë
 	//Material->SetBaseColor(255.f /255.f, 0.f / 255.f, 255.f / 255.f, 100.f / 255.f);
-	Material->SetBaseColor(227.f /255.f, 79.f / 255.f, 64.f / 255.f, 140.f / 255.f);
+	//Material->SetBaseColor(544.f /255.f, 158.f / 255.f, 128.f / 255.f, 160.f / 255.f);
+	Material->SetBaseColor(227.f / 255.f, 79.f / 255.f, 64.f / 255.f, 140.f / 255.f);
 	Material->SetTransparency(true);
-	
+	Material->SetOpacity(1.f);
 	//Material->AddTexture("TorchLightt", TEXT("object/torch/torchEffect.png"));
 
 	return true;

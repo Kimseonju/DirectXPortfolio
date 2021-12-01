@@ -37,5 +37,15 @@ public:
 	{
 		m_BufferData.Size = Size;
 	}
+
+	void SetUIHorizontalReverse2DEnable(bool Enable)
+	{
+		m_BufferData.UIHorizontalReverse2DEnable = Enable ? 1 : 0;
+	}
+
+	void SetUIVerticalReverse2DEnable(bool Enable)
+	{
+		m_BufferData.UIVerticalReverse2DEnable = Enable ? 1 : 0;
+	}
 };
 
