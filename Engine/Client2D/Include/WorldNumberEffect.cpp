@@ -16,7 +16,7 @@ CWorldNumberEffect::~CWorldNumberEffect()
 bool CWorldNumberEffect::Init()
 {
 	CWidgetWindow::Init();
-
+	SetCollision(false);
 	m_Text = CreateWidget<CText>("Name");
 	m_Text->SetText(TEXT(""));
 	m_Text->SetPos(0.f, 25.f);

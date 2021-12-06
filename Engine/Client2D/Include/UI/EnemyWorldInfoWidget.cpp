@@ -22,7 +22,7 @@ void CEnemyWorldInfoWidget::Active(bool bActive)
 bool CEnemyWorldInfoWidget::Init()
 {
 	CWidgetWindow::Init();
-
+	SetCollision(false);
 	m_HPBar = CreateWidget<CProgressBar>("HPBar");
 
 	m_HPBar->SetPos(0.f, 0.f);

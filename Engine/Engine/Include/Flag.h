@@ -292,6 +292,7 @@ enum class Client_Object_Type
     Restaurant,
     TresureBox,
     BossTresureBox,
+    Gate,
     End
 };
 enum class Client_Enemy_Type

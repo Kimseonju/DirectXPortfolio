@@ -17,6 +17,7 @@
 #include "../Object/SpawnEffect.h"
 #include "../Object/TorchLight.h"
 #include "../Object/BossTorchLight.h"
+#include "../Object/RestaurantNPC.h"
 CStage::CStage() :
 	m_Enable(true),
 	m_State(Stage_State::Idle),
@@ -173,13 +174,20 @@ void CStage::ObjectUpdate(StageObjectsInfo Info, StageType Type, int num)
 
 			case Client_Object_Type::Restaurant:
 			{
-				CShopNPC* NPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
+				CRestaurantNPC* NPC = m_pScene->SpawnObject<CRestaurantNPC>("RestaurantNPC");
 				m_Object.push_back(NPC);
 				Obj = NPC;
 
 				break;
 			}
 
+			case Client_Object_Type::Gate:
+			{
+				CGate* Gate = m_pScene->SpawnObject<CGate>("Gate");
+				m_Object.push_back(Gate);
+				m_Gate = Gate;
+				Obj = Gate;
+			}
 
 			}
 			break;
@@ -450,6 +458,16 @@ void CStage::PlayerStageMove(Stage_Dir Dir)
 		}
 	}
 
+}
+
+void CStage::PlayerStageGate()
+{
+	m_Gate->StageGateEnd();
+}
+
+void CStage::MoveStageGate(Vector2 Pos)
+{
+	m_Gate->StageGateMove(Pos);
 }
 
 void CStage::PushSpawnEnemy(CSpawnEffect* Obj)

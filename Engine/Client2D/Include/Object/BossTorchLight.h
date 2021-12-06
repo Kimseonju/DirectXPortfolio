@@ -4,7 +4,6 @@
 #include "GameObject.h"
 
 #include "Component/SpriteComponent.h"
-#include "Component/ColliderBox2D.h"
 class CBossTorchLight :
 	public CGameObject
 {

@@ -193,6 +193,9 @@
     <ClCompile Include="Object\BossTorchLight.cpp" />
     <ClCompile Include="Object\BossTresure.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
+    <ClCompile Include="Object\CosmosSword.cpp" />
+    <ClCompile Include="Object\CosmosSwordEffect.cpp" />
+    <ClCompile Include="Object\CosmosSwordSkillEffect.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
     <ClCompile Include="Object\EndingCamera.cpp" />
@@ -204,7 +207,9 @@
     <ClCompile Include="Object\Enemy.cpp" />
     <ClCompile Include="Object\EnemyArrow.cpp" />
     <ClCompile Include="Object\EnemyAttack.cpp" />
+    <ClCompile Include="Object\Firefly.cpp" />
     <ClCompile Include="Object\FlameEffect.cpp" />
+    <ClCompile Include="Object\Gate.cpp" />
     <ClCompile Include="Object\Ghost.cpp" />
     <ClCompile Include="Object\Ghost_FSM.cpp" />
     <ClCompile Include="Object\Giant_Red.cpp" />
@@ -284,6 +289,8 @@
     <ClCompile Include="UI\EndingUI.cpp" />
     <ClCompile Include="UI\EnemyWorldInfoWidget.cpp" />
     <ClCompile Include="UI\FadeInOutUI.cpp" />
+    <ClCompile Include="UI\FadeInOut_White.cpp" />
+    <ClCompile Include="UI\GateButton.cpp" />
     <ClCompile Include="UI\Inventory.cpp" />
     <ClCompile Include="UI\InventoryButton.cpp" />
     <ClCompile Include="UI\ItemInfoWidget.cpp" />
@@ -294,7 +301,9 @@
     <ClCompile Include="UI\PlayerUI.cpp" />
     <ClCompile Include="UI\PlayerWorldInfoWidget.cpp" />
     <ClCompile Include="UI\PlayerWorldWidget.cpp" />
+    <ClCompile Include="UI\RestaurantButton.cpp" />
     <ClCompile Include="UI\RestaurantUI.cpp" />
+    <ClCompile Include="UI\ResturantInfoWidget.cpp" />
     <ClCompile Include="UI\ShopButton.cpp" />
     <ClCompile Include="UI\ShopInfoWidget.cpp" />
     <ClCompile Include="UI\ShopUI.cpp" />
@@ -337,6 +346,9 @@
     <ClInclude Include="Object\BossTorchLight.h" />
     <ClInclude Include="Object\BossTresure.h" />
     <ClInclude Include="Object\Cloud.h" />
+    <ClInclude Include="Object\CosmosSword.h" />
+    <ClInclude Include="Object\CosmosSwordEffect.h" />
+    <ClInclude Include="Object\CosmosSwordSkillEffect.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
     <ClInclude Include="Object\EndingCamera.h" />
@@ -348,7 +360,9 @@
     <ClInclude Include="Object\Enemy.h" />
     <ClInclude Include="Object\EnemyArrow.h" />
     <ClInclude Include="Object\EnemyAttack.h" />
+    <ClInclude Include="Object\Firefly.h" />
     <ClInclude Include="Object\FlameEffect.h" />
+    <ClInclude Include="Object\Gate.h" />
     <ClInclude Include="Object\Ghost.h" />
     <ClInclude Include="Object\Giant_Red.h" />
     <ClInclude Include="Object\Giant_RedBullet.h" />
@@ -424,6 +438,8 @@
     <ClInclude Include="UI\EndingUI.h" />
     <ClInclude Include="UI\EnemyWorldInfoWidget.h" />
     <ClInclude Include="UI\FadeInOutUI.h" />
+    <ClInclude Include="UI\FadeInOut_White.h" />
+    <ClInclude Include="UI\GateButton.h" />
     <ClInclude Include="UI\Inventory.h" />
     <ClInclude Include="UI\InventoryButton.h" />
     <ClInclude Include="UI\ItemInfoWidget.h" />
@@ -434,7 +450,9 @@
     <ClInclude Include="UI\PlayerUI.h" />
     <ClInclude Include="UI\PlayerWorldInfoWidget.h" />
     <ClInclude Include="UI\PlayerWorldWidget.h" />
+    <ClInclude Include="UI\RestaurantButton.h" />
     <ClInclude Include="UI\RestaurantUI.h" />
+    <ClInclude Include="UI\ResturantInfoWidget.h" />
     <ClInclude Include="UI\ShopButton.h" />
     <ClInclude Include="UI\ShopInfoWidget.h" />
     <ClInclude Include="UI\ShopUI.h" />

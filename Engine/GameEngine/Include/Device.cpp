@@ -13,7 +13,9 @@ CDevice::CDevice():
 	m_ClearColor{},
 	m_2DTarget(nullptr),
 	m_2DTargetWorld(nullptr),
-	m_2DFactory(nullptr)
+	m_2DFactory(nullptr),
+	m_DefaultState(nullptr),
+	m_OriginState(nullptr)
 {
 }
 CDevice::~CDevice()
@@ -88,7 +90,7 @@ bool CDevice::Init(HWND hWnd, int Width, int Height, bool ScreenMode)
 
 	//멀티샘플링을 지원을하는데 픽셀을 출력할때 좀 더 퀄리티있게 출력해주는 용도 안티앨리어싱
 	//실제 게임개발할때는 다이렉트 멀티샘플링 사용X 성능이 좋지 않다.
-	SwapDesc.SampleDesc.Count = 1;		// 1은 멀티샘플링 안한다. 만약 사용한다면 4~8로 카운트
+	SwapDesc.SampleDesc.Count = 2;		// 1은 멀티샘플링 안한다. 만약 사용한다면 4~8로 카운트
 	SwapDesc.SampleDesc.Quality = 0;	// 
 	SwapDesc.Windowed = ScreenMode;
 	SwapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD; 
@@ -150,7 +152,7 @@ bool CDevice::Init(HWND hWnd, int Width, int Height, bool ScreenMode)
 	//D3D11_USAGE_STAGING
 	//데이터보관용버퍼 필요할때 꺼내다쓰는용(없다고치면댐)
 	DepthDesc.Usage = D3D11_USAGE_DEFAULT;
-	DepthDesc.SampleDesc.Count = 1;
+	DepthDesc.SampleDesc.Count = 2;
 	DepthDesc.SampleDesc.Quality = 0;
 	DepthDesc.MipLevels = 1;
 

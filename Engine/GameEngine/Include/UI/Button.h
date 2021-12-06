@@ -34,6 +34,7 @@ protected:
 	bool    m_Push;
 	bool    m_Up;
 	std::function<void()>	m_ClickCallback;
+	std::function<void()>	m_MouseOnCallback;
 	CSharedPtr<CSound>	m_InteractionSound[(int)Button_Sound_State::End];
 
 public:
@@ -80,6 +81,11 @@ public:
 	void SetClickCallback(T* Obj, void(T::* Func)())
 	{
 		m_ClickCallback = std::bind(Func, Obj);
+	}
+	template <typename T>
+	void SetMouseOnCallback(T* Obj, void(T::* Func)())
+	{
+		m_MouseOnCallback = std::bind(Func, Obj);
 	}
 };
 

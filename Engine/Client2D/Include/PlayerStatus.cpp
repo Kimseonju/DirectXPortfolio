@@ -2,7 +2,8 @@
 CPlayerStatus::CPlayerStatus():
 	m_DashCount(0),
 	m_DashCountMax(2.f),
-	m_GracePeriod(0.f)
+	m_GracePeriod(0.f),
+	m_Satiety(0)
 {
 }
 
@@ -39,4 +40,16 @@ void CPlayerStatus::SubHP(int HP)
 		m_HP = 0;
 
 	
+}
+
+bool CPlayerStatus::AddSatiety(int Satiety)
+{
+	if (m_Satiety + Satiety <= 100)
+	{
+		m_Satiety += Satiety;
+		if (m_Satiety < 0)
+			m_Satiety = 0;
+		return true;
+	}
+	return false;
 }

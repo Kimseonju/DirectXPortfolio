@@ -127,7 +127,7 @@ void CGiant_Red::CollisionBegin(const HitResult& result, CCollider* Collider)
 	{
 		int CriticalCheck = GetRandom(0, 100);
 		bool bCritical = false;
-		if (CGlobalValue::MainPlayer->GetStatus().GetCritical() > CriticalCheck)
+		if (CGlobalValue::MainPlayer->GetStatus()->GetCritical() > CriticalCheck)
 		{
 			bCritical = true;
 		}

@@ -56,6 +56,7 @@ public:
 	}
 
 	Vector2 GetPos()	const;
+	Vector2 GetNotPivotPos()	const;
 
 	Vector2 GetPivot()	const
 	{

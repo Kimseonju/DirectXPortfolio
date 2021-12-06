@@ -30,7 +30,7 @@ bool CRenderStateManager::Init()
 	if (!CreateBlendState("UIAlphaBlend", false))
 		return false;
 
-	if (!CreateBlendState("AlphaBlend", true))
+	if (!CreateBlendState("AlphaBlend", false))
 		return false;
 
 	if (!CreateDepthStencilState("DepthDisable", false))

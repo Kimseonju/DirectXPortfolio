@@ -92,7 +92,7 @@ bool CPlayerUI::Init()
 	m_HPMaxText->SetAlignV(TEXT_ALIGN_V::Middle);
 
 	CPlayer* Player=CGlobalValue::MainPlayer;
-	int DashMax=Player->GetStatus().GetDashMax();
+	int DashMax=Player->GetStatus()->GetDashMax();
 	{
 		//앞뒤는 미리 만들기 대쉬는 최소 2이상
 
@@ -115,7 +115,7 @@ bool CPlayerUI::Init()
 			image = CreateWidget<CImage>("DashBack"+ str);
 			image->SetPos(94.f +i* 36.f, 560.f);
 			image->SetSize(36.f, 32.f);
-			image->SetTexture("PlayerUIDashBack2", TEXT("UI/DashBase.png"));
+			image->SetTexture("PlayerUIDashBase", TEXT("UI/DashBase.png"));
 			image->SetCollision(false);
 
 			image = CreateWidget<CImage>("DashCount"+ str);
@@ -131,9 +131,10 @@ bool CPlayerUI::Init()
 		CImage* aimage = CreateWidget<CImage>("DashEnd" + str);
 		aimage->SetPos(94.f + (DashMax-2) * 36.f, 560.f);
 		aimage->SetSize(44.f, 32.f);
-		aimage->SetTexture("PlayerUIDashBack", TEXT("UI/DashCountBase_0.png"));
+		aimage->SetTexture("PlayerUIDashBac1k", TEXT("UI/DashCountBase_1.png"));
 		aimage->SetCollision(false);
-		aimage->SetUIHorizontalReverse2DEnable(true);
+		//aimage->SetUIHorizontalReverse2DEnable(true);
+
 		image = CreateWidget<CImage>("DashCount" + str);
 		image->SetPos(94.f + (DashMax-2) * 36.f, 568.f);
 		image->SetSize(36.f, 16.f);
@@ -169,7 +170,7 @@ void CPlayerUI::Update(float DeltaTime)
 	m_WarningOnHit0->SetColorTint(1.f, 1.f, 1.f, m_HitTime);
 	m_WarningOnHit1->SetColorTint(1.f, 1.f, 1.f, m_HitTime);
 	CPlayer* Player = CGlobalValue::MainPlayer;
-	int Dash=Player->GetStatus().GetDash();
+	int Dash=Player->GetStatus()->GetDash();
 	Dash--;
 	for (int i = 0; i < m_vecDashCount.size(); ++i)
 	{
@@ -184,8 +185,8 @@ void CPlayerUI::Update(float DeltaTime)
 	}
 
 	m_HitTime -= DeltaTime;
-	int hp = CGlobalValue::MainPlayer->GetStatus().GetHP();
-	int hpmax = CGlobalValue::MainPlayer->GetStatus().GetHPMax();
+	int hp = CGlobalValue::MainPlayer->GetStatus()->GetHP();
+	int hpmax = CGlobalValue::MainPlayer->GetStatus()->GetHPMax();
 	float Percentt = (float)hp / (float)hpmax;
 
 	std::wstring str;

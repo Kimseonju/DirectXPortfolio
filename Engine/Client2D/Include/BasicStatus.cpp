@@ -3,7 +3,7 @@
 #include "EngineMath.h"
 CBasicStatus::CBasicStatus() :
 	m_HP(0),
-	m_HPMax(0),
+	m_HPMax(9999),
 	m_Dash(0),
 	m_DashMax(0),
 	m_AttackSpeed(1.f),
@@ -39,6 +39,8 @@ void CBasicStatus::SubHP(int HP)
 void CBasicStatus::SetHP(int HP)
 {
 	m_HP = HP;
+	if (m_HP > m_HPMax)
+		m_HP = m_HPMax;
 }
 
 void CBasicStatus::SetHPMax(int HP)

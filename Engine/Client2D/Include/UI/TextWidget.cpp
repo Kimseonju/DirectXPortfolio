@@ -16,7 +16,7 @@ CTextWidget::~CTextWidget()
 bool CTextWidget::Init()
 {
 	CWidgetWindow::Init();
-
+	SetCollision(false);
 	m_Text = CreateWidget<CText>("OutputText");
 
 	m_Text->SetPos(0.f, 0.f);

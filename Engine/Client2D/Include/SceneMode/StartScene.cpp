@@ -103,11 +103,11 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD3.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR3.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRD.txt"));
 
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLU4.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUR2.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUR3.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLURD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapR2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD.txt"));
@@ -117,10 +117,11 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapURD3.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BossMapLR3.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Boss.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR2.txt"));  //시작지점
+	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Boss.txt")); //보스시작지점
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR2.txt")); //상점
+	CStageManager::GetInst()->AllLoadStage(TEXT("RestaurantMapLR2.txt")); //레스토랑
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
 	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
@@ -194,6 +195,31 @@ void CStartScene::CreateMaterial()
 
 void CStartScene::CreateAnimationSequence2D()
 {
+
+	/*Gate*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_Idle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Gate_Idle",
+		"Gate_Idle", TEXT("object/gate/gate_idle.png"));
+
+	for (int i = 0; i < 9; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gate_Idle",
+			Vector2(i * 27.f, 0.f), Vector2((i + 1) * 27.f, 31.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_In");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Gate_In",
+		"Gate_In", TEXT("object/gate/gate_eat.png"));
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gate_In",
+			Vector2(i * 27.f, 0.f), Vector2((i + 1) * 27.f, 31.f));
+	}
+	
+
+	m_pScene->GetResource()->AddAnimationSequence2DNotify("Gate_In", "Gate_InEnd", 1);
+
 	/*
 	Player
 	*/
@@ -780,15 +806,15 @@ void CStartScene::CreateAnimationSequence2D()
 			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
 	}
 
-	//m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
-	//m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
-	//	"Restaurant", TEXT("NPC/restaurant.png"));
-	//for (int i = 0; i < 6; ++i)
-	//{
-	//	m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
-	//		Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
-	//}
-	//
+	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
+		"Restaurant", TEXT("NPC/restaurant.png"));
+	for (int i = 0; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
+			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
+	}
+	
 	/*
 	UI
 	*/
@@ -801,14 +827,14 @@ void CStartScene::CreateAnimationSequence2D()
 			Vector2(i * 4.f, 0), Vector2((i + 1) * 4.f, 10.f));
 	}
 
-	//m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
-	//m_pScene->GetResource()->SetAnimationSequence2DTexture("RestaurantTable",
-	//	"RestaurantTable", TEXT("UI/restaurant/RestaurantTable.png"));
-	//for (int i = 0; i < 3; ++i)
-	//{
-	//	m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
-	//		Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
-	//}
+	m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("RestaurantTable",
+		"RestaurantTable", TEXT("UI/restaurant/RestaurantTable3Frame.png"));
+	for (int i = 0; i < 3; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
+			Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
+	}
 
 	/*기타*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("SpawnEffect");

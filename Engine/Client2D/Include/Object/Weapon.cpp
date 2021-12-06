@@ -50,6 +50,14 @@ void CWeapon::Update(float DeltaTime)
 
 	if (!m_MapDrop)
 	{
+		if (m_Skill)
+		{
+			m_SkillDelay += DeltaTime;
+			if (m_SkillDelay >= m_SkillDelayMax)
+			{
+				m_SkillDelay = m_SkillDelayMax;
+			}
+		}
 		if (m_Reload)
 		{
 			m_CurrentReloadDelay += DeltaTime;
@@ -150,7 +158,33 @@ bool CWeapon::Attack(float Angle)
 		return false;
 	}
 }
+bool CWeapon::SkillAttack(float Angle)
+{
+	float AttackSpeed = 1.f / GetAttackSpeed();
+	float ReloadSpeed = GetReloadSpeed();
+	if (m_CurrentAttackDelay >= AttackSpeed)
+	{
+		if (m_Reload)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 
+	if (m_SkillDelay >= m_SkillDelayMax)
+	{
+		m_SkillDelay = 0.f;
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
 void CWeapon::Dash(CPlayer* player)
 {
 }
@@ -185,4 +219,22 @@ bool CWeapon::IsAttack()
 		return true;
 	}
 	return false;
+}
+
+void CWeapon::SetSKillTexture(const std::string& Name, const TCHAR* FileName,
+	const std::string& PathName)
+{
+	if (m_pScene)
+	{
+		m_pScene->GetResource()->LoadTexture(Name, FileName, PathName);
+
+		m_ItemImage = m_pScene->GetResource()->FindTexture(Name);
+	}
+
+	else
+	{
+		CResourceManager::GetInst()->LoadTexture(Name, FileName, PathName);
+
+		m_ItemImage = CResourceManager::GetInst()->FindTexture(Name);
+	}
 }

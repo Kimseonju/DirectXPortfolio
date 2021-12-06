@@ -62,7 +62,6 @@ bool CShopUI::Init()
 
 		
 		CItem* Item = nullptr;
-		m_Scene->SpawnObject<CShortSword>("CShortSwordShop");
 		ShopItemInfo ShopInfo;
 		int SelectWeapon=GetRandom(0, Weapons::End-1);
 

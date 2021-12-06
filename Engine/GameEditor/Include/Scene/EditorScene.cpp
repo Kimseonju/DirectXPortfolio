@@ -302,6 +302,26 @@ void CEditorScene::DeleteObjectMap()
 
 void CEditorScene::CreateAnimationSequence2D()
 {
+	/*Gate*/
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_Idle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Gate_Idle",
+		"Gate_Idle", TEXT("object/gate/gate_idle.png"));
+
+	for (int i = 0; i < 9; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gate_Idle",
+			Vector2(i * 27.f, 0.f), Vector2((i + 1) * 27.f, 31.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_In");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Gate_In",
+		"Gate_In", TEXT("object/gate/gate_eat.png"));
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gate_In",
+			Vector2(i * 27.f, 0.f), Vector2((i + 1) * 27.f, 31.f));
+	}
 
 
 	/*
@@ -320,7 +340,23 @@ void CEditorScene::CreateAnimationSequence2D()
 				Vector2(x * 31.f, y * 31.f), Vector2((x + 1) * 31.f, (y + 1) * 31.f));
 		}
 	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Restaurant",
+		"Restaurant", TEXT("NPC/restaurant.png"));
+	for (int i = 0; i < 6; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
+			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
+	}
 
+	m_pScene->GetResource()->CreateAnimationSequence2D("Tavern");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("Tavern",
+		"Tavern", TEXT("Villiage/Tavern.png"));
+	for (int i = 0; i < 1; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("Tavern",
+			Vector2(i * 198.f, 0), Vector2((i + 1) * 198.f, 92.f));
+	}
 	/*
 	Player
 	*/

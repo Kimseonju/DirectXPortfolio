@@ -2,6 +2,7 @@
 #include <Input.h>
 #include "KeyboardUIObject.h"
 #include "Player.h"
+#include "../UI/UIManager.h"
 CRestaurantNPC::CRestaurantNPC():
 	m_KeyUIObject(nullptr)
 {
@@ -21,6 +22,8 @@ CRestaurantNPC::~CRestaurantNPC()
 void CRestaurantNPC::Start()
 {
 	CGameObject::Start();
+	m_KeyUIObject->SetWorldPos(GetWorldPos());
+	m_KeyUIObject->AddWorldPos(-0.f, 30.f, 0.f);
 
 }
 
@@ -29,16 +32,25 @@ bool CRestaurantNPC::Init()
 	CGameObject::Init();
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-
+	m_SpriteTavern = CreateSceneComponent<CSpriteComponent>("SpriteTavern");
 
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_SpriteTavern);
 
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Back2);
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	m_Sprite->SetWorldScale(48.f, 48.f, 0.f);
+	m_Sprite->SetWorldScale(15.f, 23.f, 0.f);
 	m_Sprite->CreateAnimation2D<CAnimation2D>();
 	m_Animation2D = m_Sprite->GetAnimation2D();
 	m_Animation2D->AddAnimationSequence2D("Restaurant");
+
+	m_SpriteTavern->SetRender2DType(Render_Type_2D::RT2D_Back1);
+	m_SpriteTavern->SetRelativePos(-60.f, 35.f, 0.f);
+	m_SpriteTavern->SetPivot(0.5f, 0.5f, 0.f);
+	m_SpriteTavern->SetRelativeScale(198.f, 92.f, 0.f);
+	CMaterial* Material =m_SpriteTavern->GetMaterial(0);
+	Material->AddTexture("Tavern", TEXT("Villiage/Tavern.png"));
 
 	m_Collider2D->SetCollisionProfile("Object");
 	m_Collider2D->AddCollisionCallbackFunction<CRestaurantNPC>(Collision_State::Begin, this,
@@ -48,14 +60,12 @@ bool CRestaurantNPC::Init()
 	m_Collider2D->AddCollisionCallbackFunction<CRestaurantNPC>(Collision_State::End, this,
 		&CRestaurantNPC::CollisionEnd);
 
-	m_Collider2D->SetExtent(24.f, 24.f);
+	m_Collider2D->SetExtent(5.f, 5.f);
 
 
 
 	m_KeyUIObject = m_pScene->SpawnObject<CKeyboardUIObject>("KeyUIObject");
 	m_KeyUIObject->SetKey("F");
-	m_KeyUIObject->SetWorldPos(GetWorldPos());
-	m_KeyUIObject->AddWorldPos(-0.f, 30.f, 0.f);
 	m_KeyUIObject->Enable(false);
 
 	return true;
@@ -95,6 +105,7 @@ void CRestaurantNPC::CollisionBegin(const HitResult& result, CCollider* Collider
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
+		CUIManager::GetInst()->RestaurantUIOnOff();
 		//상점 UI시작
 		//플레이어 키 다 잠금
 	}

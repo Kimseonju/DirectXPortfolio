@@ -25,12 +25,15 @@ void CShopNPC::Enable(bool bEnable)
 	CGameObject::Enable(bEnable);
 	m_Collider2D->Enable(bEnable);
 	m_Sprite->Enable(bEnable);
+	if(!bEnable)
+		m_KeyUIObject->Enable(false);
 }
 
 void CShopNPC::Start()
 {
 	CGameObject::Start();
 	m_KeyUIObject->SetWorldPos(GetWorldPos());
+	m_KeyUIObject->AddWorldPos(-0.f, 30.f, 0.f);
 }
 
 bool CShopNPC::Init()
@@ -116,14 +119,17 @@ void CShopNPC::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
-		m_KeyUIObject->Enable(true);
-		m_KeyUIObject->SetWorldPos(GetWorldPos());
+		if (IsEnable())
+		{
+			m_KeyUIObject->Enable(true);
+			m_KeyUIObject->SetWorldPos(GetWorldPos());
+		}
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
 		//상점 UI시작
 		//플레이어 키 다 잠금
-		CUIManager::GetInst()->GetShopUI()->Enable(true);
+		CUIManager::GetInst()->ShopUIOnOff();
 	}
 
 }

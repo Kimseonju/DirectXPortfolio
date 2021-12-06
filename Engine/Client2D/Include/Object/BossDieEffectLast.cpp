@@ -4,6 +4,7 @@
 #include "Belial.h"
 #include <Scene/SceneResource.h>
 #include "BossDieEffect.h"
+#include "SpawnEffect.h"
 CBossDieEffectLast::CBossDieEffectLast() :
 	m_SpawnCountMax(6),
 	m_SpawnCount(0),
@@ -57,6 +58,13 @@ void CBossDieEffectLast::Update(float DeltaTime)
 	if (m_SpawnCount == m_SpawnCountMax)
 	{
 		m_Belial->EffectEnd();
+		CSpawnEffect* Effect = m_pScene->SpawnObject<CSpawnEffect>("SpawnEffect");
+		Effect->SetWorldPos(GetWorldPos());
+		Effect->SetClassType(Client_Class_Type::Object);
+		Effect->SetObjectType(Client_Object_Type::BossTresureBox);
+		Effect->Enable(true);
+		Effect->Spawn();
+		Active(false);
 		return;
 	}
 	if (m_SpawnTimer >= m_SpawnTimerMax)

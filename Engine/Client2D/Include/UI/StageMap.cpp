@@ -14,13 +14,30 @@ CStageMap::CStageMap() :
 	m_Stage(nullptr),
 	m_CurMapTimer(0.f),
 	m_CurMapTimerMax(0.3f),
-	m_CurMapEnable(false)
+	m_CurMapEnable(false),
+	m_GateIn(false)
 {
 }
 
 
 CStageMap::~CStageMap()
 {
+	size_t Size = m_MapInfoBase.size();
+	for (size_t i = 0; i < Size; ++i)
+	{
+		m_MapInfoBase[i].clear();
+	}
+	m_MapInfoBase.clear();
+}
+
+void CStageMap::Enable(bool bEnable)
+{
+	CWidgetWindow::Enable(bEnable);
+	if (!bEnable)
+	{
+		m_GateMoveLine->Enable(false);
+		m_GateIn = false;
+	}
 }
 
 bool CStageMap::Init()
@@ -30,8 +47,15 @@ bool CStageMap::Init()
 	Vector2 Pos;
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
 	int Size = CStageManager::GetInst()->GetMapSize();
-
-
+	m_GateMoveLine = CreateWidget<CImage>("GateMoveLine");
+	m_GateMoveLine->SetSize(10.f, 10.f);
+	m_GateMoveLine->SetColorTint(46.f / 255.f, 248.f / 255.f, 233.f / 255.f, 1.f);
+	m_GateMoveLine->SetZOrder(3);
+	m_MapInfoBase.resize(Size);
+	for (int i = 0; i < Size; ++i)
+	{
+		m_MapInfoBase[i].resize(Size);
+	}
 
 	SetZOrder(UI_ZOrder::MapUI);
 	for (int x= 0; x < Size; ++x)
@@ -47,23 +71,31 @@ bool CStageMap::Init()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f*4.f, 24.f * 4.f);
 			Base->SetCollision(false);
-			Base->SetZOrder(1);
-			Base->SetColorTint(1.5f, 1.5f, 1.5f, 1.5f);
+			Base->SetZOrder(2);
+			Base->SetColorTint(1.f, 1.f, 1.f, 1.f);
 			switch (Info[x][y].StageType)
 			{
 			case StageType::Base:
 				break;
 			case StageType::Start:
-				Base->SetColorTint(1.5f, 0.f, 0.f, 1.5f);
+				Base->SetColorTint(1.f, 0.f, 0.f, 1.f);
 				break;
 			case StageType::End:
-				Base->SetColorTint(0.f, 0.f, 1.5f, 1.5f);
+				Base->SetColorTint(0.f, 0.f, 1.f, 1.f);
 				break;
 			case StageType::Shop:
-				Base->SetColorTint(0.f, 1.5f, 0.f, 1.5f);
+				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
 				break;
 			}
 			m_MapBase.push_back(Base);
+
+			MapInfoBase InfoBase;
+			InfoBase.MapBase = Base;
+			m_MapInfoBase[x][y] = InfoBase;
+
+
+
+
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{
 				std::string str3 = std::to_string((int)WallDir::Left);
@@ -125,39 +157,6 @@ bool CStageMap::Init()
 			}
 		}
 	}
-	for (int x= 0; x < Size; ++x)
-	{
-		for (int y = 0; y < Size; ++y)
-		{
-			if (Info[x][y].StageType == StageType::None)
-				continue;
-			std::string str1 = std::to_string(x);
-			std::string str2 = std::to_string(y);
-			CImage* Base=CreateWidget<CImage>("Base"+str1+str2);
-			Base->SetPos(30.f * 4.f *x+300.f, 30.f * 4.f *y+ 80.f);
-			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
-			Base->SetSize(24.f*4.f, 24.f * 4.f);
-			Base->SetCollision(false);
-			Base->SetZOrder(1);
-			Base->SetColorTint(1.5f, 1.5f, 1.5f, 1.5f);
-			switch (Info[x][y].StageType)
-			{
-			case StageType::Base:
-				break;
-			case StageType::Start:
-				Base->SetColorTint(1.5f, 0.f, 0.f, 1.5f);
-				break;
-			case StageType::End:
-				Base->SetColorTint(0.f, 0.f, 1.5f, 1.5f);
-				break;
-			case StageType::Shop:
-				Base->SetColorTint(0.f, 1.5f, 0.f, 1.5f);
-				break;
-			}
-			m_MapBase.push_back(Base);
-		}
-	}
-
 
 	m_MapBase1_0 = CreateWidget<CImage>("MapBase1_0");
 
@@ -180,7 +179,7 @@ bool CStageMap::Init()
 	m_CurMapImage->SetSize(24.f * 4.f, 24.f * 4.f);
 	m_CurMapImage->SetTexture("MapEffect", TEXT("object/door/MapEffect.png"));
 	m_CurMapImage->SetColorTint(0.f, 1.f, 0.f, 1.f);
-
+	m_CurMapImage->SetCollision(false);
 	CImage* Base = CreateWidget<CImage>("Base11");
 	Base->SetPos(0.f, 0.f);
 	Base->SetColorTint(0.f, 0.f, 0.f, 0.4f);
@@ -221,7 +220,98 @@ CStageMap* CStageMap::Clone()
 	return new CStageMap(*this);
 }
 
-void CStageMap::StageUpdate()
+void CStageMap::StageMove()
+{
+	CStage* Stage=CStageManager::GetInst()->GetCurStage();
+	Vector2 CurPos = CStageManager::GetInst()->GetCurPos();
+
+	if (m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].Move)
+	{
+		return;
+	}
+	m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].Move = true;
+
+	//게이트가 있다면
+	int IconCount = 0;
+	CGateButton* Gate = nullptr;
+	if (Stage->IsGate())
+	{
+		//아이콘제작
+		Gate = CreateWidget<CGateButton>("GateButton");
+		Gate->SetSize(34.f, 28.f);
+
+		Gate->SetStateTexture(Button_State::Normal, "Worm", TEXT("UI/Map/Worm.png"));
+		Gate->SetStateTexture(Button_State::MouseOn, "Worm_Selected", TEXT("UI/Map/Worm_Selected.png"));
+		Gate->SetStateTexture(Button_State::Click, "Worm_Selected", TEXT("UI/Map/Worm_Selected.png"));
+		Gate->SetMouseOnCallback<CStageMap>(this, &CStageMap::MosueOnCallback);
+		Gate->SetClickCallback<CStageMap>(this, &CStageMap::ClickCallback);
+		Gate->SetMouseOutCallback<CStageMap>(this, &CStageMap::MouseOutCallback);
+		Gate->SetZOrder(4);
+		Gate->SetPivot(0.5f, 0.5f);
+		Gate->SetCurPos(CurPos);
+		m_vecGateButton.push_back(Gate);
+		m_MapIcon.push_back(Gate);
+		m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].GateButton = Gate;
+		IconCount++;
+
+	}
+	//다른것들 아이콘 제작
+	StageType Type=Stage->GetStageType();
+	CImage* Image = nullptr;
+	switch (Type)
+	{
+	case StageType::Start:
+		Image= CreateWidget<CImage>("StartIcon");
+		Image->SetTexture("EnteranceIcon", TEXT("UI/Map/Enterance.png"));
+		IconCount++;
+		break;
+	case StageType::End:
+		Image = CreateWidget<CImage>("ExitIcon");
+		Image->SetTexture("ExitIcon", TEXT("UI/Map/Exit.png"));
+		IconCount++;
+		break;
+	case StageType::Shop:
+		Image = CreateWidget<CImage>("ShopIcon");
+		Image->SetTexture("ShopIcon", TEXT("UI/Map/Shop.png"));
+		IconCount++;
+		break;
+	case StageType::Restaurant:
+		Image = CreateWidget<CImage>("RestaurantIcon");
+		Image->SetTexture("FoodIcon", TEXT("UI/Map/Food.png"));
+		IconCount++;
+		break;
+	}
+	if (Image)
+	{
+		Image->SetSize(34.f, 28.f);
+		Image->SetZOrder(4);
+		Image->SetPivot(0.5f, 0.5f);
+		Image->SetCollision(false);
+		m_MapIcon.push_back(Image);
+	}
+	CImage* Base = m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].MapBase;
+	Vector2 Pos = Base->GetPos();
+	Vector2 Size = Base->GetSize();
+	Pos =Pos+ Size / 2.f;
+	if (IconCount == 1)
+	{//둘중에 하나
+		if (Gate)
+			Gate->SetPos(Pos);
+		if (Image)
+			Image->SetPos(Pos);
+	}
+	else if (IconCount == 2)
+	{
+		//게이트랑 일반아이콘 둘다있음
+		Vector2 IconSize=Gate->GetSize();
+		Pos.x -= IconSize.x / 2.f;
+		Gate->SetPos(Pos);
+		Pos.x += IconSize.x;
+		Image->SetPos(Pos);
+	}
+}
+
+void CStageMap::MapUpdate()
 {
 	for (size_t i = 0; i < m_MapBase.size(); i++)
 	{
@@ -234,8 +324,15 @@ void CStageMap::StageUpdate()
 	}
 	m_MapArrow.clear();
 
+	for (size_t i = 0; i < m_MapIcon.size(); i++)
+	{
+		m_MapIcon[i]->Active(false);
+	}
+	m_MapIcon.clear();
+	//Icon과 겹쳐잇음
+	m_vecGateButton.clear();
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
-
+	
 	SetZOrder(UI_ZOrder::MapUI);
 	for (int x = 0; x < 3; ++x)
 	{
@@ -250,7 +347,7 @@ void CStageMap::StageUpdate()
 			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
 			Base->SetSize(24.f * 4.f, 24.f * 4.f);
 			Base->SetCollision(false);
-			Base->SetZOrder(1);
+			Base->SetZOrder(2);
 			switch (Info[x][y].StageType)
 			{
 			case StageType::Base:
@@ -268,6 +365,11 @@ void CStageMap::StageUpdate()
 				break;
 			}
 			m_MapBase.push_back(Base);
+
+			MapInfoBase InfoBase;
+			InfoBase.MapBase = Base;
+			m_MapInfoBase[x][y] = InfoBase;
+
 			if (!Info[x][y].Wall[(int)WallDir::Left])
 			{
 				std::string str3 = std::to_string((int)WallDir::Left);
@@ -329,36 +431,70 @@ void CStageMap::StageUpdate()
 			}
 		}
 	}
-	for (int x = 0; x < 3; ++x)
+	
+}
+
+void CStageMap::MosueOnCallback()
+{
+	//밝아지기만할뿐 길은 안만들어준다.
+	if (!m_GateIn)
+		return;
+
+	Vector2 CurPos = CStageManager::GetInst()->GetCurPos();
+	size_t Size = m_vecGateButton.size();
+	if (!m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].GateButton)
 	{
-		for (int y = 0; y < 1; ++y)
+		return;
+	}
+	for (size_t i = 0; i < Size; i++)
+	{
+		if (m_vecGateButton[i]->IsMouseOn())
 		{
-			if (Info[x][y].StageType == StageType::None)
-				continue;
-			std::string str1 = std::to_string(x);
-			std::string str2 = std::to_string(y);
-			CImage* Base = CreateWidget<CImage>("Base" + str1 + str2);
-			Base->SetPos(30.f * 4.f * x + 300.f, 30.f * 4.f * y + 80.f);
-			Base->SetTexture("BaseStage", TEXT("UI/map/Room.png"));
-			Base->SetSize(24.f * 4.f, 24.f * 4.f);
-			Base->SetCollision(false);
-			Base->SetZOrder(1);
-			Base->SetColorTint(1.5f, 1.5f, 1.5f, 1.5f);
-			switch (Info[x][y].StageType)
+			if (m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].GateButton == m_vecGateButton[i])
 			{
-			case StageType::Base:
-				break;
-			case StageType::Start:
-				Base->SetColorTint(1.5f, 0.f, 0.f, 1.5f);
-				break;
-			case StageType::End:
-				Base->SetColorTint(0.f, 0.f, 1.5f, 1.5f);
-				break;
-			case StageType::Shop:
-				Base->SetColorTint(0.f, 1.5f, 0.f, 1.5f);
-				break;
+				m_GateMoveLine->Enable(false);
+				return;
 			}
-			m_MapBase.push_back(Base);
+			m_GateMoveLine->Enable(true);
+			Vector2 CurGatePos = m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].GateButton->GetNotPivotPos();
+			Vector2 MouseOnPos = m_vecGateButton[i]->GetNotPivotPos();
+			float Angle= MouseOnPos.GetAngle(CurGatePos);
+			Angle += 90.f;
+			float Length= MouseOnPos.Distance(CurGatePos);
+			m_GateMoveLine->SetRotation(Angle);
+			m_GateMoveLine->SetSize(10.f, Length);
+			m_GateMoveLine->SetPos(CurGatePos);
+			//이위치로 옮기기
+			return;
 		}
 	}
+	m_GateMoveLine->Enable(false);
+}
+
+void CStageMap::ClickCallback()
+{
+	if (!m_GateIn)
+		return;
+
+	Vector2 CurPos = CStageManager::GetInst()->GetCurPos();
+	size_t Size = m_vecGateButton.size();
+	for (size_t i = 0; i < Size; i++)
+	{
+		if (m_vecGateButton[i]->IsClick())
+		{
+			if (m_MapInfoBase[(int)CurPos.x][(int)CurPos.y].GateButton == m_vecGateButton[i])
+				return;
+			CStage* Stage=CStageManager::GetInst()->GetCurStage();
+			Stage->MoveStageGate(m_vecGateButton[i]->GetCurPos());
+			Enable(false);
+			m_GateMoveLine->Enable(false);
+			//이위치로 스테이지이동 스테이지맵끄고 게이트는 씹어먹고하는등
+			return;
+		}
+	}
+}
+
+void CStageMap::MouseOutCallback()
+{
+	m_GateMoveLine->Enable(false);
 }

@@ -31,8 +31,18 @@ protected:
 	float m_Rebound;
 	Object_Dir m_Dir;
 	bool m_ReloadEffect;
+	float m_SkillDelay;
+	float m_SkillDelayMax;
+	bool m_Skill;
+	class CTexture* m_SkillImage;
+
 public:
 
+
+	bool IsSkill()
+	{
+		return m_Skill;
+	}
 	bool IsReloadEffect()
 	{
 		return m_ReloadEffect;
@@ -94,6 +104,7 @@ public:
 	virtual void Animation2DNotify(const std::string& Name);
 
 	virtual bool Attack(float Angle);
+	virtual bool SkillAttack(float Angle);
 	virtual void Dash(CPlayer* player);
 	virtual void Reload();
 	// 피격
@@ -101,5 +112,6 @@ public:
 	// 아이템 장착
 	virtual void Equip();
 	bool IsAttack();
-
+	void SetSKillTexture(const std::string& Name, const TCHAR* FileName,
+		const std::string& PathName);
 };

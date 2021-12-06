@@ -5,8 +5,6 @@
 #include "UI/Text.h"
 //Inventory가 들고있음
 class CItem;
-class CImage;
-class CText;
 class CShopButton :
 	public CButton
 {

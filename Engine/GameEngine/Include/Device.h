@@ -49,6 +49,8 @@ private:
 	//2D World¿ë
 	ID2D1RenderTarget* m_2DTargetWorld; 
 	ID2D1Factory* m_2DFactory;
+	ID3D11RasterizerState* m_DefaultState;
+	ID3D11RasterizerState* m_OriginState;
 
 public:
 	ID2D1RenderTarget* Get2DTarget()   const

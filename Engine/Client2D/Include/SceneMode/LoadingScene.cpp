@@ -27,11 +27,15 @@ bool CLoadingScene::Init()
 
 	m_pScene->GetResource()->LoadSound("BGM", false, "Loading",
 		"Loading.mp3");
-	m_pScene->GetResource()->FindSound("Loading")->Play();
 	return true;
 }
 
 void CLoadingScene::Update(float DeltaTime)
 {
 	m_Widget->SetPercent(m_Thread->GetPercent());
+}
+
+void CLoadingScene::Start()
+{
+	m_pScene->GetResource()->FindSound("Loading")->Play();
 }

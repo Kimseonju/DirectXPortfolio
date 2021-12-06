@@ -474,14 +474,13 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 
 void CBelial::AnimationFrameEnd(const std::string& Name)
 {
-	int a = 0;
 }
 
 void CBelial::CollisionBegin(const HitResult& result, CCollider* Collider)
 {
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::PlayerAttack)
 	{
-		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus().GetAttackDamage());
+		m_Status->SetHP(m_Status->GetHP() - CGlobalValue::MainPlayer->GetStatus()->GetAttackDamage());
 		CUIManager::GetInst()->GetBossUI()->SetProgressBarPercent((float)m_Status->GetHP() / (float)m_Status->GetHPMax());
 		
 		if (m_Status->GetHP() < 0.f)

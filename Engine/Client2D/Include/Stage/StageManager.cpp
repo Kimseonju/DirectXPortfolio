@@ -232,6 +232,12 @@ void CStageManager::NextStage(Stage_Dir Dir)
 	PlayStage(Dir);
 }
 
+void CStageManager::GateStage(Vector2 Pos)
+{
+	m_CurPos = Pos;
+	PlayGateStage();
+}
+
 void CStageManager::PlayStage(Stage_Dir Dir)
 {
 	if (m_SelectStage)
@@ -281,7 +287,7 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 		Info = GetShopStageSpawnInfo(num);
 		break;
 	case StageType::Restaurant:
-		Info = GetStageSpawnInfo(num);
+		Info = GetRestaurantStageSpawnInfo(num);
 		break;
 
 	case StageType::Boss:
@@ -292,6 +298,74 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	Stage->SetScene(m_pScene);
 	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType, num);
 	Stage->PlayerStageMove(Dir);
+	m_vecStage[x][y] = Stage;
+	Stage->Enable(true);
+	m_SelectStage = Stage;
+	BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
+	
+	
+}
+
+void CStageManager::PlayGateStage()
+{
+	if (m_SelectStage)
+	{
+		m_SelectStage->Enable(false);
+	}
+	int x = (int)m_CurPos.x;
+	int y = (int)m_CurPos.y;
+	if (m_vecStage[x][y])
+	{
+		//만약있는방이면 이미 방문했던방이다.
+		m_SelectStage = m_vecStage[x][y];
+		m_SelectStage->PlayerStageGate();
+		m_SelectStage->Enable(true);
+		BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
+		return;
+	}
+	//첫방문
+	CStage* Stage = new CStage;
+	//벽이없다면 문이있다는 뜻
+	int num = 0;
+	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Left])
+		num = num | 1;
+	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Up])
+		num = num | 2;
+	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Right])
+		num = num | 4;
+	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Down])
+		num = num | 8;
+	StageObjectsInfo Info;
+
+	//나중에 만들면 수정
+	switch (m_vecStageInfo[x][y].StageType)
+	{
+	case StageType::None:
+		break;
+	case StageType::Base:
+		Info = GetStageSpawnInfo(num);
+		break;
+	case StageType::Start:
+		Info = GetMainDoorStageSpawnInfo(num);
+		break;
+	case StageType::End:
+		Info = GetMainDoorStageSpawnInfo(num);
+		break;
+	case StageType::Shop:
+		Info = GetShopStageSpawnInfo(num);
+		break;
+	case StageType::Restaurant:
+		Info = GetRestaurantStageSpawnInfo(num);
+		break;
+
+	case StageType::Boss:
+		Info = GetBossStageSpawnInfo(num);
+		break;
+	}
+
+	Stage->SetScene(m_pScene);
+	Stage->ObjectUpdate(Info, m_vecStageInfo[x][y].StageType, num);
+	//Stage->PlayerStageMove(Dir);
 	m_vecStage[x][y] = Stage;
 	Stage->Enable(true);
 	m_SelectStage = Stage;
@@ -359,6 +433,8 @@ bool CStageManager::CreateStage_Special()
 		{
 			if (m_StartPos.x == x && m_StartPos.y == y)
 				continue;
+			if (m_EndPos.x == x && m_EndPos.y == y)
+				continue;
 			//벽체크 
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
@@ -375,59 +451,35 @@ bool CStageManager::CreateStage_Special()
 
 	vecStagePos.clear();
 
+	//레스토랑 넣기
+	for (int x = 0; x < m_MapSize; ++x)
+	{
+		for (int y = 0; y < m_MapSize; ++y)
+		{
+			if (m_StartPos.x == x && m_StartPos.y == y)
+				continue;
+			if (m_EndPos.x == x && m_EndPos.y == y)
+				continue;
+			if (m_ShopPos.x == x && m_ShopPos.y == y)
+				continue;
+			//벽체크 
+			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			{
+				vecStagePos.push_back(Vector2{ (float)x,(float)y });
+			}
+		}
+	}
+	if (vecStagePos.size() == 0)
+		return false;
+	RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
+	m_ShopPos = vecStagePos[RandomNum];
+	m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Restaurant;
 
-	//상점
+	vecStagePos.clear();
 
-	//vecStagePos.clear();
-	//for (int x = 0; x < m_MapSize; ++x)
-	//{
-	//	for (int y = 0; y < m_MapSize; ++y)
-	//	{
-	//		//벽체크 
-	//		if (m_StartPos.x == x && m_StartPos.y == y)
-	//			continue;
-	//		if (m_EndPos.x == x && m_EndPos.y == y)
-	//			continue;
-	//		if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-	//			!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-	//		{
-	//			vecStagePos.push_back(Vector2{ (float)x,(float)y });
-	//		}
-	//	}
-	//}
-	//if (vecStagePos.size() == 0)
-	//	return false;
-	//RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
-	//m_ShopPos = vecStagePos[RandomCount];
-	//m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Shop;
-	////레스토랑
-	//
-	//vecStagePos.clear();
-	//for (int x = 0; x < m_MapSize; ++x)
-	//{
-	//	for (int y = 0; y < m_MapSize; ++y)
-	//	{
-	//		//벽체크 
-	//		if (m_StartPos.x == x && m_StartPos.y == y)
-	//			continue;
-	//		if (m_EndPos.x == x && m_EndPos.y == y)
-	//			continue;
-	//		if (m_ShopPos.x == x && m_ShopPos.y == y)
-	//			continue;
-	//		if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-	//			!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-	//		{
-	//			vecStagePos.push_back(Vector2{ (float)x,(float)y });
-	//		}
-	//	}
-	//}
-	//if (vecStagePos.size() == 0)
-	//	return false;
-	//RandomCount = GetRandom(0, (int)vecStagePos.size() - 1);
-	//m_RestaurantPos = vecStagePos[RandomCount];
-	//m_vecStageInfo[(int)m_RestaurantPos.x][(int)m_RestaurantPos.y].StageType = StageType::Restaurant;
-	//
-	//
+
+
 	for (int x = 0; x < m_MapSize; x++)
 	{
 		for (int y = 0; y < m_MapSize; y++)
@@ -440,6 +492,8 @@ bool CStageManager::CreateStage_Special()
 			if (m_ShopPos.x == x && m_ShopPos.y == y)
 				continue;
 
+			if (m_RestaurantPos.x == x && m_RestaurantPos.y == y)
+				continue;
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
@@ -520,6 +574,7 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	bool bMainDoor = false;
 	bool bBoss = false;
 	bool bShop = false;
+	bool bRestaurant = false;
 
 	for (size_t i = 0; i < Size; ++i)
 	{
@@ -586,6 +641,11 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 				bShop = true;
 				break;
 			}
+			case Client_Object_Type::Restaurant:
+			{
+				bRestaurant = true;
+				break;
+			}
 			}
 			break;
 		}
@@ -649,6 +709,10 @@ void CStageManager::LoadStage(FILE* pFile, const char* Name)
 	else if (bShop)
 	{
 		PushShopStageSpawnInfo(num, _StageObjectsInfo);
+	}
+	else if (bRestaurant)
+	{
+		PushRestaurantStageSpawnInfo(num, _StageObjectsInfo);
 	}
 	else
 	{

@@ -135,7 +135,6 @@ struct StageInfo
     //우선순위별
     //-1 없음 0 일반 1 시작방 2 끝방 3 상점 4 식당
     StageType StageType;
-
     //벽 왼쪽부터 시계방향으로 (왼,위,오,아)
     bool Wall[4];
 };
@@ -163,6 +162,33 @@ struct StageObjectsInfo
     class CTileMapComponent* TileObjectMapComponent;
     int UseCount;
 };
+
+
+
+struct FoodStatus
+{
+    int HP;
+    int HPMax;
+    int Damage;
+    int Critical;
+    int Price;
+    int Satiety;
+};
+
+enum class FoodType
+{
+    //위력, 최대체력
+    FriedEgg,
+    //체력회복
+    Bread,
+    //위력,크리티컬
+    TomatoSoup,
+    //방어력
+    StrawberryPie,
+    //-최대체력, -100포만감
+    Lemonade,
+    End
+};
 enum class WallDir
 {
     Left,
@@ -180,3 +206,6 @@ enum UI_ZOrder
     MapUI,
     BossSpawnUI
 };
+
+
+

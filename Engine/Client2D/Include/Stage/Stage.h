@@ -4,6 +4,7 @@
 #include "Door.h"
 #include <Component/TileMapComponent.h>
 #include "../Object/SpawnEffect.h"
+#include "../Object/Gate.h"
 //Enemy,Object,Tile Door 등 들고있는 클래스
 class CStage
 {
@@ -27,6 +28,7 @@ private:
 	std::vector<CSharedPtr<CGameObject>> m_Object;
 	std::vector<CSharedPtr<CSpawnEffect>> m_ItemSpawn;
 	std::vector<CSharedPtr<CDoor>> m_Doors;
+	CSharedPtr<CGate> m_Gate;
 	class CGameObject* m_TileMap;
 	class CGameObject* m_TileMapObject;
 	CSharedPtr<CTileMapComponent> m_TileMapComponent;
@@ -36,6 +38,11 @@ private:
 	class CScene* m_pScene;
 	int m_DoorDir;
 public:
+	bool IsGate()
+	{
+		return m_Gate;
+	}
+
 	StageType GetStageType()
 	{
 		return m_Type;
@@ -91,5 +98,7 @@ public:
 	void DeleteObject(class CGameObject* obj);
 	void PushEnemy(class CGameObject* obj);
 	void PlayerStageMove(Stage_Dir Dir);
+	void PlayerStageGate();
+	void MoveStageGate(Vector2 Pos);
 	void PushSpawnEnemy(CSpawnEffect* Obj);
 };

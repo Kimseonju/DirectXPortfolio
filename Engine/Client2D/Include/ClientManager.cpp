@@ -52,7 +52,9 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("InteractionInputKey", 'F');
     CInput::GetInst()->CreateKey("ShopUI", 'R');
     CInput::GetInst()->CreateKey("StatusUI", 'T');
-  
+    CInput::GetInst()->CreateKey("RestaurantUI", 'Y');
+    CInput::GetInst()->CreateKey("ESCUI", VK_ESCAPE);
+    
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');
     CInput::GetInst()->SetControlKey("Skill2", true);
@@ -206,7 +208,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Player,
         Collision_Interaction::Block);
     CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
-    CEngine::GetInst()->SetCollisionRender(false);
+    CEngine::GetInst()->SetCollisionRender(true);
     //CSceneManager::GetInst()->SetSceneMode<CEndingScene>();
     
     CreateMouse();

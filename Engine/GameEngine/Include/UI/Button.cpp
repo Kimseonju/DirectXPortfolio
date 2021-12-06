@@ -71,6 +71,9 @@ void CButton::Update(float DeltaTime)
 
 	if (m_State == Button_State::MouseOn)
 	{
+		if (m_MouseOnCallback)
+			m_MouseOnCallback();
+
 		if (m_Down)
 			m_State = Button_State::Click;
 	}

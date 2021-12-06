@@ -80,7 +80,9 @@ public:
 	void CreateDungeon();
 	void CreateStage(int x, int y);
 	void NextStage(Stage_Dir Dir);
+	void GateStage(Vector2 Pos);
 	void PlayStage(Stage_Dir Dir);
+	void PlayGateStage();
 	//시작, 끝, 상점, 레스토랑
 	bool CreateStage_Special(); 
 	

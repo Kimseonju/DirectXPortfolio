@@ -44,6 +44,7 @@
 #include "../Object/ShopNPC.h"
 #include "../ObjectStatusManager.h"
 #include "../UI/BasicMouse.h"
+#include "../Object/BossTresure.h"
 CTestMainScene::CTestMainScene() :
 	m_Minrooms(-1),
 	m_Maxrooms(-1),
@@ -66,69 +67,9 @@ bool CTestMainScene::Init()
 	CreateSound();
 
 	CGlobalValue::MainMouse->SetScene(m_pScene);
-	//CObjectStatusManager::GetInst()->LoadStatus("Player", TEXT("Player.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("Revolver", TEXT("Revolver.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("ShortSword", TEXT("ShortSword.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("MetalBoomerang", TEXT("MetalBoomerang.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("SmallSkelBow", TEXT("SmallSkelBow.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("SkelSmallDagger", TEXT("SkelSmallDagger.csv"));
-	//
-	//
-	//
-	//CObjectStatusManager::GetInst()->LoadStatus("SmallSkel_Sword", TEXT("SmallSkel_Sword.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("SmallSkel_Bow", TEXT("SmallSkel_Bow.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("Giant_Red", TEXT("Giant_Red.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("Ghost", TEXT("Ghost.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("Belial", TEXT("Belial.csv"));
-	//CObjectStatusManager::GetInst()->LoadStatus("Banshee", TEXT("Banshee.csv"));
-	//CTestTileMap* TestTileMap = m_pScene->SpawnObject<CTestTileMap>("TestTileMap");
-
-	//구름
-	//CBackGround* BackGround = m_pScene->SpawnObject<CBackGround>("BackGround");
-	//BackGround->AddTexture("Town_BGL", TEXT("Map/Town_BGL.png"));
-
-	//CBackGround_Tree* BackGround_Tree = m_pScene->SpawnObject<CBackGround_Tree>("BackGround_Tree1");
-	//BackGround_Tree->AddTexture("TownBG_Day", TEXT("Map/TownBG_Day.png"));
-	//
-	//BackGround_Tree = m_pScene->SpawnObject<CBackGround_Tree>("BackGround_Tree2");
-	//BackGround_Tree->AddTexture("TownBG_Day", TEXT("Map/TownBG_Day.png"));
-	//BackGround_Tree->SetRelativePos(RS.Width, 0.f, 0.f);
-
-	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
-	//CStageManager::GetInst()->SetScene(m_pScene);
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD2.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR.txt"));
-	//
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRU.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRUD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLU.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLUD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapR.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRD2.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRU.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapRUD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapU.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapUD.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_LR.txt"));
-	////CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLRT.txt"));
-	////CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
-	////CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
-	////CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
-	////CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
 
 
-
-	//CProgressBarObject* pEnemy = m_pScene->SpawnObject<CProgressBarObject>("TestEnemy");
-	//pEnemy->SetWorldPos(0.f, 100.f, 0.f);
+	//CBossTresure* pEnemy = m_pScene->SpawnObject<CBossTresure>("BossTresure");
 
 	//CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
 	//CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
@@ -169,6 +110,7 @@ void CTestMainScene::Start()
 	CStageManager::GetInst()->Init();
 	CStageManager::GetInst()->Start();
 	CUIManager::GetInst()->Init(m_pScene);
+	CUIManager::GetInst()->GetStageMap()->StageMove();
 
 	CStage1MapEffect* Stage1MapEffect = m_pScene->SpawnObject<CStage1MapEffect>("Stage1MapEffect");
 	Stage1MapEffect->SetWorldPos(400.f, 200.f, 0.f);
@@ -177,6 +119,7 @@ void CTestMainScene::Start()
 void CTestMainScene::Update(float DeltaTime)
 {
 	CStageManager::GetInst()->Update(DeltaTime);
+	CUIManager::GetInst()->MouseUIWorldCheck();
 }
 
 void CTestMainScene::PostUpdate(float DeltaTime)
@@ -221,6 +164,11 @@ void CTestMainScene::CreateMaterial()
 
 void CTestMainScene::CreateAnimationSequence2D()
 {
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_Idle");
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("Gate_In");
+
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("Gate_In", "Gate_InEnd", 3);
 	/*
 	Player
 	*/
@@ -258,7 +206,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("ObjectDieEffect");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("ObjectDieEffect", "CreateEffect", 5);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("ObjectDieEffect", "CreateEffect", 5);
 
 	/*
 	Door
@@ -270,7 +218,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("DoorOpen", "DoorSound", 4);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("DoorOpen", "DoorSound", 4);
 
 
 	//MainMapDoor
@@ -298,7 +246,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyMoveShot");
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyDaggerAttack");
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyDaggerAttack", "Attack", 7);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyDaggerAttack", "Attack", 7);
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyDaggerIdle");
 
@@ -307,7 +255,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyBowIdle");
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyBowAttack");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 2);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 2);
 
 
 
@@ -318,7 +266,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("GhostAttack");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("GhostAttack", "Attack", 2);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("GhostAttack", "Attack", 2);
 	/*
 	Banshee
 	*/
@@ -327,7 +275,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("BansheeAttack");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("BansheeAttack", "Attack", 5);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("BansheeAttack", "Attack", 5);
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("BansheeBullet");
 
@@ -341,7 +289,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Giant_RedAttack");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("Giant_RedAttack", "Attack", 4);
+	//m_pScene->GetResource()->AddAnimationSequence2DNotify("Giant_RedAttack", "Attack", 4);
 
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Giant_RedBullet");
@@ -368,7 +316,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	//Notify설정할부분
 	//m_pScene->GetResource()->AddAnimationSequence2DNotify("PlayerAttack", "Attack", 8);
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("BelialHand_Attack", "BelialHandAttack", 7);
+//	m_pScene->GetResource()->AddAnimationSequence2DNotify("BelialHand_Attack", "BelialHandAttack", 7);
 	/*Back*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Circle");
 
@@ -422,7 +370,7 @@ void CTestMainScene::CreateAnimationSequence2D()
 	/*기타*/
 	m_pScene->GetResource()->CreateAnimationSequence2D("SpawnEffect");
 
-	m_pScene->GetResource()->AddAnimationSequence2DNotify("SpawnEffect", "Spawn", 10);
+//	m_pScene->GetResource()->AddAnimationSequence2DNotify("SpawnEffect", "Spawn", 10);
 
 }
 

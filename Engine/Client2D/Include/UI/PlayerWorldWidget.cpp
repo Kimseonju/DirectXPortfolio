@@ -17,7 +17,7 @@ CPlayerWorldWidget::~CPlayerWorldWidget()
 bool CPlayerWorldWidget::Init()
 {
 	CWidgetWindow::Init();
-
+	SetCollision(false);
 	m_ReloadBase = CreateWidget<CImage>("ReloadBase");
 	m_ReloadBase->SetPos(0.f, 0.f);
 	m_ReloadBase->SetSize(92.f, 4.f);

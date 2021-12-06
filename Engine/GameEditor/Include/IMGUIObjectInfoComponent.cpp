@@ -118,6 +118,7 @@ bool CIMGUIObjectInfoComponent::Init()
 	m_ObjectType->AddItem("Restaurant");
 	m_ObjectType->AddItem("TresureBox");
 	m_ObjectType->AddItem("BossTresureBox");
+	m_ObjectType->AddItem("Gate");
 	m_ObjectType->AddItem("End");
 
 	m_ObjectType->SetSelectCallback<CIMGUIObjectInfoComponent>(this, &CIMGUIObjectInfoComponent::ObjectTypeComboCallback);

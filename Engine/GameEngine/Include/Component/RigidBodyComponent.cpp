@@ -58,16 +58,9 @@ void CRigidBodyComponent::Update(float DeltaTime)
 			{
 				m_Dash = false;
 				m_Dir = Vector3::Zero;
+				m_Force.x = 0.f;
+				m_Force.y = 0.f;
 			}
-			if (m_Force.x > 100.f)
-				m_Force.x = 100.f;
-			if (m_Force.x < -100.f)
-				m_Force.x = -100.f;
-
-			if (m_Force.y > 200.f)
-				m_Force.y = 200.f;
-			if (m_Force.y < -200.f)
-				m_Force.y = -200.f;
 			m_Force.y -= m_GravityPower * DeltaTime;
 			moveDir += m_Force * DeltaTime;
 			moveDir += m_Dir * m_Speed * DeltaTime;
@@ -105,7 +98,13 @@ void CRigidBodyComponent::Update(float DeltaTime)
 		//애니메이션은 플레이어에서 조절
 		if (m_DashTimer <= 0.f)
 		{
-			m_Dash = false;
+			if (m_Dash)
+			{
+				m_Dash = false;
+				m_Dir = Vector3::Zero;
+				m_Force.x = 0.f;
+				m_Force.y = 0.f;
+			}
 		}
 		else
 		{

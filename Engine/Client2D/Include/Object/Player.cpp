@@ -144,8 +144,10 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("InteractionInputKey", KT_Up, this, &CPlayer::InputInteractionInputKey);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("ShopUI", KT_Up, this, &CPlayer::ShopUIOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("StatusUI", KT_Up, this, &CPlayer::StatusUIOnOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("RestaurantUI", KT_Up, this, &CPlayer::RestaurantUIOnOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("ESCUI", KT_Up, this, &CPlayer::UIOff);
 	//마우스회전용
-	
+
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
 	m_WeaponArm->SetRelativePos(20.f,0.f,0.f);
 	PushObjectChild(m_WeaponArm);
@@ -333,8 +335,8 @@ void CPlayer::SetStatus(const std::string& Name)
 	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);
 	if (Status)
 	{
-		m_Status.SetHP(Status->GetHP());
 		m_Status.SetHPMax(Status->GetHPMax());
+		m_Status.SetHP(Status->GetHP());
 		m_Status.SetDash(Status->GetDash());
 		m_Status.SetDashMax(Status->GetDashMax());
 		m_Status.SetAttackSpeed(Status->GetAttackSpeed());
@@ -413,30 +415,15 @@ void CPlayer::Dash(float DeltaTime)
 
 void CPlayer::InventoryOnOff(float DeltaTime)
 {
-	if (CUIManager::GetInst()->GetInventory()->IsEnable())
-	{
-		CUIManager::GetInst()->GetInventory()->Enable(false);
-		CGlobalValue::MainMouse->SetState(Mouse_State::World);
-	}
-	else
+	bool Enable=CUIManager::GetInst()->InventoryUIOnOff();
+	if (Enable)
 	{
 		m_pScene->GetResource()->FindSound("OpenInventory")->Play();
-		CUIManager::GetInst()->GetInventory()->Enable(true);
-		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
 	}
 }
 void CPlayer::MapOnOff(float DeltaTime)
 {
-	if (CUIManager::GetInst()->GetStageMap()->IsEnable())
-	{
-		CUIManager::GetInst()->GetStageMap()->Enable(false);
-		CGlobalValue::MainMouse->SetState(Mouse_State::World);
-	}
-	else
-	{
-		CUIManager::GetInst()->GetStageMap()->Enable(true);
-		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
-	}
+	CUIManager::GetInst()->StageMapUIOnOff();
 }
 void CPlayer::WeaponChange(float DeltaTime)
 {
@@ -458,29 +445,19 @@ void CPlayer::InputInteractionInputKey(float DeltaTime)
 }
 void CPlayer::ShopUIOnOff(float DeltaTime)
 {
-	if (CUIManager::GetInst()->GetShopUI()->IsEnable())
-	{
-		CUIManager::GetInst()->GetShopUI()->Enable(false);
-		CGlobalValue::MainMouse->SetState(Mouse_State::World);
-	}
-	else
-	{
-		CUIManager::GetInst()->GetShopUI()->Enable(true);
-		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
-	}
+	CUIManager::GetInst()->ShopUIOnOff();
 }
 void CPlayer::StatusUIOnOff(float DeltaTime)
 {
-	if (CUIManager::GetInst()->GetStatusUI()->IsEnable())
-	{
-		CUIManager::GetInst()->GetStatusUI()->Enable(false);
-		CGlobalValue::MainMouse->SetState(Mouse_State::World);
-	}
-	else
-	{
-		CUIManager::GetInst()->GetStatusUI()->Enable(true);
-		CGlobalValue::MainMouse->SetState(Mouse_State::UI);
-	}
+	CUIManager::GetInst()->StatusUIOnOff();
+}
+void CPlayer::RestaurantUIOnOff(float DeltaTime)
+{
+	CUIManager::GetInst()->RestaurantUIOnOff();
+}
+void CPlayer::UIOff(float DeltaTime)
+{
+	CUIManager::GetInst()->UIOff();
 }
 int CPlayer::GetDamage()
 {

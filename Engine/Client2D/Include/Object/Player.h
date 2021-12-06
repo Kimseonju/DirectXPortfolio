@@ -87,9 +87,9 @@ public:
 		return true;
 	}
 
-	CPlayerStatus& GetStatus()
+	CPlayerStatus* GetStatus()
 	{
-		return m_Status;
+		return &m_Status;
 	}
 	Object_Dir GetDir() const
 	{
@@ -130,6 +130,8 @@ public:
 	void InputInteractionInputKey(float DeltaTime);
 	void ShopUIOnOff(float DeltaTime);
 	void StatusUIOnOff(float DeltaTime);
+	void RestaurantUIOnOff(float DeltaTime);
+	void UIOff(float DeltaTime);
 public:
 //status 가져오기
 	int GetDamage();

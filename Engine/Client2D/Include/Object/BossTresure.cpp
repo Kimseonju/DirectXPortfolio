@@ -4,6 +4,10 @@
 #include "../UI/UIManager.h"
 #include "../UI/MiniMap.h"
 #include <Scene/SceneResource.h>
+#include <Scene/CameraManager.h>
+#include <Component/Camera.h>
+#include "Firefly.h"
+#include "Player.h"
 CBossTresure::CBossTresure() :
 	m_Open(false),
 	m_KeyUIObject(nullptr)
@@ -77,6 +81,12 @@ void CBossTresure::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 	AddRelativePos(m_Body->GetMove());
+	
+	CPlayer* Player = CGlobalValue::MainPlayer;
+	if (Player)
+	{
+		SetWorldPos(Player->GetWorldPos());
+	}
 }
 
 void CBossTresure::PostUpdate(float DeltaTime)
@@ -127,19 +137,32 @@ void CBossTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
-		if (!m_Open)
-		{
+		//if (!m_Open)
+		//{
 			m_Open = true;
 			m_KeyUIObject->Enable(false);
 			CMaterial* Material = m_Sprite->GetMaterial(0);
 			Material->AddTexture("BossTresureOpened", TEXT("NPC/BossTresureOpened.png"));
 			Material->SetTexture("BossTresureOpened", TEXT("NPC/BossTresureOpened.png"));
 			//°ñµåµå¶ø
+			CCamera* Camera=m_pScene->GetCameraManager()->GetCurrentCamera();
 
+			Camera->AddCameraShake(2.f, 2.f, 0.4f);
 			m_pScene->GetResource()->FindSound("BossTresureBox")->Play();
-
-
-		}
+			Vector3 Pos = GetWorldPos();
+			CUIManager::GetInst()->GetFadeInOut_WhiteUI()->SetFadeIn();
+			for (int i = 0; i < 20; ++i)
+			{
+				CFirefly* Firefly=m_pScene->SpawnObject<CFirefly>("Firefly" + std::to_string(i));
+				Firefly->SetWorldPos(Pos);
+				Firefly->SetOldPos(Vector2(Pos.x, Pos.y));
+				
+				Vector2 NextPos = Vector2(Pos.x, Pos.y);
+				NextPos.x+=(float)GetRandom(-100, 100);
+				NextPos.y+=(float)GetRandom(-50, 100);
+				Firefly->SetNextPos(NextPos);
+			}
+		//}
 	}
 
 }

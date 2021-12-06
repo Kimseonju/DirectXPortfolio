@@ -51,8 +51,8 @@ public:
     {
         m_DashRadian = DegreeToRadian(Angle);
         m_Gravity = true;
-        m_DashTimer = 0.3f;
-        m_DashEffectTime = 0.05f;
+        m_DashTimer = 0.2f;
+        m_DashEffectTime = 0.03f;
         m_Force.x = 0.f;
         m_Force.y = 0.f;
         m_Dash = true;
@@ -64,8 +64,8 @@ public:
     }
     void Dashing(float DeltaTime)
     {
-        m_Force.x += cosf(m_DashRadian) * 30.f * DeltaTime * m_Speed;
-        m_Force.y += sinf(m_DashRadian) * 30.f * DeltaTime * m_Speed;
+        m_Force.x += cosf(m_DashRadian) * 40.f * DeltaTime * m_Speed;
+        m_Force.y += sinf(m_DashRadian) * 40.f * DeltaTime * m_Speed;
     }
 
     void SetForce2D(float Angle, float Power)

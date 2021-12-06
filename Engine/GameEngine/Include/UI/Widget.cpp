@@ -69,6 +69,14 @@ Vector2 CWidget::GetPos() const
 	return Pos;
 }
 
+Vector2 CWidget::GetNotPivotPos() const
+{
+	Vector2 Pos = m_Pos;
+	if (m_Owner)
+		Pos += m_Owner->GetPos();
+	return Pos;
+}
+
 void CWidget::SetUIHorizontalReverse2DEnable(bool Enable)
 {
 	m_TransformCBuffer->SetUIHorizontalReverse2DEnable(Enable);

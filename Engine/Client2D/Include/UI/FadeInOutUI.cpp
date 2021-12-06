@@ -50,24 +50,26 @@ void CFadeInOutUI::Update(float DeltaTime)
 		m_FadeImage->SetColorTint(0.f, 0.f, 0.f, m_Alpha);
 		if (m_Alpha >= 1.f)
 		{
+			m_FadeIn = true;
+			m_FadeOut = false;
 			if (m_StageBoss)
 			{
 
 				CStageManager::GetInst()->CreateBossStage();
-				CUIManager::GetInst()->GetStageMap()->StageUpdate();
-				CUIManager::GetInst()->GetMiniMapUI()->TileUpdate();
-				m_FadeIn = true;
-				m_FadeOut = false;
+				CUIManager::GetInst()->GetStageMap()->MapUpdate();
 				m_StageBoss = false;
 			}
 			if (m_StageMove)
 			{
 				CStageManager::GetInst()->NextStage(m_StageDir);
-				m_FadeIn = true;
-				m_FadeOut = false;
+				CUIManager::GetInst()->GetStageMap()->StageMove();
 				m_StageMove = false;
-				CUIManager::GetInst()->GetMiniMapUI()->TileUpdate();
 			}
+			if (m_StageGate)
+			{
+				CStageManager::GetInst()->GateStage(m_StageGateMove);
+			}
+			CUIManager::GetInst()->GetMiniMapUI()->TileUpdate();
 		}
 	}
 	else if (m_FadeIn)
@@ -107,6 +109,16 @@ void CFadeInOutUI::StageMoveIn(Stage_Dir Dir)
 	m_FadeOut = true;
 	m_StageMove = true;
 	CInput::GetInst()->SetUpdate(false);
+}
+
+void CFadeInOutUI::StageGateIn(Vector2 Pos)
+{
+	m_StageGateMove = Pos;
+	m_Alpha = 0.f;
+	m_FadeOut = true;
+	m_StageGate = true;
+	CInput::GetInst()->SetUpdate(false);
+
 }
 
 void CFadeInOutUI::StageBossIn()

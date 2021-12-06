@@ -10,6 +10,9 @@
 #include "FadeInOutUI.h"
 #include "StatusUI.h"
 #include "MiniMap.h"
+#include "FadeInOut_White.h"
+#include "RestaurantUI.h"
+#include "ResturantInfoWidget.h"
 class CUIManager
 {
 
@@ -60,6 +63,22 @@ public:
 	{
 		return m_MiniMapUI;
 	}
+	CFadeInOut_White* GetFadeInOut_WhiteUI()
+	{
+		return m_FadeInOut_WhiteUI;
+	}
+
+	CRestaurantUI* GetRestaurantUI()
+	{
+		return m_RestaurantUI;
+	}
+	void MouseUIWorldCheck();
+	bool InventoryUIOnOff();
+	bool StageMapUIOnOff();
+	bool ShopUIOnOff();
+	bool StatusUIOnOff();
+	bool RestaurantUIOnOff();
+	void UIOff();
 private:
 	CSharedPtr<CPlayerUI> m_PlayerUI;
 	CSharedPtr<CInventory> m_InventoryUI;
@@ -71,6 +90,9 @@ private:
 	CSharedPtr<CFadeInOutUI> m_FadeInOutUI;
 	CSharedPtr<CStatusUI> m_StatusUI;
 	CSharedPtr<CMiniMap> m_MiniMapUI;
+	CSharedPtr<CFadeInOut_White> m_FadeInOut_WhiteUI;
+	CSharedPtr<CRestaurantUI> m_RestaurantUI;
+	CSharedPtr<CResturantInfoWidget> m_TEstUI;
 	CScene* m_pScene;
 
 

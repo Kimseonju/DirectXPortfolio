@@ -69,6 +69,8 @@ bool CLoadingUI::Init()
 void CLoadingUI::Update(float DeltaTime)
 {
  	CWidgetWindow::Update(DeltaTime);
+	if (DeltaTime > 1.f)
+		return;
 	if (m_ImageNum == 0)
 	{
 		m_ImageCount += DeltaTime;
@@ -78,6 +80,7 @@ void CLoadingUI::Update(float DeltaTime)
 		{
 			m_ImageCount = 0.f;
 			m_ImageNum++;
+			CSceneManager::GetInst()->SetChange(true);
 		}
 	}
 	else if (m_ImageNum == 1)
@@ -100,7 +103,7 @@ void CLoadingUI::Update(float DeltaTime)
 		{
 			m_ImageCount = 0.f;
 			m_ImageNum++;
-			CSceneManager::GetInst()->SetChange(true);
+			//CSceneManager::GetInst()->SetChange(true);
 		}
 	}
 }

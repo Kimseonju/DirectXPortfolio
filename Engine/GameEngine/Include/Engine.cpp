@@ -147,6 +147,7 @@ bool CEngine::Init(HINSTANCE hInst, HWND hWnd, int Width, int Height,
 	if (!CNavigationManager::GetInst()->Init())
 		return false;
 
+	CNavigationManager::GetInst()->CreateNavigation();
 	// 장면 관리자 초기화
 	if (!CSceneManager::GetInst()->Init())
 		return false;

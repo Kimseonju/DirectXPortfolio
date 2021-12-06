@@ -238,6 +238,24 @@
     <Filter Include="UI\EndingUI">
       <UniqueIdentifier>{8fa0ecae-92a9-4e38-b637-cfb6487a798c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\MapObject\FireFly">
+      <UniqueIdentifier>{9ac2c505-e26f-4ff3-b0fd-629cc24a7d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\Widget\Info">
+      <UniqueIdentifier>{e0c63aea-06de-498a-a492-63e566e25b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\UI\Widget\Button">
+      <UniqueIdentifier>{c14e734b-d981-434c-a019-1ab813b2a779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject\Gate">
+      <UniqueIdentifier>{c32183f4-6293-4297-b00c-eff41e0c1690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Weapon\CosmosSword">
+      <UniqueIdentifier>{a774160d-cd26-45dc-a651-94928886a30f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\EffectAndParticle\CosmosSwordEffect">
+      <UniqueIdentifier>{5d32639f-4833-41c9-a0f2-35942cec23e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -369,9 +387,6 @@
     <ClCompile Include="UI\TitleWidget.cpp">
       <Filter>UI\UI\WidgetWindow</Filter>
     </ClCompile>
-    <ClCompile Include="UI\InventoryButton.cpp">
-      <Filter>UI\UI\Widget</Filter>
-    </ClCompile>
     <ClCompile Include="SceneMode\LoadingScene.cpp">
       <Filter>01. SceneMode</Filter>
     </ClCompile>
@@ -403,9 +418,6 @@
       <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClCompile>
     <ClCompile Include="UI\Inventory.cpp">
-      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\ItemInfoWidget.cpp">
       <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStatus.cpp">
@@ -521,9 +533,6 @@
     </ClCompile>
     <ClCompile Include="UI\ShopUI.cpp">
       <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\ShopButton.cpp">
-      <Filter>UI\UI\Widget</Filter>
     </ClCompile>
     <ClCompile Include="UI\ShopInfoWidget.cpp">
       <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
@@ -672,6 +681,42 @@
     <ClCompile Include="Object\BossDieEffect.cpp">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Firefly.cpp">
+      <Filter>02. Object\MapObject\FireFly</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FadeInOut_White.cpp">
+      <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ResturantInfoWidget.cpp">
+      <Filter>UI\UI\Widget\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ItemInfoWidget.cpp">
+      <Filter>UI\UI\Widget\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ShopButton.cpp">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InventoryButton.cpp">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\RestaurantButton.cpp">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Gate.cpp">
+      <Filter>02. Object\MapObject\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GateButton.cpp">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CosmosSword.cpp">
+      <Filter>02. Object\Item\Weapon\CosmosSword</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CosmosSwordEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CosmosSwordSkillEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -803,9 +848,6 @@
     <ClInclude Include="UI\TitleWidget.h">
       <Filter>UI\UI\WidgetWindow</Filter>
     </ClInclude>
-    <ClInclude Include="UI\InventoryButton.h">
-      <Filter>UI\UI\Widget</Filter>
-    </ClInclude>
     <ClInclude Include="SceneMode\LoadingScene.h">
       <Filter>01. SceneMode</Filter>
     </ClInclude>
@@ -822,9 +864,6 @@
       <Filter>UI\UI\WidgetWindow\Ability</Filter>
     </ClInclude>
     <ClInclude Include="UI\Inventory.h">
-      <Filter>UI\UI\WidgetWindow\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\ItemInfoWidget.h">
       <Filter>UI\UI\WidgetWindow\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="UI\AbilityWidget_Arcane.h">
@@ -952,9 +991,6 @@
     </ClInclude>
     <ClInclude Include="UI\ShopUI.h">
       <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\ShopButton.h">
-      <Filter>UI\UI\Widget</Filter>
     </ClInclude>
     <ClInclude Include="UI\ShopInfoWidget.h">
       <Filter>UI\UI\WidgetWindow\ShopUI</Filter>
@@ -1087,6 +1123,42 @@
     </ClInclude>
     <ClInclude Include="Object\BossDieEffect.h">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Firefly.h">
+      <Filter>02. Object\MapObject\FireFly</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FadeInOut_White.h">
+      <Filter>UI\UI\WidgetWindow\FadeInout</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ResturantInfoWidget.h">
+      <Filter>UI\UI\Widget\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ItemInfoWidget.h">
+      <Filter>UI\UI\Widget\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ShopButton.h">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\InventoryButton.h">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\RestaurantButton.h">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Gate.h">
+      <Filter>02. Object\MapObject\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GateButton.h">
+      <Filter>UI\UI\Widget\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CosmosSword.h">
+      <Filter>02. Object\Item\Weapon\CosmosSword</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CosmosSwordSkillEffect.h">
+      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CosmosSwordEffect.h">
+      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
