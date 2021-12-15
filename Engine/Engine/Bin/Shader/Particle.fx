@@ -85,9 +85,20 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 	g_ParticleShare[0].Animation2DSize = g_ParticleAnimation2DSize;
 	g_ParticleShare[0].Animation2DPlayRate = g_ParticleAnimation2DPlayRate;
 
+	if (g_ParticleSpawnCountMax == 0)
+	{
+		g_ParticleArray[ThreadID.x].Alive = 0;
+		g_ParticleArray[ThreadID.x].Animation2DCount = 0;
+		g_ParticleArray[ThreadID.x].Animation2DStart.x = 0.f;
+		g_ParticleArray[ThreadID.x].Animation2DStart.y = 0.f;
+		g_ParticleArray[ThreadID.x].Animation2DEnd.x = 0.f;
+		g_ParticleArray[ThreadID.x].Animation2DEnd.y = 0.f;
+		g_ParticleShare[0].Animation2DCount = 0;
+		g_ParticleShare[0].Animation2DEnable = 0;
+		return;
+	}
 	if (g_ParticleSpawnCountMax <= ThreadID.x)
 		return;
-
 	if (g_ParticleArray[ThreadID.x].Alive == 0)
 	{
 		int	SpawnCount = g_ParticleShare[0].SpawnCount;
@@ -218,7 +229,16 @@ void ParticleUpdate(uint3 ThreadID : SV_DispatchThreadID)
 	g_ParticleShare[0].EndColor = g_ParticleEndColor;
 	g_ParticleShare[0].GravityEnable = g_ParticleGravity;
 	g_ParticleShare[0].TwinkleEnable = g_ParticleTwinkle;
+	g_ParticleShare[0].Animation2DEnable = g_ParticleAnimation2DEnable;
+	g_ParticleShare[0].Animation2DCount = g_ParticleAnimation2DCount;
+	g_ParticleShare[0].Animation2DSize = g_ParticleAnimation2DSize;
+	g_ParticleShare[0].Animation2DPlayRate = g_ParticleAnimation2DPlayRate;
 
+	if (g_ParticleSpawnCountMax == 0)
+	{
+		g_ParticleArray[ThreadID.x].Alive = 0;
+		return;
+	}
 	if (g_ParticleSpawnCountMax <= ThreadID.x)
 		return;
 
@@ -375,7 +395,16 @@ void ParticleDirUpdate(uint3 ThreadID : SV_DispatchThreadID)
 	g_ParticleShare[0].EndColor = g_ParticleEndColor;
 	g_ParticleShare[0].GravityEnable = g_ParticleGravity;
 	g_ParticleShare[0].TwinkleEnable = g_ParticleTwinkle;
+	g_ParticleShare[0].Animation2DEnable = g_ParticleAnimation2DEnable;
+	g_ParticleShare[0].Animation2DCount = g_ParticleAnimation2DCount;
+	g_ParticleShare[0].Animation2DSize = g_ParticleAnimation2DSize;
+	g_ParticleShare[0].Animation2DPlayRate = g_ParticleAnimation2DPlayRate;
 
+	if (g_ParticleSpawnCountMax == 0)
+	{
+		g_ParticleArray[ThreadID.x].Alive = 0;
+		return;
+	}
 	if (g_ParticleSpawnCountMax <= ThreadID.x)
 		return;
 
@@ -532,7 +561,16 @@ void ParticleRandomScaleUpdate(uint3 ThreadID : SV_DispatchThreadID)
 	g_ParticleShare[0].EndColor = g_ParticleEndColor;
 	g_ParticleShare[0].GravityEnable = g_ParticleGravity;
 	g_ParticleShare[0].TwinkleEnable = g_ParticleTwinkle;
+	g_ParticleShare[0].Animation2DEnable = g_ParticleAnimation2DEnable;
+	g_ParticleShare[0].Animation2DCount = g_ParticleAnimation2DCount;
+	g_ParticleShare[0].Animation2DSize = g_ParticleAnimation2DSize;
+	g_ParticleShare[0].Animation2DPlayRate = g_ParticleAnimation2DPlayRate;
 
+	if (g_ParticleSpawnCountMax == 0)
+	{
+		g_ParticleArray[ThreadID.x].Alive = 0;
+		return;
+	}
 	if (g_ParticleSpawnCountMax <= ThreadID.x)
 		return;
 
@@ -803,13 +841,7 @@ void ParticleGS(point VS_OUTPUT_PARTICLE input[1],
 		OutputArray[2].UV = float2(g_ParticleArrayInput[InstanceID].Animation2DEnd.x, g_ParticleArrayInput[InstanceID].Animation2DEnd.y);
 		OutputArray[3].UV = float2(g_ParticleArrayInput[InstanceID].Animation2DStart.x, g_ParticleArrayInput[InstanceID].Animation2DEnd.y);
 	}
-	float3	TestPos[4] =
-	{
-		float3(100.f, 100.f, 0.f),
-		float3(200.f, 100.f, 0.f),
-		float3(200.f, 0.f, 0.f),
-		float3(100.f, 0.f, 0.f),
-	};
+
 
 	// 4개의 정점정보를 만들어준다.
 	for (int i = 0; i < 4; ++i)

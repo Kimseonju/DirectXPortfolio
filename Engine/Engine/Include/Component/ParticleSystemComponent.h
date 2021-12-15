@@ -35,6 +35,7 @@ public:
 	void SetSpawnTime(float Time);
 
 public:
+	virtual void Active(bool bActive);
 	virtual void Start();
 	virtual bool Init();
 	virtual void Update(float DeltaTime);

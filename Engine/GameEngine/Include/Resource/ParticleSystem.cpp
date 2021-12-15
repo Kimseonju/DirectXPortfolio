@@ -221,7 +221,7 @@ void CParticleSystem::SetUpdateShader(const std::string& Name)
 	CShader* UpdateShader =CShaderManager::GetInst()->FindShader(Name);
 	if (UpdateShader)
 	{
-		m_UpdateShader = (CParticleUpdateShader *)UpdateShader;
+		m_UpdateShader = (CParticleUpdateShader*)UpdateShader;
 	}
 }
 
@@ -238,7 +238,6 @@ void CParticleSystem::CloneStructuredBuffer(
 	for(size_t i = 0; i < Size; ++i)
 	{
 		CStructuredBuffer* Buffer = m_vecBuffer[i]->Clone();
-
 		vecBuffer.push_back(Buffer);
 	}
 }

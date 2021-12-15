@@ -13,11 +13,11 @@ private:
 	std::vector<class CBelialWeapon*> m_BelialWeapon;
 	class CBelialHand* m_LeftHand;
 	class CBelialHand* m_RightHand;
+	class CBelialBackParticle* m_BackParticleObject;
 
 	CSharedPtr<CColliderBox2D> m_SpawnColliderBox2D;
 	CSharedPtr<CSpriteComponent> m_Sprite;
 	CSharedPtr<CSpriteComponent> m_BackSprite;
-	CSharedPtr<CParticleSystemComponent> m_BackParticle;
 	CSharedPtr<CColliderBox2D> m_Collider2D;
 	CEngineFSM<CEnemy> m_EnemyFSM;
 	CBasicStatus* m_Status;

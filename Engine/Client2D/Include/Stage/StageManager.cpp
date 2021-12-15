@@ -72,9 +72,6 @@ void CStageManager::Update(float DeltaTime)
 	{
 		m_SelectStage->Update(DeltaTime);
 		//배경음 관리
-		
-
-		
 	}
 
 }

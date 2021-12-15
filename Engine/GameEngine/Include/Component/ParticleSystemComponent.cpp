@@ -11,7 +11,7 @@
 
 CParticleSystemComponent::CParticleSystemComponent()    :
     m_CBuffer(nullptr),
-    //m_CopyBuffer(nullptr),
+    m_CopyBuffer(nullptr),
     m_ParticleInfo{},
     m_ParticleInfoShare{},
     m_SpawnTime(0.f),
@@ -57,7 +57,7 @@ CParticleSystemComponent::~CParticleSystemComponent()
     }
     SAFE_DELETE(m_CBuffer);
 
-    //SAFE_DELETE(m_CopyBuffer);
+    SAFE_DELETE(m_CopyBuffer);
 }
 
 void CParticleSystemComponent::SetParticle(const std::string& Name)
@@ -92,6 +92,20 @@ void CParticleSystemComponent::SetParticle(CParticleSystem* Particle)
 
     m_CBuffer->SetDefaultZ(m_pTransform->GetDefaultZ());
 
+    SAFE_DELETE(m_CopyBuffer);
+    m_CopyBuffer = new CStructuredBuffer;
+
+    m_CopyBuffer->InitRead("Copy", sizeof(ParticleInfo),
+        m_CBuffer->GetSpawnCountMax(), 0);
+
+    m_CopyBuffer->CopyData(m_Info);
+    if (m_CopyBuffer)
+    {
+
+        m_vecBuffer[0]->CopyResource(m_CopyBuffer);
+
+        m_CopyBuffer->CopyData(m_Info);
+    }
     m_SpawnTimeMax = m_Particle->GetSpawnTime();
 }
 
@@ -100,14 +114,35 @@ void CParticleSystemComponent::SetSpawnTime(float Time)
     m_SpawnTimeMax = Time;
 }
 
+void CParticleSystemComponent::Active(bool bActive)
+{
+    CPrimitiveComponent::Active(bActive);
+    int GroupCount = (m_CBuffer->GetSpawnCountMax() / 64) + 1;
+    m_CBuffer->SetSpawnCountMax(0);
+    m_CBuffer->UpdateCBuffer();
+    size_t  Size = m_vecBuffer.size();
+
+    for (size_t i = 0; i < Size; ++i)
+    {
+        m_vecBuffer[i]->SetShader((int)i);
+    }
+
+    // ParticleUpdateShader에서 Thread를 64, 1, 1 을 쓰고 있다.
+    // 즉, X그룹은 64개당 그룹 1개가 필요하므로 현재 생성된 파티클수 / 64를
+    // 이용해서 그룹 번호를 구하고 + 1을 해서 그룹 개수를 구한다.
+    m_UpdateShader->Excute(GroupCount, 1, 1);
+
+    for (size_t i = 0; i < Size; ++i)
+    {
+        m_vecBuffer[i]->ResetShader((int)i);
+    }
+
+}
+
 void CParticleSystemComponent::Start()
 {
     CPrimitiveComponent::Start();
 
-    /*m_CopyBuffer = new CStructuredBuffer;
-
-    m_CopyBuffer->InitRead("Copy", sizeof(ParticleInfo),
-        m_CBuffer->GetSpawnCountMax(), 0);*/
 }
 
 bool CParticleSystemComponent::Init()
@@ -143,6 +178,8 @@ void CParticleSystemComponent::PostUpdate(float DeltaTime)
 {
     CPrimitiveComponent::PostUpdate(DeltaTime);
 
+    if (!IsEnable())
+        return;
     m_CBuffer->SetPos(GetWorldPos());
 
     m_CBuffer->UpdateCBuffer();
@@ -184,10 +221,11 @@ void CParticleSystemComponent::Render(float DeltaTime)
     }
     CPrimitiveComponent::Render(DeltaTime);
 
+    m_CBuffer->UpdateCBuffer();
     
-    //m_vecBuffer[0]->CopyResource(m_CopyBuffer);
-
-    //m_CopyBuffer->CopyData(m_Info);
+    m_vecBuffer[0]->CopyResource(m_CopyBuffer);
+    
+    m_CopyBuffer->CopyData(m_Info);
 
     size_t  Size = m_vecBuffer.size();
 

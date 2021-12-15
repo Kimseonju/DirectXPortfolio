@@ -41,4 +41,5 @@ public:
 	void ResetShader(int Register, int ConstantBufferType);
 	void CopyData(void* Data);
 	void CopyResource(CStructuredBuffer* Buffer);
+	void CopyBuffer(CStructuredBuffer* Buffer);
 };

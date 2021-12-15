@@ -72,7 +72,17 @@ bool CObjectStatusManager::LoadStatus(const std::string& Name, const TCHAR* File
 		getfield(tmp, &d, 16);
 		std::string s_0 = d.s[0];
 		std::string s_1 = d.s[1];
-		s_1.erase(s_1.find('\r'));
+		size_t num = s_1.find('\r');
+		
+		if (num != std::string::npos)
+		{
+			s_1.erase(s_1.find('\r'));
+		}
+		num = s_1.find('\n');
+		if (num != std::string::npos)
+		{
+			s_1.erase(s_1.find('\n'));
+		}
 		if (s_0 == "Object")
 		{
 

@@ -732,6 +732,9 @@
     <ClCompile Include="Object\TaanaShieldEffect.cpp">
       <Filter>02. Object\EffectAndParticle\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Object\BelialBackParticle.cpp">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -1186,6 +1189,9 @@
     </ClInclude>
     <ClInclude Include="Object\TaanaShieldEffect.h">
       <Filter>02. Object\EffectAndParticle\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BelialBackParticle.h">
+      <Filter>02. Object\EffectAndParticle\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

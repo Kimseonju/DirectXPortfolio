@@ -111,9 +111,11 @@ void CTestMainScene::Start()
 	CStageManager::GetInst()->Start();
 	CUIManager::GetInst()->Init(m_pScene);
 	CUIManager::GetInst()->GetStageMap()->StageMove();
+	//CUIManager::GetInst()->GetFadeInOutUI()->StageBossIn();
 
 	CStage1MapEffect* Stage1MapEffect = m_pScene->SpawnObject<CStage1MapEffect>("Stage1MapEffect");
 	Stage1MapEffect->SetWorldPos(400.f, 200.f, 0.f);
+
 }
 
 void CTestMainScene::Update(float DeltaTime)

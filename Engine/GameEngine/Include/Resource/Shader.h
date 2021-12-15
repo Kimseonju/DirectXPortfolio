@@ -50,5 +50,6 @@ public:
         unsigned int InstanceDataStepRate);
     virtual bool CreateInputLayout();
     virtual void SetShader();
+    virtual void ReSetShader();
 };
 

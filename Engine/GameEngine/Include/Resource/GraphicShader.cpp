@@ -252,3 +252,15 @@ void CGraphicShader::SetShader()
     // 입력레이아웃을 설정한다.
     CONTEXT->IASetInputLayout(m_InputLayout);
 }
+
+void CGraphicShader::ReSetShader()
+{
+    CONTEXT->VSSetShader(nullptr, nullptr, 0);
+    CONTEXT->PSSetShader(nullptr, nullptr, 0);
+    CONTEXT->HSSetShader(nullptr, nullptr, 0);
+    CONTEXT->DSSetShader(nullptr, nullptr, 0);
+    CONTEXT->GSSetShader(nullptr, nullptr, 0);
+
+    // 입력레이아웃을 설정한다.
+    CONTEXT->IASetInputLayout(nullptr);
+}

@@ -41,4 +41,5 @@ public:
     virtual bool Init();
     virtual bool CreateInputLayout();
     virtual void SetShader();
+    virtual void ReSetShader();
 };

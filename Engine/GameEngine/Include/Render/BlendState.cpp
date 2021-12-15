@@ -29,7 +29,7 @@ void CBlendState::AddBlendInfo(bool BlendEnable, D3D11_BLEND SrcBlend,
 	Desc.BlendOp = BlendOp;
 	Desc.SrcBlendAlpha = SrcBlendAlpha;
 	Desc.DestBlendAlpha = DestBlendAlpha;
-	Desc.BlendOpAlpha = D3D11_BLEND_OP_MAX;
+	Desc.BlendOpAlpha = BlendOpAlpha;
 	Desc.RenderTargetWriteMask = RenderTargetWriteMask;
 
 	m_vecDesc.push_back(Desc);

@@ -18,6 +18,7 @@
 #include "BelialDeadHead.h"
 #include "BelialDeadMouth.h"
 #include "../ObjectStatusManager.h"
+#include "BelialBackParticle.h"
 #include <Scene/SceneResource.h>
 CBelial::CBelial() :
 	m_AttackTimer(0.f),
@@ -43,7 +44,8 @@ CBelial::CBelial() :
 	m_SpawnEnd(false),
 	m_LaserCountMax(2),
 	m_HitTimer(0.f),
-	m_BulletFireCountMax(0.2f)
+	m_BulletFireCountMax(0.2f),
+	m_BackParticleObject(nullptr)
 	
 {
 	SetStatus("Belial");
@@ -79,14 +81,13 @@ bool CBelial::Init()
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	m_BackSprite = CreateSceneComponent<CSpriteComponent>("BackSprite");
-	m_BackParticle = CreateSceneComponent<CParticleSystemComponent>("BackParticle");
 
 	SetRootComponent(m_Sprite);
 
-	m_RootComponent->AddChild(m_SpawnColliderBox2D);
-	m_RootComponent->AddChild(m_Collider2D);
-	m_RootComponent->AddChild(m_BackSprite);
-	m_RootComponent->AddChild(m_BackParticle);
+	m_Sprite->AddChild(m_SpawnColliderBox2D);
+	m_Sprite->AddChild(m_Collider2D);
+	m_Sprite->AddChild(m_BackSprite);
+
 	m_Sprite->CreateAnimation2D<CAnimation2D>();
 	m_Sprite->SetRelativeScale(70.f, 96.f, 1.f);
 	m_Sprite->SetPivot(0.6f, 0.3f, 0.f);
@@ -104,7 +105,7 @@ bool CBelial::Init()
 	m_BackSprite->SetRelativeScale(50.f, 50.f, 1.f);
 	m_BackSprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_BackSprite->CreateAnimation2D < CAnimation2D_FSM>();
-	m_BackSprite->SetRender2DType(Render_Type_2D::RT2D_Back1);
+	m_BackSprite->SetRender2DType(Render_Type_2D::RT2D_Back2);
 	m_BackAnimation2D = (CAnimation2D_FSM*)m_BackSprite->GetAnimation2D();
 	m_BackAnimation2D->AddAnimationSequence2D("Belial_Circle");
 	Material = m_BackSprite->GetMaterial(0);
@@ -112,24 +113,6 @@ bool CBelial::Init()
 	Material->SetOpacity(1.f);
 
 
-	m_BackParticle->SetParticle("BossBackParticle");
-	Material = m_BackParticle->GetMaterial(0);
-	Material->Enable(false);
-
-	m_BackParticle->SetRelativePos(Vector3(0.f, 0.f, 0.f));
-	m_BackParticle->SetPivot(0.5f, 0.5f, 0.f);
-	m_BackParticle->SetSpawnTime(0.1f);
-	m_BackParticle->SetTwinkleEnable(false);
-	m_BackParticle->SetAnimation2DEnable(true);
-	m_BackParticle->SetAnimation2DCount(8);
-	m_BackParticle->SetRender2DType(Render_Type_2D::RT2D_Back1);
-	Vector2 Size;
-	Size.x = (float)m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
-	Size.y = (float)m_BackParticle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
-	m_BackParticle->SetAnimation2DSize(Size);
-	m_BackParticle->SetAnimation2DPlayRate(0.1f);
-
-	m_BackParticle->Enable(false);
 	m_Collider2D->SetExtent(30.f, 30.f);
 	m_Collider2D->Enable(false);
 	m_Collider2D->SetCollisionProfile("Enemy");
@@ -326,7 +309,7 @@ void CBelial::EffectEndUpdate(float DeltaTime)
 		m_LeftHand = nullptr;
 		m_RightHand->Active(false);
 		m_RightHand = nullptr;
-		m_BackParticle->Enable(false);
+		m_BackParticleObject->Active(false);
 		CBelialDeadHead* Head=m_pScene->SpawnObject<CBelialDeadHead>("BelialDeadHead");
 		Head->SetWorldPos(GetWorldPos());
 
@@ -370,7 +353,6 @@ void CBelial::AlphaUpdate(float DeltaTime)
 		Material = m_BackSprite->GetMaterial(0);
 		Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha); 
 
-		Material = m_BackParticle->GetMaterial(0);
 		m_LeftHand->SetOpaacity(m_Alpha);
 		m_RightHand->SetOpaacity(m_Alpha);
 
@@ -380,7 +362,6 @@ void CBelial::AlphaUpdate(float DeltaTime)
 		Material = m_RightHand->GetMaterial();
 		Material->SetBaseColor(1.f, 1.f, 1.f, m_HandAlpha);
 		m_Collider2D->Enable(true);
-		m_BackParticle->Enable(true);
 	}
 }
 
@@ -465,6 +446,8 @@ void CBelial::CollisionBossSpawnBegin(const HitResult& result, CCollider* Collid
 		m_AlphaUpdate = true;
 		CInput::GetInst()->SetUpdate(false);
 		CUIManager::GetInst()->GetBossSpawnUI()->Enable(true);
+		m_BackParticleObject =m_pScene->SpawnObject<CBelialBackParticle>("BelialBackParticle");
+		m_BackParticleObject->SetWorldPos(GetWorldPos());
 	}
 
 }

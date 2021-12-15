@@ -176,6 +176,7 @@
     <ClCompile Include="Object\Banshee_FSM.cpp" />
     <ClCompile Include="Object\BasicTresure.cpp" />
     <ClCompile Include="Object\Belial.cpp" />
+    <ClCompile Include="Object\BelialBackParticle.cpp" />
     <ClCompile Include="Object\BelialBullet.cpp" />
     <ClCompile Include="Object\BelialBulletEffect.cpp" />
     <ClCompile Include="Object\BelialDeadHead.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Object\BansheeBulletFX.h" />
     <ClInclude Include="Object\BasicTresure.h" />
     <ClInclude Include="Object\Belial.h" />
+    <ClInclude Include="Object\BelialBackParticle.h" />
     <ClInclude Include="Object\BelialBullet.h" />
     <ClInclude Include="Object\BelialBulletEffect.h" />
     <ClInclude Include="Object\BelialDeadHead.h" />

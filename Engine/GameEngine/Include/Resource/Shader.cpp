@@ -44,3 +44,7 @@ bool CShader::CreateInputLayout()
 void CShader::SetShader()
 {
 }
+
+void CShader::ReSetShader()
+{
+}

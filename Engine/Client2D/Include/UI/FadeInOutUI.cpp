@@ -63,7 +63,7 @@ void CFadeInOutUI::Update(float DeltaTime)
 			else if (m_StageMove)
 			{
 				CStageManager::GetInst()->NextStage(m_StageDir);
-				CUIManager::GetInst()->GetStageMap()->StageMove();
+      				CUIManager::GetInst()->GetStageMap()->StageMove();
 				m_StageMove = false;
 			}
 			else if (m_StageGate)

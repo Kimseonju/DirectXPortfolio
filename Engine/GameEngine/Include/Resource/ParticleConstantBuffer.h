@@ -178,7 +178,10 @@ public:
 	{
 		m_BufferData.Animation2DPlayRate = PlayRate;
 	}
-
+	void SetSpawnCountMax(int Count)
+	{
+		m_BufferData.SpawnCountMax = Count;
+	}
 	int GetSpawnCountMax()	const
 	{
 		return m_BufferData.SpawnCountMax;

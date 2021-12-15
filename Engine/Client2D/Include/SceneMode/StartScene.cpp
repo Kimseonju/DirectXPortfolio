@@ -122,6 +122,7 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR2.txt"));  //시작지점
 	CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Boss.txt")); //보스시작지점
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL2.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR2.txt")); //상점
 	CStageManager::GetInst()->AllLoadStage(TEXT("RestaurantMapLR2.txt")); //레스토랑
 	
@@ -894,7 +895,7 @@ void CStartScene::CreateParticle()
 	m_pScene->GetResource()->CreateParticle("StageMapParticle");
 	m_pScene->GetResource()->SetParticleUpdateShader("StageMapParticle", "ParticleRandomScaleUpdateShader");
 	m_pScene->GetResource()->SetParticleMaterial("StageMapParticle", StageMapMaterial);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 1000);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 200);
 	m_pScene->GetResource()->SetParticleStartColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleEndColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleStartScale("StageMapParticle", 4.f, 4.f, 1.f);
@@ -916,7 +917,7 @@ void CStartScene::CreateParticle()
 	m_pScene->GetResource()->CreateParticle("DoorParticle");
 	m_pScene->GetResource()->SetParticleUpdateShader("DoorParticle", "ParticleDirUpdateShader");
 	m_pScene->GetResource()->SetParticleMaterial("DoorParticle", StageMapMateria1l);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 500);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 20);
 	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 1.f, 1.f, 1.f, 0.7f);
 	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 5.f, 5.f, 1.f);
@@ -939,7 +940,7 @@ void CStartScene::CreateParticle()
 	m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleAnimation2DShader");
 	//m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleDirUpdateShader");
 	m_pScene->GetResource()->SetParticleMaterial("BossDieParticle", BossDieParticle);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("BossDieParticle", 500);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("BossDieParticle", 20);
 	m_pScene->GetResource()->SetParticleStartColor("BossDieParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleEndColor("BossDieParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleStartScale("BossDieParticle", 40.f, 40.f, 1.f);
@@ -957,7 +958,7 @@ void CStartScene::CreateParticle()
 	m_pScene->GetResource()->CreateParticle("BossBackParticle");
 	m_pScene->GetResource()->SetParticleUpdateShader("BossBackParticle", "ParticleAnimation2DShader");
 	m_pScene->GetResource()->SetParticleMaterial("BossBackParticle", BossBackParticle);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("BossBackParticle", 100);
+	m_pScene->GetResource()->SetParticleMaxParticleCount("BossBackParticle", 10);
 	m_pScene->GetResource()->SetParticleStartColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleEndColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
 	m_pScene->GetResource()->SetParticleStartScale("BossBackParticle", 30.f, 30.f, 1.f);
