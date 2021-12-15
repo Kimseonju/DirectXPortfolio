@@ -7,7 +7,8 @@
 #include "Scene/SceneResource.h"
 
 CLoadingScene::CLoadingScene():
-	m_Thread(nullptr)
+	m_Thread(nullptr),
+	m_Widget(nullptr)
 {
 }
 

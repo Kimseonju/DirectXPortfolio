@@ -61,15 +61,6 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Force.x = 0.f;
 				m_Force.y = 0.f;
 			}
-			m_Force.y -= m_GravityPower * DeltaTime;
-			moveDir += m_Force * DeltaTime;
-			moveDir += m_Dir * m_Speed * DeltaTime;
-		}
-		//대쉬중일때
-		else
-		{
-			Dashing(DeltaTime);
-			m_DashTimer -= DeltaTime;
 
 			if (m_Force.x > 100.f)
 				m_Force.x = 100.f;
@@ -80,6 +71,15 @@ void CRigidBodyComponent::Update(float DeltaTime)
 				m_Force.y = 200.f;
 			if (m_Force.y < -200.f)
 				m_Force.y = -200.f;
+			m_Force.y -= m_GravityPower * DeltaTime;
+			moveDir += m_Force * DeltaTime;
+			moveDir += m_Dir * m_Speed * DeltaTime;
+		}
+		//대쉬중일때
+		else
+		{
+			m_DashTimer -= DeltaTime;
+
 			if (m_DashEffectTime <= 0.f)
 			{
 				if (!m_DashEffect)

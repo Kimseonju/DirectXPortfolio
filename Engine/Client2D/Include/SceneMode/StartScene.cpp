@@ -36,6 +36,9 @@ bool CStartScene::Init()
 	CObjectStatusManager::GetInst()->LoadStatus("MetalBoomerang", TEXT("MetalBoomerang.csv"));
 	CObjectStatusManager::GetInst()->LoadStatus("SmallSkelBow", TEXT("SmallSkelBow.csv"));
 	CObjectStatusManager::GetInst()->LoadStatus("SkelSmallDagger", TEXT("SkelSmallDagger.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("DaisyRing", TEXT("DaisyRing.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("MiniEarth", TEXT("MiniEarth.csv"));
+	CObjectStatusManager::GetInst()->LoadStatus("Taana", TEXT("Taana.csv"));
 
 
 
@@ -83,8 +86,7 @@ bool CStartScene::Init()
 	pBack_CloudMove3->AddTexture("BackCloud", TEXT("TitleScene/BackCloud.png"));
 	pBack_CloudMove3->SetSpeed(50.f);
 	pBack_CloudMove3->SetRelativePos(2560.f, 0.f, 0.f);
-	//새가 3마리 다 안나오는건 Y솔트때문이다.
-	//나중에 구조를 수정해야함
+
 	CBird* pBird1 = m_pScene->SpawnObject<CBird>("Bird1");
 	CBird* pBird2 = m_pScene->SpawnObject<CBird>("Bird2");
 	pBird2->SetRelativePos(-100.f, 300.f, 0.f);
@@ -102,7 +104,7 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->SetScene(m_NextScene);
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapD.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapL2.txt"));
-	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD3.txt"));
+	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLD4.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLR3.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("BasicMapLRD.txt"));
 
@@ -122,13 +124,6 @@ bool CStartScene::Init()
 	CStageManager::GetInst()->AllLoadStage(TEXT("EndMapL.txt"));
 	CStageManager::GetInst()->AllLoadStage(TEXT("ShopMapLR2.txt")); //상점
 	CStageManager::GetInst()->AllLoadStage(TEXT("RestaurantMapLR2.txt")); //레스토랑
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_Enemy.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("StartMapR_EnemyTTT.txt"));
-	//CStageManager::GetInst()->AllLoadStage(TEXT("BossMap_R_TestTTTT.txt"));
-	//CRenderManager::GetInst()->SetWorldRenderState("WireFrame");
 	
 	return true;
 }
@@ -282,7 +277,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("ReloadEffect",
-			Vector2(i * 28.f, 0), Vector2((i + 1) * 28.f, 9.f));
+			Vector2(i * 28.f, 0.f), Vector2((i + 1) * 28.f, 9.f));
 
 
 	}
@@ -294,7 +289,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 3; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("ShortSwordEffect",
-			Vector2(i * 28.f, 0), Vector2((i + 1) * 28.f, 40));
+			Vector2(i * 28.f, 0.f), Vector2((i + 1) * 28.f, 40.f));
 	}
 
 
@@ -308,7 +303,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 3; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RevolverEffect",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 15.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 15.f));
 	}
 	m_pScene->GetResource()->CreateAnimationSequence2D("RevolverBullet");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("RevolverBullet",
@@ -317,7 +312,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RevolverBullet",
-			Vector2(i * 35.f, 0), Vector2((i + 1) * 35.f, 7.f));
+			Vector2(i * 35.f, 0.f), Vector2((i + 1) * 35.f, 7.f));
 	}
 
 	/*
@@ -330,7 +325,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MetalBoomerangEffect",
-			Vector2(i * 22.f, 0), Vector2((i + 1) * 22.f, 22.f));
+			Vector2(i * 22.f, 0.f), Vector2((i + 1) * 22.f, 22.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("MetalBoomerangBullet");
@@ -340,7 +335,45 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 2; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MetalBoomerangBullet",
-			Vector2(i * 37.f, 0), Vector2((i + 1) * 37.f, 37.f));
+			Vector2(i * 37.f, 0.f), Vector2((i + 1) * 37.f, 37.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("CosmosSwordIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("CosmosSwordIdle",
+		"CosmosSwordIdle", TEXT("Weapon/Melee/CosmosSword.png"));
+
+	for (int i = 0; i <12; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("CosmosSwordIdle",
+			Vector2(i * 33.f, 0.f), Vector2((i + 1) * 33.f, 11.f));
+	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("CosmosSwordEffect");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("CosmosSwordEffect",
+		"CosmosSwordEffect", TEXT("Weapon/Melee/CosmosSwordFx.png"));
+
+	for (int i = 0; i < 8; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("CosmosSwordEffect",
+			Vector2(i * 47.f, 0.f), Vector2((i + 1) * 47.f, 60.f));
+	}
+	m_pScene->GetResource()->CreateAnimationSequence2D("TAANAIdle");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("TAANAIdle",
+		"TAANAIdle", TEXT("Acc/TAANA00.png"));
+
+	for (int i = 0; i < 12; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("TAANAIdle",
+			Vector2(i * 16.f, 0.f), Vector2((i + 1) * 16.f, 19.f));
+	}
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("TAANAShield");
+	m_pScene->GetResource()->SetAnimationSequence2DTexture("TAANAShield",
+		"TAANAShield", TEXT("Acc/TAANA_Shield.png"));
+
+	for (int i = 0; i < 15; ++i)
+	{
+		m_pScene->GetResource()->AddAnimationSequence2DFrame("TAANAShield",
+			Vector2(i * 25.f, 0.f), Vector2((i + 1) * 25.f, 25.f));
 	}
 	/*
 	ObjectDieEffect
@@ -352,7 +385,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 11; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("ObjectDieEffect",
-			Vector2(i * 50.f, 0), Vector2((i + 1) * 50.f, 50.f));
+			Vector2(i * 50.f, 0.f), Vector2((i + 1) * 50.f, 50.f));
 	}
 
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("ObjectDieEffect", "CreateEffect", 5);
@@ -368,7 +401,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorClose",
-			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+			Vector2(i * 66.f, 0.f), Vector2((i + 1) * 66.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorIdle");
@@ -378,7 +411,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 7; i < 17; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorIdle",
-			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+			Vector2(i * 66.f, 0.f), Vector2((i + 1) * 66.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("DoorOpen");
@@ -387,7 +420,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 17; i < 23; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("DoorOpen",
-			Vector2(i * 66.f, 0), Vector2((i + 1) * 66.f, 20.f));
+			Vector2(i * 66.f, 0.f), Vector2((i + 1) * 66.f, 20.f));
 	}
 
 
@@ -398,7 +431,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorClose",
-			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 70.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorCloseIdle");
@@ -407,7 +440,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 6; i < 10; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorCloseIdle",
-			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 70.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorOpen");
@@ -416,7 +449,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 6; i >= 0; --i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorOpen",
-			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 70.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("MainDoorOpenIdle");
@@ -425,7 +458,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("MainDoorOpenIdle",
-			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 70.f));
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 70.f));
 	}
 	//가로 23
 
@@ -445,7 +478,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyIdle",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 19.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 19.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyIdleShot");
@@ -455,7 +488,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyIdleShot",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 19.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 19.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyMove");
@@ -465,7 +498,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyMove",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 20.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyMoveShot");
@@ -475,7 +508,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyMoveShot",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 20.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyDaggerAttack");
@@ -484,7 +517,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 12; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyDaggerAttack",
-			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 30.f));
+			Vector2(i * 26.f, 0.f), Vector2((i + 1) * 26.f, 30.f));
 	}
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyDaggerAttack", "Attack", 7);
 
@@ -494,7 +527,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyDaggerIdle",
-			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 30.f));
+			Vector2(i * 26.f, 0.f), Vector2((i + 1) * 26.f, 30.f));
 	}
 
 
@@ -505,7 +538,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyBowIdle",
-			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
+			Vector2(i * 17.f, 0.f), Vector2((i + 1) * 17.f, 13.f));
 	}
 	m_pScene->GetResource()->CreateAnimationSequence2D("SmallEnemyBowAttack");
 	m_pScene->GetResource()->SetAnimationSequence2DTexture("SmallEnemyBowAttack",
@@ -513,7 +546,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 1; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("SmallEnemyBowAttack",
-			Vector2(i * 17.f, 0), Vector2((i + 1) * 17.f, 13.f));
+			Vector2(i * 17.f, 0.f), Vector2((i + 1) * 17.f, 13.f));
 	}
 
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("SmallEnemyBowAttack", "Attack", 2);
@@ -529,7 +562,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("GhostMove",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 20.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 20.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("GhostAttack");
@@ -538,7 +571,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 3; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("GhostAttack",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 20.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 20.f));
 	}
 
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("GhostAttack", "Attack", 2);
@@ -552,7 +585,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BansheeIdle",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 22.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 22.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("BansheeAttack");
@@ -561,7 +594,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BansheeAttack",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 22.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 22.f));
 	}
 
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("BansheeAttack", "Attack", 5);
@@ -572,7 +605,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BansheeBullet",
-			Vector2(i * 13.f, 0), Vector2((i + 1) * 13.f, 16.f));
+			Vector2(i * 13.f, 0.f), Vector2((i + 1) * 13.f, 16.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("BansheeBulletFX");
@@ -581,7 +614,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BansheeBulletFX",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 27.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 27.f));
 	}
 
 
@@ -594,7 +627,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Giant_RedIdle",
-			Vector2(i * 59.f, 0), Vector2((i + 1) * 59.f, 36.f));
+			Vector2(i * 59.f, 0.f), Vector2((i + 1) * 59.f, 36.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Giant_RedAttack");
@@ -603,7 +636,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 10; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Giant_RedAttack",
-			Vector2(i * 59.f, 0), Vector2((i + 1) * 59.f, 41.f));
+			Vector2(i * 59.f, 0.f), Vector2((i + 1) * 59.f, 41.f));
 	}
 
 	m_pScene->GetResource()->AddAnimationSequence2DNotify("Giant_RedAttack", "Attack", 4);
@@ -615,7 +648,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 5; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Giant_RedBullet",
-			Vector2(i * 14.f, 0), Vector2((i + 1) * 14.f, 14.f));
+			Vector2(i * 14.f, 0.f), Vector2((i + 1) * 14.f, 14.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Giant_RedBulletFX");
@@ -624,7 +657,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Giant_RedBulletFX",
-			Vector2(i * 26.f, 0), Vector2((i + 1) * 26.f, 26.f));
+			Vector2(i * 26.f, 0.f), Vector2((i + 1) * 26.f, 26.f));
 	}
 
 
@@ -650,7 +683,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 10; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHead_Attack",
-			Vector2(i * 70.f, 0), Vector2((i + 1) * 70.f, 128.f));
+			Vector2(i * 70.f, 0.f), Vector2((i + 1) * 70.f, 128.f));
 	}
 
 
@@ -669,7 +702,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 18; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("BelialHand_Attack",
-			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
+			Vector2(i * 65.f, 0.f), Vector2((i + 1) * 65.f, 71.f));
 	}
 	//Notify설정할부분
 	//m_pScene->GetResource()->AddAnimationSequence2DNotify("PlayerAttack", "Attack", 8);
@@ -690,7 +723,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 18; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_CircleParticle",
-			Vector2(i * 65.f, 0), Vector2((i + 1) * 65.f, 71.f));
+			Vector2(i * 65.f, 0.f), Vector2((i + 1) * 65.f, 71.f));
 	}
 
 	/*Laser*/
@@ -710,7 +743,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_LaserHead",
-			Vector2(i * 27.f, 0), Vector2((i + 1) * 27.f, 44.f));
+			Vector2(i * 27.f, 0.f), Vector2((i + 1) * 27.f, 44.f));
 	}
 
 	/*Weapon*/
@@ -729,7 +762,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 5; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_WeaponHit",
-			Vector2(i * 22.f, 0), Vector2((i + 1) * 22.f, 51.f));
+			Vector2(i * 22.f, 0.f), Vector2((i + 1) * 22.f, 51.f));
 	}
 	//Bullet
 	m_pScene->GetResource()->CreateAnimationSequence2D("Belial_Bullet");
@@ -738,7 +771,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 1; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_Bullet",
-			Vector2(i * 13.f, 0), Vector2((i + 1) * 13.f, 13.f));
+			Vector2(i * 13.f, 0.f), Vector2((i + 1) * 13.f, 13.f));
 	}
 
 	//Bulletfx
@@ -748,7 +781,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 8; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Belial_BulletFx",
-			Vector2(i * 31.f, 0), Vector2((i + 1) * 31.f, 31.f));
+			Vector2(i * 31.f, 0.f), Vector2((i + 1) * 31.f, 31.f));
 	}
 
 	//Item
@@ -760,7 +793,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 8; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Gold",
-			Vector2(i * 7.f, 0), Vector2((i + 1) * 7.f, 7.f));
+			Vector2(i * 7.f, 0.f), Vector2((i + 1) * 7.f, 7.f));
 	}
 
 
@@ -770,7 +803,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("GoldBullion",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 9.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 9.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("HPFairy");
@@ -779,7 +812,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 16; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("HPFairy",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 20.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 20.f));
 	}
 
 
@@ -789,7 +822,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Torch",
-			Vector2(i * 20.f, 0), Vector2((i + 1) * 20.f, 30.f));
+			Vector2(i * 20.f, 0.f), Vector2((i + 1) * 20.f, 30.f));
 	}
 
 
@@ -803,7 +836,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 4; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Shop",
-			Vector2(i * 49.f, 0), Vector2((i + 1) * 49.f, 48.f));
+			Vector2(i * 49.f, 0.f), Vector2((i + 1) * 49.f, 48.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("Restaurant");
@@ -812,7 +845,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 6; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("Restaurant",
-			Vector2(i * 15.f, 0), Vector2((i + 1) * 15.f, 23.f));
+			Vector2(i * 15.f, 0.f), Vector2((i + 1) * 15.f, 23.f));
 	}
 	
 	/*
@@ -824,7 +857,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 7; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("LifeWave",
-			Vector2(i * 4.f, 0), Vector2((i + 1) * 4.f, 10.f));
+			Vector2(i * 4.f, 0.f), Vector2((i + 1) * 4.f, 10.f));
 	}
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("RestaurantTable");
@@ -833,7 +866,7 @@ void CStartScene::CreateAnimationSequence2D()
 	for (int i = 0; i < 3; ++i)
 	{
 		m_pScene->GetResource()->AddAnimationSequence2DFrame("RestaurantTable",
-			Vector2(i * 191.f, 0), Vector2((i + 1) * 191.f, 130.f));
+			Vector2(i * 191.f, 0.f), Vector2((i + 1) * 191.f, 130.f));
 	}
 
 	/*기타*/
@@ -957,6 +990,8 @@ void CStartScene::CreateSound()
 	m_pScene->GetResource()->LoadSound("BGM", true, "Shop",
 		"bgm/Shop.wav");
 
+	m_pScene->GetResource()->LoadSound("BGM", true, "Foodshop",
+		"bgm/Foodshop.wav");
 	m_pScene->GetResource()->LoadSound("BGM", true, "title",
 		"bgm/title.wav");
 #pragma endregion
@@ -1043,6 +1078,8 @@ void CStartScene::CreateSound()
 	m_pScene->GetResource()->LoadSound("UI", false, "PickUpItem",
 		"player/PickUpItem.wav");
 
+	m_pScene->GetResource()->LoadSound("UI", false, "restaurantEffect",
+		"restaurantEffect.wav");
 
 
 	m_pScene->GetResource()->LoadSound("Object", false, "GetCoin",

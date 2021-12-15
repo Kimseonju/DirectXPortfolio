@@ -21,7 +21,12 @@ CGoldBullion::CGoldBullion(const CGoldBullion& obj)
 CGoldBullion::~CGoldBullion()
 {
 }
-
+void CGoldBullion::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Collider2DHorizon->Enable(bEnable);
+	m_Collider2DVertical->Enable(bEnable);
+}
 void CGoldBullion::Start()
 {
 	CGameObject::Start();

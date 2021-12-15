@@ -24,13 +24,18 @@ CRenderStateManager::~CRenderStateManager()
 bool CRenderStateManager::Init()
 {
 	AddBlendInfo("AlphaBlend");
+	AddBlendInfo("AlphaBlend2", true, D3D11_BLEND_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD, D3D11_BLEND_ONE,
+		D3D11_BLEND_ZERO, D3D11_BLEND_OP_MAX, D3D11_COLOR_WRITE_ENABLE_ALL);
 
 	AddBlendInfo("UIAlphaBlend");
 
 	if (!CreateBlendState("UIAlphaBlend", false))
 		return false;
 
-	if (!CreateBlendState("AlphaBlend", false))
+	if (!CreateBlendState("AlphaBlend", true))
+		return false;
+
+	if (!CreateBlendState("AlphaBlend2", false))
 		return false;
 
 	if (!CreateDepthStencilState("DepthDisable", false))

@@ -63,6 +63,7 @@ bool CFirefly::Init()
 		CMaterial* Material = m_SpriteBlend->GetMaterial(0);
 		Material->AddTexture("FireFlyBlend", TEXT("object/FireFlyBlend.png"));
 		Material->SetBaseColor(231.f / 255.f, 102.f / 255.f, 229.f / 255.f, 0.4f);
+		Material->SetTransparency(true, true);
 	}
 
 

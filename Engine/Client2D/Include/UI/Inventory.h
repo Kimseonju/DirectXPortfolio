@@ -34,6 +34,10 @@ public:
     virtual CInventory* Clone();
 public:
     class CItem* GetWeapon() const;
+    std::vector<CInventoryButton*>& GetvecAccButton()
+    {
+        return m_Accs;
+    }
     Select_Weapon GetCurrentNumber()
     {
         return m_Current;

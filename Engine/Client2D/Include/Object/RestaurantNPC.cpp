@@ -18,6 +18,14 @@ CRestaurantNPC::CRestaurantNPC(const CRestaurantNPC& obj)
 CRestaurantNPC::~CRestaurantNPC()
 {
 }
+void CRestaurantNPC::Enable(bool bEnable)
+{
+	CGameObject::Enable(bEnable);
+	m_Collider2D->Enable(bEnable);
+	m_Sprite->Enable(bEnable);
+	if (!bEnable)
+		m_KeyUIObject->Enable(false);
+}
 
 void CRestaurantNPC::Start()
 {

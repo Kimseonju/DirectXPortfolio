@@ -36,6 +36,9 @@ bool CStage1MapEffect::Init()
 	m_Particle->SetPivot(0.5f, 0.5f, 0.f);
 	m_Particle->SetSpawnTime(0.05f);
 	m_Particle->SetTwinkleEnable(true);
+
+	CSharedPtr<CMaterial>   Mtrl = m_Particle->GetMaterial(0);
+	Mtrl->SetTransparency(true, true);
 	//m_Particle->SetGravityEnable(true);
 	SetRootComponent(m_Particle);
 

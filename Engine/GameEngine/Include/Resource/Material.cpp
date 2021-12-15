@@ -83,28 +83,47 @@ CMaterial::~CMaterial()
 	SAFE_DELETE(m_pCBuffer);
 }
 
-void CMaterial::SetTransparency(bool bTransparency)
+void CMaterial::SetTransparency(bool bTransparency, bool check)
 {
 	m_bTransparency = bTransparency;
 
 	if (!m_bTransparency)
+	{
 		m_RenderState[RST_Blend] = nullptr;
+	}
 
 	else
-		m_RenderState[RST_Blend] = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend");
+	{
+		if (check)
+		{
+			m_RenderState[RST_Blend] = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend2");
+		}
+		else
+		{
+			m_RenderState[RST_Blend] = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend");
+		}
+	}
 }
 
 void CMaterial::SetBaseColor(const Vector4& Color)
 {
 	m_BaseColor = Color;
 
+	if (m_BaseColor.w < 1.f)
+	{
+		SetTransparency(true, true);
+	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
+
 }
 
 void CMaterial::SetBaseColor(float r, float g, float b, float a)
 {
 	m_BaseColor = Vector4(r, g, b, a);
-
+	if (a < 1.f)
+	{
+		SetTransparency(true, true);
+	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
 }
 
@@ -113,6 +132,10 @@ void CMaterial::SetBaseColor(unsigned char r, unsigned char g,
 {
 	m_BaseColor = Vector4(r / 255.f, g / 255.f, b / 255.f, a / 255.f);
 
+	if (m_BaseColor.w < 1.f)
+	{
+		SetTransparency(true, true);
+	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
 }
 
@@ -787,6 +810,13 @@ void CMaterial::ResetMaterialEmptyShader()
 	{
 		if (m_RenderState[i])
 			m_RenderState[i]->ResetState();
+	}
+
+	size_t	Size = m_vecTexture.size();
+	for (size_t i = 0; i < Size; ++i)
+	{
+		m_vecTexture[i]->pTexture->ResetShader(m_vecTexture[i]->Register,
+			m_vecTexture[i]->ShaderType);
 	}
 
 	auto	iter = m_ResetMaterialList.begin();

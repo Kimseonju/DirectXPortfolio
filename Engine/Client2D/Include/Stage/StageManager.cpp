@@ -57,6 +57,8 @@ void CStageManager::Init()
 	m_BGMSound[(int)StageType::Boss] = Sound;
 
 
+	Sound = m_pScene->GetResource()->FindSound("Foodshop");
+	m_BGMSound[(int)StageType::Restaurant] = Sound;
 }
 
 void CStageManager::Start()
@@ -494,11 +496,7 @@ bool CStageManager::CreateStage_Special()
 
 			if (m_RestaurantPos.x == x && m_RestaurantPos.y == y)
 				continue;
-			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-			{
-				vecStagePos.push_back(Vector2{ (float)x,(float)y });
-			}
+			
 
 
 
@@ -508,11 +506,6 @@ bool CStageManager::CreateStage_Special()
 				vecStagePos.push_back(Vector2{ (float)x,(float)y });
 			}
 
-			else if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] &&m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
-			{
-				vecStagePos.push_back(Vector2{ (float)x,(float)y });
-			}
 			else if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && !m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
@@ -991,6 +984,9 @@ void CStageManager::BGMSoundUpdate(StageType Type)
 	case StageType::Boss:
 		break;
 
+	case StageType::Restaurant:
+		m_BGMSound[(int)Type]->Play();
+		break;
 	}
 }
 void CStageManager::BGMBossSoundPlay()

@@ -59,7 +59,7 @@ bool CBasicTresure::Init()
 	m_Sprite->AddChild(m_Body);
 
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
-	m_Sprite->SetWorldScale(43.f, 30.f, 0.f);
+	m_Sprite->SetWorldScale(43.f, 30.f, 1.f);
 	CMaterial* Material=m_Sprite->GetMaterial(0);
 	Material->AddTexture("BossTresureClosed", TEXT("NPC/BossTresureClosed.png"));
 
@@ -165,14 +165,12 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 				CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 				Gold->SetWorldPos(GetWorldPos());
 				Gold->Drop((float)GetRandom(0, 180), 50.f);
-				CurStage->PushObject(Gold);
 			}
 			for (int i = 0; i < 5; ++i)
 			{
 				CGoldBullion* GoldBullion = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
 				GoldBullion->SetWorldPos(GetWorldPos());
 				GoldBullion->Drop((float)GetRandom(0, 180), 50.f);
-				CurStage->PushObject(GoldBullion);
 			}
 
 

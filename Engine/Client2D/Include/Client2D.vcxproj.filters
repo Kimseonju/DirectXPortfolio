@@ -256,6 +256,9 @@
     <Filter Include="02. Object\EffectAndParticle\CosmosSwordEffect">
       <UniqueIdentifier>{5d32639f-4833-41c9-a0f2-35942cec23e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Item\Acc">
+      <UniqueIdentifier>{34698f72-3d2c-4d1e-84a0-f2d0e47f9e16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -714,8 +717,20 @@
     <ClCompile Include="Object\CosmosSwordEffect.cpp">
       <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
     </ClCompile>
-    <ClCompile Include="Object\CosmosSwordSkillEffect.cpp">
-      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
+    <ClCompile Include="Object\CosmosSwordBullet.cpp">
+      <Filter>02. Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\DaisyRing.cpp">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MiniEarth.cpp">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Taana.cpp">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TaanaShieldEffect.cpp">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1154,11 +1169,23 @@
     <ClInclude Include="Object\CosmosSword.h">
       <Filter>02. Object\Item\Weapon\CosmosSword</Filter>
     </ClInclude>
-    <ClInclude Include="Object\CosmosSwordSkillEffect.h">
-      <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
-    </ClInclude>
     <ClInclude Include="Object\CosmosSwordEffect.h">
       <Filter>02. Object\EffectAndParticle\CosmosSwordEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CosmosSwordBullet.h">
+      <Filter>02. Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\DaisyRing.h">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MiniEarth.h">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Taana.h">
+      <Filter>02. Object\Item\Acc</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TaanaShieldEffect.h">
+      <Filter>02. Object\EffectAndParticle\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

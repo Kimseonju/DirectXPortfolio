@@ -57,6 +57,8 @@ public:
         m_Force.y = 0.f;
         m_Dash = true;
         m_Jump = true;
+        m_Force.x += cosf(m_DashRadian)  * 200.f;
+        m_Force.y += sinf(m_DashRadian)  * 200.f;
     }
     void StopDash()
     {
@@ -64,8 +66,6 @@ public:
     }
     void Dashing(float DeltaTime)
     {
-        m_Force.x += cosf(m_DashRadian) * 40.f * DeltaTime * m_Speed;
-        m_Force.y += sinf(m_DashRadian) * 40.f * DeltaTime * m_Speed;
     }
 
     void SetForce2D(float Angle, float Power)

@@ -53,7 +53,6 @@ protected:
     bool        m_bHorizontalReverse2D;
     bool		m_PaperBurnEnable;
     bool		m_DistortionEnable;
-
     std::list<MaterialCallback*>	m_SetMaterialList;
     std::list<MaterialCallback*>	m_ResetMaterialList;
 
@@ -62,7 +61,6 @@ public:
     {
         return m_vecTexture[Index];
     }
-
 
 public:
     void SetScene(class CScene* pScene)
@@ -76,7 +74,7 @@ public:
     }
 public:
 
-    void SetTransparency(bool bTransparency);
+    void SetTransparency(bool bTransparency, bool check);
     void SetOpacity(float Opacity)
     {
         m_Opacity = Opacity;

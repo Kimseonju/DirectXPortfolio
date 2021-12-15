@@ -64,5 +64,8 @@ void CEffectObject::Animation2DNotify(const std::string& Name)
 
 void CEffectObject::AnimationFrameEnd(const std::string& Name)
 {
+	m_Sprite->SetWorldScale(0.f, 0.f, 0.f);
+	Enable(false);
+	m_Sprite->Enable(false);
 	Active(false);
 }

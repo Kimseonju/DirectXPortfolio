@@ -131,28 +131,16 @@ void CTestMainScene::CreateMaterial()
 
 
 	m_pScene->GetResource()->CreateMaterial("StageMapMaterial");
-	m_pScene->GetResource()->AddMaterialTexture("StageMapMaterial", "StageMapMaterial",
-		TEXT("Map/StageMapEffect.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("StageMapMaterial", true);
 
 
 	m_pScene->GetResource()->CreateMaterial("DoorParticle");
-	m_pScene->GetResource()->AddMaterialTexture("DoorParticle", "DoorParticle",
-		TEXT("Map/MapEffect.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("DoorParticle", true);
 	
 
 	m_pScene->GetResource()->CreateMaterial("BossDieParticle");
-	m_pScene->GetResource()->AddMaterialTexture("BossDieParticle", "BossDieParticle",
-		TEXT("Boss/Effect/Finish.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("BossDieParticle", true);
 
 
 
 	m_pScene->GetResource()->CreateMaterial("BossBackParticle");
-	m_pScene->GetResource()->AddMaterialTexture("BossBackParticle", "BossBackParticle",
-		TEXT("boss/Belial/Back/particle.png"));
-	m_pScene->GetResource()->SetMaterialTransparency("BossBackParticle", true);
 	//юс╫ц
 	//m_pScene->GetResource()->CreateMaterial("MainMap");
 	//m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
@@ -201,6 +189,14 @@ void CTestMainScene::CreateAnimationSequence2D()
 	m_pScene->GetResource()->CreateAnimationSequence2D("MetalBoomerangEffect");
 
 	m_pScene->GetResource()->CreateAnimationSequence2D("MetalBoomerangBullet");
+
+	//CosmosSword
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("CosmosSwordIdle");
+
+	m_pScene->GetResource()->CreateAnimationSequence2D("CosmosSwordEffect");
+	m_pScene->GetResource()->CreateAnimationSequence2D("TAANAIdle");
+	m_pScene->GetResource()->CreateAnimationSequence2D("TAANAShield");
 	/*
 	ObjectDieEffect
 	*/
@@ -380,85 +376,18 @@ void CTestMainScene::CreateParticle()
 	CMaterial* StageMapMaterial = m_pScene->GetResource()->FindMaterial("StageMapMaterial");
 
 	m_pScene->GetResource()->CreateParticle("StageMapParticle");
-	m_pScene->GetResource()->SetParticleUpdateShader("StageMapParticle", "ParticleRandomScaleUpdateShader");
-	m_pScene->GetResource()->SetParticleMaterial("StageMapParticle", StageMapMaterial);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("StageMapParticle", 1000);
-	m_pScene->GetResource()->SetParticleStartColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndColor("StageMapParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleStartScale("StageMapParticle", 4.f, 4.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("StageMapParticle", 4.f, 4.f, 1.f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("StageMapParticle", 2.f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("StageMapParticle", 2.f);
-	m_pScene->GetResource()->SetParticleRange("StageMapParticle", 1000.f, 1000.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("StageMapParticle", 10.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("StageMapParticle", 10.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("StageMapParticle", true);
-	m_pScene->GetResource()->SetParticle2D("StageMapParticle", true);
-	//m_pScene->GetResource()->SetParticleMoveDir("StageMapParticle", 0.f, 1.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveAngle("StageMapParticle", 0.f, 0.f, 360.f);
 
 	CMaterial* StageMapMateria1l = m_pScene->GetResource()->FindMaterial("DoorParticle");
 
 	m_pScene->GetResource()->CreateParticle("DoorParticle");
-	m_pScene->GetResource()->SetParticleUpdateShader("DoorParticle", "ParticleDirUpdateShader");
-	m_pScene->GetResource()->SetParticleMaterial("DoorParticle", StageMapMateria1l);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("DoorParticle", 500);
-	m_pScene->GetResource()->SetParticleStartColor("DoorParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndColor("DoorParticle", 1.f, 1.f, 1.f, 0.7f);
-	m_pScene->GetResource()->SetParticleStartScale("DoorParticle", 5.f, 5.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("DoorParticle", 5.f, 5.f, 1.f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("DoorParticle", 2.f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("DoorParticle", 2.f);
-	m_pScene->GetResource()->SetParticleRange("DoorParticle", 100.f, 100.f, 0.f);
-	m_pScene->GetResource()->SetParticleMinSpeed("DoorParticle", 10.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("DoorParticle", 10.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("DoorParticle", true);
-	m_pScene->GetResource()->SetParticle2D("DoorParticle", true);
-	m_pScene->GetResource()->SetParticleMoveDir("DoorParticle", 0.f, 1.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveAngle("DoorParticle", 0.f, 0.f, 90.f);
 
 	CMaterial* BossDieParticle = m_pScene->GetResource()->FindMaterial("BossDieParticle");
 
 	m_pScene->GetResource()->CreateParticle("BossDieParticle");
-	m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleAnimation2DShader");
-	//m_pScene->GetResource()->SetParticleUpdateShader("BossDieParticle", "ParticleDirUpdateShader");
-	m_pScene->GetResource()->SetParticleMaterial("BossDieParticle", BossDieParticle);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("BossDieParticle", 500);
-	m_pScene->GetResource()->SetParticleStartColor("BossDieParticle", 1.f,1.f,1.f,1.f);
-	m_pScene->GetResource()->SetParticleEndColor("BossDieParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleStartScale("BossDieParticle", 40.f, 40.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("BossDieParticle", 40.f, 40.f, 1.f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("BossDieParticle", 10.5f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("BossDieParticle", 10.8f);
-	m_pScene->GetResource()->SetParticleRange("BossDieParticle", 200.f, 200.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("BossDieParticle", false);
-	m_pScene->GetResource()->SetParticle2D("BossDieParticle", true);
 
 	CMaterial* BossBackParticle = m_pScene->GetResource()->FindMaterial("BossBackParticle");
 
 	m_pScene->GetResource()->CreateParticle("BossBackParticle");
-	m_pScene->GetResource()->SetParticleUpdateShader("BossBackParticle", "ParticleAnimation2DShader");
-	m_pScene->GetResource()->SetParticleMaterial("BossBackParticle", BossBackParticle);
-	m_pScene->GetResource()->SetParticleMaxParticleCount("BossBackParticle", 100);
-	m_pScene->GetResource()->SetParticleStartColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndColor("BossBackParticle", 1.f, 1.f, 1.f, 1.f);
-	m_pScene->GetResource()->SetParticleStartScale("BossBackParticle", 30.f, 30.f, 1.f);
-	m_pScene->GetResource()->SetParticleEndScale("BossBackParticle", 30.f, 30.f, 1.f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMin("FlameParticle", 0.5f);
-	//m_pScene->GetResource()->SetParticleLifeTimeMax("FlameParticle", 0.8f);
-	m_pScene->GetResource()->SetParticleMinSpeed("BossBackParticle", 50.f);
-	m_pScene->GetResource()->SetParticleMaxSpeed("BossBackParticle", 50.f);
-	m_pScene->GetResource()->SetParticleLifeTimeMin("BossBackParticle", 10.5f);
-	m_pScene->GetResource()->SetParticleLifeTimeMax("BossBackParticle", 10.8f);
-	m_pScene->GetResource()->SetParticleRange("BossBackParticle", 1.f, 1.f, 0.f);
-	m_pScene->GetResource()->SetParticleMoveEnable("BossBackParticle", true);
-	m_pScene->GetResource()->SetParticle2D("BossBackParticle", true);
 }
 
 void CTestMainScene::CreateSound()
@@ -476,6 +405,8 @@ void CTestMainScene::CreateSound()
 
 	m_pScene->GetResource()->LoadSound("BGM", true, "title",
 		"bgm/title.wav");
+	m_pScene->GetResource()->LoadSound("BGM", true, "Foodshop",
+		"bgm/Foodshop.wav");
 #pragma endregion
 
 #pragma region BossSoud
@@ -567,6 +498,9 @@ void CTestMainScene::CreateSound()
 		"object/ItemInputInventory.wav");
 	m_pScene->GetResource()->LoadSound("UI", false, "ItemOutInventory",
 		"object/ItemOutInventory.wav");
+
+	m_pScene->GetResource()->LoadSound("UI", false, "restaurantEffect",
+		"restaurantEffect.wav");
 
 	m_pScene->GetResource()->LoadSound("Object", false, "GetGold",
 		"object/GetGold.wav");

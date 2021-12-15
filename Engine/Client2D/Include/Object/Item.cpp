@@ -107,6 +107,10 @@ void CItem::Animation2DNotify(const std::string& Name)
 {
 }
 
+void CItem::ItemUpdate(float DeltaTime)
+{
+}
+
 void CItem::SetStatus(const std::string& Name)
 {
 	CBasicStatus* Status = CObjectStatusManager::GetInst()->FindStatus(Name);

@@ -25,6 +25,7 @@ bool CBelialWeaponCharge::Init()
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
 	SetRootComponent(m_Sprite);
 	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default2);
 	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
 	m_Animation2D->SetIdleAnimation2D("Belial_WeaponCharge");
 	m_Sprite->SetRelativeScale(65.f, 21.f,1.f);

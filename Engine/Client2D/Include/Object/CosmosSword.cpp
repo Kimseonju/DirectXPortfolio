@@ -9,18 +9,20 @@
 #include "ShortSwordEffectObject.h"
 #include "PlayerAttack.h"
 #include <Scene/SceneResource.h>
+#include "CosmosSwordEffect.h"
+#include "CosmosSwordBullet.h"
 CCosmosSword::CCosmosSword()
 {
 	SetItemTexture("CosmosSwordIcon", TEXT("Weapon/Melee/CosmosSwordIcon.png"));
 	m_Type = ITEM_TYPE::Weapon_One_Hand;
 	m_Rank = ITEM_RANK::Normal;
-	SetStatus("CosmosSword");
+	SetStatus("ShortSword");
 	m_ItemName = TEXT("우주검");
 	m_ItemText = TEXT("\"이 검이 내뿜는 우주의 신비한 빛.\"");
 	m_Skill = true;
 	m_SkillDelayMax = 5.f;
 	m_SkillDelay = 5.f;
-	SetSKillTexture("cosmosSwordSkill");
+	SetSKillTexture("CosmosSwordFXIcon", TEXT("Weapon/Melee/CosmosSwordFXIcon.png"));
 }
 
 CCosmosSword::CCosmosSword(const CCosmosSword& obj) :
@@ -45,9 +47,9 @@ bool CCosmosSword::Init()
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 
 	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
-	SpriteMtrl->AddTexture("ShortSword", TEXT("Weapon/Melee/ShortSword.png"));
-	//m_Sprite->CreateAnimation2D<>()
-
+	m_Sprite->CreateAnimation2D<CAnimation2D_FSM>();
+	m_Animation2D = (CAnimation2D_FSM*)m_Sprite->GetAnimation2D();
+	m_Animation2D->SetIdleAnimation2D("CosmosSwordIdle", true);
 	return true;
 }
 
@@ -88,8 +90,8 @@ bool CCosmosSword::Attack(float Angle)
 	{
 		return false;
 	}
-
-	CCosmosSwordEffectObject* obj = m_pScene->SpawnObject<CCosmosSwordEffectObject>("EffectAttack");
+	
+	CCosmosSwordEffect* obj = m_pScene->SpawnObject<CCosmosSwordEffect>("CosmosSwordEffect");
 	if (m_Owner)
 	{
 		obj->SetWorldPos(m_Owner->GetWorldPos());
@@ -114,6 +116,10 @@ bool CCosmosSword::SkillAttack(float Angle)
 		return false;
 	}
 	//스킬사용!
+	CCosmosSwordBullet* pCosmosSwordBullet = m_pScene->SpawnObject<CCosmosSwordBullet>("CCosmosSwordBullet");
+	pCosmosSwordBullet->SetWorldPos(GetWorldPos());
+	pCosmosSwordBullet->SetRelativeRotationZ(Angle - 90.f);
+
 
 
 	return true;

@@ -20,11 +20,11 @@ protected:
 	CSharedPtr<CAnimation2D> m_Animation2D;
 	CSharedPtr<CColliderBox2D> m_ColliderBox2D;
 	CSharedPtr<CGameObject> m_SpawnObject;
+
 	class CKeyboardUIObject* m_KeyUIObject;
 	bool m_Spawn;
 	Vector2 m_NextGateStagePos;
-protected:
-public:
+
 public:
 	virtual void Enable(bool bEnable);
 	virtual void Start();

@@ -130,7 +130,7 @@ void ParticleAnimation2D(uint3 ThreadID : SV_DispatchThreadID)
 
 		float	RatioZ = ConvertY / (g_Resolution.y * 2.f);
 			g_ParticleArray[ThreadID.x].WorldPos.z =
-				(0.99999f - g_ParticleDefaultZ) * RatioZ + 0.7f;
+				(0.99999f - g_ParticleDefaultZ) * RatioZ + 0.6f;
 
 		g_ParticleArray[ThreadID.x].FallTime = 0.f;
 		g_ParticleArray[ThreadID.x].FallStartY =
@@ -404,7 +404,9 @@ void ParticleDirUpdate(uint3 ThreadID : SV_DispatchThreadID)
 		}
 
 		if (g_ParticleArray[ThreadID.x].Alive == 0)
+		{
 			return;
+		}
 
 		// 살려야 하는 파티클이므로 파티클 정보를 계산한다.
 		float	key = ThreadID.x / (float)g_ParticleSpawnCountMax;
@@ -559,7 +561,13 @@ void ParticleRandomScaleUpdate(uint3 ThreadID : SV_DispatchThreadID)
 		}
 
 		if (g_ParticleArray[ThreadID.x].Alive == 0)
+		{
+
+			g_ParticleArray[ThreadID.x].Scale.x = 0.f;
+			g_ParticleArray[ThreadID.x].Scale.y = 0.f;
+			g_ParticleArray[ThreadID.x].Scale.z = 0.f;
 			return;
+		}
 
 		// 살려야 하는 파티클이므로 파티클 정보를 계산한다.
 		float	key = ThreadID.x / (float)g_ParticleSpawnCountMax;

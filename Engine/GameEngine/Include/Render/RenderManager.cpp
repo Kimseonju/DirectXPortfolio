@@ -112,7 +112,7 @@ bool CRenderManager::Init()
 		return false;
 
 	m_DepthDisable = CRenderStateManager::GetInst()->FindRenderState("DepthDisable");
-	m_AlphaBlend = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend");
+	m_AlphaBlend = CRenderStateManager::GetInst()->FindRenderState("AlphaBlend2");
 	m_UIAlphaBlend = CRenderStateManager::GetInst()->FindRenderState("UIAlphaBlend");
 
 

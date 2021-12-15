@@ -54,6 +54,8 @@ bool CClientManager::Init()
     CInput::GetInst()->CreateKey("StatusUI", 'T');
     CInput::GetInst()->CreateKey("RestaurantUI", 'Y');
     CInput::GetInst()->CreateKey("ESCUI", VK_ESCAPE);
+    CInput::GetInst()->CreateKey("Skill", 'Q');
+    CInput::GetInst()->CreateKey("CollisionRender", '1');
     
     CInput::GetInst()->CreateKey("Skill1", '1');
     CInput::GetInst()->CreateKey("Skill2", '2');
@@ -208,7 +210,7 @@ bool CClientManager::Init()
     CCollisionManager::GetInst()->SetProfileChannelState("Item", Collision_Channel::Player,
         Collision_Interaction::Block);
     CSceneManager::GetInst()->SetSceneMode<CLoadingScene>();
-    CEngine::GetInst()->SetCollisionRender(true);
+    CEngine::GetInst()->SetCollisionRender(false);
     //CSceneManager::GetInst()->SetSceneMode<CEndingScene>();
     
     CreateMouse();
@@ -219,8 +221,8 @@ bool CClientManager::Init()
 void CClientManager::CreateMouse()
 {
     m_Mouse = CEngine::GetInst()->CreateMouseWidget<CBasicMouse>("Mouse");
-    m_Mouse->SetTexture("BasicCursor", TEXT("UI/Cursor/BasicCursor.png"));
     m_Mouse->SetTexture("ShootingCursor", TEXT("UI/Cursor/ShootingCursor.png"));
+    m_Mouse->SetTexture("BasicCursor", TEXT("UI/Cursor/BasicCursor.png"));
     m_Mouse->SetSize(63.f, 63.f);
     CGlobalValue::MainMouse = m_Mouse;
 }

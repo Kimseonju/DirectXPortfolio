@@ -1,6 +1,7 @@
 #pragma once
 #include <math.h>
 #include <GameEngine.h>
+#include <sstream>
 class CPlayer;
 class CBasicMouse;
 class CGlobalValue
@@ -12,6 +13,15 @@ public:
     static float Lerp2DMax(float _Start, float _End, float _Ratio);
 
     static float Lerp2D(float _Start, float _End, float _Ratio);
+
+    template <typename T>
+    static std::wstring to_wstring_with_precision(const T a_value, const int n = 2)
+    {
+        std::wstringstream out;
+        out.precision(n);
+        out << std::fixed << a_value;
+        return out.str();
+    }
 };
 
 enum Weapons

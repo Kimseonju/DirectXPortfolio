@@ -1,0 +1,16 @@
+Object,MiniEarth
+HP,0
+HPMAX,20
+Dash,0
+DashMax,0
+AttackSpeed,0
+ReloadSpeed,0
+MoveSpeed,0
+Damage,0
+DamageMax,0
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,0
+Price,2000

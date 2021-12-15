@@ -72,7 +72,8 @@ enum Render_Type_2D
     RT2D_Back2,      // z : 0.7f ~ 0.99999f
     RT2D_Default,   // z : 0.3f ~ 0.69999f
     RT2D_Default2,
-    RT2D_Particle,  // z : 0.f ~ 0.29999f
+    RT2D_Particle,
+    RT2D_Particle2, // z : 0.f ~ 0.29999f
     RT2D_End
 };
 

@@ -1,0 +1,16 @@
+Object,DaisyRing
+HP,0
+HPMAX,0
+Dash,0
+DashMax,0
+AttackSpeed,0
+ReloadSpeed,0
+MoveSpeed,0
+Damage,100
+DamageMax,0
+Armor,0
+Critical,0
+Evasion,0
+Magazine,0
+MagazineMax,10
+Price,5000

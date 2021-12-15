@@ -116,6 +116,7 @@ void CSpawnEffect::Spawn()
 		{
 			Stage->PushEnemy(m_Obj);
 			m_Obj->SetWorldPos(2000.f, 2000.f, 0.f);
+			m_Obj->SetStartTimer(0.5f);
 			m_pScene->GetResource()->FindSound("SpawnEnemy")->Play();
 		}
 	}

@@ -45,6 +45,7 @@ bool CPlayerDash::Init()
 	m_Sprite->SetWorldScale(19.f, 22.f, 0.f);
 	CSharedPtr<CMaterial>   SpriteMtrl = m_Sprite->GetMaterial(0);
 	SpriteMtrl->AddTexture("DashTexture", TEXT("Effect/Dash/Shadow/base_player_jump_shadow.png"));
+	SpriteMtrl->SetTransparency(true, true);
 	return true;
 }
 

@@ -23,11 +23,11 @@ bool CCosmosSwordEffect::Init()
 	if (!CEffectObject::Init())
 		return false;
 
-	m_Sprite->SetRelativeScale(Vector3(14.f, 20.f, 1.f));
+	m_Sprite->SetRelativeScale(Vector3(47.f, 60.f, 1.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 
-	m_Animation2D->SetIdleAnimation2D("ShortSwordEffect", false);
-	m_Animation2D->SetSequencePlayRate("ShortSwordEffect", 4.f);
+	m_Animation2D->SetIdleAnimation2D("CosmosSwordEffect", false);
+	m_Animation2D->SetSequencePlayRate("CosmosSwordEffect", 4.f);
 	m_Animation2D->SetFrameEndFunction<CCosmosSwordEffect>(this, &CEffectObject::AnimationFrameEnd);
 	return true;
 }

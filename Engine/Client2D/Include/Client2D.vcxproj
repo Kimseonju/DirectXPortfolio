@@ -194,8 +194,9 @@
     <ClCompile Include="Object\BossTresure.cpp" />
     <ClCompile Include="Object\Cloud.cpp" />
     <ClCompile Include="Object\CosmosSword.cpp" />
+    <ClCompile Include="Object\CosmosSwordBullet.cpp" />
     <ClCompile Include="Object\CosmosSwordEffect.cpp" />
-    <ClCompile Include="Object\CosmosSwordSkillEffect.cpp" />
+    <ClCompile Include="Object\DaisyRing.cpp" />
     <ClCompile Include="Object\DoorEffect.cpp" />
     <ClCompile Include="Object\EffectObject.cpp" />
     <ClCompile Include="Object\EndingCamera.cpp" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Object\MetalBoomerang.cpp" />
     <ClCompile Include="Object\MetalBoomerangBullet.cpp" />
     <ClCompile Include="Object\MetalBoomerangEffectObject.cpp" />
+    <ClCompile Include="Object\MiniEarth.cpp" />
     <ClCompile Include="Object\Monster.cpp" />
     <ClCompile Include="Object\ObjectDieEffectObject.cpp" />
     <ClCompile Include="Object\Particle2D.cpp" />
@@ -256,6 +258,8 @@
     <ClCompile Include="Object\Stage1MapEffect.cpp" />
     <ClCompile Include="Object\StartScene\BackGround.cpp" />
     <ClCompile Include="Object\StartScene\Bird.cpp" />
+    <ClCompile Include="Object\Taana.cpp" />
+    <ClCompile Include="Object\TaanaShieldEffect.cpp" />
     <ClCompile Include="Object\Teemo.cpp" />
     <ClCompile Include="Object\TempBullet.cpp" />
     <ClCompile Include="Object\TestParticle.cpp" />
@@ -347,8 +351,9 @@
     <ClInclude Include="Object\BossTresure.h" />
     <ClInclude Include="Object\Cloud.h" />
     <ClInclude Include="Object\CosmosSword.h" />
+    <ClInclude Include="Object\CosmosSwordBullet.h" />
     <ClInclude Include="Object\CosmosSwordEffect.h" />
-    <ClInclude Include="Object\CosmosSwordSkillEffect.h" />
+    <ClInclude Include="Object\DaisyRing.h" />
     <ClInclude Include="Object\DoorEffect.h" />
     <ClInclude Include="Object\EffectObject.h" />
     <ClInclude Include="Object\EndingCamera.h" />
@@ -378,6 +383,7 @@
     <ClInclude Include="Object\MetalBoomerang.h" />
     <ClInclude Include="Object\MetalBoomerangBullet.h" />
     <ClInclude Include="Object\MetalBoomerangEffectObject.h" />
+    <ClInclude Include="Object\MiniEarth.h" />
     <ClInclude Include="Object\Monster.h" />
     <ClInclude Include="Object\ObjectDieEffectObject.h" />
     <ClInclude Include="Object\Particle2D.h" />
@@ -404,6 +410,8 @@
     <ClInclude Include="Object\Stage1MapEffect.h" />
     <ClInclude Include="Object\StartScene\BackGround.h" />
     <ClInclude Include="Object\StartScene\Bird.h" />
+    <ClInclude Include="Object\Taana.h" />
+    <ClInclude Include="Object\TaanaShieldEffect.h" />
     <ClInclude Include="Object\Teemo.h" />
     <ClInclude Include="Object\TempBullet.h" />
     <ClInclude Include="Object\TestParticle.h" />

@@ -59,7 +59,7 @@ bool CTorchLight::Init()
 	//º¸½º¿ë
 	//Material->SetBaseColor(255.f /255.f, 0.f / 255.f, 255.f / 255.f, 100.f / 255.f);
 	Material->SetBaseColor(227.f / 255.f, 79.f / 255.f, 64.f / 255.f, 80.f / 255.f);
-	Material->SetTransparency(true);
+	Material->SetTransparency(true, true);
 
 	//Material->AddTexture("TorchLightt", TEXT("object/torch/torchEffect.png"));
 

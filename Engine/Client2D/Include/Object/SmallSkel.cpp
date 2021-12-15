@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "SkelSmallDagger.h"
 #include "Gold.h"
+#include "../Stage/StageManager.h"
+#include "../Stage/Stage.h"
 CSmallSkel::CSmallSkel():
 	m_PlayerFind(false)
 {
@@ -142,11 +144,13 @@ void CSmallSkel::AnimationFrameEnd(const std::string& Name)
 void CSmallSkel::DropGold()
 {
 	int DropCount = GetRandom(0, 4);
+	CStage* CurStage = CStageManager::GetInst()->GetCurStage();
 	for (int i = 0; i < DropCount; ++i)
 	{
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
 		Gold->Drop((float)GetRandom(0, 180), 50.f);
+		CurStage->PushObject(Gold);
 	}
 }

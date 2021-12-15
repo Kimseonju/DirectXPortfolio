@@ -114,9 +114,7 @@ bool CBelial::Init()
 
 	m_BackParticle->SetParticle("BossBackParticle");
 	Material = m_BackParticle->GetMaterial(0);
-	Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha);
-	Material->SetOpacity(1.f);
-	//m_Particle->SetParticle("DoorParticle");
+	Material->Enable(false);
 
 	m_BackParticle->SetRelativePos(Vector3(0.f, 0.f, 0.f));
 	m_BackParticle->SetPivot(0.5f, 0.5f, 0.f);
@@ -229,6 +227,7 @@ void CBelial::AttackSword(float DeltaTime)
 {
 	Vector3 Pos = GetWorldPos();
 	Pos.y += 50.f;
+	Pos.x -= 50.f;
 	if (m_BelialWeapon.size() < 5 && m_SwordSpawn==false)
 	{	
 		m_SwordSpawnTimer += DeltaTime;
@@ -372,8 +371,6 @@ void CBelial::AlphaUpdate(float DeltaTime)
 		Material->SetBaseColor(1.f, 1.f, 1.f, m_Alpha); 
 
 		Material = m_BackParticle->GetMaterial(0);
-		Material->SetOpacity(m_Alpha);
-		
 		m_LeftHand->SetOpaacity(m_Alpha);
 		m_RightHand->SetOpaacity(m_Alpha);
 

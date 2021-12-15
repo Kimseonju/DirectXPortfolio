@@ -14,7 +14,10 @@
 #include <Scene/SceneResource.h>
 
 CWeaponUI::CWeaponUI() :
-	m_SelectWeapon(Select_Weapon::Left)
+	m_SelectWeapon(Select_Weapon::Left),
+	m_InventoryUI(nullptr),
+	m_FinishChange(true),
+	m_MoveRatio(-1.f)
 {
 }
 
@@ -126,6 +129,28 @@ bool CWeaponUI::Init()
 	m_WeaponMagazineMax2->SetAlignH(TEXT_ALIGN_H::Center);
 	m_InventoryUI = CUIManager::GetInst()->GetInventory();
 	m_SelectWeapon=m_InventoryUI->GetCurrentNumber();
+
+
+	m_SkillBaseUI = CreateWidget<CImage>("SkillBaseUI");
+	m_SkillBaseUI->SetSize(80.f, 80.f);
+	m_SkillBaseUI->SetTexture("SkillUI", TEXT("UI/SkillUI.png"));
+	m_SkillBaseUI->SetPos(1000.f, 50.f);
+	m_SkillBaseUI->SetCollision(false);
+	m_SkillBaseUI->SetZOrder(0);
+	m_SkillImageUI = CreateWidget<CImage>("SkillImageUI");
+	m_SkillImageUI->SetSize(80.f, 80.f);
+	m_SkillImageUI->SetTexture("SkillUI", TEXT("UI/SkillUI.png"));
+	m_SkillImageUI->SetPos(1000.f, 50.f);
+	m_SkillImageUI->SetCollision(false);
+	m_SkillImageUI->SetZOrder(1);
+
+	m_SkillProgressBar = CreateWidget<CProgressBar>("SkillProgressBar");
+	m_SkillProgressBar->SetSize(80.f, 80.f);
+	m_SkillProgressBar->SetPos(1000.f, 50.f);
+	m_SkillProgressBar->SetTint(0.f, 0.f, 0.f, 0.51f);
+	m_SkillProgressBar->SetBackTint(0.f, 0.f, 0.f, 0.f);
+	m_SkillProgressBar->SetCollision(false);
+	m_SkillProgressBar->SetZOrder(1);
 	return true;
 }
 
@@ -353,6 +378,78 @@ void CWeaponUI::Update(float DeltaTime)
 	m_WeaponMagazineMax1->SetPos(UIBasePos1);
 	m_WeaponMagazineMax2->SetPos(UIBasePos2);
 	m_FinishChange = Change;
+
+
+	if (m_SelectWeapon == Select_Weapon::Left)
+	{
+		if (LeftWeapon)
+		{
+			if (LeftWeapon->IsSkill())
+			{
+				m_SkillImageUI->SetTexture(LeftWeapon->GetSkillTexture());
+				float percent = LeftWeapon->GetSkillDelay() / LeftWeapon->GetSkillDelayMax();
+				if (percent < 1.f)
+				{
+					m_SkillProgressBar->SetPercent(LeftWeapon->GetSkillDelay() / LeftWeapon->GetSkillDelayMax());
+				}
+				else
+				{
+					m_SkillProgressBar->SetPercent(0.f);
+				}
+				m_SkillBaseUI->Enable(true);
+				m_SkillProgressBar->Enable(true);
+				m_SkillImageUI->Enable(true);
+			}
+			else
+			{
+				m_SkillBaseUI->Enable(false);
+				m_SkillProgressBar->Enable(false);
+				m_SkillImageUI->Enable(false);
+			}
+		}
+		else
+		{
+			m_SkillBaseUI->Enable(false);
+			m_SkillProgressBar->Enable(false);
+			m_SkillImageUI->Enable(false);
+		}
+
+	}
+	else if (m_SelectWeapon == Select_Weapon::Right)
+	{
+		if (RightWeapon)
+		{
+			if (RightWeapon->IsSkill())
+			{
+				m_SkillImageUI->SetTexture(RightWeapon->GetSkillTexture());
+				float percent = RightWeapon->GetSkillDelay() / RightWeapon->GetSkillDelayMax();
+				if (percent < 1.f)
+				{
+					m_SkillProgressBar->SetPercent(RightWeapon->GetSkillDelay() / RightWeapon->GetSkillDelayMax());
+				}
+				else
+				{
+					m_SkillProgressBar->SetPercent(0.f);
+				}
+				m_SkillBaseUI->Enable(true);
+				m_SkillProgressBar->Enable(true);
+				m_SkillImageUI->Enable(true);
+			}
+			else
+			{
+				m_SkillBaseUI->Enable(false);
+				m_SkillProgressBar->Enable(false);
+				m_SkillImageUI->Enable(false);
+			}
+		}
+		else
+		{
+			m_SkillBaseUI->Enable(false);
+			m_SkillProgressBar->Enable(false);
+			m_SkillImageUI->Enable(false);
+		}
+		
+	}
 }
 
 void CWeaponUI::PostUpdate(float DeltaTime)

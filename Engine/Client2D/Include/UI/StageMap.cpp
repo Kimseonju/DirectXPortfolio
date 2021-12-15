@@ -86,6 +86,9 @@ bool CStageMap::Init()
 			case StageType::Shop:
 				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
 				break;
+			case StageType::Restaurant:
+				Base->SetColorTint(0.f, 1.f, 1.f, 1.f);
+				break;
 			}
 			m_MapBase.push_back(Base);
 
@@ -180,6 +183,7 @@ bool CStageMap::Init()
 	m_CurMapImage->SetTexture("MapEffect", TEXT("object/door/MapEffect.png"));
 	m_CurMapImage->SetColorTint(0.f, 1.f, 0.f, 1.f);
 	m_CurMapImage->SetCollision(false);
+	m_CurMapImage->SetZOrder(0);
 	CImage* Base = CreateWidget<CImage>("Base11");
 	Base->SetPos(0.f, 0.f);
 	Base->SetColorTint(0.f, 0.f, 0.f, 0.4f);
@@ -332,7 +336,7 @@ void CStageMap::MapUpdate()
 	//Icon°ú °ãÃÄÀÕÀ½
 	m_vecGateButton.clear();
 	std::vector<std::vector<StageInfo>>& Info = CStageManager::GetInst()->GetvecStageInfo();
-	
+
 	SetZOrder(UI_ZOrder::MapUI);
 	for (int x = 0; x < 3; ++x)
 	{
@@ -362,6 +366,7 @@ void CStageMap::MapUpdate()
 				Base->SetColorTint(0.f, 1.f, 0.f, 1.f);
 				break;
 			case StageType::Restaurant:
+				Base->SetColorTint(0.f, 1.f, 1.f, 1.f);
 				break;
 			}
 			m_MapBase.push_back(Base);
@@ -431,7 +436,8 @@ void CStageMap::MapUpdate()
 			}
 		}
 	}
-	
+
+	m_CurMapImage->SetZOrder(0);
 }
 
 void CStageMap::MosueOnCallback()

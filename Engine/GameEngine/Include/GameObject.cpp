@@ -29,7 +29,8 @@ CGameObject::CGameObject() :
 	m_Owner(nullptr),
 	m_CreateEnemyEffect(false),
 	m_CreateEnemyOrder(0),
-	m_StartTimer(-1.f)
+	m_StartTimer(-1.f),
+	m_StartGravity(false)
 {
 	m_SceneComponentList.resize(0);
 	m_RootComponent = CreateSceneComponent<CSceneComponent>("DefaultRoot");

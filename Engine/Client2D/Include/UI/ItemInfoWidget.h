@@ -5,7 +5,7 @@
 #include "UI/Button.h"
 #include "UI/Text.h"
 #include "UI/ProgressBar.h"
-
+#include "../GlobalValue.h"
 class CItemInfoWidget :
     public CWidgetWindow
 {
@@ -24,7 +24,7 @@ protected:
     CSharedPtr<CText> m_ItemRank;
     CSharedPtr<CText> m_ItemType;
     CSharedPtr<CText> m_ItemText;
-
+    ITEM_TYPE m_Type;
 protected:
     CItemInfoWidget();
     CItemInfoWidget(const CItemInfoWidget& widget);
@@ -39,11 +39,11 @@ public:
     virtual CItemInfoWidget* Clone();
 public:
     //아이템이름
-    void SetItemNameText(const TCHAR* Text);
-    //데미지 최소 ~ 최대
-    void SetAttackDamageText(int Min, int Max);
-    //공격속도
-    void SetAttackSpeedText(float Speed);
+    void SetItemNameText(const TCHAR* Text, ITEM_TYPE Type);
+    //데미지 최소 ~ 최대 //악세사리에서는 데미지가 아닌 방어력
+    void SetAttackDamageText(int Min, int Max, const TCHAR* Text = TEXT("공격력 :"));
+    //공격속도//악세사리에서는  위력 n은 소수점
+    void SetAttackSpeedText(float Speed, const TCHAR* Text=TEXT("초당 공격 횟수 :"), int n=2);
     //아이템등급
     void SetItemRankText(const TCHAR* Text);
     //아이템타입(한손검 두손검)

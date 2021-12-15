@@ -42,7 +42,7 @@ bool CBossDieParticle::Init()
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetWorldScale(0.f, 0.f, 0.f);
 	m_Sprite->AddChild(m_Particle);
-
+	
 	m_Particle->SetParticle("BossDieParticle");
 	m_Particle->SetRelativePos(Vector3(0.f, 0.f, 0.f));
 	m_Particle->SetPivot(0.5f, 0.5f, 0.f);
@@ -50,13 +50,13 @@ bool CBossDieParticle::Init()
 	m_Particle->SetTwinkleEnable(false);
 	m_Particle->SetAnimation2DEnable(true);
 	m_Particle->SetAnimation2DCount(12);
+	m_Particle->SetRender2DType(Render_Type_2D::RT2D_Particle2);
 	Vector2 Size;
 	Size.x = (float)m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetWidth();
 	Size.y = (float)m_Particle->GetMaterial(0)->GetMaterialTextureInfo()->pTexture->GetHeight();
 	m_Particle->SetAnimation2DSize(Size);
 	m_Particle->SetAnimation2DPlayRate(0.05f);
 	m_Particle->SetRender2DType(Render_Type_2D::RT2D_Particle);
-	//m_Particle->SetParticle("DoorParticle");
 
 
 	return true;

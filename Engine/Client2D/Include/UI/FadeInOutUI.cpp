@@ -19,6 +19,7 @@ CFadeInOutUI::CFadeInOutUI():
 	m_FadeIn(false),
 	m_StageMove(false),
 	m_Alpha(0.f),
+	m_StageGateMove(0.f,0.f),
 	m_StageBoss(false)
 {
 }
@@ -59,13 +60,13 @@ void CFadeInOutUI::Update(float DeltaTime)
 				CUIManager::GetInst()->GetStageMap()->MapUpdate();
 				m_StageBoss = false;
 			}
-			if (m_StageMove)
+			else if (m_StageMove)
 			{
 				CStageManager::GetInst()->NextStage(m_StageDir);
 				CUIManager::GetInst()->GetStageMap()->StageMove();
 				m_StageMove = false;
 			}
-			if (m_StageGate)
+			else if (m_StageGate)
 			{
 				CStageManager::GetInst()->GateStage(m_StageGateMove);
 			}
@@ -108,6 +109,7 @@ void CFadeInOutUI::StageMoveIn(Stage_Dir Dir)
 
 	m_FadeOut = true;
 	m_StageMove = true;
+	m_StageGate = false;
 	CInput::GetInst()->SetUpdate(false);
 }
 
@@ -116,6 +118,7 @@ void CFadeInOutUI::StageGateIn(Vector2 Pos)
 	m_StageGateMove = Pos;
 	m_Alpha = 0.f;
 	m_FadeOut = true;
+	m_StageMove = false;
 	m_StageGate = true;
 	CInput::GetInst()->SetUpdate(false);
 

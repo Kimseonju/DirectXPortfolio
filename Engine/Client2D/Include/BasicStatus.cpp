@@ -31,9 +31,10 @@ void CBasicStatus::Dash()
 	m_Dash--;
 }
 
-void CBasicStatus::SubHP(int HP)
+bool CBasicStatus::SubHP(int HP)
 {
 	m_HP -= HP;
+	return true;
 }
 
 void CBasicStatus::SetHP(int HP)

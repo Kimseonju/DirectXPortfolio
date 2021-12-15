@@ -8,7 +8,9 @@
 #include "SpawnEffect.h"
 #include "../UI/UIManager.h"
 #include "KeyboardUIObject.h"
-CGate::CGate()
+CGate::CGate():
+	m_Spawn(false),
+	m_KeyUIObject(nullptr)
 {
 }
 

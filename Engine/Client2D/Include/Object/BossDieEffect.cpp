@@ -26,13 +26,13 @@ bool CBossDieEffect::Init()
 	if (!CEffectObject::Init())
 		return false;
 
-	m_Sprite->SetRelativeScale(Vector3(31.f, 31.f, 1.f));
+	m_Sprite->SetRelativeScale(Vector3(31.f, 31.f, 0.f));
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Animation2D->SetIdleAnimation2D("ObjectDieEffect", false);
 	m_Animation2D->SetFrameEndFunction<CBossDieEffect>(this, &CEffectObject::AnimationFrameEnd);
 	m_Animation2D->SetSequencePlayRate("ObjectDieEffect", 2.f);
 
-	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Particle);
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Default2);
 
 	return true;
 }

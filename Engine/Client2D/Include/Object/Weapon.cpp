@@ -91,7 +91,7 @@ void CWeapon::Update(float DeltaTime)
 			{
 				m_Rebound -= DeltaTime * 100.f;
 			}
-			else if (m_Rebound > 30.f || m_Rebound < 30.f || m_Rebound<0.1f || m_Rebound>-0.1f)
+			else if (m_Rebound<0.1f || m_Rebound>-0.1f)
 			{
 				m_Rebound = 0.f;
 			}
@@ -228,13 +228,13 @@ void CWeapon::SetSKillTexture(const std::string& Name, const TCHAR* FileName,
 	{
 		m_pScene->GetResource()->LoadTexture(Name, FileName, PathName);
 
-		m_ItemImage = m_pScene->GetResource()->FindTexture(Name);
+		m_SkillImage = m_pScene->GetResource()->FindTexture(Name);
 	}
 
 	else
 	{
 		CResourceManager::GetInst()->LoadTexture(Name, FileName, PathName);
 
-		m_ItemImage = CResourceManager::GetInst()->FindTexture(Name);
+		m_SkillImage = CResourceManager::GetInst()->FindTexture(Name);
 	}
 }

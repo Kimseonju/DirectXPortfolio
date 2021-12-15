@@ -9,7 +9,9 @@
 CRestaurantButton::CRestaurantButton() :
 	m_ResturantInfoWidget(nullptr),
 	m_Type(FoodType::Lemonade),
-	m_Eat(false)
+	m_Eat(false),
+	m_Price(-1),
+	m_SatietyNumber(-1)
 {
 }
 
@@ -244,6 +246,7 @@ bool CRestaurantButton::PlayerEat()
 	default:
 		break;
 	}
+	m_Eat = true;
 	return true;
 	
 }

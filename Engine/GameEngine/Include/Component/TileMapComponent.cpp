@@ -830,9 +830,9 @@ void CTileMapComponent::Collision(float DeltaTime)
 }
 void CTileMapComponent::PrevRender(float DeltaTime)
 {
-	CPrimitiveComponent::PrevRender(DeltaTime);
 	if (!IsEnable())
 		return;
+	CPrimitiveComponent::PrevRender(DeltaTime);
 	CCamera* Camera = m_pScene->GetCameraManager()->GetCurrentCamera();
 
 	Resolution	RS = Camera->GetResolution();
@@ -948,10 +948,10 @@ void CTileMapComponent::PrevRender(float DeltaTime)
 
 void CTileMapComponent::Render(float DeltaTime)
 {
-	CPrimitiveComponent::Render(DeltaTime);
-
 	if (!IsEnable())
 		return;
+	CPrimitiveComponent::Render(DeltaTime);
+
 	m_WorldBuffer->SetShader(30, CBT_VERTEX);
 
 	m_CBuffer->UpdateCBuffer();

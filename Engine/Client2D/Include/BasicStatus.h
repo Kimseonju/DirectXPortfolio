@@ -1,4 +1,5 @@
 #pragma once
+#include <GameEngine.h>
 class CBasicStatus
 {
 
@@ -64,7 +65,7 @@ public:
 	{
 		m_Magazine--;
 	}
-	virtual void SubHP(int HP);
+	virtual bool SubHP(int HP);
 
 
 	void SetHP(int HP);

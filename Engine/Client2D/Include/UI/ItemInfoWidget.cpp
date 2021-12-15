@@ -2,7 +2,8 @@
 #include "ItemInfoWidget.h"
 #include "UI/Image.h"
 #include "UI/Text.h"
-CItemInfoWidget::CItemInfoWidget()
+CItemInfoWidget::CItemInfoWidget():
+	m_Type(ITEM_TYPE::End)
 {
 }
 
@@ -124,10 +125,10 @@ bool CItemInfoWidget::Init()
 
 
 	m_ItemText = CreateWidget<CText>("ItemText");
-	m_ItemText->SetPos(10.f, 21.f);
-	m_ItemText->SetSize(380.f, 100.f);
+	m_ItemText->SetPos(10.f, 26.f);
+	m_ItemText->SetSize(380.f, 50.f);
 	m_ItemText->SetColor(unsigned char(120), unsigned char(240), unsigned char(215));
-	m_ItemText->SetAlignV(TEXT_ALIGN_V::Middle);
+	m_ItemText->SetAlignV(TEXT_ALIGN_V::Top);
 	m_ItemText->SetFontSize(15.f);
 	m_ItemText->SetText(TEXT("°¡º±°í ÈÖµÎ¸£±â ÆíÇÑ"));
 	m_ItemText->SetFont("DungreedFont");
@@ -154,23 +155,57 @@ CItemInfoWidget* CItemInfoWidget::Clone()
 	return new CItemInfoWidget(*this);
 }
 
-void CItemInfoWidget::SetItemNameText(const TCHAR* Text)
+void CItemInfoWidget::SetItemNameText(const TCHAR* Text, ITEM_TYPE Type)
 {
 	m_ItemName->SetText(Text);
+	m_Type = Type;
+	if (Type == ITEM_TYPE::Acc)
+	{
+		m_AttackSpeed->SetPos(180.f, 108.f);
+	}
+	else
+	{
+		m_AttackSpeed->SetPos(210.f, 108.f);
+	}
 }
 
-void CItemInfoWidget::SetAttackDamageText(int Min, int Max)
+void CItemInfoWidget::SetAttackDamageText(int Min, int Max, const TCHAR* Text)
 {
+	if (Min == 0 && Max == 0)
+	{
+		m_AttackDamageText->SetText(TEXT(""));
+		m_AttackDamage->SetText(TEXT(""));
+		return;
+	}
+	m_AttackDamageText->SetText(Text);
 	std::wstring str;
-	str = std::to_wstring(Min)+TEXT(" ~ ")+std::to_wstring(Max);
-	
-	m_AttackDamage->SetText(str.c_str());
+	if (m_Type == ITEM_TYPE::Acc)
+	{
+		str = std::to_wstring(Min);
+
+		m_AttackDamage->SetText(str.c_str());
+	}
+	else
+	{
+		str = std::to_wstring(Min) + TEXT(" ~ ") + std::to_wstring(Max);
+
+		m_AttackDamage->SetText(str.c_str());
+	}
 }
 
-void CItemInfoWidget::SetAttackSpeedText(float Speed)
+void CItemInfoWidget::SetAttackSpeedText(float Speed, const TCHAR* Text, int n)
 {
+	if (Speed == 0)
+	{
+		m_AttackSpeedText->SetText(TEXT(""));
+		m_AttackSpeed->SetText(TEXT(""));
+		return;
+	}
+	float speed = Speed;
+	m_AttackSpeedText->SetText(Text);
 	std::wstring str;
-	str = std::to_wstring(Speed);
+	str=CGlobalValue::to_wstring_with_precision(speed, n);
+	//str = std::to_wstring(Speed);
 
 	m_AttackSpeed->SetText(str.c_str());
 }

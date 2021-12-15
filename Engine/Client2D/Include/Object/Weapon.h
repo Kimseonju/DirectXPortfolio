@@ -34,11 +34,22 @@ protected:
 	float m_SkillDelay;
 	float m_SkillDelayMax;
 	bool m_Skill;
-	class CTexture* m_SkillImage;
+	CTexture* m_SkillImage;
 
 public:
 
-
+	CTexture* GetSkillTexture()
+	{
+		return m_SkillImage;
+	}
+	float GetSkillDelayMax()const
+	{
+		return m_SkillDelayMax;
+	}
+	float GetSkillDelay() const
+	{
+		return m_SkillDelay;
+	}
 	bool IsSkill()
 	{
 		return m_Skill;
@@ -113,5 +124,5 @@ public:
 	virtual void Equip();
 	bool IsAttack();
 	void SetSKillTexture(const std::string& Name, const TCHAR* FileName,
-		const std::string& PathName);
+		const std::string& PathName= TEXTURE_PATH);
 };

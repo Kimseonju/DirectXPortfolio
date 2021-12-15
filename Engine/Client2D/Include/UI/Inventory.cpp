@@ -10,6 +10,10 @@
 #include "../Object/ShortSword.h"
 #include "../Object/MetalBoomerang.h"
 #include "../Object/Revolver.h"
+#include "../Object/CosmosSword.h"
+#include "../Object/DaisyRing.h"
+#include "../Object/MiniEarth.h"
+#include "../Object/Taana.h"
 #include "../Object/Item.h"
 #include "../Object/Player.h"
 CInventory::CInventory():
@@ -171,6 +175,29 @@ bool CInventory::Init()
 	Item->Enable(false);
 	Item->StateNoMapItem();
 	m_Items[4]->SetItem(Item);
+
+	Item = m_Scene->SpawnObject<CCosmosSword>("CosmosSword");
+	Item->Enable(false);
+	Item->StateNoMapItem();
+	m_Items[7]->SetItem(Item);
+
+
+	Item = m_Scene->SpawnObject<CDaisyRing>("DaisyRing");
+	Item->Enable(false);
+	Item->StateNoMapItem();
+	m_Items[9]->SetItem(Item);
+
+
+	Item = m_Scene->SpawnObject<CMiniEarth>("MiniEarth");
+	Item->Enable(false);
+	Item->StateNoMapItem();
+	m_Items[10]->SetItem(Item);
+
+
+	Item = m_Scene->SpawnObject<CTaana>("Taana");
+	Item->Enable(false);
+	Item->StateNoMapItem();
+	m_Items[11]->SetItem(Item);
 
 	m_CoinText = CreateWidget<CText>("GoldText");
 	m_CoinText->SetColor(0.f, 0.f, 0.f);

@@ -31,6 +31,10 @@ protected:
     CSharedPtr<CText>    m_WeaponMagazineMiddle2;
     CSharedPtr<CText>    m_WeaponMagazineMax2;
 
+    CSharedPtr<CImage>    m_SkillBaseUI;
+    CSharedPtr<CProgressBar>    m_SkillProgressBar;
+    CSharedPtr<CImage>    m_SkillImageUI;
+
     Select_Weapon m_SelectWeapon;
     Vector2 m_MoveWeapon1;
     Vector2 m_MoveWeapon2;

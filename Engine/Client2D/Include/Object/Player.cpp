@@ -17,7 +17,9 @@
 #include "PlayerInteractionCollision.h"
 #include "../ObjectStatusManager.h"
 #include "../UI/PlayerWorldWidget.h"
+#include "../UI/InventoryButton.h"
 #include <Scene/SceneResource.h>
+#include "TaanaShieldEffect.h"
 CPlayer::CPlayer() :
 	m_OneAttack(false),
 	m_Weapon(nullptr),
@@ -27,7 +29,8 @@ CPlayer::CPlayer() :
 	m_WallCol(false),
 	m_Coin(100000),
 	m_DustCount(0.f),
-	m_MoveSound(0.f)
+	m_MoveSound(0.f),
+	m_CollisionRender(false)
 {
 	SetStatus("Player");
 }
@@ -146,6 +149,8 @@ bool CPlayer::Init()
 	CInput::GetInst()->AddKeyCallback<CPlayer>("StatusUI", KT_Up, this, &CPlayer::StatusUIOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("RestaurantUI", KT_Up, this, &CPlayer::RestaurantUIOnOff);
 	CInput::GetInst()->AddKeyCallback<CPlayer>("ESCUI", KT_Up, this, &CPlayer::UIOff);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("Skill", KT_Up, this, &CPlayer::SkillAttack);
+	CInput::GetInst()->AddKeyCallback<CPlayer>("CollisionRender", KT_Up, this, &CPlayer::SkillAttack);
 	//마우스회전용
 
 	m_WeaponArm = m_pScene->SpawnObject<CWeaponArm>("basicWeaponArm");
@@ -164,12 +169,28 @@ bool CPlayer::Init()
 	m_BodyFSM.CreateState("Jump", this, &CPlayer::BodyJumpStay, &CPlayer::BodyJumpStart);
 	m_BodyFSM.ChangeState("Idle");
 	SetGravity(true);
+	m_AccItem.resize(4);
+
+	SetStartTimer(0.2f);
 	return true;
 }
 
 void CPlayer::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
+
+	if (m_StartTimer > 0.f)
+		return;
+	else
+	{
+		if (!m_StartGravity)
+		{
+			m_StartGravity = true;
+			m_Body->SetGravity(true);
+			return;
+		}
+	}
+
 	m_WallCol = false;
 	m_StageMove = false;
 	Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
@@ -184,6 +205,57 @@ void CPlayer::Update(float DeltaTime)
 		m_Dir = Object_Dir::Right;
 		m_Sprite->SetHorizontalReverse2DEnable(false); 
 	}
+
+	//데미지 최소 ~ 최대 //악세사리에서는 데미지가 아닌 방어력
+	//void SetAttackDamageText(int Min, int Max, const TCHAR * Text = TEXT("공격력 :"));
+	//공격속도//악세사리에서는  위력
+
+	std::vector<CInventoryButton*> vecAccButton=CUIManager::GetInst()->GetInventory()->GetvecAccButton();
+	size_t Size = vecAccButton.size();
+	//악세사리 아이템 관리
+	for (size_t i = 0; i < Size; i++)
+	{
+		CItem* Item = vecAccButton[i]->GetItem();
+		if (Item)
+		{
+			if (Item == m_AccItem[i])
+			{
+				//이미장착되있는곳
+			}
+			else
+			{
+				if (m_AccItem[i])
+				{
+					m_AccItem[i]->Enable(false);
+					m_Status.SetDamage(m_Status.GetDamage() - m_AccItem[i]->GetStatus()->GetDamage());
+					m_Status.SetDamageMax(m_Status.GetDamageMax() - m_AccItem[i]->GetStatus()->GetDamage());
+					m_Status.SetArmor(m_Status.GetArmor() - m_AccItem[i]->GetStatus()->GetArmor());
+					m_Status.SetHPMax(m_Status.GetHPMax() - m_AccItem[i]->GetStatus()->GetHPMax());
+				}
+
+				Item->Enable(true);
+				m_Status.SetDamage(m_Status.GetDamage() + Item->GetStatus()->GetDamage());
+				m_Status.SetDamageMax(m_Status.GetDamageMax() + Item->GetStatus()->GetDamage());
+				m_Status.SetArmor(m_Status.GetArmor() + Item->GetStatus()->GetArmor());
+				m_Status.SetHPMax(m_Status.GetHPMax() + Item->GetStatus()->GetHPMax());
+				
+				m_AccItem[i] = Item;
+			}
+		}
+		else
+		{
+			if (m_AccItem[i])
+			{
+				m_AccItem[i]->Enable(false);
+				m_Status.SetDamage(m_Status.GetDamage() - m_AccItem[i]->GetStatus()->GetDamage());
+				m_Status.SetDamageMax(m_Status.GetDamageMax() - m_AccItem[i]->GetStatus()->GetDamage());
+				m_Status.SetArmor(m_Status.GetArmor() - m_AccItem[i]->GetStatus()->GetArmor());
+				m_Status.SetHPMax(m_Status.GetHPMax() - m_AccItem[i]->GetStatus()->GetHPMax());
+				m_AccItem[i] = nullptr;
+			}
+		}
+	}
+
 
 	m_WeaponArm->SetDir(m_Dir);
 	CWeapon* Item= (CWeapon*)CUIManager::GetInst()->GetInventory()->GetWeapon();
@@ -459,6 +531,30 @@ void CPlayer::UIOff(float DeltaTime)
 {
 	CUIManager::GetInst()->UIOff();
 }
+void CPlayer::SkillAttack(float DeltaTime)
+{
+	if (CGlobalValue::MainMouse->GetState() == Mouse_State::World)
+	{
+		if (m_Weapon)
+		{
+			Vector2 MousePos = CInput::GetInst()->GetMouse2DWorldPos();
+			Vector3 Pos = m_Weapon->GetWorldPos();
+			Vector2 Pos2 = Vector2(Pos.x, Pos.y);
+
+			float angle = Pos2.GetAngle(MousePos);
+			if (m_Weapon->SkillAttack(angle))
+			{
+				m_OneAttack = !m_OneAttack;
+				m_Camera->AddCameraShake(1.f, 1.f, 0.3f);
+			}
+		}
+	}
+}
+void CPlayer::CollisionRenderOnOff(float DeltaTime)
+{
+	m_CollisionRender = !m_CollisionRender;
+	CEngine::GetInst()->SetCollisionRender(m_CollisionRender);
+}
 int CPlayer::GetDamage()
 {
 	if (m_Weapon)
@@ -528,9 +624,17 @@ void CPlayer::EnemyHit(int Damage)
 {
 	if (!m_Status.GetGracePeriod())
 	{
-		m_Status.SubHP(Damage);
-		CUIManager::GetInst()->GetPlayerUI()->Hit();
-		m_pScene->GetResource()->FindSound("PlayerHit")->Play();
+		if (m_Status.SubHP(Damage))
+		{
+			CUIManager::GetInst()->GetPlayerUI()->Hit(false);
+			m_pScene->GetResource()->FindSound("PlayerHit")->Play();
+		}
+		else
+		{
+			CUIManager::GetInst()->GetPlayerUI()->Hit(true);
+			m_pScene->SpawnObject<CTaanaShieldEffect>("TaanaShieldEffect");
+		}
+		
 	}
 }
 void CPlayer::AnimationFrameEnd(const std::string& Name)

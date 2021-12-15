@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "SmallSkelBow.h"
 #include "Gold.h"
+#include "../Stage/StageManager.h"
+#include "../Stage/Stage.h"
 CSmallSkel_Bow::CSmallSkel_Bow() :
 	m_PlayerFind(false)
 {
@@ -105,11 +107,13 @@ void CSmallSkel_Bow::AnimationFrameEnd(const std::string& Name)
 void CSmallSkel_Bow::DropGold()
 {
 	int DropCount = GetRandom(0, 4);
+	CStage* CurStage = CStageManager::GetInst()->GetCurStage();
 	for (int i = 0; i < DropCount; ++i)
 	{
 		CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
 		Gold->SetWorldPos(GetWorldPos());
 		Gold->AddWorldPos(0.f, 20.f, 0.f);
 		Gold->Drop((float)GetRandom(0, 180), 50.f);
+		CurStage->PushObject(Gold);
 	}
 }

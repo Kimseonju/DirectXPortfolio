@@ -59,6 +59,10 @@ void CProgressBar::PostUpdate(float DeltaTime)
 
 void CProgressBar::Render()
 {
+	if (!IsEnable())
+	{
+		return;
+	}
 	m_TintCBuffer->SetTint(m_BackInfo.Tint);
 
 	if (m_BackInfo.Texture)

@@ -254,7 +254,8 @@ bool CResourceManager::Init()
 
 	CreateSampler("Point", D3D11_FILTER_MIN_MAG_MIP_POINT);
 	CreateSampler("Linear", D3D11_FILTER_MIN_MAG_MIP_POINT);
-	CreateSampler("Anisotropic", D3D11_FILTER_MIN_MAG_MIP_POINT, 2);
+	CreateSampler("Anisotropic", D3D11_FILTER_MIN_MAG_MIP_POINT);
+	//CreateSampler("Anisotropic", D3D11_FILTER_MIN_MAG_MIP_POINT, 2);
 	//g_AnisotropicSmp
 	//D3D11_FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR
 	//D3D11_FILTER_ANISOTROPIC
@@ -455,7 +456,7 @@ bool CResourceManager::SetMaterialTransparency(const std::string& Name, bool bTr
 	if (!pMaterial)
 		return false;
 
-	pMaterial->SetTransparency(bTransparency);
+	pMaterial->SetTransparency(bTransparency, false);
 
 	return true;
 }

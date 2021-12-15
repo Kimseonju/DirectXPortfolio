@@ -4,7 +4,7 @@
 #include <Scene/SceneResource.h>
 #include <Scene/Scene.h>
 CBasicMouse::CBasicMouse():
-	m_State(Mouse_State::World),
+	m_State(Mouse_State::UI),
 	m_ClickInventoryButton(nullptr),
 	m_Item(nullptr),
 	m_Down(false),
@@ -139,6 +139,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(nullptr);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 				break;
@@ -151,6 +152,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(nullptr);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 				break;
@@ -163,6 +165,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(nullptr);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 				break;
@@ -188,6 +191,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(Item);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 			break;
@@ -201,6 +205,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(Item);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 			break;
@@ -214,6 +219,7 @@ void CBasicMouse::InventoryMove(CInventoryButton* Button)
 					m_Item = nullptr;
 					m_ClickInventoryButton->SetItem(Item);
 					m_ClickInventoryButton = nullptr;
+					m_Scene->GetResource()->FindSound("ItemOutInventory")->Play();
 				}
 			}
 			break;

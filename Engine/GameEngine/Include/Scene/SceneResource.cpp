@@ -190,7 +190,7 @@ bool CSceneResource::SetMaterialTransparency(const std::string& Name,
 	if (!pMaterial)
 		return false;
 
-	pMaterial->SetTransparency(bTransparency);
+	pMaterial->SetTransparency(bTransparency, false);
 
 	return true;
 }

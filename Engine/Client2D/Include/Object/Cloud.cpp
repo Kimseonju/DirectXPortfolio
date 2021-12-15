@@ -53,8 +53,8 @@ bool CCloud::Init()
 	Resolution RS = CDevice::GetInst()->GetResolution();
 	SetRootComponent(m_Sprite);
 	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_MAP);
-
-	//SpriteMtrl->SetBaseColor(1.f, 0.f, 0.f, 1.f);
+	CMaterial* SpriteMtrl =m_Sprite->GetMaterial(0);
+	SpriteMtrl->SetBaseColor(1.f, 1.f, 1.f, 1.f);
 	//SpriteMtrl->AddTexture("FrontCloud", TEXT("TitleScene/FrontCloud.png"));
 
 	return true;

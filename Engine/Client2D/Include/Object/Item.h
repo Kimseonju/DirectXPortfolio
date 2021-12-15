@@ -34,6 +34,7 @@ protected:
 	float	m_UpdateDelay;
 	//¸Ê¿¡ »Ñ¸°»óÅÂ
 	bool m_MapDrop;
+	
 public:
 	virtual void Start();
 	virtual bool Init();
@@ -43,6 +44,8 @@ public:
 	virtual void Render(float DeltaTime);
 	virtual CItem* Clone();
 	virtual void Animation2DNotify(const std::string& Name);
+public:
+	virtual void ItemUpdate(float DeltaTime);
 public:
 	void SetStatus(const std::string& Name);
 	// ÇÇ°Ý

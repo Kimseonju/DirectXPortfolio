@@ -20,13 +20,19 @@ private:
     CSharedPtr<CText>     m_HPMaxText;
     CSharedPtr<CImage>    m_WarningOnHit0;
     CSharedPtr<CImage>    m_WarningOnHit1;
+    CSharedPtr<CImage>    m_SkillBaseUI;
+    CSharedPtr<CImage>    m_SkillImageUI;
     std::vector<CSharedPtr<CImage>> m_vecDashBack;
     std::vector<CSharedPtr<CImage>> m_vecDashCount;
+
+    CSharedPtr<CImage>    m_ShieldBaseUI;
+    CSharedPtr<CProgressBar>   m_ShieldProgressBar;
+
 
     class CBossUI* m_BossUI;
     class CWeaponUI* m_PlayerWeaponUI;
     float m_HitTime;
-
+    bool m_bShield;
 protected:
     CPlayerUI();
     virtual ~CPlayerUI();
@@ -37,7 +43,8 @@ public:
     virtual void Render();
     virtual CPlayerUI* Clone();
 public:
-    void Hit();
+    void SetShieldUI(bool Enable);
+    void Hit(bool bShield);
     void WeaponChange();
     void SetHPBar(float Percent);
 };

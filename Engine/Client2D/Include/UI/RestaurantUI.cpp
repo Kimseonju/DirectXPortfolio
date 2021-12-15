@@ -5,9 +5,14 @@
 #include "../Stage/StageManager.h"
 #include <UI/Text.h>
 #include "../Object/Player.h"
+#include <Scene/SceneResource.h>
 #define RatioY 0.9375f
 CRestaurantUI::CRestaurantUI():
-	m_EatFoodImageAlpha(1.f)
+	m_EatFoodImageAlpha(1.f),
+	m_SelectFoodImage(nullptr),
+	m_EatFoodImage(nullptr),
+	m_Eat(false),
+	m_EatStart(false)
 {
 }
 
@@ -202,9 +207,9 @@ bool CRestaurantUI::Init()
 	m_GoldText->SetText(TEXT("100000"));
 	m_GoldText->SetAlignH(TEXT_ALIGN_H::Right);
 	m_GoldText->SetFontSize(20.f);
-	m_GoldText->SetPos(1050.f, 50.f);
+	m_GoldText->SetPos(1080.f, 50.f);
 	m_GoldText->SetPivot(0.5f, 0.5f);
-	m_GoldText->SetSize(28.f, 28.f);
+	m_GoldText->SetSize(100.f, 28.f);
 	m_GoldText->SetCollision(false);
 	m_GoldText->SetZOrder(1);
 
@@ -268,7 +273,7 @@ void CRestaurantUI::Update(float DeltaTime)
 	{
 		if (m_EatFoodImage)
 		{
-			m_EatFoodImage->SetSize(m_EatFoodImage->GetSize() * 1.1f);
+			m_EatFoodImage->SetSize(m_EatFoodImage->GetSize() +(m_EatFoodImage->GetSize()* DeltaTime* 1.f));
 			m_EatFoodImage->SetColorTint(1.f, 1.f, 1.f, m_EatFoodImageAlpha);
 			m_EatFoodImageAlpha -= DeltaTime;
 			if (m_EatFoodImageAlpha <= 0.f)
@@ -285,7 +290,8 @@ void CRestaurantUI::Update(float DeltaTime)
 	m_SatietyLeft->SetText(str.c_str());
 	float Percent = (float)Satiety / 100.f;
 	m_SatietyBar->SetPercent(Percent);
-
+	int Gold=CGlobalValue::MainPlayer->GetCoin();
+	m_GoldText->SetText(std::to_wstring(Gold).c_str());
 }
 
 void CRestaurantUI::PostUpdate(float DeltaTime)
@@ -354,6 +360,7 @@ void CRestaurantUI::ClickCallback()
 				m_RestaurantInfo[i].FoodName->Enable(false);
 				m_RestaurantInfo[i].FoodPrice->Enable(false);
 
+				m_Scene->GetResource()->FindSound("restaurantEffect")->Play();
 				if (m_SelectFoodImage)
 				{
 					m_EatFoodImage = m_SelectFoodImage;

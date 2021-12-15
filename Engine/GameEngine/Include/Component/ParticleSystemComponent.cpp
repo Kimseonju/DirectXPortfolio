@@ -203,6 +203,7 @@ void CParticleSystemComponent::Render(float DeltaTime)
 
     m_Mesh->RenderInstancing(m_CBuffer->GetSpawnCountMax());
 
+
     for (size_t i = 0; i < Size; ++i)
     {
         m_vecBuffer[i]->ResetShader((int)i + 30, CBT_GEOMETRY);

@@ -29,7 +29,7 @@ bool CBelialDeadHead::Init()
 	m_Body = CreateSceneComponent<CRigidBodyComponent>("Body");
 	m_Collider2D = CreateSceneComponent<CColliderBox2D>("Collider2D");
 	m_Sprite = CreateSceneComponent<CSpriteComponent>("Sprite");
-
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Back2);
 	SetRootComponent(m_Sprite);
 	m_Sprite->AddChild(m_Body);
 	CMaterial* Material = m_Sprite->GetMaterial(0);

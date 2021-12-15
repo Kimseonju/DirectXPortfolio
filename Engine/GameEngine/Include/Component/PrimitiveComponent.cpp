@@ -11,10 +11,10 @@ CPrimitiveComponent::CPrimitiveComponent()
     m_PrimitiveType = PrimitiveComponent_Type::Primitive3D;
     m_ComponentClassType = Component_Class_Type::Primitive;
 
-    SetRender2DType(RT2D_None);
     m_3DType = RT3D_None;
 
-    m_pTransform->SetDefaultZ(0.3f);
+    //m_pTransform->SetDefaultZ(0.3f);
+    SetRender2DType(RT2D_None);
 
     m_DistortionEnable = false;
 }
@@ -40,16 +40,16 @@ void CPrimitiveComponent::SetRender2DType(Render_Type_2D Type)
     switch (m_2DType)
     {
     case RT2D_None:
-        m_pTransform->SetDefaultZ(0.1f);
+        m_pTransform->SetDefaultZ(0.0f);
         break;
     case RT2D_MAP:
-        m_pTransform->SetDefaultZ(0.2f);
+        m_pTransform->SetDefaultZ(0.0f);
         break;
     case RT2D_Back1:
-        m_pTransform->SetDefaultZ(0.3f);
+        m_pTransform->SetDefaultZ(0.2f);
         break;
     case RT2D_Back2:
-        m_pTransform->SetDefaultZ(0.4f);
+        m_pTransform->SetDefaultZ(0.3f);
         break;
     case RT2D_Default:
         m_pTransform->SetDefaultZ(0.5f);
@@ -58,7 +58,10 @@ void CPrimitiveComponent::SetRender2DType(Render_Type_2D Type)
         m_pTransform->SetDefaultZ(0.6f);
         break;
     case RT2D_Particle:
-        m_pTransform->SetDefaultZ(0.9f);
+        m_pTransform->SetDefaultZ(0.7f);
+        break;
+    case RT2D_Particle2:
+        m_pTransform->SetDefaultZ(0.7f);
         break;
     default:
         break;

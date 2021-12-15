@@ -49,7 +49,7 @@ private:
 	CEngineFSM<CPlayer>m_BodyFSM;
 
 	class CWeapon*  m_Weapon;
-
+	std::vector<class CItem*> m_AccItem;
 
 	bool m_OneAttack;
 	float m_Angle;
@@ -62,6 +62,7 @@ private:
 	bool m_StageMove;
 	float m_DustCount;
 	float m_MoveSound;
+	bool m_CollisionRender;
 protected:
 public:
 	void StageMove()
@@ -132,6 +133,8 @@ public:
 	void StatusUIOnOff(float DeltaTime);
 	void RestaurantUIOnOff(float DeltaTime);
 	void UIOff(float DeltaTime);
+	void SkillAttack(float DeltaTime);
+	void CollisionRenderOnOff(float DeltaTime);
 public:
 //status 가져오기
 	int GetDamage();

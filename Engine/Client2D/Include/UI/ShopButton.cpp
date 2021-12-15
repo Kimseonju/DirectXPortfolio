@@ -108,13 +108,29 @@ void CShopButton::CollisionMouse(const Vector2& MousePos, float DeltaTime)
 	if (m_Item)
 	{
 		m_ItemInfoWidget->Enable(true);
-		m_ItemInfoWidget->SetItemNameText(m_Item->GetItemName());
-		m_ItemInfoWidget->SetAttackDamageText(m_Item->GetDamage(), m_Item->GetDamageMax());
-		m_ItemInfoWidget->SetAttackSpeedText(m_Item->GetAttackSpeed());
-		m_ItemInfoWidget->SetItemRankText(m_Item->GetItemRank());
-		m_ItemInfoWidget->SetItemTypeText(m_Item->GetItemType());
-		m_ItemInfoWidget->SetItemText(m_Item->GetItemText());
-		m_ItemInfoWidget->SetImage(m_Item->GetItemTexture());
+		if (m_Item->GetType() == ITEM_TYPE::Weapon_One_Hand || m_Item->GetType() == ITEM_TYPE::Weapon_Two_Hand)
+		{
+
+			m_ItemInfoWidget->SetItemNameText(m_Item->GetItemName(), m_Item->GetType());
+			m_ItemInfoWidget->SetAttackDamageText(m_Item->GetDamage(), m_Item->GetDamageMax());
+			m_ItemInfoWidget->SetAttackSpeedText(m_Item->GetAttackSpeed());
+			m_ItemInfoWidget->SetItemRankText(m_Item->GetItemRank());
+			m_ItemInfoWidget->SetItemTypeText(m_Item->GetItemType());
+			m_ItemInfoWidget->SetItemText(m_Item->GetItemText());
+			m_ItemInfoWidget->SetImage(m_Item->GetItemTexture());
+		}
+		else
+		{
+			m_ItemInfoWidget->SetItemNameText(m_Item->GetItemName(), m_Item->GetType());
+			m_ItemInfoWidget->SetAttackDamageText(m_Item->GetDamage(), 0, TEXT("방어력 :"));
+			m_ItemInfoWidget->SetAttackSpeedText(m_Item->GetAttackSpeed(), TEXT("위력 :"));
+			m_ItemInfoWidget->SetItemRankText(m_Item->GetItemRank());
+			m_ItemInfoWidget->SetItemTypeText(m_Item->GetItemType());
+			m_ItemInfoWidget->SetItemText(m_Item->GetItemText());
+			m_ItemInfoWidget->SetImage(m_Item->GetItemTexture());
+			//악세사리임
+
+		}
 	}
 }
 
