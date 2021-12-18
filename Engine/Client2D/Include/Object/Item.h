@@ -34,7 +34,8 @@ protected:
 	float	m_UpdateDelay;
 	//맵에 뿌린상태
 	bool m_MapDrop;
-	
+	//타일충돌상태인지아닌지
+	bool m_bTileHit;
 public:
 	virtual void Start();
 	virtual bool Init();

@@ -229,9 +229,6 @@
     <Filter Include="UI\UI\WidgetWindow\Map\MiniMap">
       <UniqueIdentifier>{ef4c5ab1-9b9d-48c4-a33f-008f0b0e8872}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\MapObject\Torch">
-      <UniqueIdentifier>{5e31c50d-2107-47bb-bed1-d164c9680502}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\EndingObject">
       <UniqueIdentifier>{84980256-a039-4f38-bc78-ec5572e4f3e3}</UniqueIdentifier>
     </Filter>
@@ -258,6 +255,9 @@
     </Filter>
     <Filter Include="02. Object\Item\Acc">
       <UniqueIdentifier>{34698f72-3d2c-4d1e-84a0-f2d0e47f9e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\MapObject\Tresure\Torch">
+      <UniqueIdentifier>{5e31c50d-2107-47bb-bed1-d164c9680502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -649,10 +649,10 @@
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
     </ClCompile>
     <ClCompile Include="Object\BossTorchLight.cpp">
-      <Filter>02. Object\MapObject\Torch</Filter>
+      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
     </ClCompile>
     <ClCompile Include="Object\TorchLight.cpp">
-      <Filter>02. Object\MapObject\Torch</Filter>
+      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
     </ClCompile>
     <ClCompile Include="Object\EndingTerrain.cpp">
       <Filter>02. Object\EndingObject</Filter>
@@ -734,6 +734,9 @@
     </ClCompile>
     <ClCompile Include="Object\BelialBackParticle.cpp">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMode\LoadingThreadScene.cpp">
+      <Filter>01. SceneMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1107,10 +1110,10 @@
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
     </ClInclude>
     <ClInclude Include="Object\BossTorchLight.h">
-      <Filter>02. Object\MapObject\Torch</Filter>
+      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
     </ClInclude>
     <ClInclude Include="Object\TorchLight.h">
-      <Filter>02. Object\MapObject\Torch</Filter>
+      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
     </ClInclude>
     <ClInclude Include="Object\EndingTerrain.h">
       <Filter>02. Object\EndingObject</Filter>
@@ -1192,6 +1195,9 @@
     </ClInclude>
     <ClInclude Include="Object\BelialBackParticle.h">
       <Filter>02. Object\EffectAndParticle\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMode\LoadingThreadScene.h">
+      <Filter>01. SceneMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

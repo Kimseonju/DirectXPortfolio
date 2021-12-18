@@ -51,6 +51,7 @@ bool CStageMap::Init()
 	m_GateMoveLine->SetSize(10.f, 10.f);
 	m_GateMoveLine->SetColorTint(46.f / 255.f, 248.f / 255.f, 233.f / 255.f, 1.f);
 	m_GateMoveLine->SetZOrder(3);
+	m_GateMoveLine->SetCollision(false);
 	m_MapInfoBase.resize(Size);
 	for (int i = 0; i < Size; ++i)
 	{

@@ -200,7 +200,7 @@ bool CInventory::Init()
 	m_Items[11]->SetItem(Item);
 
 	m_CoinText = CreateWidget<CText>("GoldText");
-	m_CoinText->SetColor(0.f, 0.f, 0.f);
+	m_CoinText->SetColor(1.f, 1.f, 1.f);
 	m_CoinText->SetText(L"1000");
 	m_CoinText->SetFontSize(20.f);
 	m_CoinText->SetPos(1130.f, -40.f);

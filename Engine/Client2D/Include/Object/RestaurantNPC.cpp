@@ -94,6 +94,12 @@ void CRestaurantNPC::Collision(float DeltaTime)
 	CGameObject::Collision(DeltaTime);
 }
 
+void CRestaurantNPC::PrevRender(float DeltaTime)
+{
+	CGameObject::PrevRender(DeltaTime);
+	CUIManager::GetInst()->GetMiniMapUI()->PushMiniMapInfoObject(Vector2(GetWorldPos().x, GetWorldPos().y), Vector2(4.f, 4.f), Vector4(0.f / 255.f, 0.f / 255.f, 255.f / 255.f, 1.f), Vector4(1.f, 1.f, 1.f, 1.f), 1.f);
+}
+
 void CRestaurantNPC::Render(float DeltaTime)
 {
 	CGameObject::Render(DeltaTime);

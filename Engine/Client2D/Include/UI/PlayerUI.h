@@ -18,6 +18,12 @@ private:
     CSharedPtr<CText>     m_HPText;
     CSharedPtr<CText>     m_HPMiddleText;
     CSharedPtr<CText>     m_HPMaxText;
+    CSharedPtr<CImage>    m_GoldImage;
+    CSharedPtr<CText>     m_GoldText;
+    CSharedPtr<CImage>    m_SatietyImage;
+    CSharedPtr<CText>     m_SatietyText;
+    CSharedPtr<CText>     m_SatietyTextMiddle;
+    CSharedPtr<CText>     m_SatietyTextMax;
     CSharedPtr<CImage>    m_WarningOnHit0;
     CSharedPtr<CImage>    m_WarningOnHit1;
     CSharedPtr<CImage>    m_SkillBaseUI;

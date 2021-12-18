@@ -18,7 +18,8 @@ CItem::CItem() :
 	m_Fire(false),
 	m_MapDrop(false),
 	m_UpdateDelay(0.f),
-	m_Status(nullptr)
+	m_Status(nullptr),
+	m_bTileHit(false)
 {
 }
 
@@ -350,15 +351,19 @@ void CItem::DropCollisionBegin(const HitResult& result, CCollider* Collider)
 		Vector2 ColPos = Vector2(result.DestCollider->GetWorldPos().x, result.DestCollider->GetWorldPos().y);
 		float Angle = PlayerPos.GetAngle(ColPos);
 		ColDirVertical(Angle, result.DestCollider);
+		m_bTileHit = true;
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::Player)
 	{
-		if (CUIManager::GetInst()->GetInventory()->AddInventoryItem(this))
+		if (m_bTileHit)
 		{
-			StateNoMapItem();
-			m_pScene->GetResource()->FindSound("GetItem")->Play();
-			CStage* CurStage = CStageManager::GetInst()->GetCurStage();
-			CurStage->DeleteObject(this);
+			if (CUIManager::GetInst()->GetInventory()->AddInventoryItem(this))
+			{
+				StateNoMapItem();
+				m_pScene->GetResource()->FindSound("GetItem")->Play();
+				CStage* CurStage = CStageManager::GetInst()->GetCurStage();
+				CurStage->DeleteObject(this);
+			}
 		}
 	}
 }

@@ -62,7 +62,7 @@ void CEnemyArrow::Update(float DeltaTime)
 {
     CGameObject::Update(DeltaTime);
 
-    AddRelativePos(GetAxis(AXIS_Y) * DeltaTime * 100.f);
+    AddRelativePos(GetAxis(AXIS_Y) * DeltaTime * 250.f);
     m_Sprite2->SetRelativeRotationZ(GetWorldRotation().z+90.f);
 
 }

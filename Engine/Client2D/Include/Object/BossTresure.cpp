@@ -8,9 +8,13 @@
 #include <Component/Camera.h>
 #include "Firefly.h"
 #include "Player.h"
+#include "Gold.h"
+#include "GoldBullion.h"
 CBossTresure::CBossTresure() :
 	m_Open(false),
-	m_KeyUIObject(nullptr)
+	m_KeyUIObject(nullptr),
+	m_GoldCount(0),
+	m_GoldCountMax(100)
 {
 }
 
@@ -73,7 +77,7 @@ bool CBossTresure::Init()
 	m_KeyUIObject->SetWorldPos(GetWorldPos());
 	m_KeyUIObject->AddWorldPos(-0.f, 30.f, 0.f);
 	m_KeyUIObject->Enable(false);
-
+	m_Body->SetGravity(true);
 	return true;
 }
 
@@ -81,7 +85,32 @@ void CBossTresure::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
 	AddRelativePos(m_Body->GetMove());
-	
+	if (m_Open)
+	{
+		if (m_GoldCount < m_GoldCountMax)
+		{
+			m_GoldDropTimer += DeltaTime;
+			if (m_GoldDropTimer >= m_GoldDropTimerMax)
+			{
+				m_GoldDropTimer -= m_GoldDropTimerMax;
+				m_GoldCount++;
+				int Select = GetRandom(0, 1);
+
+				if (Select == 0)
+				{
+					CGold* Gold = m_pScene->SpawnObject<CGold>("Gold");
+					Gold->SetWorldPos(GetWorldPos());
+					Gold->Drop((float)GetRandom(0, 180), 50.f);
+				}
+				else
+				{
+					CGoldBullion* GoldBullion = m_pScene->SpawnObject<CGoldBullion>("GoldBullion");
+					GoldBullion->SetWorldPos(GetWorldPos());
+					GoldBullion->Drop((float)GetRandom(0, 180), 50.f);
+				}
+			}
+		}
+	}
 }
 
 void CBossTresure::PostUpdate(float DeltaTime)
@@ -132,8 +161,8 @@ void CBossTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 	}
 	if (result.DestCollider->GetProfile()->Channel == Collision_Channel::InteractionInputKey)
 	{
-		//if (!m_Open)
-		//{
+		if (!m_Open)
+		{
 			m_Open = true;
 			m_KeyUIObject->Enable(false);
 			CMaterial* Material = m_Sprite->GetMaterial(0);
@@ -157,7 +186,7 @@ void CBossTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 				NextPos.y+=(float)GetRandom(-50, 100);
 				Firefly->SetNextPos(NextPos);
 			}
-		//}
+		}
 	}
 
 }

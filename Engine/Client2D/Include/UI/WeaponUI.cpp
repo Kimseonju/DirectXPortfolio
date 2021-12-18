@@ -248,7 +248,7 @@ void CWeaponUI::Update(float DeltaTime)
 		if (UIBasePos1 != m_SelectPos)
 		{
 			UIBasePos1 =UIBasePos1.Lerp2DMax(UIBasePos1, m_SelectPos, m_MoveRatio);
-			if (m_MoveRatio > 0.5f)
+			if (m_MoveRatio > 0.3f)
 			{
 				m_WeaponImage1->SetZOrder(4);
 				m_WeaponMagazine1->SetZOrder(4);
@@ -271,7 +271,7 @@ void CWeaponUI::Update(float DeltaTime)
 		if (UIBasePos2 != m_WaltPos)
 		{
 			UIBasePos2 = UIBasePos2.Lerp2DMax(UIBasePos2, m_WaltPos, m_MoveRatio);
-			if (m_MoveRatio>0.5f)
+			if (m_MoveRatio > 0.3f)
 			{
 				m_WeaponImage2->SetZOrder(2);
 				m_WeaponMagazine2->SetZOrder(2);
@@ -320,7 +320,7 @@ void CWeaponUI::Update(float DeltaTime)
 		if (UIBasePos2 != m_SelectPos)
 		{
 			UIBasePos2 = UIBasePos2.Lerp2DMax(UIBasePos2, m_SelectPos, m_MoveRatio);
-			if (m_MoveRatio> 0.5f)
+			if (m_MoveRatio > 0.3f)
 			{
 				m_WeaponImage2->SetZOrder(4);
 				m_WeaponMagazine2->SetZOrder(4);
@@ -333,7 +333,7 @@ void CWeaponUI::Update(float DeltaTime)
 		}
 		else
 		{
-			if (m_MoveRatio > 0.5f)
+			if (m_MoveRatio > 0.3f)
 			{
 				m_WeaponImage2->SetZOrder(4);
 				m_WeaponMagazine2->SetZOrder(4);

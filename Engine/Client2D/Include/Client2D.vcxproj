@@ -273,6 +273,7 @@
     <ClCompile Include="SceneMode\EndingScene.cpp" />
     <ClCompile Include="SceneMode\LoadingScene.cpp" />
     <ClCompile Include="SceneMode\LoadingThread.cpp" />
+    <ClCompile Include="SceneMode\LoadingThreadScene.cpp" />
     <ClCompile Include="SceneMode\MainScene.cpp" />
     <ClCompile Include="SceneMode\StartScene.cpp" />
     <ClCompile Include="SceneMode\TestMainScene.cpp" />
@@ -427,6 +428,7 @@
     <ClInclude Include="SceneMode\EndingScene.h" />
     <ClInclude Include="SceneMode\LoadingScene.h" />
     <ClInclude Include="SceneMode\LoadingThread.h" />
+    <ClInclude Include="SceneMode\LoadingThreadScene.h" />
     <ClInclude Include="SceneMode\MainScene.h" />
     <ClInclude Include="SceneMode\StartScene.h" />
     <ClInclude Include="SceneMode\TestMainScene.h" />

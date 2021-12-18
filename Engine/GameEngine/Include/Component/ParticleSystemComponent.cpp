@@ -11,7 +11,7 @@
 
 CParticleSystemComponent::CParticleSystemComponent()    :
     m_CBuffer(nullptr),
-    m_CopyBuffer(nullptr),
+    //m_CopyBuffer(nullptr),
     m_ParticleInfo{},
     m_ParticleInfoShare{},
     m_SpawnTime(0.f),
@@ -57,7 +57,7 @@ CParticleSystemComponent::~CParticleSystemComponent()
     }
     SAFE_DELETE(m_CBuffer);
 
-    SAFE_DELETE(m_CopyBuffer);
+    //SAFE_DELETE(m_CopyBuffer);
 }
 
 void CParticleSystemComponent::SetParticle(const std::string& Name)
@@ -92,7 +92,7 @@ void CParticleSystemComponent::SetParticle(CParticleSystem* Particle)
 
     m_CBuffer->SetDefaultZ(m_pTransform->GetDefaultZ());
 
-    SAFE_DELETE(m_CopyBuffer);
+    /*SAFE_DELETE(m_CopyBuffer);
     m_CopyBuffer = new CStructuredBuffer;
 
     m_CopyBuffer->InitRead("Copy", sizeof(ParticleInfo),
@@ -105,7 +105,7 @@ void CParticleSystemComponent::SetParticle(CParticleSystem* Particle)
         m_vecBuffer[0]->CopyResource(m_CopyBuffer);
 
         m_CopyBuffer->CopyData(m_Info);
-    }
+    }*/
     m_SpawnTimeMax = m_Particle->GetSpawnTime();
 }
 
@@ -222,10 +222,10 @@ void CParticleSystemComponent::Render(float DeltaTime)
     CPrimitiveComponent::Render(DeltaTime);
 
     m_CBuffer->UpdateCBuffer();
-    
+    /*
     m_vecBuffer[0]->CopyResource(m_CopyBuffer);
     
-    m_CopyBuffer->CopyData(m_Info);
+    m_CopyBuffer->CopyData(m_Info);*/
 
     size_t  Size = m_vecBuffer.size();
 

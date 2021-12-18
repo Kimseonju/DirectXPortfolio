@@ -113,6 +113,10 @@ void CMaterial::SetBaseColor(const Vector4& Color)
 	{
 		SetTransparency(true, true);
 	}
+	else
+	{
+		SetTransparency(true, false);
+	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
 
 }
@@ -123,6 +127,10 @@ void CMaterial::SetBaseColor(float r, float g, float b, float a)
 	if (a < 1.f)
 	{
 		SetTransparency(true, true);
+	}
+	else
+	{
+		SetTransparency(true, false);
 	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
 }
@@ -135,6 +143,10 @@ void CMaterial::SetBaseColor(unsigned char r, unsigned char g,
 	if (m_BaseColor.w < 1.f)
 	{
 		SetTransparency(true, true);
+	}
+	else
+	{
+		SetTransparency(true, false);
 	}
 	m_pCBuffer->SetBaseColor(m_BaseColor);
 }

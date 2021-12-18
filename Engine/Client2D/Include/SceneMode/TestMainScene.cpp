@@ -68,36 +68,6 @@ bool CTestMainScene::Init()
 
 	CGlobalValue::MainMouse->SetScene(m_pScene);
 
-
-	//CBossTresure* pEnemy = m_pScene->SpawnObject<CBossTresure>("BossTresure");
-
-	//CBasicTresure* Tresure = m_pScene->SpawnObject<CBasicTresure>("Tresure");
-	//CTorchLight* TorchLight = m_pScene->SpawnObject<CTorchLight>("TorchLight");
-	//CShopNPC* ShopNPC = m_pScene->SpawnObject<CShopNPC>("ShopNPC");
-	//벨리알테스트용
-	//CBelial* pEnemy = m_pScene->SpawnObject<CBelial>("TestEnemy");
-	//pEnemy->SetRelativePos(-300.f, 0.f, 0.f);
-
-	//CCollisionObject* pCollisionObject = m_pScene->SpawnObject<CCollisionObject>("Collision1");
-	
-	//CTeemo* pTeemo = m_pScene->SpawnObject<CTeemo>("Teemo");
-	//
-	//pTeemo->SetRelativePos(500.f, 500.f, 0.f);
-	
-	//CPixelCollisionTest* pPixelCollisionTest = m_pScene->SpawnObject<CPixelCollisionTest>("PixelCollisionTest");
-	//CTestParticle* pParticle = m_pScene->SpawnObject<CTestParticle>("PixelCollisionTest");
-
-	//CGameObject* BossDieParticle = m_pScene->SpawnObject<CBossDieParticle>("BossDieParticle");
-	//BossDieParticle->SetWorldPos(200.f, 200.f,0.f);
-	//CMainHUDWidget* Widget = m_pScene->GetViewport()->AddWindow<CMainHUDWidget>("MainHUD");
-	//Widget->SetPlayer(pPlayer);
-
-	//CStageMap* Widget1 = m_pScene->GetViewport()->AddWindow<CStageMap>("StageMap");
-	//Widget1->SetStage(m_Stage);
-	//CItemInfoWidget* Widget3 = m_pScene->GetViewport()->AddWindow<CItemInfoWidget>("ItemInfoWidget");
-	//CAbilityWidget* Widget4 = m_pScene->GetViewport()->AddWindow<CAbilityWidget>("CAbilityWidget");
-	//Widget4->SetPos(500.f, 300.f);
-	//Widget1->SetStage(m_Stage);
 	return true;
 }
 
@@ -143,12 +113,6 @@ void CTestMainScene::CreateMaterial()
 
 
 	m_pScene->GetResource()->CreateMaterial("BossBackParticle");
-	//임시
-	//m_pScene->GetResource()->CreateMaterial("MainMap");
-	//m_pScene->GetResource()->AddMaterialTexture("MainMap", "MainMap",
-	//	TEXT("Diablos_Lair_Floor_TRS/Diablos_Lair_Floor.png"));
-	//m_pScene->GetResource()->SetMaterialTransparency("MainMap", true);
-	//m_pScene->GetResource()->SetMaterialShader("MainMap", "TileMapShader");
 
 }
 

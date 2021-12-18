@@ -193,7 +193,7 @@ void CBasicTresure::CollisionBegin(const HitResult& result, CCollider* Collider)
 			Item->SetWorldPos(GetWorldPos());
 			Item->Drop();
 			Item->Enable(true);
-			Item->Drop((float)GetRandom(0, 180), 50.f);
+			Item->Drop(90.f, 50.f);
 			CurStage->PushObject(Item);
 			m_pScene->GetResource()->FindSound("TresureBoxOpen")->Play();
 		}

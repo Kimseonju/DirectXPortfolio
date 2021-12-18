@@ -28,6 +28,10 @@ protected:
 	class CKeyboardUIObject* m_KeyUIObject;
 protected:
 	bool m_Open;
+	float m_GoldDropTimer;
+	float m_GoldDropTimerMax;
+	int m_GoldCount;
+	int m_GoldCountMax;
 public:
 
 public:

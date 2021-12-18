@@ -149,6 +149,66 @@ bool CPlayerUI::Init()
 
 	}
 
+
+	m_GoldImage = CreateWidget<CImage>("GoldImage");
+	m_GoldImage->SetSize(21.f, 21.f);
+	m_GoldImage->CreateAnimation2D<CAnimation2D>();
+	CAnimation2D* Animation2D = m_GoldImage->GetAnimation2D();
+	Animation2D->AddAnimationSequence2D("Gold");
+	m_GoldImage->SetPos(50.f, 50.f);
+	m_GoldImage->SetCollision(false);
+	m_GoldImage->SetPivot(0.5f, 0.5f);
+
+	m_GoldText = CreateWidget<CText>("GoldText");
+	m_GoldText->SetPos(90.f, 50.f);
+	m_GoldText->SetSize(100.f, 28.f);
+	m_GoldText->SetFontSize(20.f);
+	m_GoldText->SetCollision(false);
+	m_GoldText->SetText(TEXT("222222"));
+	m_GoldText->SetZOrder(2);
+	m_GoldText->SetAlignH(TEXT_ALIGN_H::Right);
+	m_GoldText->SetAlignV(TEXT_ALIGN_V::Middle);
+	m_GoldText->SetPivot(0.5f, 0.5f);
+
+	//m_SatietyImage = CreateWidget<CImage>("SatietyImage");
+	//m_SatietyImage->SetSize(34.f, 28.f);
+	//m_SatietyImage->SetTexture("SatietyIcon", TEXT("UI/restaurant/SatietyRate.png"));
+	//m_SatietyImage->SetPos(50.f, 18.f);
+	//m_SatietyImage->SetPivot(0.5f, 0.5f);
+	//m_SatietyImage->SetCollision(false);
+	//
+	//m_SatietyText = CreateWidget<CText>("SatietyText");
+	//m_SatietyText->SetPos(100.f, 20.f);
+	//m_SatietyText->SetSize(35.f, 28.f);
+	//m_SatietyText->SetFontSize(20.f);
+	//m_SatietyText->SetCollision(false);
+	//m_SatietyText->SetText(TEXT("100"));
+	//m_SatietyText->SetZOrder(2);
+	//m_SatietyText->SetAlignH(TEXT_ALIGN_H::Left);
+	//m_SatietyText->SetPivot(0.5f, 0.5f);
+	//
+	//m_SatietyTextMiddle = CreateWidget<CText>("SatietyTextMiddle");
+	//m_SatietyTextMiddle->SetPos(120.f, 20.f);
+	//m_SatietyTextMiddle->SetSize(5.f, 28.f);
+	//m_SatietyTextMiddle->SetFontSize(20.f);
+	//m_SatietyTextMiddle->SetCollision(false);
+	//m_SatietyTextMiddle->SetText(TEXT("/"));
+	//m_SatietyTextMiddle->SetZOrder(2);
+	//m_SatietyTextMiddle->SetAlignH(TEXT_ALIGN_H::Left);
+	//m_SatietyTextMiddle->SetPivot(0.5f, 0.5f);
+	//
+	//
+	//m_SatietyTextMax = CreateWidget<CText>("SatietyTextMax");
+	//m_SatietyTextMax->SetPos(145.f, 20.f);
+	//m_SatietyTextMax->SetSize(35.f, 28.f);
+	//m_SatietyTextMax->SetFontSize(20.f);
+	//m_SatietyTextMax->SetCollision(false);
+	//m_SatietyTextMax->SetText(TEXT("100"));
+	//m_SatietyTextMax->SetZOrder(2);
+	//m_SatietyTextMax->SetAlignH(TEXT_ALIGN_H::Left);
+	//m_SatietyTextMax->SetPivot(0.5f, 0.5f);
+
+	m_GoldText->SetAlignV(TEXT_ALIGN_V::Middle);
 	m_WarningOnHit0 = CreateWidget<CImage>("RedWarningOnHit_0");
 	m_WarningOnHit0->SetSize(640.f, 720.f);
 	m_WarningOnHit0->SetTexture("RedWarningOnHit_0", TEXT("UI/RedWarningOnHit_0.png"));
@@ -202,6 +262,7 @@ void CPlayerUI::Update(float DeltaTime)
 			m_vecDashCount[i]->Enable(false);
 		}
 	}
+
 	if (m_bShield)
 	{
 		m_WarningOnHit0->SetColorTint(0.f, 1.f, 1.f, m_HitTime);
@@ -231,6 +292,12 @@ void CPlayerUI::Update(float DeltaTime)
 		float ShieldPercent=Status->GetShieldHP_Percent();
 		m_ShieldProgressBar->SetPercent(ShieldPercent);
 	}
+
+	str = std::to_wstring(Player->GetCoin());
+	m_GoldText->SetText(str.c_str());
+
+	//str = std::to_wstring(Player->GetStatus()->GetSatiety());
+	//m_SatietyText->SetText(str.c_str());
 }
 
 void CPlayerUI::PostUpdate(float DeltaTime)

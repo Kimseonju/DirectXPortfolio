@@ -212,13 +212,13 @@ void CStatusUI::Update(float DeltaTime)
 	str = std::to_wstring(Player->GetCritical());
 	m_CriticalText->SetText(str.c_str());
 
-	str = std::to_wstring(Player->GetMoveSpeed());
+	str = CGlobalValue::to_wstring_with_precision(Player->GetMoveSpeed(), 2);
 	m_MoveSpeedText->SetText(str.c_str());
 
-	str = std::to_wstring(Player->GetAttackSpeed());
+	str = CGlobalValue::to_wstring_with_precision(Player->GetAttackSpeed(), 2);
 	m_AttackSpeedText->SetText(str.c_str());
 
-	str = std::to_wstring(Player->GetReloadSpeed());
+	str = CGlobalValue::to_wstring_with_precision(Player->GetReloadSpeed(), 2);
 	m_ReloadSpeedText->SetText(str.c_str());
 }
 
