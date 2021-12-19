@@ -47,6 +47,10 @@ void CBasicStatus::SetHP(int HP)
 void CBasicStatus::SetHPMax(int HP)
 {
 	m_HPMax = HP;
+	if (m_HP > m_HPMax)
+	{
+		m_HP = m_HPMax;
+	}
 }
 
 void CBasicStatus::SetDash(int Dash)

@@ -50,7 +50,7 @@ bool CRestaurantButton::Init()
 void CRestaurantButton::Update(float DeltaTime)
 {
 	CButton::Update(DeltaTime);
-	
+
 	if (m_State == Button_State::Click)
 	{
 		m_Eat = true;
@@ -139,9 +139,9 @@ void CRestaurantButton::SetFoodType(FoodType Type)
 		m_ResturantInfoWidget->SetTwoDescription(TEXT("최대체력"));
 		m_ResturantInfoWidget->SetPrice(683);
 		m_ResturantInfoWidget->SetSatietyNumber(20);
-		m_Foodstr= TEXT("계란 후라이");
-		m_Price=683;
-		m_SatietyNumber= 20;
+		m_Foodstr = TEXT("계란 후라이");
+		m_Price = 683;
+		m_SatietyNumber = 20;
 		break;
 	}
 	case FoodType::Bread:
@@ -179,8 +179,8 @@ void CRestaurantButton::SetFoodType(FoodType Type)
 
 		m_ResturantInfoWidget->SetFoodName(TEXT("딸기 파이"));
 		m_ResturantInfoWidget->SetFoodDescription(TEXT("맛있는 것만 잔뜩 넣었으니 분명 맛있을 거에요."));
-		m_ResturantInfoWidget->SetOneNumber(2);
-		m_ResturantInfoWidget->SetOneDescription(TEXT("방어력"));
+		m_ResturantInfoWidget->SetOneNumber(10);
+		m_ResturantInfoWidget->SetOneDescription(TEXT("체력 회복"));
 		m_ResturantInfoWidget->SetTwoNumber(0);
 		m_ResturantInfoWidget->SetTwoDescription(TEXT(""));
 		m_ResturantInfoWidget->SetPrice(557);
@@ -211,9 +211,9 @@ void CRestaurantButton::SetFoodType(FoodType Type)
 
 bool CRestaurantButton::PlayerEat()
 {
-	CPlayer* Player=CGlobalValue::MainPlayer;
+	CPlayer* Player = CGlobalValue::MainPlayer;
 
-	CPlayerStatus* Status=Player->GetStatus();
+	CPlayerStatus* Status = Player->GetStatus();
 	if (!Status->AddSatiety(m_SatietyNumber))
 		return false;
 	if (!Player->SubCoin(m_Price))
@@ -238,8 +238,10 @@ bool CRestaurantButton::PlayerEat()
 		Status->SetCritical(Status->GetCritical() + 5);
 		break;
 	case FoodType::StrawberryPie:
+		Player->GetStatus()->SetHP(Status->GetHP() + 10);
 		break;
 	case FoodType::Lemonade:
+		Status->SetHPMax(Status->GetHPMax() - 10);
 		break;
 	case FoodType::End:
 		break;
@@ -248,7 +250,7 @@ bool CRestaurantButton::PlayerEat()
 	}
 	m_Eat = true;
 	return true;
-	
+
 }
 
 bool CRestaurantButton::IsClick()
