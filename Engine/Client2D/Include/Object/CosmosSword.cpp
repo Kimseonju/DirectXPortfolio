@@ -116,6 +116,7 @@ bool CCosmosSword::SkillAttack(float Angle)
 		return false;
 	}
 	//스킬사용!
+	m_pScene->GetResource()->FindSound("SwordAttack")->Play();
 	CCosmosSwordBullet* pCosmosSwordBullet = m_pScene->SpawnObject<CCosmosSwordBullet>("CCosmosSwordBullet");
 	pCosmosSwordBullet->SetWorldPos(GetWorldPos());
 	pCosmosSwordBullet->SetRelativeRotationZ(Angle - 90.f);
