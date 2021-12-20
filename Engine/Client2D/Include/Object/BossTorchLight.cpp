@@ -37,20 +37,18 @@ bool CBossTorchLight::Init()
 	m_Sprite->SetPivot(0.5f, 0.5f, 0.f);
 	m_Sprite->SetWorldScale(20.f, 30.f, 0.f);
 	m_Sprite->CreateAnimation2D<CAnimation2D>();
+	m_Sprite->SetRender2DType(Render_Type_2D::RT2D_Back1);
 	m_Animation2D = m_Sprite->GetAnimation2D();
 	m_Animation2D->AddAnimationSequence2D("Torch");
 
 	m_SpriteBlend->SetPivot(0.5f, 0.5f, 0.f);
 	m_SpriteBlend->SetWorldScale(100.f, 100.f, 0.f);
+	m_SpriteBlend->SetRender2DType(Render_Type_2D::RT2D_Back2);
 
 	CMaterial* Material = m_SpriteBlend->GetMaterial(0);
 
 	Material->AddTexture("torchEffect", TEXT("object/torch/torchEffect6.png"));
-	//º¸½º¿ë
-	Material->SetBaseColor(255.f /255.f, 0.f / 255.f, 255.f / 255.f, 80.f / 255.f);
-	//Material->SetBaseColor(227.f / 255.f, 79.f / 255.f, 64.f / 255.f, 140.f / 255.f);
-
-	//Material->AddTexture("TorchLightt", TEXT("object/torch/torchEffect.png"));
+	Material->SetBaseColor(255.f / 255.f, 0.f / 255.f, 255.f / 255.f, 80.f / 255.f);
 
 	return true;
 }
@@ -58,11 +56,6 @@ bool CBossTorchLight::Init()
 void CBossTorchLight::Update(float DeltaTime)
 {
 	CGameObject::Update(DeltaTime);
-	//CPlayer* Player = CGlobalValue::MainPlayer;
-	//if (Player)
-	//{
-	//	SetWorldPos(Player->GetWorldPos());
-	//}
 }
 
 void CBossTorchLight::PostUpdate(float DeltaTime)
@@ -94,8 +87,4 @@ void CBossTorchLight::Render(float DeltaTime)
 CBossTorchLight* CBossTorchLight::Clone()
 {
 	return new CBossTorchLight(*this);
-}
-
-void CBossTorchLight::CollisionBegin(const HitResult& result, CCollider* Collider)
-{
 }

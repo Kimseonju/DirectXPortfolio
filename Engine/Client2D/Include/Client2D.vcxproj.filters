@@ -256,7 +256,7 @@
     <Filter Include="02. Object\Item\Acc">
       <UniqueIdentifier>{34698f72-3d2c-4d1e-84a0-f2d0e47f9e16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\MapObject\Tresure\Torch">
+    <Filter Include="02. Object\MapObject\Torch">
       <UniqueIdentifier>{5e31c50d-2107-47bb-bed1-d164c9680502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -649,10 +649,10 @@
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
     </ClCompile>
     <ClCompile Include="Object\BossTorchLight.cpp">
-      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
+      <Filter>02. Object\MapObject\Torch</Filter>
     </ClCompile>
     <ClCompile Include="Object\TorchLight.cpp">
-      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
+      <Filter>02. Object\MapObject\Torch</Filter>
     </ClCompile>
     <ClCompile Include="Object\EndingTerrain.cpp">
       <Filter>02. Object\EndingObject</Filter>
@@ -1110,10 +1110,10 @@
       <Filter>UI\UI\WidgetWindow\Map\MiniMap</Filter>
     </ClInclude>
     <ClInclude Include="Object\BossTorchLight.h">
-      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
+      <Filter>02. Object\MapObject\Torch</Filter>
     </ClInclude>
     <ClInclude Include="Object\TorchLight.h">
-      <Filter>02. Object\MapObject\Tresure\Torch</Filter>
+      <Filter>02. Object\MapObject\Torch</Filter>
     </ClInclude>
     <ClInclude Include="Object\EndingTerrain.h">
       <Filter>02. Object\EndingObject</Filter>

@@ -30,6 +30,5 @@ public:
 	virtual void PrevRender(float DeltaTime);
 	virtual void Render(float DeltaTime);
 	virtual CTorchLight* Clone();
-	void CollisionBegin(const HitResult& result, CCollider* Collider);
 
 };

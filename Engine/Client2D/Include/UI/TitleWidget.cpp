@@ -7,11 +7,11 @@
 #include <UI/Button.h>
 #include <Scene/Scene.h>
 #include <Scene/SceneResource.h>
-CTitleWidget::CTitleWidget():
+CTitleWidget::CTitleWidget() :
 	m_Cloud(nullptr),
 	m_BackCloud(nullptr)
 {
-	
+
 }
 
 CTitleWidget::CTitleWidget(const CTitleWidget& widget) :
@@ -53,10 +53,6 @@ bool CTitleWidget::Init()
 	PlayButton->SetZOrder(1);
 
 
-	//PlayButton->SetStateTint(Button_State::Normal, 1.f, 1.f, 1.f, 1.f);
-	//PlayButton->SetStateTint(Button_State::MouseOn, 1.f, 1.f, 1.f, 1.f);
-	//PlayButton->SetStateTint(Button_State::Click, 0.6f, 0.6f, 0.6f, 1.f);
-
 	PlayButton->SetClickCallback<CTitleWidget>(this, &CTitleWidget::StartButtonClick);
 
 	PlayButton->SetInteractionSound(Button_Sound_State::MouseOn, "ButtonMouseOn");
@@ -74,9 +70,6 @@ bool CTitleWidget::Init()
 	ExitButton->SetZOrder(1);
 
 
-	//ExitButton->SetStateTint(Button_State::Normal, 1.f, 1.f, 1.f, 1.f);
-	//ExitButton->SetStateTint(Button_State::MouseOn, 1.f, 1.f, 1.f, 1.f);
-	//ExitButton->SetStateTint(Button_State::Click, 1.f, 1.f, 1.f, 1.f);
 
 	ExitButton->SetClickCallback<CTitleWidget>(this, &CTitleWidget::ExitButtonClick);
 
@@ -115,6 +108,6 @@ void CTitleWidget::StartButtonClick()
 
 void CTitleWidget::ExitButtonClick()
 {
-	MessageBox(0, TEXT("종료버튼"), TEXT("종료버튼"), MB_OK);
+
 }
 
