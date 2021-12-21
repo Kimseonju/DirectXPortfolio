@@ -256,6 +256,9 @@
     <Filter Include="02. Resource\02. Shader\02. ConstantBuffer\MiniMap">
       <UniqueIdentifier>{af371aa3-6754-4f95-8a93-146901eb12d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Resource\01. Mesh\01. FBXLoader">
+      <UniqueIdentifier>{e99c9bbf-f45d-4772-9f18-51509f80e6b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -741,6 +744,9 @@
     <ClInclude Include="Resource\MiniMapCBuffer.h">
       <Filter>02. Resource\02. Shader\02. ConstantBuffer\MiniMap</Filter>
     </ClInclude>
+    <ClInclude Include="Resource\FBXLoader.h">
+      <Filter>02. Resource\01. Mesh\01. FBXLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -1180,6 +1186,9 @@
     </ClCompile>
     <ClCompile Include="Resource\MiniMapCBuffer.cpp">
       <Filter>02. Resource\02. Shader\02. ConstantBuffer\MiniMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\FBXLoader.cpp">
+      <Filter>02. Resource\01. Mesh\01. FBXLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

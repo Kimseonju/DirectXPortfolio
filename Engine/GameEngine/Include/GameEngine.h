@@ -47,9 +47,11 @@
 #ifdef _DEBUG
 
 #pragma comment(lib, "DirectXTex_Debug.lib")
+#pragma comment(lib, "libfbxsdk-md_Debug.lib")
 
 #else
 #pragma comment(lib,"DirectXTex.lib")
+#pragma comment(lib, "libfbxsdk-md.lib")
 
 #endif
 

@@ -75,22 +75,26 @@
     <OutDir>../Bin/</OutDir>
     <IntDir>../BinObj/</IntDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+    <IncludePath>Resource/fbxsdk/;Resource/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <IntDir>../BinObj/</IntDir>
+    <IncludePath>Resource/fbxsdk/;Resource/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <IntDir>../BinObj/</IntDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+    <IncludePath>Resource/fbxsdk/;Resource/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <IntDir>../BinObj/</IntDir>
+    <IncludePath>Resource/fbxsdk/;Resource/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -264,6 +268,7 @@
     <ClInclude Include="Resource\ConstantBufferData.h" />
     <ClInclude Include="Resource\DirectXTex.h" />
     <ClInclude Include="Resource\DistortionCBuffer.h" />
+    <ClInclude Include="Resource\FBXLoader.h" />
     <ClInclude Include="Resource\FullScreenDistortionShader.h" />
     <ClInclude Include="Resource\FullScreenShader.h" />
     <ClInclude Include="Resource\GlobalCBuffer.h" />
@@ -414,6 +419,7 @@
     <ClCompile Include="Resource\ConstantBuffer.cpp" />
     <ClCompile Include="Resource\ConstantBufferData.cpp" />
     <ClCompile Include="Resource\DistortionCBuffer.cpp" />
+    <ClCompile Include="Resource\FBXLoader.cpp" />
     <ClCompile Include="Resource\FullScreenDistortionShader.cpp" />
     <ClCompile Include="Resource\FullScreenShader.cpp" />
     <ClCompile Include="Resource\GlobalCBuffer.cpp" />

@@ -746,9 +746,6 @@
     <ClInclude Include="SceneMode\MainScene.h">
       <Filter>01. SceneMode</Filter>
     </ClInclude>
-    <ClInclude Include="ClientManager.h">
-      <Filter>02. Object</Filter>
-    </ClInclude>
     <ClInclude Include="TestWindow.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -1198,6 +1195,9 @@
     </ClInclude>
     <ClInclude Include="SceneMode\LoadingThreadScene.h">
       <Filter>01. SceneMode</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

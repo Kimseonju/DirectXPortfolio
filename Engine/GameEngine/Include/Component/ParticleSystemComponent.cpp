@@ -127,9 +127,6 @@ void CParticleSystemComponent::Active(bool bActive)
         m_vecBuffer[i]->SetShader((int)i);
     }
 
-    // ParticleUpdateShader에서 Thread를 64, 1, 1 을 쓰고 있다.
-    // 즉, X그룹은 64개당 그룹 1개가 필요하므로 현재 생성된 파티클수 / 64를
-    // 이용해서 그룹 번호를 구하고 + 1을 해서 그룹 개수를 구한다.
     m_UpdateShader->Excute(GroupCount, 1, 1);
 
     for (size_t i = 0; i < Size; ++i)

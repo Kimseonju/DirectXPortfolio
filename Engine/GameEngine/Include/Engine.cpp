@@ -109,59 +109,47 @@ bool CEngine::Init(HINSTANCE hInst, HWND hWnd, int Width, int Height,
 
 	SetResolution(Width, Height);
 
-	// 디바이스를 초기화한다.
 	if (!CDevice::GetInst()->Init(m_hWnd, Width, Height, ScreenMode))
 		return false;
 
-	// 경로관리자를 초기화한다.
 	if (!CPathManager::GetInst()->Init())
 		return false;
 
-	// 렌더링 관리자 초기화
 	if (!CRenderManager::GetInst()->Init())
 		return false;
 
-	// 리소스 관리자 초기화
 	if (!CResourceManager::GetInst()->Init())
 		return false;
 
 	CRenderManager::GetInst()->SetDefaultTarget();
 
-	// 충돌관리자 초기화
 	if (!CCollisionManager::GetInst()->Init())
 		return false;
 
-	// 입력 관리자 초기화
 	if (!CInput::GetInst()->Init(m_hInst, m_hWnd))
 		return false;
 
-	// 스레드 관리자 초기화
 	if (!CThreadManager::GetInst()->Init())
 		return false;
 
-	// IMGUI 초기화
 	if(!CIMGUIManager::GetInst()->Init(m_hWnd))
 		return false;
 
-	// Navigation 관리자 초기화
 	if (!CNavigationManager::GetInst()->Init())
 		return false;
 
 	CNavigationManager::GetInst()->CreateNavigation();
-	// 장면 관리자 초기화
+
 	if (!CSceneManager::GetInst()->Init())
 		return false;
 
 	m_pTimer = new CTimer;
-
 	m_pTimer->Init();
 
 	m_GlobalCBuffer = new CGlobalCBuffer;
-
 	m_GlobalCBuffer->Init();
 
 	m_AccTime = 0.f;
-
 	m_GlobalCBuffer->SetResolution(Vector2((float)m_RS.Width, (float)m_RS.Height));
 	m_GlobalCBuffer->SetNoiseResolution(Vector2(340.f, 340.f));
 
