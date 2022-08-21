@@ -64,11 +64,11 @@ private:
 
 
 public:
-	void CreateState(std::string _StateName, //시간
+	void CreateState(std::string _StateName, 
 		EventTarget* _Obj,
-		void(EventTarget::* _StayFunc)(),//타이머가 끝날때 실행되는 함수
-		void(EventTarget::* _StartFunc)() = nullptr, //시작할때 실행되는 함수
-		void(EventTarget::* _EndFunc)() = nullptr)//startFunc가 실행되고 End가 실행되기전까지 계속 실행되는 함수
+		void(EventTarget::* _StayFunc)(),
+		void(EventTarget::* _StartFunc)() = nullptr, 
+		void(EventTarget::* _EndFunc)() = nullptr)
 	{
 
 		if (m_State.end() != m_State.find(_StateName))
