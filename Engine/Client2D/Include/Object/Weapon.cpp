@@ -47,9 +47,9 @@ bool CWeapon::Init()
 void CWeapon::Update(float DeltaTime)
 {
 	CItem::Update(DeltaTime);
-
 	if (!m_MapDrop)
 	{
+#pragma region Skill
 		if (m_Skill)
 		{
 			m_SkillDelay += DeltaTime;
@@ -58,6 +58,8 @@ void CWeapon::Update(float DeltaTime)
 				m_SkillDelay = m_SkillDelayMax;
 			}
 		}
+#pragma endregion
+#pragma region Ranged
 		if (m_Reload)
 		{
 			m_CurrentReloadDelay += DeltaTime;
@@ -70,7 +72,6 @@ void CWeapon::Update(float DeltaTime)
 				m_ReloadEffect = true;
 				m_Status->Reload();
 				m_pScene->GetResource()->FindSound("Reload2")->Play();
-				//사운드재생
 			}
 
 		}
@@ -81,10 +82,8 @@ void CWeapon::Update(float DeltaTime)
 				Reload();
 			}
 		}
-		m_CurrentAttackDelay += DeltaTime;
-
-		
-
+#pragma endregion
+#pragma region Ranged rebound
 		if (m_WeaponType == Weapon_Type::Range)
 		{
 			if (m_Rebound > 0.1f)
@@ -96,19 +95,9 @@ void CWeapon::Update(float DeltaTime)
 				m_Rebound = 0.f;
 			}
 		}
-
-		//if (m_Dir == Object_Dir::Left)
-		//{
-		//	m_Sprite->SetRelativePos(10.f, 0.f, 0.f);
-		//	m_Sprite->SetVerticalReverse2DEnable(true);
-		//}
-		//else if (m_Dir == Object_Dir::Right)
-		//{
-		//	m_Sprite->SetRelativePos(-10.f, 0.f, 0.f);
-		//	m_Sprite->SetVerticalReverse2DEnable(false);
-		//}
+#pragma endregion
+		m_CurrentAttackDelay += DeltaTime;
 	}
-
 }
 
 void CWeapon::PostUpdate(float DeltaTime)

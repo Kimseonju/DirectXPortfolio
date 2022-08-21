@@ -141,17 +141,12 @@ void CStageManager::CreateDungeon()
 {
 	m_vecStageInfo.resize(m_MapSize);
 	for (int i = 0; i < m_MapSize; i++)
-	{
 		m_vecStageInfo[i].resize(m_MapSize);
-	}
 	m_vecStage.resize(m_MapSize);
 	for (int i = 0; i < m_MapSize; i++)
-	{
 		m_vecStage[i].resize(m_MapSize);
-	}
 	while (true)
 	{
-		// 맵 정보 초기화
 		for (int x = 0; x < m_MapSize; x++)
 		{
 			for (int y = 0; y < m_MapSize; y++)
@@ -267,8 +262,6 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	if (!m_vecStageInfo[x][y].Wall[(int)Door_Dir::Door_Down])
 		num = num | 8;
 	StageObjectsInfo Info;
-
-	//나중에 만들면 수정
 	switch (m_vecStageInfo[x][y].StageType)
 	{
 	case StageType::None:
@@ -276,6 +269,7 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	case StageType::Base:
 		Info = GetStageSpawnInfo(num);
 		break;
+#pragma region GetStage...
 	case StageType::Start:
 		Info = GetMainDoorStageSpawnInfo(num);
 		break;
@@ -288,10 +282,10 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	case StageType::Restaurant:
 		Info = GetRestaurantStageSpawnInfo(num);
 		break;
-
 	case StageType::Boss:
 		Info = GetBossStageSpawnInfo(num);
 		break;
+#pragma endregion
 	}
 
 	Stage->SetScene(m_pScene);
@@ -301,8 +295,6 @@ void CStageManager::PlayStage(Stage_Dir Dir)
 	Stage->Enable(true);
 	m_SelectStage = Stage;
 	BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
-	
-	
 }
 
 void CStageManager::PlayGateStage()
@@ -322,6 +314,8 @@ void CStageManager::PlayGateStage()
 		BGMSoundUpdate(m_vecStage[x][y]->GetStageType());
 		return;
 	}
+
+
 	//첫방문
 	CStage* Stage = new CStage;
 	//벽이없다면 문이있다는 뜻
@@ -375,20 +369,16 @@ void CStageManager::PlayGateStage()
 
 bool CStageManager::CreateStage_Special()
 {
-	/*
-	
-	기본제작 (맵제작후수정필요)
-	*/
 	std::vector<Vector2> vecStagePos;
-
-	//시작방 체크할곳
+#pragma region StartStage
 	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
-			//벽체크 (오른쪽출발맵 1개)
-			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
-				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
+			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && 
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
+				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && 
+				m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
 				vecStagePos.push_back(Vector2{ (float)x,(float)y });
 			}
@@ -399,17 +389,15 @@ bool CStageManager::CreateStage_Special()
 	int RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
 	m_StartPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_StartPos.x][(int)m_StartPos.y].StageType = StageType::Start;
-
-	//끝방 체크
 	vecStagePos.clear();
-	//위와동일
+#pragma endregion	
+#pragma region EndStage
 	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
 		{
 			if (m_StartPos.x == x && m_StartPos.y == y)
 				continue;
-			//벽체크 
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
@@ -419,13 +407,13 @@ bool CStageManager::CreateStage_Special()
 	}
 	if (vecStagePos.size() == 0)
 		return false;
-	RandomNum = GetRandom(0, (int)vecStagePos.size()-1);
+	RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
 	m_EndPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_EndPos.x][(int)m_EndPos.y].StageType = StageType::End;
-
 	vecStagePos.clear();
+#pragma endregion
 
-	//상점방 넣기
+#pragma region ShopStage
 	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
@@ -434,7 +422,6 @@ bool CStageManager::CreateStage_Special()
 				continue;
 			if (m_EndPos.x == x && m_EndPos.y == y)
 				continue;
-			//벽체크 
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
@@ -447,10 +434,9 @@ bool CStageManager::CreateStage_Special()
 	RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
 	m_ShopPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Shop;
-
 	vecStagePos.clear();
-
-	//레스토랑 넣기
+#pragma endregion
+#pragma region RestaurantStage
 	for (int x = 0; x < m_MapSize; ++x)
 	{
 		for (int y = 0; y < m_MapSize; ++y)
@@ -461,7 +447,6 @@ bool CStageManager::CreateStage_Special()
 				continue;
 			if (m_ShopPos.x == x && m_ShopPos.y == y)
 				continue;
-			//벽체크 
 			if (!m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				!m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
 			{
@@ -474,28 +459,22 @@ bool CStageManager::CreateStage_Special()
 	RandomNum = GetRandom(0, (int)vecStagePos.size() - 1);
 	m_ShopPos = vecStagePos[RandomNum];
 	m_vecStageInfo[(int)m_ShopPos.x][(int)m_ShopPos.y].StageType = StageType::Restaurant;
-
 	vecStagePos.clear();
-
-
+#pragma endregion
+#pragma region StageCheck
 
 	for (int x = 0; x < m_MapSize; x++)
 	{
 		for (int y = 0; y < m_MapSize; y++)
 		{
-			if (m_StartPos.x == x && m_StartPos.y == y) 
+			if (m_StartPos.x == x && m_StartPos.y == y)
 				continue;
-			if (m_EndPos.x == x && m_EndPos.y == y) 
+			if (m_EndPos.x == x && m_EndPos.y == y)
 				continue;
-
 			if (m_ShopPos.x == x && m_ShopPos.y == y)
 				continue;
-
 			if (m_RestaurantPos.x == x && m_RestaurantPos.y == y)
 				continue;
-			
-
-
 
 			if (m_vecStageInfo[x][y].Wall[(int)WallDir::Left] && !m_vecStageInfo[x][y].Wall[(int)WallDir::Up] &&
 				m_vecStageInfo[x][y].Wall[(int)WallDir::Right] && m_vecStageInfo[x][y].Wall[(int)WallDir::Down])
@@ -510,8 +489,6 @@ bool CStageManager::CreateStage_Special()
 			}
 		}
 	}
-
-
 	int dir_x[4] = { -1,0,1,0 };
 	int dir_y[4] = { 0,1,0,-1 };
 
@@ -522,17 +499,13 @@ bool CStageManager::CreateStage_Special()
 		{
 			if (!m_vecStageInfo[(int)vecStagePos[i].x][(int)vecStagePos[i].y].Wall[dir])
 			{
-
 				int nextX = (int)vecStagePos[i].x + dir_x[dir];
 				int nextY = (int)vecStagePos[i].y + dir_y[dir];
-				m_vecStageInfo[nextX][nextY].Wall[(dir + 2) % 4] = true; 
+				m_vecStageInfo[nextX][nextY].Wall[(dir + 2) % 4] = true;
 			}
 		}
 	}
-
-	////방설정완료
-
-
+#pragma endregion
 
 	return true;
 }

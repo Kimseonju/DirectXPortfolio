@@ -340,14 +340,9 @@ void CPlayer::PostUpdate(float DeltaTime)
 
 	if (m_Weapon)
 	{
-
 		m_Weapon->SetDir(m_Dir);
 		if (m_Weapon->GetWeaponType() == Weapon_Type::Melee)
 		{
-			//임시로
-			//선형보간 적용하여 움직임구현하기		
-			//게임상엔 없네??ㅇ
-			float LerpAngle = CGlobalValue::Lerp2DMax(0.f, 90.f, m_Weapon->GetCurrentAttackDelay() * 10.f);
 			if (m_OneAttack)
 			{
 				m_WeaponArm->SetRelativeRotationZ(angle + 90.f);

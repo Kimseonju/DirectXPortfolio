@@ -367,7 +367,7 @@ void CBelial::AlphaUpdate(float DeltaTime)
 
 void CBelial::PatternUpdate(float DeltaTime)
 {
-	//패턴시작
+#pragma region BossMoving
 	if (m_Animation2D->GetName() == "BelialHead_Idle")
 	{
 		int Frame = m_Animation2D->GetFrame();
@@ -384,9 +384,11 @@ void CBelial::PatternUpdate(float DeltaTime)
 			SetWorldPos(Pos);
 		}
 	}
+#pragma endregion
 
 	if (m_Attacking)
 	{
+#pragma region PatternPlay_Stay
 		switch (m_Pattern)
 		{
 		case Belial_Pattern::Sword:
@@ -403,11 +405,10 @@ void CBelial::PatternUpdate(float DeltaTime)
 		default:
 			break;
 		}
+#pragma endregion
 	}
 	else
-	{
 		m_AttackTimer += DeltaTime;
-	}
 
 	if (m_AttackTimer >= m_AttackTimerMax)
 	{
@@ -419,11 +420,8 @@ void CBelial::PatternUpdate(float DeltaTime)
 		{
 			m_Pattern = (Belial_Pattern)GetRandom(0, (int)Belial_Pattern::End - 1);
 			if (m_Pattern == Belial_Pattern::Laser)
-			{
 				m_LaserCountMax = GetRandom(1, 2);
-			}
 		}
-		//m_Pattern = Belial_Pattern::Sword;
 		m_AttackTimer = 0.f;
 		m_SwordSpawn = false;
 	}
